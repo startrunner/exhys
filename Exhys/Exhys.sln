@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exhys.CheckerCore", "Exhys.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exhys.WebInterface", "Exhys.WebInterface\Exhys.WebInterface.csproj", "{0BD44A81-A8B1-486B-ABA6-129B764BE17A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exhys.CheckerCore.Tests", "Exhys.CheckerCore.Tests\Exhys.CheckerCore.Tests.csproj", "{2A56EC16-AC05-4267-9956-1C2F7E821D10}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{0BD44A81-A8B1-486B-ABA6-129B764BE17A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BD44A81-A8B1-486B-ABA6-129B764BE17A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BD44A81-A8B1-486B-ABA6-129B764BE17A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A56EC16-AC05-4267-9956-1C2F7E821D10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A56EC16-AC05-4267-9956-1C2F7E821D10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A56EC16-AC05-4267-9956-1C2F7E821D10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A56EC16-AC05-4267-9956-1C2F7E821D10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
