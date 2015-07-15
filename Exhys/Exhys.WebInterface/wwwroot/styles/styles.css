@@ -1,4 +1,29 @@
-body {
-  background: #00F; }
+﻿* {
+  margin: 0px;
+  padding: 0px;
+  font-size: 24px;
+  font-family: sans-serif; }
 
-/*# sourceMappingURL=styles.css.map */
+body {
+  padding-top: 1.52917cm; }
+
+nav {
+  background: #565656;
+  display: block;
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  height: 1cm; }
+  nav ul {
+    display: inline-block; }
+    nav ul li {
+      display: inline-block; }
+      nav ul li a {
+        display: block;
+        background: gray;
+        height: 100%;
+        color: #EEE;
+        text-decoration: none; }
+      nav ul li a:hover {
+        text-decoration: underline; }

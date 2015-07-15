@@ -1,4 +1,44 @@
-﻿$blue:#00F;
-body {
-    background:$blue;
+﻿*{
+    margin:0px;
+    padding:0px;
+    font-size:24px;
+    font-family:sans-serif;
+}
+
+$themeColor:#565656;
+$backgroundColor:#FFF;
+$foregroundColor:#AAA;
+$textColor:#000;
+$revTextColor:#EEE;
+$headerHeight:1cm;
+
+body{
+    padding-top:$headerHeight+20px;
+}
+
+nav{
+    background:$themeColor;
+    display:block;
+    position:fixed;
+    left:0px; top:0px; right:0px;
+    height:$headerHeight;
+
+    ul{
+        display:inline-block;
+
+        li{
+            display:inline-block;
+
+            a{
+                display:block;
+                background:gray;
+                height:100%;
+                color:$revTextColor;
+                text-decoration:none;
+            }
+            a:hover{
+                text-decoration:underline;
+            }
+        }
+    }
 }
