@@ -74,5 +74,10 @@ label[for] {
   label[for] + input[type=checkbox] {
     margin-left: -26px; }
 
-textarea, input[type=text], input[type=datetime] {
-  width: 200px; }
+form {
+  margin-right: 100px;
+  margin-left: 100px; }
+  form input, form button, form textarea {
+    width: 100%; }
+  form input[type=checkbox] {
+    width: auto; }
