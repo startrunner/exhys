@@ -114,6 +114,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\AnArea\AnAreaAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -141,11 +142,15 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\AnArea\Controllers\" />
+    <Folder Include="Areas\AnArea\Models\" />
+    <Folder Include="Areas\AnArea\Views\Shared\" />
     <Folder Include="ViewModels\" />
     <Folder Include="wwwroot\scripts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="Areas\AnArea\Views\web.config" />
     <None Include="Project_Readme.html" />
     <Content Include="wwwroot\images\background.jpg" />
     <Content Include="wwwroot\images\background.png" />
