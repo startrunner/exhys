@@ -8,7 +8,7 @@ namespace Exhys.WebInterface.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index ()
+        public ActionResult Index ()  
         {
             return View();
         }
