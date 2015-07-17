@@ -5,19 +5,20 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Services.Protocols;
 
-namespace Exhys.WebInterface.Controllers
+namespace Exhys.WebContestHost.Areas.Accounts.Controllers
 {
     public class AccountController : Controller
     {
-        // GET: 
+        // GET: Accounts/Account
         public ActionResult Index()
         {
-            return Redirect("~/Account/Signin");
+            return PartialView();
         }
 
-        public ActionResult SignIn()
+        public ActionResult CreateNew()
         {
-            return PartialView();
+            Request.Form.
+            return View();
         }
     }
 }

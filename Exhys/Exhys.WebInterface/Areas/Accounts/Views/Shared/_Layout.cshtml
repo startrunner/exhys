@@ -1,28 +1,4 @@
-﻿<!doctype html>
-<html>
-    <head>
-        <meta lang="en-us"/>
-        <meta charset="utf-8" />
-        <title>@ViewBag.Title - Exhys</title>
-        <link rel="stylesheet" href="~/wwwroot/styles/styles.min.css"/>
-    </head>
-    <body>
-        <header></header>
-        <nav>
-            <ul>
-                <li>@Html.ActionLink("Home", "Index", controllerName: "Home")</li>
-                <li>@Html.ActionLink("About", "About", controllerName: "Home")</li>
-                <li>@Html.ActionLink("Contact", "Contact", controllerName: "Home")</li>
-            </ul>
-        </nav>
-        <section>@RenderBody()</section>
-        <footer></footer>
-    </body>
-</html>
-
-
-
-@*<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -44,13 +20,11 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
             </div>
         </div>
     </div>
+
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -63,4 +37,4 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
-</html>*@
+</html>

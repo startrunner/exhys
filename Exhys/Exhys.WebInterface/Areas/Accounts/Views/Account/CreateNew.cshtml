@@ -1,0 +1,12 @@
+﻿@using (Html.BeginForm("CreateNew", "Account", FormMethod.Post))
+{
+    <input name="username" type="text" placeholder="Username" />
+    <input name="password" type="password" placeholder="Password"/>
+    <input name="confirmPassword" type="password" placeholder="Confirm Passowrd"/>
+    <select>
+    </select>
+
+    <input name="isSubmit" type="hidden" value="1"/>
+
+    <button type="submit">Register</button>
+}

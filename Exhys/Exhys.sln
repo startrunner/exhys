@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exhys.MiniChecker", "Exhys.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exhys.CheckerCore", "Exhys.CheckerCore\Exhys.CheckerCore.csproj", "{21D8D3E0-5042-4DF6-BA91-0C4A2BBFD781}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exhys.WebInterface", "Exhys.WebInterface\Exhys.WebInterface.csproj", "{0BD44A81-A8B1-486B-ABA6-129B764BE17A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exhys.WebContestHost", "Exhys.WebInterface\Exhys.WebContestHost.csproj", "{0BD44A81-A8B1-486B-ABA6-129B764BE17A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exhys.CheckerCore.Tests", "Exhys.CheckerCore.Tests\Exhys.CheckerCore.Tests.csproj", "{2A56EC16-AC05-4267-9956-1C2F7E821D10}"
 EndProject

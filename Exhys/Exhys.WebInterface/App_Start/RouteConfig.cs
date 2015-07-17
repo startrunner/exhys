@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace Exhys.WebInterface
+namespace Exhys.WebContestHost
 {
     public class RouteConfig
     {
@@ -13,11 +13,17 @@ namespace Exhys.WebInterface
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            //routes.MapRoute(
+            //    name: "Default",
+            //    url: "{area}/{controller}/{action}",
+            //    defaults: new { controller = "Home", action = "Index", area="Accounts"}
+            //);
+
             routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}",
-                defaults: new { controller = "Home", action = "Index"}
-            );
+                name: "r1",
+                url: "Accounts/{controller}/{action}",
+                defaults: new { controller = "Account", action = "Index" });
+
         }
     }
 }

@@ -1,22 +1,22 @@
 ﻿using System.Web.Mvc;
 
-namespace Exhys.WebInterface.Areas.AnArea
+namespace Exhys.WebContestHost.Areas.Competitions
 {
-    public class AnAreaAreaRegistration : AreaRegistration 
+    public class CompetitionsAreaRegistration : AreaRegistration 
     {
         public override string AreaName 
         {
             get 
             {
-                return "AnArea";
+                return "Competitions";
             }
         }
 
         public override void RegisterArea(AreaRegistrationContext context) 
         {
             context.MapRoute(
-                "AnArea_default",
-                "AnArea/{controller}/{action}/{id}",
+                "Competitions_default",
+                "Competitions/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional }
             );
         }
