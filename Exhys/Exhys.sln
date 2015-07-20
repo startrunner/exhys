@@ -11,9 +11,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exhys.CheckerCore.Tests", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExhaustedHasher", "ExhaustedHasher\ExhaustedHasher.csproj", "{66B5F25B-C23F-4D5C-94B4-5D424B1F1315}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exhys.WebContestHost", "Exhys.WebContestHost\Exhys.WebContestHost.csproj", "{2EF07992-05BF-45DC-9621-AC508DB67D13}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exhys.WebContestHost", "Exhys.WebContestHost\Exhys.WebContestHost.csproj", "{789FCFAE-F59B-4171-85A6-35628C887B26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebContestDataModels", "WebContestDataModels\WebContestDataModels.csproj", "{45575178-912F-4AD5-AD31-B3A0ADBB3F66}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exhys.WebContestHost.DataModels", "Exhys.WebContestHost.DataModels\Exhys.WebContestHost.DataModels.csproj", "{6F2BA6D2-C380-4097-8E4F-562FA64F284B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,14 +37,14 @@ Global
 		{66B5F25B-C23F-4D5C-94B4-5D424B1F1315}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66B5F25B-C23F-4D5C-94B4-5D424B1F1315}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66B5F25B-C23F-4D5C-94B4-5D424B1F1315}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2EF07992-05BF-45DC-9621-AC508DB67D13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2EF07992-05BF-45DC-9621-AC508DB67D13}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2EF07992-05BF-45DC-9621-AC508DB67D13}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2EF07992-05BF-45DC-9621-AC508DB67D13}.Release|Any CPU.Build.0 = Release|Any CPU
-		{45575178-912F-4AD5-AD31-B3A0ADBB3F66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{45575178-912F-4AD5-AD31-B3A0ADBB3F66}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{45575178-912F-4AD5-AD31-B3A0ADBB3F66}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{45575178-912F-4AD5-AD31-B3A0ADBB3F66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{789FCFAE-F59B-4171-85A6-35628C887B26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{789FCFAE-F59B-4171-85A6-35628C887B26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{789FCFAE-F59B-4171-85A6-35628C887B26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{789FCFAE-F59B-4171-85A6-35628C887B26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F2BA6D2-C380-4097-8E4F-562FA64F284B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F2BA6D2-C380-4097-8E4F-562FA64F284B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F2BA6D2-C380-4097-8E4F-562FA64F284B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F2BA6D2-C380-4097-8E4F-562FA64F284B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

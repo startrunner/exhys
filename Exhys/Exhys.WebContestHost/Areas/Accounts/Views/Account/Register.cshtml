@@ -1,0 +1,26 @@
+﻿@model Exhys.WebContestHost.Areas.Accounts.ViewModels.UserAccountViewModel
+<!doctype html>
+<html>
+<head>
+
+</head>
+<body>
+    <header></header>
+    <section>
+
+        @using (Html.BeginForm(FormMethod.Post))
+        {
+            <div>
+                @MyHelpers.UList(ViewBag.Errors)
+            </div>
+            @Html.TextBoxFor(m => m.Username, new { placeholder = "Username" });
+            @Html.PasswordFor(m => m.Password, new { placeholder = "Password" });
+            @Html.PasswordFor(m => m.ConfirmPassword, new { placeholder = "Confirm Password" });
+            @Html.TextBoxFor(m => m.FirstName, new { placeholder = "First Name" });
+            @Html.TextBoxFor(m => m.LastName, new { placeholder = "Last Name" });
+            <button type="submit">Register</button>
+        }
+    </section>
+    <footer></footer>
+</body>
+</html>

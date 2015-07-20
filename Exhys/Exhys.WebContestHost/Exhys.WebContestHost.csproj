@@ -7,7 +7,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{2EF07992-05BF-45DC-9621-AC508DB67D13}</ProjectGuid>
+    <ProjectGuid>{789FCFAE-F59B-4171-85A6-35628C887B26}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -117,16 +117,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Accounts\AccountsAreaRegistration.cs" />
     <Compile Include="Areas\Accounts\Controllers\AccountController.cs" />
     <Compile Include="Areas\Accounts\ViewModels\UserAccountViewModel.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -135,30 +139,33 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Accounts\Views\web.config" />
+    <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Areas\Accounts\Models\" />
-    <Folder Include="Content\" />
-  </ItemGroup>
-  <ItemGroup>
+    <Content Include="Areas\Accounts\Views\web.config" />
     <Content Include="Areas\Accounts\Views\_ViewStart.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Areas\Accounts\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Accounts\Views\Account\Register.cshtml" />
+    <Content Include="App_Code\MyHelpers.cshtml" />
+    <Content Include="Areas\Accounts\Views\Account\SignIn.cshtml" />
+    <Content Include="Areas\Accounts\Views\Account\Profile.cshtml" />
+    <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Accounts\Views\Account\CreateAccount.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\WebContestDataModels\WebContestDataModels.csproj">
-      <Project>{45575178-912f-4ad5-ad31-b3a0adbb3f66}</Project>
-      <Name>WebContestDataModels</Name>
+    <ProjectReference Include="..\Exhys.WebContestHost.DataModels\Exhys.WebContestHost.DataModels.csproj">
+      <Project>{6f2ba6d2-c380-4097-8e4f-562fa64f284b}</Project>
+      <Name>Exhys.WebContestHost.DataModels</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
@@ -177,7 +184,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>52144</DevelopmentServerPort>
+          <DevelopmentServerPort>64767</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:51995/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

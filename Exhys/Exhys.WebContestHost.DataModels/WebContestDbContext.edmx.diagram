@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0c1651022ffa4ae1a7cf907a9ea83b41" Name="Diagram1" ZoomLevel="108" >
+        <EntityTypeShape EntityType="ExhysContestModel.UserAccount" Width="1.5" PointX="2" PointY="1" />
+        <EntityTypeShape EntityType="ExhysContestModel.UserSession" Width="1.5" PointX="2" PointY="3.875" />
+        <AssociationConnector Association="ExhysContestModel.UserSessionUserAccount" />
+        <EntityTypeShape EntityType="ExhysContestModel.UserGroup" Width="1.5" PointX="4.375" PointY="1" />
+        <AssociationConnector Association="ExhysContestModel.UserGroupUserAccount" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

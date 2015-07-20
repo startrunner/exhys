@@ -16,8 +16,8 @@ namespace Exhys.WebContestHost.Areas.Accounts
         {
             context.MapRoute(
                 "Accounts_default",
-                "Accounts/{controller}/{action}",
-                new { action = "Index", controller="Account"}
+                "Accounts/{controller}/{action}/{id}",
+                new { action = "Index", id = UrlParameter.Optional }
             );
         }
     }

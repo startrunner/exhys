@@ -1,0 +1,20 @@
+﻿@model Exhys.WebContestHost.Areas.Accounts.ViewModels.UserAccountViewModel
+<!doctype html>
+<html>
+<head>
+
+</head>
+<body>
+    <header></header>
+    <section>
+        @using (Html.BeginForm(FormMethod.Post))
+        {
+            <div>@MyHelpers.UList(ViewBag.Errors)</div>
+            @Html.TextBoxFor(m => m.Username)
+            @Html.PasswordFor(m => m.Password)
+            <button type="submit">Sign In</button>
+        }
+    </section>
+    <footer></footer>
+</body>
+</html>
