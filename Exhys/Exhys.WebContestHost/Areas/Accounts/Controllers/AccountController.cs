@@ -12,7 +12,7 @@ namespace Exhys.WebContestHost.Areas.Accounts.Controllers
     {
         public const string SessionCookieName = "exhys-session-id";
         
-        public UserAccount GetSigneddInUser(HttpRequestBase request)
+        public static UserAccount GetSigneddInUser(HttpRequestBase request)
         {
             HttpCookie cookie = null;
             try
@@ -78,6 +78,7 @@ namespace Exhys.WebContestHost.Areas.Accounts.Controllers
                         LastName = vm.LastName,
                         Password = vm.Password
                     };
+                    db.UserGroups.Where(g => g.IsOpen).ToList().ForEach((g) => { user.UserGroups.Add(g); });
                     db.UserAccounts.Add(user);
                     db.SaveChanges();
                 }

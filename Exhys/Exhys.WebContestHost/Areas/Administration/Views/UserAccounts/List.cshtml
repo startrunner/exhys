@@ -1,0 +1,31 @@
+﻿@model List<Exhys.WebContestHost.Areas.Administration.ViewModels.UserAccountViewModel>
+<div>
+    @using (Html.BeginForm(FormMethod.Post))
+    {
+        <table>
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ 
+                    for(int i=0;i<Model.Count;i++)
+                    {
+                        <tr>
+                            <td>@Html.TextBoxFor(m=>m[i].UserId)</td>
+                            <td>@Html.TextBoxFor(m=>m[i].Username)</td>
+                            <td>@Html.TextBoxFor(m=>m[i].Password)</td>
+                            <td>@Html.TextBoxFor(m=>m[i].FirstName)</td>
+                            <td>@Html.TextBoxFor(m=>m[i].LastName)</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    }
+</div>

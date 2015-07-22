@@ -123,6 +123,11 @@
     <Compile Include="Areas\Accounts\AccountsAreaRegistration.cs" />
     <Compile Include="Areas\Accounts\Controllers\AccountController.cs" />
     <Compile Include="Areas\Accounts\ViewModels\UserAccountViewModel.cs" />
+    <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
+    <Compile Include="Areas\Administration\Models\UserAccountsController.cs" />
+    <Compile Include="Areas\Administration\Models\UserGroupsController.cs" />
+    <Compile Include="Areas\Administration\ViewModels\UserAccountViewModel.cs" />
+    <Compile Include="Areas\Administration\ViewModels\UserGroupViewModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -160,6 +165,12 @@
     <Content Include="App_Code\MyHelpers.cshtml" />
     <Content Include="Areas\Accounts\Views\Account\SignIn.cshtml" />
     <Content Include="Areas\Accounts\Views\Account\Profile.cshtml" />
+    <Content Include="Areas\Administration\Views\web.config" />
+    <Content Include="Areas\Administration\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Administration\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Administration\Views\Shared\_Shared.cshtml" />
+    <Content Include="Areas\Administration\Views\UserGroups\List.cshtml" />
+    <Content Include="Areas\Administration\Views\UserAccounts\List.cshtml" />
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>

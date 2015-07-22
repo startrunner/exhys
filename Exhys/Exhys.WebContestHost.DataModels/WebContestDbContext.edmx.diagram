@@ -4,11 +4,11 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0c1651022ffa4ae1a7cf907a9ea83b41" Name="Diagram1" ZoomLevel="108" >
-        <EntityTypeShape EntityType="ExhysContestModel.UserAccount" Width="1.5" PointX="2" PointY="1" />
-        <EntityTypeShape EntityType="ExhysContestModel.UserSession" Width="1.5" PointX="2" PointY="3.875" />
+      <Diagram DiagramId="0c1651022ffa4ae1a7cf907a9ea83b41" Name="Diagram1" ZoomLevel="73" ShowGrid="false" SnapToGrid="true" DisplayType="true" >
+        <EntityTypeShape EntityType="ExhysContestModel.UserAccount" Width="3.25" PointX="4.375" PointY="1" />
+        <EntityTypeShape EntityType="ExhysContestModel.UserSession" Width="2.875" PointX="0.5" PointY="3.625" />
         <AssociationConnector Association="ExhysContestModel.UserSessionUserAccount" />
-        <EntityTypeShape EntityType="ExhysContestModel.UserGroup" Width="1.5" PointX="4.375" PointY="1" />
+        <EntityTypeShape EntityType="ExhysContestModel.UserGroup" Width="2" PointX="6" PointY="4.75" />
         <AssociationConnector Association="ExhysContestModel.UserGroupUserAccount" />
       </Diagram>
     </edmx:Diagrams>

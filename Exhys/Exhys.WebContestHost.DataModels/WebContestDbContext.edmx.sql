@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 07/20/2015 17:39:19
+-- Date Created: 07/20/2015 22:02:37
 -- Generated from EDMX file: C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost.DataModels\WebContestDbContext.edmx
 -- --------------------------------------------------
 
@@ -30,6 +30,9 @@ IF OBJECT_ID(N'[dbo].[UserAccounts]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[UserSessions]', 'U') IS NOT NULL
     DROP TABLE [dbo].[UserSessions];
+GO
+IF OBJECT_ID(N'[dbo].[UserGroups]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[UserGroups];
 GO
 
 -- --------------------------------------------------
@@ -60,18 +63,18 @@ GO
 -- Creating table 'UserGroups'
 CREATE TABLE [dbo].[UserGroups] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [IsOpen] bit  NOT NULL,
-    [IsAdministrator] bit  NOT NULL,
     [Name] nvarchar(32)  NOT NULL,
-    [Description] nvarchar(256)  NOT NULL
+    [Description] nvarchar(256)  NULL,
+    [IsOpen] bit  NOT NULL,
+    [IsAdministrator] bit  NOT NULL
 );
 GO
 
 -- Creating table 'UserGroupUserAccount'
 CREATE TABLE [dbo].[UserGroupUserAccount] (
     [UserGroups_Id] int  NOT NULL,
-    [MemberUsers_Id] int  NOT NULL,
-    [MemberUsers_Username] nvarchar(32)  NOT NULL
+    [GroupMembers_Id] int  NOT NULL,
+    [GroupMembers_Username] nvarchar(32)  NOT NULL
 );
 GO
 
@@ -97,10 +100,10 @@ ADD CONSTRAINT [PK_UserGroups]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [UserGroups_Id], [MemberUsers_Id], [MemberUsers_Username] in table 'UserGroupUserAccount'
+-- Creating primary key on [UserGroups_Id], [GroupMembers_Id], [GroupMembers_Username] in table 'UserGroupUserAccount'
 ALTER TABLE [dbo].[UserGroupUserAccount]
 ADD CONSTRAINT [PK_UserGroupUserAccount]
-    PRIMARY KEY CLUSTERED ([UserGroups_Id], [MemberUsers_Id], [MemberUsers_Username] ASC);
+    PRIMARY KEY CLUSTERED ([UserGroups_Id], [GroupMembers_Id], [GroupMembers_Username] ASC);
 GO
 
 -- --------------------------------------------------
@@ -131,10 +134,10 @@ ADD CONSTRAINT [FK_UserGroupUserAccount_UserGroup]
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
--- Creating foreign key on [MemberUsers_Id], [MemberUsers_Username] in table 'UserGroupUserAccount'
+-- Creating foreign key on [GroupMembers_Id], [GroupMembers_Username] in table 'UserGroupUserAccount'
 ALTER TABLE [dbo].[UserGroupUserAccount]
 ADD CONSTRAINT [FK_UserGroupUserAccount_UserAccount]
-    FOREIGN KEY ([MemberUsers_Id], [MemberUsers_Username])
+    FOREIGN KEY ([GroupMembers_Id], [GroupMembers_Username])
     REFERENCES [dbo].[UserAccounts]
         ([Id], [Username])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -143,7 +146,7 @@ GO
 -- Creating non-clustered index for FOREIGN KEY 'FK_UserGroupUserAccount_UserAccount'
 CREATE INDEX [IX_FK_UserGroupUserAccount_UserAccount]
 ON [dbo].[UserGroupUserAccount]
-    ([MemberUsers_Id], [MemberUsers_Username]);
+    ([GroupMembers_Id], [GroupMembers_Username]);
 GO
 
 -- --------------------------------------------------

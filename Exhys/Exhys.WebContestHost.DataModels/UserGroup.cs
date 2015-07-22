@@ -17,16 +17,16 @@ namespace Exhys.WebContestHost.DataModels
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public UserGroup()
         {
-            this.MemberUsers = new HashSet<UserAccount>();
+            this.GroupMembers = new HashSet<UserAccount>();
         }
     
         public int Id { get; set; }
-        public bool IsOpen { get; set; }
-        public bool IsAdministrator { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public bool IsOpen { get; set; }
+        public bool IsAdministrator { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserAccount> MemberUsers { get; set; }
+        public virtual ICollection<UserAccount> GroupMembers { get; set; }
     }
 }

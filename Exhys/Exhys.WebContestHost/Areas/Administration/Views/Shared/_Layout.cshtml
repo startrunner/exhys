@@ -1,0 +1,32 @@
+﻿<!doctype html>
+<head>
+
+</head>
+<body>
+    <header>
+        Exhys Administration
+    </header>
+
+    <nav>
+        <ul>
+            <li>
+                <a href="#">User Groups</a>
+                <ul>
+                    <li>@Html.ActionLink(linkText:"List Groups", controllerName:"UserGroups", actionName:"List")</li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">User Accounts</a>
+                <ul>
+                    <li>@Html.ActionLink(linkText:"List Users", controllerName:"UserAccounts", actionName:"List")</li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <section>@RenderBody()</section>
+
+    <footer>
+
+    </footer>
+</body>

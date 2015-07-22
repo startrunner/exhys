@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exhys.WebContestHost", "Exh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exhys.WebContestHost.DataModels", "Exhys.WebContestHost.DataModels\Exhys.WebContestHost.DataModels.csproj", "{6F2BA6D2-C380-4097-8E4F-562FA64F284B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exhys.WebContestHost.DatabaseInitializer", "Exhys.WebContestHost.DatabaseInitializer\Exhys.WebContestHost.DatabaseInitializer.csproj", "{5758053D-458F-4FC8-B841-079D1FABF96B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{6F2BA6D2-C380-4097-8E4F-562FA64F284B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F2BA6D2-C380-4097-8E4F-562FA64F284B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F2BA6D2-C380-4097-8E4F-562FA64F284B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5758053D-458F-4FC8-B841-079D1FABF96B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5758053D-458F-4FC8-B841-079D1FABF96B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5758053D-458F-4FC8-B841-079D1FABF96B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5758053D-458F-4FC8-B841-079D1FABF96B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,50 @@
+﻿@model IList<Exhys.WebContestHost.Areas.Administration.ViewModels.UserGroupViewModel>
+<div>
+    @using (Html.BeginForm(FormMethod.Post))
+    {
+        <table border="1">
+            <thead>
+                <tr>
+                    <td>Id</td>
+                    <td>Name</td>
+                    <td>Description</td>
+                    <td>Is Admin</td>
+                    <td>Is Open</td>
+                    <td>Delete Group</td>
+                </tr>
+            </thead>
+            <tbody>
+                @{ 
+                    for(int i=0;i<Model.Count;i++)
+                    {
+                        <tr>
+                            <td>
+                                @Html.TextBoxFor(m=>m[i].Id, new { readonlY="" })
+                            </td>
+                            <td>@Html.TextBoxFor(m=>m[i].Name)</td>
+                            <td>@Html.TextBoxFor(m=>m[i].Description)</td>
+                            <td>@Html.CheckBoxFor(m=>m[i].IsAdmin)</td>
+                            <td>@Html.CheckBoxFor(m=>m[i].IsOpen)</td>
+                            <td>@Html.CheckBoxFor(m=>m[i].RequestDelete)</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <button type="submit">Save Changes</button>
+    }
+
+    @using (Html.BeginForm(method: FormMethod.Post, controllerName:"UserGroups",  actionName:"AddGroup"))
+    {
+        var vm=new Exhys.WebContestHost.Areas.Administration.ViewModels.UserGroupViewModel();
+
+        @Html.TextBoxFor(m => vm.Name, new { placeholder = "Group Name" })
+        @Html.TextBoxFor(m => vm.Description, new { placeholder = "Group Description" })
+        @Html.LabelFor(m=>vm.IsAdmin, "Is Admin")
+        @Html.CheckBoxFor(m => vm.IsAdmin)
+        @Html.LabelFor(m=>vm.IsOpen, "Is Open")
+        @Html.CheckBoxFor(m => vm.IsOpen)
+
+        <button type="submit">Add Group</button>
+    }
+</div>
