@@ -1,0 +1,9 @@
+﻿@model Exhys.WebContestHost.Areas.Shared.ViewModels.CompetitionViewModel
+<div>
+    @using (Html.BeginForm(FormMethod.Post))
+    { 
+        @Html.TextBoxFor(m => m.Name);
+        @Html.TextAreaFor(m => m.Description);
+        <button type="submit">Create Contest</button>
+    }
+</div>

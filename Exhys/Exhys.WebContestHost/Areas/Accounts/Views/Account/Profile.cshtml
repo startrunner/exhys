@@ -1,4 +1,4 @@
-﻿@model Exhys.WebContestHost.Areas.Accounts.ViewModels.UserAccountViewModel
+﻿@model Exhys.WebContestHost.Areas.Shared.ViewModels.UserAccountViewModel
 <!doctype html>
 <html>
 <head>
@@ -14,6 +14,7 @@
                     <th>Username</th>
                     <th>First Name</th>
                     <th>Last Name</th>
+                    <th>Is Admin</th>
                 </tr>
             </thead>
             <tbody>
@@ -21,9 +22,11 @@
                     <td>@Model.Username</td>
                     <td>@Model.FirstName</td>
                     <td>@Model.LastName</td>
+                    <td>@Model.IsAdmin</td>
                 </tr>
             </tbody>
         </table>
+        @Html.ActionLink("Sign Out", "SignOut")
     </section>
 
     <footer></footer>

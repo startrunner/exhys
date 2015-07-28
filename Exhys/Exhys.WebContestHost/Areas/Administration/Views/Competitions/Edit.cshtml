@@ -1,0 +1,49 @@
+﻿@model Exhys.WebContestHost.Areas.Shared.ViewModels.CompetitionViewModel
+<div>
+    @using (Html.BeginForm())
+    { 
+        <fieldset>
+            <legend>Information</legend>
+            <span>Id: @Model.Id</span>
+            @Html.TextBoxFor(m => m.Name, new { placeholder = "Name" })
+            @Html.TextAreaFor(m => m.Description, new { placeholder = "Description", rows = "1" })
+        </fieldset>
+        <fieldset>
+            <legend>Problems</legend>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Problem Name</th>
+                        <th>Statements</th>
+                        <th>Edit</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ 
+                        for(int i=0;i<Model.Problems.Count;i++)
+                        {
+                            <tr>
+                                <td>@Html.TextBoxFor(m=>m.Problems[i].Id, new { readOnly = "" })</td>
+                                <td>@Html.TextBoxFor(m=>m.Problems[i].Name)</td>
+                                <td><input value="WiP" readonly /></td>
+                                <td>@Html.ActionLink(linkText:"Edit", controllerName:"Problems", actionName:"Edit", routeValues:new { id=Model.Problems[i].Id }, htmlAttributes:new { })</td>
+                                <td>@Html.CheckBoxFor(m=>m.Problems[i].RequestDelete)</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </fieldset>
+        <fieldset>
+            <legend>Add Problem</legend>
+            <div>
+                @Html.LabelFor(labelText:"Add new Problem", expression:m=>m.RequestAddNewProblem)
+                @Html.CheckBoxFor(m => m.RequestAddNewProblem)
+                @Html.TextBoxFor(m => m.ProblemToBeAdded.Name, new { placeholder = "Problem Name" })
+            </div>
+        </fieldset>
+        <button type="submit">Save Changes</button>
+    }
+</div>

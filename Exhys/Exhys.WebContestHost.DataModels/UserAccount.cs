@@ -19,6 +19,7 @@ namespace Exhys.WebContestHost.DataModels
         {
             this.UserSessions = new HashSet<UserSession>();
             this.UserGroups = new HashSet<UserGroup>();
+            this.AuthoredSolutions = new HashSet<ProblemSolution>();
         }
     
         public int Id { get; set; }
@@ -31,5 +32,7 @@ namespace Exhys.WebContestHost.DataModels
         public virtual ICollection<UserSession> UserSessions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserGroup> UserGroups { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProblemSolution> AuthoredSolutions { get; set; }
     }
 }

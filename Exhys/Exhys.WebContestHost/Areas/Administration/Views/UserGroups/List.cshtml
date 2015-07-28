@@ -1,4 +1,4 @@
-﻿@model IList<Exhys.WebContestHost.Areas.Administration.ViewModels.UserGroupViewModel>
+﻿@model IList<Exhys.WebContestHost.Areas.Shared.ViewModels.UserGroupViewModel>
 <div>
     @using (Html.BeginForm(FormMethod.Post))
     {
@@ -36,7 +36,7 @@
 
     @using (Html.BeginForm(method: FormMethod.Post, controllerName:"UserGroups",  actionName:"AddGroup"))
     {
-        var vm=new Exhys.WebContestHost.Areas.Administration.ViewModels.UserGroupViewModel();
+        var vm=new Exhys.WebContestHost.Areas.Shared.ViewModels.UserGroupViewModel();
 
         @Html.TextBoxFor(m => vm.Name, new { placeholder = "Group Name" })
         @Html.TextBoxFor(m => vm.Description, new { placeholder = "Group Description" })

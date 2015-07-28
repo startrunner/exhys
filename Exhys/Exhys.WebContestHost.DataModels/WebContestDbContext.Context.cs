@@ -28,5 +28,9 @@ namespace Exhys.WebContestHost.DataModels
         public virtual DbSet<UserAccount> UserAccounts { get; set; }
         public virtual DbSet<UserSession> UserSessions { get; set; }
         public virtual DbSet<UserGroup> UserGroups { get; set; }
+        public virtual DbSet<Competition> Competitions { get; set; }
+        public virtual DbSet<Problem> Problems { get; set; }
+        public virtual DbSet<ProblemSolution> ProblemSolutions { get; set; }
+        public virtual DbSet<ProblemStatement> ProblemStatements { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model Exhys.WebContestHost.Areas.Accounts.ViewModels.UserAccountViewModel
+﻿@model Exhys.WebContestHost.Areas.Shared.ViewModels.UserAccountViewModel
 <!doctype html>
 <html>
 <head>
@@ -11,7 +11,17 @@
         @using (Html.BeginForm(FormMethod.Post))
         {
             <div>
-                @MyHelpers.UList(ViewBag.Errors)
+                <ul>
+                    @{ 
+                        if(ViewBag.Errors is IEnumerable<string>)
+                        {
+                            foreach(var v in ViewBag.Errors)
+                            {
+                                <li>@v</li>
+                            }
+                        }
+                    }
+                </ul>
             </div>
             @Html.TextBoxFor(m => m.Username, new { placeholder = "Username" });
             @Html.PasswordFor(m => m.Password, new { placeholder = "Password" });

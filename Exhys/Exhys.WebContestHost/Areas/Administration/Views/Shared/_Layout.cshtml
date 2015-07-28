@@ -19,6 +19,20 @@
                 <a href="#">User Accounts</a>
                 <ul>
                     <li>@Html.ActionLink(linkText:"List Users", controllerName:"UserAccounts", actionName:"List")</li>
+                    <li>@Html.ActionLink(linkText:"Add Users", controllerName:"UserAccounts", actionName:"AddUsers")</li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Competitions</a>
+                <ul>
+                    <li>@Html.ActionLink(linkText: "List Competitions", controllerName: "Competitions", actionName: "List")</li>
+                    <li>@Html.ActionLink(linkText: "Add Competition", controllerName: "Competitions", actionName: "AddCompetition")</li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Problems</a>
+                <ul>
+                    <li>@Html.ActionLink(linkText: "List Problems", controllerName: "Problems", actionName: "List")</li>
                 </ul>
             </li>
         </ul>

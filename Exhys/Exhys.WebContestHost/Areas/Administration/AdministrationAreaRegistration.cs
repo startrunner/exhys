@@ -16,8 +16,8 @@ namespace Exhys.WebContestHost.Areas.Administration
         {
             context.MapRoute(
                 "Administration_default",
-                "Administration/{controller}/{action}/{id}",
-                new { controller="Competitors", action = "ListCompetitors", id = UrlParameter.Optional }
+                "Administration/{controller}/{action}",
+                new { controller="UserAccounts", action = "List"}
             );
         }
     }

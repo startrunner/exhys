@@ -1,0 +1,20 @@
+﻿@model Exhys.WebContestHost.Areas.Shared.ViewModels.ProblemViewModel
+<div>
+    @using (Html.BeginForm(FormMethod.Post))
+    {
+        <fieldset>
+            <legend>Information</legend>
+            @Html.TextBoxFor(m => m.Id, new { readOnly = "" })
+            @Html.TextBoxFor(m => m.Name, new { placeholder = "Problem Name" })
+        </fieldset>
+
+        <fieldset>
+            <legend>Statements</legend>
+        </fieldset>
+        
+        <fieldset>
+            <legend>Tests</legend>
+        </fieldset>
+        <button type="submit">Save Changes</button>
+    }
+</div>
