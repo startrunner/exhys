@@ -1,0 +1,46 @@
+﻿@model ProblemViewModel
+<div>
+    @using (Html.BeginForm("AddProblem", "Problems", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div>
+            @Html.TextBoxFor(m => m.Name, new { placeholder = "Problem Name" })
+        </div>
+        <div>
+            @Html.FixedDropDownListFor(m => m.CompetitionId, ViewBag.CompetitionOptions as IEnumerable<SelectListItem>)
+        </div>
+
+        <div>
+            @Html.TextBoxFor(m => m.InputFileExtension, new { placeholder = "Input Files Extension" })
+        </div>
+        <div>
+            @Html.TextBoxFor(m => m.OutputFileExtension, new { placeholder = "Ouput Files Extension" })
+        </div>
+
+        <div>
+            @Html.LabelFor(m => m.IgnoreTestBlankSpace, "Ignores Blank spaces in tests", new { title = "Replaces any number of following new lines, spaces, tabs, etc with a single space in both input and output files.", value = "1" })
+            @Html.CheckBoxFor(m => m.IgnoreTestBlankSpace)
+        </div>
+
+        <div>
+            @Html.TextBoxFor(m => m.PointsPerTest, new { placeholder = "Points per Test" })
+        </div>
+
+        <div>
+            @Html.LabelFor(m => m.RequiresChecker, "Requires Checker");
+            @Html.CheckBoxFor(m => m.RequiresChecker);
+        </div>
+
+        <div>
+            @Html.TextBoxFor(m=>m.DummyTestCount, "Dummy Test Count")
+        </div>
+
+        <div>
+            <input name="files" type="file" multiple placeholder="Test Files" />
+        </div>
+
+        <div>
+            <button type="submit">Add Problem</button>
+        </div>
+    }
+</div>
+

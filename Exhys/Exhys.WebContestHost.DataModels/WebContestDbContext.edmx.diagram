@@ -4,21 +4,23 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0c1651022ffa4ae1a7cf907a9ea83b41" Name="Diagram1" ZoomLevel="64" ShowGrid="false" SnapToGrid="true" DisplayType="true" >
+      <Diagram DiagramId="0c1651022ffa4ae1a7cf907a9ea83b41" Name="Diagram1" ZoomLevel="55" ShowGrid="false" SnapToGrid="true" DisplayType="true" >
         <EntityTypeShape EntityType="ExhysContestModel.UserAccount" Width="3.25" PointX="4.5" PointY="6.25" />
         <EntityTypeShape EntityType="ExhysContestModel.UserSession" Width="3.25" PointX="4.5" PointY="3.625" />
         <AssociationConnector Association="ExhysContestModel.UserAccounts_UserSessions" />
         <EntityTypeShape EntityType="ExhysContestModel.UserGroup" Width="3.25" PointX="4.5" PointY="0.875" />
         <AssociationConnector Association="ExhysContestModel.UserAccounts_UserGroups" ></AssociationConnector>
-        <EntityTypeShape EntityType="ExhysContestModel.Competition" Width="2.25" PointX="11.625" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ExhysContestModel.Problem" Width="2.25" PointX="11.625" PointY="3.375" />
+        <EntityTypeShape EntityType="ExhysContestModel.Competition" Width="2.25" PointX="10.25" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExhysContestModel.Problem" Width="2.625" PointX="10.25" PointY="3.375" />
         <AssociationConnector Association="ExhysContestModel.Competitions_Problems" />
         <AssociationConnector Association="ExhysContestModel.Competitions_UserGroups" />
-        <EntityTypeShape EntityType="ExhysContestModel.ProblemSolution" Width="2.25" PointX="11.625" PointY="6.25" />
+        <EntityTypeShape EntityType="ExhysContestModel.ProblemSolution" Width="2.25" PointX="10.25" PointY="7" />
         <AssociationConnector Association="ExhysContestModel.Problems_Solutions" />
         <AssociationConnector Association="ExhysContestModel.ProblemSolutions_UserAccounts" />
-        <EntityTypeShape EntityType="ExhysContestModel.ProblemStatement" Width="1.5" PointX="16.125" PointY="3.75" />
+        <EntityTypeShape EntityType="ExhysContestModel.ProblemStatement" Width="1.875" PointX="14.375" PointY="2.5" />
         <AssociationConnector Association="ExhysContestModel.ProblemProblemStatement" />
+        <EntityTypeShape EntityType="ExhysContestModel.ProblemTest" Width="2" PointX="14.125" PointY="6" />
+        <AssociationConnector Association="ExhysContestModel.Problems_ProblemTests" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -8,6 +8,14 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
 {
     public class UserGroupViewModel
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public bool IsAdmin { get; set; }
+        public bool IsOpen { get; set; }
+        public bool RequestDelete { get; set; }
+
+
         public UserGroupViewModel () : this(null) { }
         public UserGroupViewModel (UserGroup model)
         {
@@ -22,11 +30,6 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
             }
         }
 
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public bool IsAdmin { get; set; }
-        public bool IsOpen { get; set; }
-        public bool RequestDelete { get; set; }
+        
     }
 }

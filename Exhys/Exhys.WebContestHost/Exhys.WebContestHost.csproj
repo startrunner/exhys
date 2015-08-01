@@ -15,7 +15,7 @@
     <RootNamespace>Exhys.WebContestHost</RootNamespace>
     <AssemblyName>Exhys.WebContestHost</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <MvcBuildViews>false</MvcBuildViews>
+    <MvcBuildViews>true</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -24,6 +24,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,11 +44,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+    <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+    <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
@@ -59,11 +60,7 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
@@ -130,9 +127,13 @@
     <Compile Include="Areas\Administration\Controllers\ProblemsController.cs" />
     <Compile Include="Areas\Administration\Controllers\UserAccountsController.cs" />
     <Compile Include="Areas\Administration\Controllers\UserGroupsController.cs" />
+    <Compile Include="Areas\Participation\Controllers\CompetitionsController.cs" />
+    <Compile Include="Areas\Participation\ParticipationAreaRegistration.cs" />
+    <Compile Include="Areas\Shared\Attributes\ExhysValidationAttribute.cs" />
     <Compile Include="Areas\Shared\CookieNames.cs" />
-    <Compile Include="Areas\Shared\ViewbagHandler.cs" />
-    <Compile Include="Areas\Shared\ExhysController.cs" />
+    <Compile Include="Areas\Shared\ExhysHelpers.cs" />
+    <Compile Include="Areas\Shared\Extensions\HttpPostedFileBase_Extensions.cs" />
+    <Compile Include="Areas\Shared\ExhysMvcController.cs" />
     <Compile Include="Areas\Shared\Extensions\HttpRequestBase_Extensions.cs" />
     <Compile Include="Areas\Shared\Extensions\HttpResponseBase_Extensions.cs" />
     <Compile Include="Areas\Shared\ViewModels\CompetitionViewModel.cs" />
@@ -146,9 +147,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Site.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -162,9 +166,12 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="WebRoot\ErrorPages\401.html" />
+    <Content Include="WebRoot\Scripts\Bindings.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Participation\Models\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -187,9 +194,18 @@
     <Content Include="Areas\Administration\Views\Competitions\Edit.cshtml" />
     <Content Include="Areas\Administration\Views\Problems\Edit.cshtml" />
     <Content Include="Areas\Administration\Views\Problems\List.cshtml" />
+    <Content Include="Areas\Administration\Views\Problems\AddProblem.cshtml" />
+    <Content Include="Areas\Participation\Views\web.config" />
+    <Content Include="Areas\Participation\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Participation\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Participation\Views\Competitions\Index.cshtml" />
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CodeBits\CodeBits.csproj">
+      <Project>{a8b8cced-9569-4329-8bc6-e46f69364331}</Project>
+      <Name>CodeBits</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Exhys.WebContestHost.DataModels\Exhys.WebContestHost.DataModels.csproj">
       <Project>{6f2ba6d2-c380-4097-8e4f-562fa64f284b}</Project>
       <Name>Exhys.WebContestHost.DataModels</Name>

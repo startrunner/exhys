@@ -10,12 +10,13 @@ using Exhys.WebContestHost.DataModels;
 
 namespace Exhys.WebContestHost.Areas.Administration.Controllers
 {
-    public class CompetitionsController : ExhysController
+    public class CompetitionsController : ExhysMvcController
     {
         [HttpGet]
         public ActionResult List()
         {
             AddUserGroupOptions();
+
             var vm = new List<CompetitionViewModel>();
             using (var db=new ExhysContestEntities())
             {
@@ -31,8 +32,6 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
         [HttpPost]
         public ActionResult List(IList<CompetitionViewModel> vm)
         {
-            
-
             using (var db = new ExhysContestEntities())
             {
                 foreach(var v in vm)
@@ -40,6 +39,8 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
                     var comp = db.Competitions.Where(c => c.Id == v.Id).Take(1).ToList()[0];
                     if (v.RequestDelete == false)
                     {
+                        var gr = db.UserGroups.Where(g => g.Id == v.GroupId).Take(1).ToList()[0];
+                        comp.UserGroup = gr;
                         comp.Name = v.Name;
                         comp.Description = v.Description;
                     }
@@ -47,8 +48,10 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
                     {
                         comp.DeleteFrom(db);
                     }
+
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
+                //db.SaveChanges();
             }
             return RedirectToAction("List");
         }
@@ -90,6 +93,7 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
         [HttpGet]
         public ActionResult Edit(int? id)
         {
+            AddUserGroupOptions();
             if (id == null) return RedirectToAction("List");
             using (var db = new ExhysContestEntities())
             {
@@ -116,34 +120,7 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
                 var competition = db.Competitions.Where(c => c.Id == vm.Id).Take(1).ToList()[0];
                 competition.Name = vm.Name;
                 competition.Description = vm.Description;
-
-                if (vm.RequestAddNewProblem)
-                {
-                    var problem = new Problem()
-                    {
-                        Name = vm.ProblemToBeAdded.Name
-                    };
-                    competition.Problems.Add(problem);
-                }
-
-                foreach(var v in vm.Problems)
-                {
-                    var problem = db
-                        .Problems
-                        .Where(p => p.Id == v.Id)
-                        .Take(1)
-                        .ToList()[0];
-                    if (v.RequestDelete == false)
-                    {
-                        problem.Name = v.Name;
-                    }
-                    else
-                    {
-                        db.Problems.Remove(problem);
-                    }
-
-                }
-
+                competition.UserGroup = db.UserGroups.Where(g => g.Id == vm.GroupId).Take(1).ToList()[0];
                 db.SaveChanges();
             }
             return RedirectToAction("Edit", new { id = vm.Id });

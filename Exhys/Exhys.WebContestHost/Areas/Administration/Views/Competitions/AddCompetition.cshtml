@@ -2,9 +2,18 @@
 <div>
     @using (Html.BeginForm(FormMethod.Post))
     {
-        @Html.TextBoxFor(m => m.Name);
-        @Html.TextAreaFor(m => m.Description);
-        @Html.DropDownListFor(m=>m.GroupId, ViewBag.UserGroupOptions as IEnumerable<SelectListItem>)
-        <button type="submit">Create Contest</button>
+        <div>
+            @Html.TextBoxFor(m => m.Name, new { placeholder="Competition Name" })
+        </div>
+        <div>
+            @Html.TextAreaFor(m => m.Description, new { placeholder="Competition Description" })
+        </div>
+        <div>
+            @Html.LabelFor(m=>m.GroupId, "User Group: ")
+            @Html.DropDownListFor(m => m.GroupId, ViewBag.UserGroupOptions as IEnumerable<SelectListItem>)
+        </div>
+        <div>
+            <button type="submit">Create Contest</button>
+        </div>
     }
 </div>

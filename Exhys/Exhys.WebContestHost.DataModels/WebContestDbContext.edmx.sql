@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 07/28/2015 16:06:46
+-- Date Created: 08/01/2015 11:42:57
 -- Generated from EDMX file: C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost.DataModels\WebContestDbContext.edmx
 -- --------------------------------------------------
 
@@ -38,6 +38,9 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_ProblemProblemStatement]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[ProblemStatements] DROP CONSTRAINT [FK_ProblemProblemStatement];
 GO
+IF OBJECT_ID(N'[dbo].[FK_Problems_ProblemTests]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ProblemTests] DROP CONSTRAINT [FK_Problems_ProblemTests];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -63,6 +66,9 @@ IF OBJECT_ID(N'[dbo].[ProblemSolutions]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[ProblemStatements]', 'U') IS NOT NULL
     DROP TABLE [dbo].[ProblemStatements];
+GO
+IF OBJECT_ID(N'[dbo].[ProblemTests]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ProblemTests];
 GO
 
 -- --------------------------------------------------
@@ -114,6 +120,10 @@ GO
 CREATE TABLE [dbo].[Problems] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
+    [IgnoreTestBlankSpaces] bit  NOT NULL,
+    [DummyTestCount] int  NOT NULL,
+    [PointsPerTest] float  NOT NULL,
+    [RequiresChecker] bit  NOT NULL,
     [CompetitionGivenAt_Id] int  NULL
 );
 GO
@@ -135,6 +145,16 @@ CREATE TABLE [dbo].[ProblemStatements] (
     [Bytes] varbinary(max)  NOT NULL,
     [Filename] nvarchar(max)  NOT NULL,
     [ProblemProblemStatement_ProblemStatement_Id] int  NULL
+);
+GO
+
+-- Creating table 'ProblemTests'
+CREATE TABLE [dbo].[ProblemTests] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Input] nvarchar(max)  NULL,
+    [Output] nvarchar(max)  NULL,
+    [GroupName] nvarchar(max)  NOT NULL,
+    [Problem_Id] int  NULL
 );
 GO
 
@@ -181,6 +201,12 @@ GO
 -- Creating primary key on [Id] in table 'ProblemStatements'
 ALTER TABLE [dbo].[ProblemStatements]
 ADD CONSTRAINT [PK_ProblemStatements]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'ProblemTests'
+ALTER TABLE [dbo].[ProblemTests]
+ADD CONSTRAINT [PK_ProblemTests]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -291,6 +317,21 @@ GO
 CREATE INDEX [IX_FK_ProblemProblemStatement]
 ON [dbo].[ProblemStatements]
     ([ProblemProblemStatement_ProblemStatement_Id]);
+GO
+
+-- Creating foreign key on [Problem_Id] in table 'ProblemTests'
+ALTER TABLE [dbo].[ProblemTests]
+ADD CONSTRAINT [FK_Problems_ProblemTests]
+    FOREIGN KEY ([Problem_Id])
+    REFERENCES [dbo].[Problems]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_Problems_ProblemTests'
+CREATE INDEX [IX_FK_Problems_ProblemTests]
+ON [dbo].[ProblemTests]
+    ([Problem_Id]);
 GO
 
 -- --------------------------------------------------

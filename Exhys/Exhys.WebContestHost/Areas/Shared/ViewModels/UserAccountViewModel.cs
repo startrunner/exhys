@@ -15,11 +15,10 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
         public string LastName { get; set; }
         public bool IsAdmin { get; set; }
         public bool RequestDelete { get; set; }
-        public int UserId { get; set; }
-        public bool[] UserGroups { get; set; }
+        public int UserId { get;  set; }
+        public int GroupId { get; set; }
 
         public UserAccountViewModel () : this(null) { }
-
         public UserAccountViewModel (UserAccount model)
         {
             if (model != null)
@@ -30,6 +29,7 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
                 LastName = model.LastName;
                 this.IsAdmin = model.IsAdmin();
                 this.UserId = model.Id;
+                if(model.UserGroup!=null)this.GroupId = model.UserGroup.Id;
             }
             else
             {

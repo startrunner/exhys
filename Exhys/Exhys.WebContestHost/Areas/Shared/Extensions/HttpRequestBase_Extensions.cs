@@ -7,24 +7,28 @@ namespace Exhys.WebContestHost.Areas.Shared.Extensions
 {
     public static class HttpRequestBase_Extensions
     {
-        public static UserAccount GetSignedInUser (this HttpRequestBase request)
+        public static UserAccount GetSignedInUser(this HttpRequestBase that)
+        {
+            using (var db = new ExhysContestEntities())
+            {
+                return that.GetSignedInUser(db);
+            }
+        }
+        public static UserAccount GetSignedInUser (this HttpRequestBase request, ExhysContestEntities db)
         {
             Guid? sessionId = request.GetSessionCookie();
             if (sessionId == null) return null;
-
-            using (var db = new ExhysContestEntities())
-            {
-                var sessions = db
-                    .UserSessions
-                    .Where(s =>
-                        s.Id == sessionId &&
-                        s.BrowserName == request.Browser.Browser &&
-                        s.UserAgentString == request.UserAgent)
-                    .Take(1)
-                    .ToList();
-                if (sessions == null || sessions.Count == 0) return null;
-                else return sessions[0].UserAccount;
-            }
+            var sessions = db
+                .UserSessions
+                .Where(s =>
+                    s.Id == sessionId &&
+                    s.BrowserName == request.Browser.Browser &&
+                    s.UserAgentString == request.UserAgent)
+                .Take(1)
+                .ToList();
+            if (sessions == null || sessions.Count == 0) return null;
+            else return sessions[0].UserAccount;
+            
         }
 
         public static Guid? GetSessionCookie(this HttpRequestBase req)

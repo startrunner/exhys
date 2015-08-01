@@ -11,7 +11,7 @@
                     <th>Description</th>
                     <th>User Group</th>
                     <th>Delete</th>
-                    <th>Edit</th>
+                    @*<th>Edit</th>*@
                 </tr>
             </thead>
             <tbody>
@@ -23,13 +23,12 @@
                             <td>@Html.TextBoxFor(m => m[i].Name)</td>
                             <td>@Html.TextBoxFor(m => m[i].Description)</td>
                             <td>
-                                @Html.DropDownListFor(m=>m[i].GroupId, ViewBag.UserGroupOptions as IEnumerable<SelectListItem>)
-                                @*@Html.DropDownListFor(m=>m[i].GroupIdStr, ViewBag.UserGroupOptions as IEnumerable<SelectListItem>, )*@
+                                @Html.FixedDropDownListFor(m=>m[i].GroupId, ViewBag.UserGroupOptions as IEnumerable<SelectListItem>)
                             </td>
                             <td>@Html.CheckBoxFor(m => m[i].RequestDelete)</td>
-                            <td>
+                            @*<td>
                                 @Html.ActionLink(linkText: "Edit", actionName: "Edit", routeValues: new { id = Model[i].Id })
-                            </td>
+                            </td>*@
                         </tr>
                     }
                 }

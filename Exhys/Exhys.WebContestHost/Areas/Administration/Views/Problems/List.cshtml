@@ -8,6 +8,10 @@
                     <th>Id</th>
                     <th>Name</th>
                     <th>Competition</th>
+                    <td>Requires Checker</td>
+                    <td>Dummy T.C</td>
+                    <td>Points p. Test</td>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -15,17 +19,22 @@
                     for (int i = 0; i < Model.Count; i++)
                     {
                         <tr>
-                            <td>@Html.TextBoxFor(m => m[i].Id)</td>
+                            <td>@Html.TextBoxFor(m => m[i].Id, new { readOnly="" })</td>
                             <td>@Html.TextBoxFor(m => m[i].Name)</td>
                             <td>
-                                @*@Html.ActionLink(linkText:Model[i].CompetitionName, controllerName:"Competitions", actionName:"Edit", routeValues: new { id=Model[i].CompetitionId }, htmlAttributes:new { })*@
-                                __
+                                @*@(Model[i].CompetitionName)*@
+                                @Html.FixedDropDownListFor(m=>m[i].CompetitionId, ViewBag.CompetitionOptions as IEnumerable<SelectListItem>)
                             </td>
+                            <td>@Html.CheckBoxFor(m=>m[i].RequiresChecker)</td>
+                            <td>@Html.TextBoxFor(m=>m[i].DummyTestCount)</td>
+                            <td>@Html.TextBoxFor(m=>m[i].PointsPerTest)</td>
+                            <td>@Html.CheckBoxFor(m => m[i].RequestDelete)</td>
                         </tr>
                     }
                 }
             </tbody>
         </table>
+        <button type="submit">Save Changes</button>
     }
 </div>
 

@@ -42,8 +42,9 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
                         group.GroupMembers.Clear();
                         db.UserGroups.Remove(group);
                     }
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
+                //db.SaveChanges();
             }
             return RedirectToAction("List");
         }

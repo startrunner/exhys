@@ -70,6 +70,9 @@
     <Compile Include="ProblemStatement.cs">
       <DependentUpon>WebContestDbContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="ProblemTest.cs">
+      <DependentUpon>WebContestDbContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserAccount.cs">
       <DependentUpon>WebContestDbContext.tt</DependentUpon>

@@ -4,39 +4,29 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using Exhys.WebContestHost.Areas.Shared;
 using Exhys.WebContestHost.Areas.Shared.ViewModels;
 using Exhys.WebContestHost.DataModels;
+using CodeBits;
 
 namespace Exhys.WebContestHost.Areas.Administration.Controllers
 {
-    public class UserAccountsController : Controller
+    public class UserAccountsController : ExhysMvcController
     {
 		[HttpGet]
         public ActionResult List()
         {
+            AddUserGroupOptions();
+
 			using (var db=new ExhysContestEntities())
             {
-                var userGroups = db.UserGroups.ToList();
-
-                string[] groupNames = new string[userGroups.Count];
-                int[] groupIds = new int[userGroups.Count];
-                for(int i=0;i<userGroups.Count;i++)
-                {
-                    groupNames[i] = userGroups[i].Name;
-                    groupIds[i] = userGroups[i].Id;
-                }
-                ViewBag.GroupNames = groupNames;
-                ViewBag.GroupIds = groupIds;
-                
                 var vm = new List<UserAccountViewModel>();
                 db.UserAccounts
                     .OrderBy(a=>a.Username)
                     .ToList()
                     .ForEach((acc) =>
                     {
-                        var cVm = new UserAccountViewModel(acc);
-                        cVm.UserGroups = new bool[userGroups.Count];
-                        vm.Add(cVm);
+                        vm.Add(new UserAccountViewModel(acc));
                     });
                 return View(vm);
             }
@@ -60,21 +50,32 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
                         user.LastName = v.LastName;
                         user.Password = v.Password;
                         user.UserSessions.Clear();
+                        var gr = db.UserGroups.Where(g => g.Id == v.GroupId).Take(1).ToList()[0];
+                        user.UserGroup = gr;
                     }
                     else
                     {
                         user.DeleteFrom(db);
                     }
+                    db.SaveChanges();
                 }
-                db.SaveChanges();
+                //db.SaveChanges();
             }
             return RedirectToAction("List");
         }
 
         [HttpGet]
-        public ActionResult AddUsers(string prefix, int? count, string firstNames, string lastNames)
+        public ActionResult AddUsers()
         {
-            if (prefix == null || count == null) return View();
+            AddUserGroupOptions();
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddUsers (string prefix, int? count, string firstNames, string lastNames, int groupId)
+        { 
+            if (prefix == null || count == null) return RedirectToAction("AddUsers");
             else
             {
                 string[] fNames = firstNames.Split('\n');
@@ -84,25 +85,31 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
 
                 using (var db = new ExhysContestEntities())
                 {
-                    var gr = db.GetDefaultUserGroup();
+                    //var gr = db.GetDefaultUserGroup();
+                    var gr=db.UserGroups.Where(g=>g.Id==groupId).Take(1).ToList()[0];
 
-                    int added = 0;
-                    for(int i = 0; added != count; i++)
+                    int addedCount = 0;
+                    for (int currentNumber = 0; addedCount != count; currentNumber++)
                     {
-                        string current = string.Format("{0}{1:000}", prefix, i);
-                        var existing = db.UserAccounts.Where(u => u.Username == current).ToList();
-                        if (existing != null && existing.Count != 0) continue;
-                        var rnd = new Random();
+                        string currentUsername = string.Format("{0}{1:000}", prefix, currentNumber);
+
+                        var existing = db.UserAccounts.Where(u => u.Username == currentUsername).ToList();
+                        if (existing != null && existing.Count != 0)
+                        {
+                            //currentUsername is taken
+                            continue;
+                        }
+
                         var user = new UserAccount()
                         {
-                            Username = current,
-                            Password = Guid.NewGuid().ToString("n").Substring(rnd.Next(6), 6),
-                            FirstName = added < fNames.Length ? fNames[added] : "",
-                            LastName = added < lNames.Length ? lNames[added] : "",
+                            Username = currentUsername,
+                            Password = PasswordGenerator.Generate(6, PasswordCharacters.AlphaNumeric).ToLower(),
+                            FirstName = addedCount < fNames.Length ? fNames[addedCount] : "",
+                            LastName = addedCount < lNames.Length ? lNames[addedCount] : "",
                             UserGroup = gr
                         };
                         db.UserAccounts.Add(user);
-                        added++;
+                        addedCount++;
                     }
                     db.SaveChanges();
                 }

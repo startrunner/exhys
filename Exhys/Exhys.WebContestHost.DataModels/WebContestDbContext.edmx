@@ -13,6 +13,7 @@
     <EntitySet Name="Problems" EntityType="ExhysContestModel.Store.Problems" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProblemSolutions" EntityType="ExhysContestModel.Store.ProblemSolutions" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProblemStatements" EntityType="ExhysContestModel.Store.ProblemStatements" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProblemTests" EntityType="ExhysContestModel.Store.ProblemTests" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="UserAccounts_UserSessions" Association="ExhysContestModel.Store.UserAccounts_UserSessions">
       <End Role="UserSession" EntitySet="UserSessions" />
       <End Role="UserAccount" EntitySet="UserAccounts" />
@@ -40,6 +41,10 @@
     <AssociationSet Name="ProblemProblemStatement" Association="ExhysContestModel.Store.ProblemProblemStatement">
       <End Role="Problem" EntitySet="Problems" />
       <End Role="ProblemStatement" EntitySet="ProblemStatements" />
+    </AssociationSet>
+    <AssociationSet Name="Problems_ProblemTests" Association="ExhysContestModel.Store.Problems_ProblemTests">
+      <End Role="Problem" EntitySet="Problems" />
+      <End Role="ProblemTest" EntitySet="ProblemTests" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="UserAccounts">
@@ -90,6 +95,10 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IgnoreTestBlankSpaces" Type="bit" Nullable="false" DefaultValue="true" />
+    <Property Name="DummyTestCount" Type="int" Nullable="false" />
+    <Property Name="PointsPerTest" Type="float" Nullable="false" />
+    <Property Name="RequiresChecker" Type="bit" Nullable="false" DefaultValue="false" />
     <Property Name="CompetitionGivenAt_Id" Type="int" Nullable="true" />
   </EntityType>
   <EntityType Name="ProblemSolutions">
@@ -111,6 +120,16 @@
     <Property Name="Bytes" Type="varbinary(max)" Nullable="false" />
     <Property Name="Filename" Type="nvarchar(max)" Nullable="false" DefaultValue="(None)" />
     <Property Name="ProblemProblemStatement_ProblemStatement_Id" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="ProblemTests">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Input" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Output" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="GroupName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Problem_Id" Type="int" Nullable="true" />
   </EntityType>
   <Association Name="UserAccounts_UserSessions">
     <End Role="UserSession" Type="ExhysContestModel.Store.UserSessions" Multiplicity="*" />
@@ -200,6 +219,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="Problems_ProblemTests">
+    <End Role="Problem" Type="ExhysContestModel.Store.Problems" Multiplicity="0..1" />
+    <End Role="ProblemTest" Type="ExhysContestModel.Store.ProblemTests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Problem">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProblemTest">
+        <PropertyRef Name="Problem_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -239,6 +270,11 @@
           <AssociationSet Name="ProblemProblemStatement" Association="ExhysContestModel.ProblemProblemStatement">
             <End Role="Problem" EntitySet="Problems" />
             <End Role="ProblemStatement" EntitySet="ProblemStatements" />
+          </AssociationSet>
+          <EntitySet Name="ProblemTests" EntityType="ExhysContestModel.ProblemTest" />
+          <AssociationSet Name="Problems_ProblemTests" Association="ExhysContestModel.Problems_ProblemTests">
+            <End Role="Problem" EntitySet="Problems" />
+            <End Role="ProblemTest" EntitySet="ProblemTests" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="UserAccount">
@@ -304,6 +340,11 @@
           <Property Name="Name" Type="String" Nullable="false" />
           <NavigationProperty Name="ProblemSolutions" Relationship="ExhysContestModel.Problems_Solutions" FromRole="Problem" ToRole="ProblemSolution" />
           <NavigationProperty Name="ProblemStatements" Relationship="ExhysContestModel.ProblemProblemStatement" FromRole="Problem" ToRole="ProblemStatement" />
+          <NavigationProperty Name="ProblemTests" Relationship="ExhysContestModel.Problems_ProblemTests" FromRole="Problem" ToRole="ProblemTest" />
+          <Property Name="IgnoreTestBlankSpaces" Type="Boolean" Nullable="false" DefaultValue="True" />
+          <Property Name="DummyTestCount" Type="Int32" Nullable="false" />
+          <Property Name="PointsPerTest" Type="Double" Nullable="false" />
+          <Property Name="RequiresChecker" Type="Boolean" Nullable="false" DefaultValue="False" />
         </EntityType>
         <Association Name="Competitions_Problems">
           <End Type="ExhysContestModel.Competition" Role="Competition" Multiplicity="0..1" />
@@ -342,6 +383,21 @@
         <Association Name="ProblemProblemStatement">
           <End Type="ExhysContestModel.Problem" Role="Problem" Multiplicity="0..1" />
           <End Type="ExhysContestModel.ProblemStatement" Role="ProblemStatement" Multiplicity="*" />
+        </Association>
+        <EntityType Name="ProblemTest">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Input" Type="String" Nullable="true" />
+          <Property Name="Output" Type="String" Nullable="true" />
+          <Property Name="GroupName" Type="String" Nullable="false" />
+          <NavigationProperty Name="Problem" Relationship="ExhysContestModel.Problems_ProblemTests" FromRole="ProblemTest" ToRole="Problem" />
+        </EntityType>
+        <Association Name="Problems_ProblemTests">
+          <End Type="ExhysContestModel.Problem" Role="Problem" Multiplicity="0..1" />
+          <End Type="ExhysContestModel.ProblemTest" Role="ProblemTest" Multiplicity="*" >
+          </End>
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -395,6 +451,10 @@
         <MappingFragment StoreEntitySet="Problems">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="IgnoreTestBlankSpaces" ColumnName="IgnoreTestBlankSpaces" />
+          <ScalarProperty Name="DummyTestCount" ColumnName="DummyTestCount" />
+          <ScalarProperty Name="PointsPerTest" ColumnName="PointsPerTest" />
+          <ScalarProperty Name="RequiresChecker" ColumnName="RequiresChecker" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -413,6 +473,16 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Bytes" ColumnName="Bytes" />
           <ScalarProperty Name="Filename" ColumnName="Filename" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProblemTests">
+      <EntityTypeMapping TypeName="IsTypeOf(ExhysContestModel.ProblemTest)">
+        <MappingFragment StoreEntitySet="ProblemTests">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Input" ColumnName="Input" />
+          <ScalarProperty Name="Output" ColumnName="Output" />
+          <ScalarProperty Name="GroupName" ColumnName="GroupName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -483,6 +553,15 @@
         <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
       <Condition ColumnName="ProblemProblemStatement_ProblemStatement_Id" IsNull="false" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="Problems_ProblemTests" TypeName="ExhysContestModel.Problems_ProblemTests" StoreEntitySet="ProblemTests">
+      <EndProperty Name="Problem">
+        <ScalarProperty Name="Id" ColumnName="Problem_Id" />
+      </EndProperty>
+      <EndProperty Name="ProblemTest">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+      <Condition ColumnName="Problem_Id" IsNull="false" />
     </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
