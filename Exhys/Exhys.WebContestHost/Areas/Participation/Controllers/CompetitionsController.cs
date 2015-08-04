@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Exhys.WebContestHost.Areas.Participation.ViewModels;
 using Exhys.WebContestHost.Areas.Shared.Extensions;
 using Exhys.WebContestHost.Areas.Shared.Mvc;
 using Exhys.WebContestHost.Areas.Shared.ViewModels;
@@ -58,27 +59,27 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
 
         [HttpGet]
 
-        public ActionResult Participate(int? id=null)
+        public ActionResult Participate (int? id = null)
         {
-            AddSignedInUserInformation();
-
-
-            if(id==null)
+            if (id == null)
             {
                 id = Request.GetCurrentCompetitionCookie();
                 if (id == null) return RedirectToAction("List");
+                else return RedirectToAction("Participate", new { id = id });
             }
-            else
+
+            AddSignedInUserInformation();
+            AddProblemOptions((int)id);
+
+            Response.SetCurrentCompetitionCookie((int)id);
+            using (var db = new ExhysContestEntities())
             {
-                Response.SetCurrentCompetitionCookie((int)id);
-                using (var db = new ExhysContestEntities())
-                {
-                    var competition = db.Competitions.Where(c => c.Id == id).Take(1).ToList().FirstOrDefault();
-                    var vm = new CompetitionViewModel(competition);
-                    return View(vm);
-                }
+                var competition = db.Competitions.Where(c => c.Id == id).Take(1).ToList().FirstOrDefault();
+                var vm = new ParticipationViewModel(competition);
+                return View(vm);
             }
-            return View();
+
+            //return View();
         }
     }
 }

@@ -4,14 +4,14 @@ using System.Linq;
 using System.Web;
 using Exhys.WebContestHost.DataModels;
 
-namespace Exhys.WebContestHost.Areas.Shared.ViewModels.Embedded
+namespace Exhys.WebContestHost.Areas.Shared.ViewModels
 {
-    public class UserSessionViewModel
+    public class SignedInUserViewModel
     {
         public bool IsGuest { get; private set; }
         public string FullName { get; private set; }
 
-        public UserSessionViewModel(UserSession model)
+        public SignedInUserViewModel(UserSession model)
         {
             if (model != null)
             {
@@ -26,7 +26,7 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels.Embedded
             else { this.IsGuest = true; }
         }
 
-        public UserSessionViewModel (UserAccount model)
+        public SignedInUserViewModel (UserAccount model)
         {
             if (model != null)
             {
@@ -36,7 +36,7 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels.Embedded
             else { this.IsGuest = true; }
         }
 
-        public UserSessionViewModel()
+        public SignedInUserViewModel()
         {
             this.IsGuest = true;
         }

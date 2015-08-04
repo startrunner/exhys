@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using Exhys.WebContestHost.Areas.Shared.Extensions;
 using Exhys.WebContestHost.Areas.Shared.ViewModels;
+//using Exhys.WebContestHost.Areas.Shared.ViewModels.Embedded;
 using Exhys.WebContestHost.DataModels;
 
 namespace Exhys.WebContestHost.Areas.Shared.Mvc
@@ -23,12 +24,32 @@ namespace Exhys.WebContestHost.Areas.Shared.Mvc
         public void AddSignedInUserInformation (ExhysContestEntities db)
         {
             var user = Request.GetSignedInUser(db);
-            var vm = new UserAccountViewModel(user);
+            var vm = new SignedInUserViewModel(user);
             ViewData.SetSignedInUser(vm);
         }
         #endregion
 
         #region DropdownOptions
+        public void AddProblemOptions(int competitionId)
+        {
+            using (var db = new ExhysContestEntities())
+            {
+                AddProblemOptions(db, competitionId);
+            }
+        }
+
+        public void AddProblemOptions(ExhysContestEntities db, int competitionId)
+        {
+            var competition = db.Competitions.Where(c => c.Id == competitionId).ToList()[0];
+            var problems = competition.Problems.ToList();
+            List<SelectListItem> options = new List<SelectListItem>();
+            foreach(var p in problems)
+            {
+                options.Add(new SelectListItem() { Text = p.Name, Value = p.Id.ToString() });
+            }
+            ViewData.SetProblemOptions(options);
+        }
+
         public void AddUserGroupOptions(bool allowNull=false)
         {
             using (var db = new ExhysContestEntities())
