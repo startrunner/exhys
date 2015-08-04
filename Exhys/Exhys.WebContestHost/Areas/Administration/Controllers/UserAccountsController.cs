@@ -8,14 +8,16 @@ using Exhys.WebContestHost.Areas.Shared;
 using Exhys.WebContestHost.Areas.Shared.ViewModels;
 using Exhys.WebContestHost.DataModels;
 using CodeBits;
+using Exhys.WebContestHost.Areas.Shared.Mvc;
 
 namespace Exhys.WebContestHost.Areas.Administration.Controllers
 {
-    public class UserAccountsController : ExhysMvcController
+    public class UserAccountsController : ExhysController
     {
 		[HttpGet]
         public ActionResult List()
         {
+            AddSignedInUserInformation();
             AddUserGroupOptions();
 
 			using (var db=new ExhysContestEntities())
@@ -67,6 +69,7 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
         [HttpGet]
         public ActionResult AddUsers()
         {
+            AddSignedInUserInformation();
             AddUserGroupOptions();
 
             return View();

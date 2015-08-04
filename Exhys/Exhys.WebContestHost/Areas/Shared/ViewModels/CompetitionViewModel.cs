@@ -25,15 +25,10 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
 
         public bool RequestDelete { get; set; }
 
-        
-
-        
-
         public CompetitionViewModel () : this(null) { }
         public CompetitionViewModel (Competition model)
         {
             this.RequestDelete = false;
-
 
             if (model != null)
             {

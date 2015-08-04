@@ -23,7 +23,7 @@
                             <td>@Html.TextBoxFor(m => m[i].Name)</td>
                             <td>
                                 @*@(Model[i].CompetitionName)*@
-                                @Html.FixedDropDownListFor(m=>m[i].CompetitionId, ViewBag.CompetitionOptions as IEnumerable<SelectListItem>)
+                                @Html.FixedDropDownListFor(m=>m[i].CompetitionId, ViewData.GetCompetitionOptions())
                             </td>
                             <td>@Html.CheckBoxFor(m=>m[i].RequiresChecker)</td>
                             <td>@Html.TextBoxFor(m=>m[i].DummyTestCount)</td>

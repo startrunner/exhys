@@ -23,7 +23,7 @@
                             <td>@Html.TextBoxFor(m => m[i].Name)</td>
                             <td>@Html.TextBoxFor(m => m[i].Description)</td>
                             <td>
-                                @Html.FixedDropDownListFor(m=>m[i].GroupId, ViewBag.UserGroupOptions as IEnumerable<SelectListItem>)
+                                @Html.FixedDropDownListFor(m=>m[i].GroupId, ViewData.GetUserGroupOptions())
                             </td>
                             <td>@Html.CheckBoxFor(m => m[i].RequestDelete)</td>
                             @*<td>

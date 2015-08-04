@@ -33,7 +33,11 @@ namespace Exhys.WebContestHost.DataModels
             if (this.UserGroup.IsAdministrator) return true;
             return false;
         }
-        
+    
+        public string GetFullName ()
+        {
+            return string.Format("{0} {1}", FirstName, LastName);
+        }
 
         public void DeleteFrom (ExhysContestEntities db)
         {

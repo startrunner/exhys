@@ -26,7 +26,7 @@
                             <td>@Html.TextBoxFor(m=>m[i].Username, new { readOnly = "" })</td>
                             <td>@Html.TextBoxFor(m=>m[i].Password)</td>
                             <td>
-                                @Html.FixedDropDownListFor(m=>m[i].GroupId, ViewBag.UserGroupOptions as IEnumerable<SelectListItem>)
+                                @Html.FixedDropDownListFor(m=>m[i].GroupId, ViewData.GetUserGroupOptions())
                             </td>
                             <td>@Html.TextBoxFor(m=>m[i].FirstName)</td>
                             <td>@Html.TextBoxFor(m=>m[i].LastName)</td>

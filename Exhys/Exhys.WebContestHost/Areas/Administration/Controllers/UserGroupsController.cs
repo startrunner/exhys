@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Exhys.WebContestHost.Areas.Shared.Mvc;
 using Exhys.WebContestHost.Areas.Shared.ViewModels;
 using Exhys.WebContestHost.DataModels;
 
 namespace Exhys.WebContestHost.Areas.Administration.Controllers
 {
-    public class UserGroupsController : Controller
+    public class UserGroupsController : ExhysController
     {
         [HttpGet]
         public ActionResult List()
         {
+            AddSignedInUserInformation();
             using (var db = new ExhysContestEntities())
             {
                 var groups = new List<UserGroupViewModel>();

@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
-using Exhys.WebContestHost.DataModels;
 
 namespace Exhys.WebContestHost.Areas.Shared.Extensions
 {
@@ -10,7 +7,7 @@ namespace Exhys.WebContestHost.Areas.Shared.Extensions
     {
         public static void DeleteSessionCookie(this HttpResponseBase response)
         {
-            response.Cookies.Set(new HttpCookie(CookieNames.SessionCookieName, "")
+            response.Cookies.Set(new HttpCookie(CookieNames.SessionCookie, "")
             {
                 Expires = DateTime.Now + TimeSpan.FromDays(-1)
             });
@@ -19,10 +16,17 @@ namespace Exhys.WebContestHost.Areas.Shared.Extensions
         public static void SetSessionCookie (this HttpResponseBase response, Guid sessionId)
         {
             response.SetCookie(
-                new HttpCookie(CookieNames.SessionCookieName, sessionId.ToString())
+                new HttpCookie(CookieNames.SessionCookie, sessionId.ToString())
                 {
                     Expires = DateTime.Now + TimeSpan.FromDays(30)
                 });
+        }
+
+        public static void SetCurrentCompetitionCookie(this HttpResponseBase that, int competitionId)
+        {
+            that.SetCookie(
+                new HttpCookie(CookieNames.CurrentCompetitionCookie, competitionId.ToString())
+                { Expires = DateTime.Now + TimeSpan.FromDays(30) });
         }
     }
 }

@@ -10,7 +10,7 @@
         </div>
         <div>
             @Html.LabelFor(m=>m.GroupId, "User Group: ")
-            @Html.DropDownListFor(m => m.GroupId, ViewBag.UserGroupOptions as IEnumerable<SelectListItem>)
+            @Html.DropDownListFor(m => m.GroupId, ViewData.GetUserGroupOptions())
         </div>
         <div>
             <button type="submit">Create Contest</button>

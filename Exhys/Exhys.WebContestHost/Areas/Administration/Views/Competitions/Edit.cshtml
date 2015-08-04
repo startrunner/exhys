@@ -6,7 +6,7 @@
         <span>Id: @Model.Id</span>
         @Html.TextBoxFor(m => m.Name, new { placeholder = "Name" })
         @Html.TextAreaFor(m => m.Description, new { placeholder = "Description", rows = "1" })
-        @Html.FixedDropDownListFor(m => m.GroupId, ViewBag.UserGroupOptions as IEnumerable<SelectListItem>)
+        @Html.FixedDropDownListFor(m => m.GroupId, ViewData.GetUserGroupOptions())
 
         <button type="submit">Save Changes</button>
     }

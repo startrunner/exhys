@@ -35,7 +35,19 @@ namespace Exhys.WebContestHost.Areas.Shared.Extensions
         {
             try
             {
-                return Guid.Parse(req.Cookies.Get(CookieNames.SessionCookieName).Value);
+                return Guid.Parse(req.Cookies.Get(CookieNames.SessionCookie).Value);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public static int? GetCurrentCompetitionCookie(this HttpRequestBase that)
+        {
+            try
+            {
+                return int.Parse(that.Cookies.Get(CookieNames.CurrentCompetitionCookie).Value);
             }
             catch
             {

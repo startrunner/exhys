@@ -6,7 +6,7 @@
             @Html.TextBoxFor(m => m.Name, new { placeholder = "Problem Name" })
         </div>
         <div>
-            @Html.FixedDropDownListFor(m => m.CompetitionId, ViewBag.CompetitionOptions as IEnumerable<SelectListItem>)
+            @Html.FixedDropDownListFor(m => m.CompetitionId, ViewData.GetCompetitionOptions())
         </div>
 
         <div>

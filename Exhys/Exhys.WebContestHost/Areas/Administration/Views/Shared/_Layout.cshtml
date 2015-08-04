@@ -6,6 +6,13 @@
 <body>
     <header>
         Exhys Administration
+        @{ 
+            var user = ViewData.GetSignedInUser();
+            if(user!=null)
+            {
+                <span>User: @(user.Username)</span>
+            }
+        }
     </header>
 
     <nav>

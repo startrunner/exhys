@@ -5,17 +5,21 @@ using System.Web;
 using System.Web.Mvc;
 using Exhys.WebContestHost.Areas.Shared;
 using Exhys.WebContestHost.Areas.Shared.Extensions;
+using Exhys.WebContestHost.Areas.Shared.Mvc;
 using Exhys.WebContestHost.Areas.Shared.ViewModels;
 using Exhys.WebContestHost.DataModels;
 
+
 namespace Exhys.WebContestHost.Areas.Administration.Controllers
 {
-    public class CompetitionsController : ExhysMvcController
+    public class CompetitionsController : ExhysController
     {
         [HttpGet]
         public ActionResult List()
         {
+            AddSignedInUserInformation();
             AddUserGroupOptions();
+
 
             var vm = new List<CompetitionViewModel>();
             using (var db=new ExhysContestEntities())
@@ -59,6 +63,7 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
         [HttpGet]
         public ActionResult AddCompetition ()
         {
+            AddSignedInUserInformation();
             AddUserGroupOptions();
 
             return View();
@@ -93,7 +98,9 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
         [HttpGet]
         public ActionResult Edit(int? id)
         {
+            AddSignedInUserInformation();
             AddUserGroupOptions();
+
             if (id == null) return RedirectToAction("List");
             using (var db = new ExhysContestEntities())
             {

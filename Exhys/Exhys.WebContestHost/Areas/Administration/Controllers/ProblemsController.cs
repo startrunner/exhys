@@ -10,14 +10,17 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using Exhys.WebContestHost.Areas.Shared.Extensions;
+using Exhys.WebContestHost.Areas.Shared.Mvc;
 
 namespace Exhys.WebContestHost.Areas.Administration.Controllers
 {
-    public class ProblemsController : ExhysMvcController
+    public class ProblemsController : ExhysController
     {
         [HttpGet]
         public ActionResult Edit (int? id)
         {
+            AddSignedInUserInformation();
+
             if (id == null) return RedirectToAction(controllerName: "Competitions", actionName: "List");
 
             using(var db=new ExhysContestEntities())
@@ -49,6 +52,7 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
         [HttpGet]
         public ActionResult List()
         {
+            AddSignedInUserInformation();
             AddCompetitionOptions();
 
             using (var db = new ExhysContestEntities())
@@ -91,6 +95,7 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
         [HttpGet]
         public ActionResult AddProblem()
         {
+            AddSignedInUserInformation();
             AddCompetitionOptions();
 
             return View();
