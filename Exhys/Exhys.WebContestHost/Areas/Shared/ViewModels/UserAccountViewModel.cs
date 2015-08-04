@@ -16,6 +16,7 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
         public bool IsAdmin { get; set; }
         public bool RequestDelete { get; set; }
         public int UserId { get; set; }
+        public bool[] UserGroups { get; set; }
 
         public UserAccountViewModel () : this(null) { }
 

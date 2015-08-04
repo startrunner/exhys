@@ -14,8 +14,8 @@ namespace Exhys.WebContestHost.Areas.Accounts.Controllers
     {
         [HttpGet]
         public ActionResult Register()
-        {
-            if(Request.GetSignedInUser()!=null)
+        { 
+            if (Request.GetSignedInUser() != null)
             {
                 return RedirectToAction("Profile");
             }
@@ -48,6 +48,12 @@ namespace Exhys.WebContestHost.Areas.Accounts.Controllers
                 }
                 else
                 {
+                    var group = db.GetDefaultUserGroup();
+                    if(group==null)
+                    {
+                        ViewBag.Errors = new[] { "Registrations are closed." };
+                        return PartialView(vm);
+                    }
                     var user = new UserAccount()
                     {
                         Username = vm.Username,
@@ -55,7 +61,7 @@ namespace Exhys.WebContestHost.Areas.Accounts.Controllers
                         LastName = vm.LastName,
                         Password = vm.Password
                     };
-                    db.UserGroups.Where(g => g.IsOpen).ToList().ForEach((g) => { user.UserGroups.Add(g); });
+                    user.UserGroup = group;
                     db.UserAccounts.Add(user);
                     db.SaveChanges();
                     return SignIn(vm);
@@ -87,7 +93,7 @@ namespace Exhys.WebContestHost.Areas.Accounts.Controllers
                 return PartialView(vm);
             }
 
-            using (var db = new DataModels.ExhysContestEntities())
+            using (var db = new ExhysContestEntities())
             {
                 var users = db.UserAccounts.Where(u => u.Username == vm.Username).Take(1).ToList();
 

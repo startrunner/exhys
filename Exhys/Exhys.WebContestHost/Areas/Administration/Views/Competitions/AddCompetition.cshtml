@@ -1,9 +1,10 @@
-﻿@model Exhys.WebContestHost.Areas.Shared.ViewModels.CompetitionViewModel
+﻿@model CompetitionViewModel
 <div>
     @using (Html.BeginForm(FormMethod.Post))
-    { 
+    {
         @Html.TextBoxFor(m => m.Name);
         @Html.TextAreaFor(m => m.Description);
+        @Html.DropDownListFor(m=>m.GroupId, ViewBag.UserGroupOptions as IEnumerable<SelectListItem>)
         <button type="submit">Create Contest</button>
     }
 </div>

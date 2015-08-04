@@ -18,7 +18,6 @@ namespace Exhys.WebContestHost.DataModels
         public Competition()
         {
             this.Problems = new HashSet<Problem>();
-            this.GroupsAllowed = new HashSet<UserGroup>();
         }
     
         public int Id { get; set; }
@@ -27,7 +26,6 @@ namespace Exhys.WebContestHost.DataModels
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Problem> Problems { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserGroup> GroupsAllowed { get; set; }
+        public virtual UserGroup UserGroup { get; set; }
     }
 }

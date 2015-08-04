@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Exhys.WebContestHost.DataModels.Partials
 {
-    interface IClearable
+    interface IDeletable
     {
-        void ClearForDeletion ();
+        void DeleteFrom (ExhysContestEntities db);
     }
 }

@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0c1651022ffa4ae1a7cf907a9ea83b41" Name="Diagram1" ZoomLevel="78" ShowGrid="false" SnapToGrid="true" DisplayType="true" >
+      <Diagram DiagramId="0c1651022ffa4ae1a7cf907a9ea83b41" Name="Diagram1" ZoomLevel="64" ShowGrid="false" SnapToGrid="true" DisplayType="true" >
         <EntityTypeShape EntityType="ExhysContestModel.UserAccount" Width="3.25" PointX="4.5" PointY="6.25" />
         <EntityTypeShape EntityType="ExhysContestModel.UserSession" Width="3.25" PointX="4.5" PointY="3.625" />
         <AssociationConnector Association="ExhysContestModel.UserAccounts_UserSessions" />

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
-using Exhys.WebContestHost.Areas.Administration.ViewModels;
 using Exhys.WebContestHost.Areas.Shared.ViewModels;
 using Exhys.WebContestHost.DataModels;
 
@@ -17,11 +16,28 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
         {
 			using (var db=new ExhysContestEntities())
             {
+                var userGroups = db.UserGroups.ToList();
+
+                string[] groupNames = new string[userGroups.Count];
+                int[] groupIds = new int[userGroups.Count];
+                for(int i=0;i<userGroups.Count;i++)
+                {
+                    groupNames[i] = userGroups[i].Name;
+                    groupIds[i] = userGroups[i].Id;
+                }
+                ViewBag.GroupNames = groupNames;
+                ViewBag.GroupIds = groupIds;
+                
                 var vm = new List<UserAccountViewModel>();
                 db.UserAccounts
                     .OrderBy(a=>a.Username)
                     .ToList()
-                    .ForEach((acc) => { vm.Add(new UserAccountViewModel(acc)); });
+                    .ForEach((acc) =>
+                    {
+                        var cVm = new UserAccountViewModel(acc);
+                        cVm.UserGroups = new bool[userGroups.Count];
+                        vm.Add(cVm);
+                    });
                 return View(vm);
             }
         }
@@ -47,8 +63,7 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
                     }
                     else
                     {
-                        user.ClearForDeletion();
-                        db.UserAccounts.Remove(user);
+                        user.DeleteFrom(db);
                     }
                 }
                 db.SaveChanges();
@@ -69,6 +84,8 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
 
                 using (var db = new ExhysContestEntities())
                 {
+                    var gr = db.GetDefaultUserGroup();
+
                     int added = 0;
                     for(int i = 0; added != count; i++)
                     {
@@ -81,7 +98,8 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
                             Username = current,
                             Password = Guid.NewGuid().ToString("n").Substring(rnd.Next(6), 6),
                             FirstName = added < fNames.Length ? fNames[added] : "",
-                            LastName = added < lNames.Length ? lNames[added] : ""
+                            LastName = added < lNames.Length ? lNames[added] : "",
+                            UserGroup = gr
                         };
                         db.UserAccounts.Add(user);
                         added++;

@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Exhys.WebContestHost.Areas.Shared;
+using Exhys.WebContestHost.Areas.Shared.Extensions;
 using Exhys.WebContestHost.Areas.Shared.ViewModels;
 using Exhys.WebContestHost.DataModels;
 
 namespace Exhys.WebContestHost.Areas.Administration.Controllers
 {
-    public class CompetitionsController : Controller
+    public class CompetitionsController : ExhysController
     {
         [HttpGet]
         public ActionResult List()
         {
+            AddUserGroupOptions();
             var vm = new List<CompetitionViewModel>();
             using (var db=new ExhysContestEntities())
             {
@@ -28,6 +31,8 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
         [HttpPost]
         public ActionResult List(IList<CompetitionViewModel> vm)
         {
+            
+
             using (var db = new ExhysContestEntities())
             {
                 foreach(var v in vm)
@@ -40,8 +45,7 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
                     }
                     else
                     {
-                        comp.ClearForDeletion();
-                        db.Competitions.Remove(comp);
+                        comp.DeleteFrom(db);
                     }
                 }
                 db.SaveChanges();
@@ -50,7 +54,12 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
         }
 
         [HttpGet]
-        public ActionResult AddCompetition () { return View(); }
+        public ActionResult AddCompetition ()
+        {
+            AddUserGroupOptions();
+
+            return View();
+        }
 
         [HttpPost]
         public ActionResult AddCompetition(CompetitionViewModel vm)
@@ -62,6 +71,16 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
                     Name = vm.Name,
                     Description = vm.Description
                 };
+
+                if (vm.GroupId != null)
+                {
+                    var gr = db.UserGroups
+                        .Where(g => g.Id == vm.GroupId)
+                        .Take(1)
+                        .ToList()[0];
+                    competition.UserGroup = gr;
+                }
+
                 db.Competitions.Add(competition);
                 db.SaveChanges();
             }

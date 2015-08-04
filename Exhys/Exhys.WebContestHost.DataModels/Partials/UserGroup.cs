@@ -7,12 +7,11 @@ using Exhys.WebContestHost.DataModels.Partials;
 
 namespace Exhys.WebContestHost.DataModels
 {
-    public partial class Competition : IDeletable
+    public partial class UserGroup : IDeletable
     {
         public void DeleteFrom (ExhysContestEntities db)
-        {
-            this.Problems.Clear();
-            db.Competitions.Remove(this);
+        { 
+            db.UserGroups.Remove(this);
         }
     }
 }

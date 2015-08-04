@@ -15,7 +15,6 @@ namespace Exhys.WebContestHost.DatabaseInitializer
 
                 foreach (var v in oAdmin)
                 {
-                    v.UserGroups.Clear();
                     v.UserSessions.Clear();
                 }
                 db.UserAccounts.RemoveRange(oAdmin);
@@ -38,7 +37,7 @@ namespace Exhys.WebContestHost.DatabaseInitializer
                     Username = "admin"
                 };
 
-                admin.UserGroups.Add(admins);
+                admin.UserGroup = admins;
 
                 db.UserGroups.Add(admins);
                 db.UserAccounts.Add(admin);

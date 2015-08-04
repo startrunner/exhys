@@ -56,9 +56,11 @@
       <DependentUpon>WebContestDbContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Partials\Competition.cs" />
-    <Compile Include="Partials\IClearable.cs" />
+    <Compile Include="Partials\ExhysContestEntities.cs" />
+    <Compile Include="Partials\IDeletable.cs" />
     <Compile Include="Partials\Problem.cs" />
     <Compile Include="Partials\UserAccount.cs" />
+    <Compile Include="Partials\UserGroup.cs" />
     <Compile Include="Problem.cs">
       <DependentUpon>WebContestDbContext.tt</DependentUpon>
     </Compile>

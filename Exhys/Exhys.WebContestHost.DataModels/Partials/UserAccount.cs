@@ -9,7 +9,7 @@ using Exhys.WebContestHost.DataModels.Partials;
 
 namespace Exhys.WebContestHost.DataModels
 { 
-    public partial class UserAccount:IClearable
+    public partial class UserAccount:IDeletable
     {
 
         public bool IsAdmin ()
@@ -18,24 +18,18 @@ namespace Exhys.WebContestHost.DataModels
             {
                 try
                 {
-                    //The account needs to be attached in order to access its UserGroups property via lazy loading
                     db.UserAccounts.Attach(this);
                 }
                 catch (InvalidOperationException) {/*Already attached, nothing to do*/ }
-
-                foreach (var g in this.UserGroups)
-                {
-                    if (g.IsAdministrator) return true;
-                }
+                if (this.UserGroup == null) return false;
+                if (this.UserGroup.IsAdministrator) return true;
                 return false;
             }
         }
 
-        public void ClearForDeletion()
+        public void DeleteFrom (ExhysContestEntities db)
         {
-            if (this.UserGroups != null) this.UserGroups.Clear();
-            if (this.UserSessions != null) this.UserSessions.Clear();
-            if (this.AuthoredSolutions != null) this.AuthoredSolutions.Clear();
+            db.UserAccounts.Remove(this);
         }
     }
 }

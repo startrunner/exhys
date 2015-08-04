@@ -1,4 +1,4 @@
-﻿@model IList<Exhys.WebContestHost.Areas.Shared.ViewModels.ProblemViewModel>
+﻿@model IList<ProblemViewModel>
 <div>
     @using (Html.BeginForm())
     {
@@ -18,7 +18,8 @@
                             <td>@Html.TextBoxFor(m => m[i].Id)</td>
                             <td>@Html.TextBoxFor(m => m[i].Name)</td>
                             <td>
-                                @Html.ActionLink(linkText:Model[i].CompetitionName, controllerName:"Competitions", actionName:"Edit", routeValues: new { id=Model[i].CompetitionId }, htmlAttributes:new { })
+                                @*@Html.ActionLink(linkText:Model[i].CompetitionName, controllerName:"Competitions", actionName:"Edit", routeValues: new { id=Model[i].CompetitionId }, htmlAttributes:new { })*@
+                                __
                             </td>
                         </tr>
                     }

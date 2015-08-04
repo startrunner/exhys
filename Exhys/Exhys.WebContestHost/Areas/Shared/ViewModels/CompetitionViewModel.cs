@@ -11,6 +11,13 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
         private string _description;
 
         public int Id { get; set; }
+        public int? GroupId { get; set; }
+        public string GroupIdStr
+        {
+            get { return GroupId != null ? GroupId.ToString() : ""; }
+            set { GroupId = int.Parse(value); }
+        }
+
         public string Name { get; set; }
         public string Description
         {
@@ -40,6 +47,9 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
                 this.Name = model.Name;
                 this.Description = model.Description;
                 this.Id = model.Id;
+                if (model.UserGroup != null) this.GroupId = model.UserGroup.Id;
+               
+
                 foreach(var v in model.Problems)
                 {
                     this.Problems.Add(new ProblemViewModel(v));

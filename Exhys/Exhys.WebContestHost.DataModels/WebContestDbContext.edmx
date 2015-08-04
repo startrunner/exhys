@@ -13,31 +13,21 @@
     <EntitySet Name="Problems" EntityType="ExhysContestModel.Store.Problems" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProblemSolutions" EntityType="ExhysContestModel.Store.ProblemSolutions" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProblemStatements" EntityType="ExhysContestModel.Store.ProblemStatements" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="UserAccounts_UserGroups" EntityType="ExhysContestModel.Store.UserAccounts_UserGroups" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Competitions_UserGroups" EntityType="ExhysContestModel.Store.Competitions_UserGroups" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="UserAccounts_UserSessions" Association="ExhysContestModel.Store.UserAccounts_UserSessions">
       <End Role="UserSession" EntitySet="UserSessions" />
       <End Role="UserAccount" EntitySet="UserAccounts" />
     </AssociationSet>
-    <AssociationSet Name="FK_UserAccounts_UserGroups_UserGroup" Association="ExhysContestModel.Store.FK_UserAccounts_UserGroups_UserGroup">
+    <AssociationSet Name="UserAccounts_UserGroups" Association="ExhysContestModel.Store.UserAccounts_UserGroups">
       <End Role="UserGroup" EntitySet="UserGroups" />
-      <End Role="UserAccounts_UserGroups" EntitySet="UserAccounts_UserGroups" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UserAccounts_UserGroups_UserAccount" Association="ExhysContestModel.Store.FK_UserAccounts_UserGroups_UserAccount">
       <End Role="UserAccount" EntitySet="UserAccounts" />
-      <End Role="UserAccounts_UserGroups" EntitySet="UserAccounts_UserGroups" />
     </AssociationSet>
     <AssociationSet Name="Competitions_Problems" Association="ExhysContestModel.Store.Competitions_Problems">
       <End Role="Competition" EntitySet="Competitions" />
       <End Role="Problem" EntitySet="Problems" />
     </AssociationSet>
-    <AssociationSet Name="FK_Competitions_UserGroups_Competition" Association="ExhysContestModel.Store.FK_Competitions_UserGroups_Competition">
+    <AssociationSet Name="Competitions_UserGroups" Association="ExhysContestModel.Store.Competitions_UserGroups">
       <End Role="Competition" EntitySet="Competitions" />
-      <End Role="Competitions_UserGroups" EntitySet="Competitions_UserGroups" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Competitions_UserGroups_UserGroup" Association="ExhysContestModel.Store.FK_Competitions_UserGroups_UserGroup">
       <End Role="UserGroup" EntitySet="UserGroups" />
-      <End Role="Competitions_UserGroups" EntitySet="Competitions_UserGroups" />
     </AssociationSet>
     <AssociationSet Name="Problems_Solutions" Association="ExhysContestModel.Store.Problems_Solutions">
       <End Role="Problem" EntitySet="Problems" />
@@ -62,6 +52,7 @@
     <Property Name="FirstName" Type="nvarchar" Nullable="true" MaxLength="32" />
     <Property Name="LastName" Type="nvarchar" Nullable="true" MaxLength="32" />
     <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="32" />
+    <Property Name="UserGroup_Id" Type="int" Nullable="true" />
   </EntityType>
   <EntityType Name="UserSessions">
     <Key>
@@ -91,6 +82,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="32" />
     <Property Name="Description" Type="nvarchar" Nullable="true" MaxLength="256" />
+    <Property Name="UserGroup_Id" Type="int" Nullable="true" />
   </EntityType>
   <EntityType Name="Problems">
     <Key>
@@ -98,7 +90,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="CompetitionGivenAt_Id" Type="int" Nullable="false" />
+    <Property Name="CompetitionGivenAt_Id" Type="int" Nullable="true" />
   </EntityType>
   <EntityType Name="ProblemSolutions">
     <Key>
@@ -107,9 +99,9 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="SourceCode" Type="nvarchar(max)" Nullable="false" />
     <Property Name="LanguageAlias" Type="nvarchar" Nullable="false" MaxLength="8" />
-    <Property Name="Problem_Id" Type="int" Nullable="false" />
-    <Property Name="Author_Id" Type="int" Nullable="false" />
-    <Property Name="Author_Username" Type="nvarchar" MaxLength="32" Nullable="false" />
+    <Property Name="Problem_Id" Type="int" Nullable="true" />
+    <Property Name="Author_Id" Type="int" Nullable="true" />
+    <Property Name="Author_Username" Type="nvarchar" MaxLength="32" Nullable="true" />
   </EntityType>
   <EntityType Name="ProblemStatements">
     <Key>
@@ -118,25 +110,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Bytes" Type="varbinary(max)" Nullable="false" />
     <Property Name="Filename" Type="nvarchar(max)" Nullable="false" DefaultValue="(None)" />
-    <Property Name="ProblemProblemStatement_ProblemStatement_Id" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="UserAccounts_UserGroups">
-    <Key>
-      <PropertyRef Name="UserGroups_Id" />
-      <PropertyRef Name="GroupMembers_Id" />
-      <PropertyRef Name="GroupMembers_Username" />
-    </Key>
-    <Property Name="UserGroups_Id" Type="int" Nullable="false" />
-    <Property Name="GroupMembers_Id" Type="int" Nullable="false" />
-    <Property Name="GroupMembers_Username" Type="nvarchar" Nullable="false" MaxLength="32" />
-  </EntityType>
-  <EntityType Name="Competitions_UserGroups">
-    <Key>
-      <PropertyRef Name="AvaiableCompetitions_Id" />
-      <PropertyRef Name="GroupsAllowed_Id" />
-    </Key>
-    <Property Name="AvaiableCompetitions_Id" Type="int" Nullable="false" />
-    <Property Name="GroupsAllowed_Id" Type="int" Nullable="false" />
+    <Property Name="ProblemProblemStatement_ProblemStatement_Id" Type="int" Nullable="true" />
   </EntityType>
   <Association Name="UserAccounts_UserSessions">
     <End Role="UserSession" Type="ExhysContestModel.Store.UserSessions" Multiplicity="*" />
@@ -152,8 +126,20 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="UserAccounts_UserGroups">
+    <End Role="UserGroup" Type="ExhysContestModel.Store.UserGroups" Multiplicity="0..1" />
+    <End Role="UserAccount" Type="ExhysContestModel.Store.UserAccounts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserGroup">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserAccount">
+        <PropertyRef Name="UserGroup_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="Competitions_Problems">
-    <End Role="Competition" Type="ExhysContestModel.Store.Competitions" Multiplicity="1" />
+    <End Role="Competition" Type="ExhysContestModel.Store.Competitions" Multiplicity="0..1" />
     <End Role="Problem" Type="ExhysContestModel.Store.Problems" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Competition">
@@ -164,8 +150,20 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="Competitions_UserGroups">
+    <End Role="Competition" Type="ExhysContestModel.Store.Competitions" Multiplicity="*" />
+    <End Role="UserGroup" Type="ExhysContestModel.Store.UserGroups" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="UserGroup">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Competition">
+        <PropertyRef Name="UserGroup_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="Problems_Solutions">
-    <End Role="Problem" Type="ExhysContestModel.Store.Problems" Multiplicity="1" />
+    <End Role="Problem" Type="ExhysContestModel.Store.Problems" Multiplicity="0..1" />
     <End Role="ProblemSolution" Type="ExhysContestModel.Store.ProblemSolutions" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Problem">
@@ -178,7 +176,7 @@
   </Association>
   <Association Name="ProblemSolutions_UserAccounts">
     <End Role="ProblemSolution" Type="ExhysContestModel.Store.ProblemSolutions" Multiplicity="*" />
-    <End Role="UserAccount" Type="ExhysContestModel.Store.UserAccounts" Multiplicity="1" />
+    <End Role="UserAccount" Type="ExhysContestModel.Store.UserAccounts" Multiplicity="0..1" />
     <ReferentialConstraint>
       <Principal Role="UserAccount">
         <PropertyRef Name="Id" />
@@ -191,7 +189,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="ProblemProblemStatement">
-    <End Role="Problem" Type="ExhysContestModel.Store.Problems" Multiplicity="1" />
+    <End Role="Problem" Type="ExhysContestModel.Store.Problems" Multiplicity="0..1" />
     <End Role="ProblemStatement" Type="ExhysContestModel.Store.ProblemStatements" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Problem">
@@ -199,56 +197,6 @@
       </Principal>
       <Dependent Role="ProblemStatement">
         <PropertyRef Name="ProblemProblemStatement_ProblemStatement_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_UserAccounts_UserGroups_UserGroup">
-    <End Role="UserGroup" Type="ExhysContestModel.Store.UserGroups" Multiplicity="1" />
-    <End Role="UserAccounts_UserGroups" Type="ExhysContestModel.Store.UserAccounts_UserGroups" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="UserGroup">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="UserAccounts_UserGroups">
-        <PropertyRef Name="UserGroups_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_UserAccounts_UserGroups_UserAccount">
-    <End Role="UserAccounts_UserGroups" Type="ExhysContestModel.Store.UserAccounts_UserGroups" Multiplicity="*" />
-    <End Role="UserAccount" Type="ExhysContestModel.Store.UserAccounts" Multiplicity="1" />
-    <ReferentialConstraint>
-      <Principal Role="UserAccount">
-        <PropertyRef Name="Id" />
-        <PropertyRef Name="Username" />
-      </Principal>
-      <Dependent Role="UserAccounts_UserGroups">
-        <PropertyRef Name="GroupMembers_Id" />
-        <PropertyRef Name="GroupMembers_Username" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Competitions_UserGroups_Competition">
-    <End Role="Competition" Type="ExhysContestModel.Store.Competitions" Multiplicity="1" />
-    <End Role="Competitions_UserGroups" Type="ExhysContestModel.Store.Competitions_UserGroups" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Competition">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Competitions_UserGroups">
-        <PropertyRef Name="AvaiableCompetitions_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Competitions_UserGroups_UserGroup">
-    <End Role="Competitions_UserGroups" Type="ExhysContestModel.Store.Competitions_UserGroups" Multiplicity="*" />
-    <End Role="UserGroup" Type="ExhysContestModel.Store.UserGroups" Multiplicity="1" />
-    <ReferentialConstraint>
-      <Principal Role="UserGroup">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Competitions_UserGroups">
-        <PropertyRef Name="GroupsAllowed_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -304,7 +252,7 @@
           <Property Name="LastName" Type="String" Nullable="true" MaxLength="32" Unicode="true" FixedLength="false" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="32" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="UserSessions" Relationship="ExhysContestModel.UserAccounts_UserSessions" FromRole="UserAccount" ToRole="UserSession" />
-          <NavigationProperty Name="UserGroups" Relationship="ExhysContestModel.UserAccounts_UserGroups" FromRole="UserAccount" ToRole="UserGroup" />
+          <NavigationProperty Name="UserGroup" Relationship="ExhysContestModel.UserAccounts_UserGroups" FromRole="UserAccount" ToRole="UserGroup" />
           <NavigationProperty Name="AuthoredSolutions" Relationship="ExhysContestModel.ProblemSolutions_UserAccounts" FromRole="UserAccount" ToRole="ProblemSolution" />
         </EntityType>
         <EntityType Name="UserSession">
@@ -334,7 +282,7 @@
           <NavigationProperty Name="AvaiableCompetitions" Relationship="ExhysContestModel.Competitions_UserGroups" FromRole="UserGroup" ToRole="Competition" />
         </EntityType>
         <Association Name="UserAccounts_UserGroups">
-          <End Type="ExhysContestModel.UserGroup" Multiplicity="*" Role="UserGroup" />
+          <End Type="ExhysContestModel.UserGroup" Multiplicity="0..1" Role="UserGroup" />
           <End Type="ExhysContestModel.UserAccount" Multiplicity="*" Role="UserAccount" />
         </Association>
         <EntityType Name="Competition">
@@ -345,7 +293,7 @@
           <NavigationProperty Name="Problems" Relationship="ExhysContestModel.Competitions_Problems" FromRole="Competition" ToRole="Problem" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="32" />
           <Property Name="Description" Type="String" Nullable="true" MaxLength="256" />
-          <NavigationProperty Name="GroupsAllowed" Relationship="ExhysContestModel.Competitions_UserGroups" FromRole="Competition" ToRole="UserGroup" />
+          <NavigationProperty Name="UserGroup" Relationship="ExhysContestModel.Competitions_UserGroups" FromRole="Competition" ToRole="UserGroup" />
         </EntityType>
         <EntityType Name="Problem">
           <Key>
@@ -358,12 +306,12 @@
           <NavigationProperty Name="ProblemStatements" Relationship="ExhysContestModel.ProblemProblemStatement" FromRole="Problem" ToRole="ProblemStatement" />
         </EntityType>
         <Association Name="Competitions_Problems">
-          <End Type="ExhysContestModel.Competition" Role="Competition" Multiplicity="1" />
+          <End Type="ExhysContestModel.Competition" Role="Competition" Multiplicity="0..1" />
           <End Type="ExhysContestModel.Problem" Role="Problem" Multiplicity="*" />
         </Association>
         <Association Name="Competitions_UserGroups">
           <End Type="ExhysContestModel.Competition" Role="Competition" Multiplicity="*" />
-          <End Type="ExhysContestModel.UserGroup" Role="UserGroup" Multiplicity="*" />
+          <End Type="ExhysContestModel.UserGroup" Role="UserGroup" Multiplicity="0..1" />
         </Association>
         <EntityType Name="ProblemSolution">
           <Key>
@@ -376,12 +324,12 @@
           <NavigationProperty Name="Author" Relationship="ExhysContestModel.ProblemSolutions_UserAccounts" FromRole="ProblemSolution" ToRole="UserAccount" />
         </EntityType>
         <Association Name="Problems_Solutions">
-          <End Type="ExhysContestModel.Problem" Role="Problem" Multiplicity="1" />
+          <End Type="ExhysContestModel.Problem" Role="Problem" Multiplicity="0..1" />
           <End Type="ExhysContestModel.ProblemSolution" Role="ProblemSolution" Multiplicity="*" />
         </Association>
         <Association Name="ProblemSolutions_UserAccounts">
           <End Type="ExhysContestModel.ProblemSolution" Role="ProblemSolution" Multiplicity="*" />
-          <End Type="ExhysContestModel.UserAccount" Role="UserAccount" Multiplicity="1" />
+          <End Type="ExhysContestModel.UserAccount" Role="UserAccount" Multiplicity="0..1" />
         </Association>
         <EntityType Name="ProblemStatement">
           <Key>
@@ -392,7 +340,7 @@
           <Property Name="Filename" Type="String" Nullable="false" DefaultValue="(None)" />
         </EntityType>
         <Association Name="ProblemProblemStatement">
-          <End Type="ExhysContestModel.Problem" Role="Problem" Multiplicity="1" />
+          <End Type="ExhysContestModel.Problem" Role="Problem" Multiplicity="0..1" />
           <End Type="ExhysContestModel.ProblemStatement" Role="ProblemStatement" Multiplicity="*" />
         </Association>
       </Schema>
@@ -479,14 +427,15 @@
       <Condition ColumnName="UserAccount_Id" IsNull="false" />
       <Condition ColumnName="UserAccount_Username" IsNull="false" />
     </AssociationSetMapping>
-    <AssociationSetMapping Name="UserAccounts_UserGroups" TypeName="ExhysContestModel.UserAccounts_UserGroups" StoreEntitySet="UserAccounts_UserGroups">
+    <AssociationSetMapping Name="UserAccounts_UserGroups" TypeName="ExhysContestModel.UserAccounts_UserGroups" StoreEntitySet="UserAccounts">
       <EndProperty Name="UserGroup">
-        <ScalarProperty Name="Id" ColumnName="UserGroups_Id" />
+        <ScalarProperty Name="Id" ColumnName="UserGroup_Id" />
       </EndProperty>
       <EndProperty Name="UserAccount">
-        <ScalarProperty Name="Id" ColumnName="GroupMembers_Id" />
-        <ScalarProperty Name="Username" ColumnName="GroupMembers_Username" />
+        <ScalarProperty Name="Id" ColumnName="Id" />
+        <ScalarProperty Name="Username" ColumnName="Username" />
       </EndProperty>
+      <Condition ColumnName="UserGroup_Id" IsNull="false" />
     </AssociationSetMapping>
     <AssociationSetMapping Name="Competitions_Problems" TypeName="ExhysContestModel.Competitions_Problems" StoreEntitySet="Problems">
       <EndProperty Name="Competition">
@@ -495,14 +444,16 @@
       <EndProperty Name="Problem">
         <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
+      <Condition ColumnName="CompetitionGivenAt_Id" IsNull="false" />
     </AssociationSetMapping>
-    <AssociationSetMapping Name="Competitions_UserGroups" TypeName="ExhysContestModel.Competitions_UserGroups" StoreEntitySet="Competitions_UserGroups">
-      <EndProperty Name="Competition">
-        <ScalarProperty Name="Id" ColumnName="AvaiableCompetitions_Id" />
-      </EndProperty>
+    <AssociationSetMapping Name="Competitions_UserGroups" TypeName="ExhysContestModel.Competitions_UserGroups" StoreEntitySet="Competitions">
       <EndProperty Name="UserGroup">
-        <ScalarProperty Name="Id" ColumnName="GroupsAllowed_Id" />
+        <ScalarProperty Name="Id" ColumnName="UserGroup_Id" />
       </EndProperty>
+      <EndProperty Name="Competition">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+      <Condition ColumnName="UserGroup_Id" IsNull="false" />
     </AssociationSetMapping>
     <AssociationSetMapping Name="Problems_Solutions" TypeName="ExhysContestModel.Problems_Solutions" StoreEntitySet="ProblemSolutions">
       <EndProperty Name="Problem">
@@ -511,6 +462,7 @@
       <EndProperty Name="ProblemSolution">
         <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
+      <Condition ColumnName="Problem_Id" IsNull="false" />
     </AssociationSetMapping>
     <AssociationSetMapping Name="ProblemSolutions_UserAccounts" TypeName="ExhysContestModel.ProblemSolutions_UserAccounts" StoreEntitySet="ProblemSolutions">
       <EndProperty Name="UserAccount">
@@ -520,6 +472,8 @@
       <EndProperty Name="ProblemSolution">
         <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
+      <Condition ColumnName="Author_Id" IsNull="false" />
+      <Condition ColumnName="Author_Username" IsNull="false" />
     </AssociationSetMapping>
     <AssociationSetMapping Name="ProblemProblemStatement" TypeName="ExhysContestModel.ProblemProblemStatement" StoreEntitySet="ProblemStatements">
       <EndProperty Name="Problem">
@@ -528,6 +482,7 @@
       <EndProperty Name="ProblemStatement">
         <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
+      <Condition ColumnName="ProblemProblemStatement_ProblemStatement_Id" IsNull="false" />
     </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>

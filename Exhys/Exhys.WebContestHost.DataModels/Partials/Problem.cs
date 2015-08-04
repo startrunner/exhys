@@ -7,11 +7,13 @@ using Exhys.WebContestHost.DataModels.Partials;
 
 namespace Exhys.WebContestHost.DataModels
 {
-    public partial class Problem:IClearable
+    public partial class Problem:IDeletable
     {
-        public void ClearForDeletion()
+        
+
+        public void DeleteFrom (ExhysContestEntities db)
         {
-            if (this.ProblemStatements != null) this.ProblemStatements.Clear();
+            db.Problems.Remove(this);
         }
     }
 }

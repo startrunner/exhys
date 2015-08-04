@@ -130,8 +130,9 @@
     <Compile Include="Areas\Administration\Controllers\ProblemsController.cs" />
     <Compile Include="Areas\Administration\Controllers\UserAccountsController.cs" />
     <Compile Include="Areas\Administration\Controllers\UserGroupsController.cs" />
-    <Compile Include="Areas\Administration\ViewModels\UserGroupViewModel.cs" />
     <Compile Include="Areas\Shared\CookieNames.cs" />
+    <Compile Include="Areas\Shared\ViewbagHandler.cs" />
+    <Compile Include="Areas\Shared\ExhysController.cs" />
     <Compile Include="Areas\Shared\Extensions\HttpRequestBase_Extensions.cs" />
     <Compile Include="Areas\Shared\Extensions\HttpResponseBase_Extensions.cs" />
     <Compile Include="Areas\Shared\ViewModels\CompetitionViewModel.cs" />
