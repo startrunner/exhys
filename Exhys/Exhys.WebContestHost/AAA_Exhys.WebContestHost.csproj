@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -130,20 +129,19 @@
     <Compile Include="Areas\Participation\Controllers\CompetitionsController.cs" />
     <Compile Include="Areas\Participation\ParticipationAreaRegistration.cs" />
     <Compile Include="Areas\Participation\ViewModels\ParticipationViewModel.cs" />
-    <Compile Include="Areas\Shared\Attributes\ExhysValidationAttribute.cs" />
     <Compile Include="Areas\Shared\CookieNames.cs" />
     <Compile Include="Areas\Shared\ExhysHelpers.cs" />
     <Compile Include="Areas\Shared\Extensions\HttpPostedFileBase_Extensions.cs" />
-    <Compile Include="Areas\Shared\Extensions\ViewDataDictionary_Extensions.cs" />
+    <Compile Include="Areas\Shared\Extensions\ViewdataDictionary_Extensions.cs" />
     <Compile Include="Areas\Shared\Mvc\ExhysController.cs" />
     <Compile Include="Areas\Shared\Extensions\HttpRequestBase_Extensions.cs" />
     <Compile Include="Areas\Shared\Extensions\HttpResponseBase_Extensions.cs" />
+    <Compile Include="Areas\Shared\ViewDataDictionary_Extensions.cs" />
     <Compile Include="Areas\Shared\ViewModels\CompetitionViewModel.cs" />
     <Compile Include="Areas\Shared\ViewModels\ProblemViewModel.cs" />
     <Compile Include="Areas\Shared\ViewModels\SignedInUserViewModel.cs" />
     <Compile Include="Areas\Shared\ViewModels\UserAccountViewModel.cs" />
     <Compile Include="Areas\Shared\ViewModels\UserGroupViewModel.cs" />
-    <Compile Include="Areas\Shared\ViewModels\ViewModelBase.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -248,12 +246,6 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
-  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

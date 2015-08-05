@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-using Exhys.WebContestHost.Areas.Shared.Attributes;
 using Exhys.WebContestHost.DataModels;
 
 namespace Exhys.WebContestHost.Areas.Shared.ViewModels
