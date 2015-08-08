@@ -7,28 +7,39 @@
 }
 
 <div>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Statement</th>
-            </tr>
-        </thead>
-        <tbody>
-            @{
-                for (int i = 0; i < Model.Problems.Count; i++)
-                {
-                    <tr>
-                        <td>@Model.Problems[i].Name</td>
-                        <td><a href="#">PDF</a></td>
-                    </tr>
+    <aside>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Statement</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    for (int i = 0; i < Model.Problems.Count; i++)
+                    {
+                        <tr>
+                            <td>@Model.Problems[i].Name</td>
+                            <td><a href="#">PDF</a></td>
+                        </tr>
+                    }
                 }
-             }
-        </tbody>
+            </tbody>
 
-    </table>
-    @using (Html.BeginForm())
-    {
-
-    }
+        </table>
+    </aside>
+    <section>
+        @using (Html.BeginForm(method:FormMethod.Post, controllerName:"Problems", actionName:"SubmitSolution"))
+        {
+            var vm = Model.Solution;
+            <div>
+                @Html.FixedDropDownListFor(m => vm.ProblemId, ViewData.GetProblemOptions())
+            </div>
+            <div>
+                @Html.TextAreaFor(m => vm.SourceCode, new { placeholder = "Paste your source code here", style="resize:vertical; width:600px", rows=32 })
+            </div>
+            <button type="submit">Submit Solution</button>
+        }
+    </section>
 </div>

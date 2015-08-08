@@ -5,7 +5,7 @@
         <table border="1">
             <thead>
                 <tr>
-                    <td>Id</td>
+                    <td>Group Id</td>
                     <td>Name</td>
                     <td>Description</td>
                     <td>Is Admin</td>
@@ -19,7 +19,8 @@
                     {
                         <tr>
                             <td>
-                                @Html.TextBoxFor(m=>m[i].Id, new { readonlY="" })
+                                @Html.HiddenFor(m=>m[i].Id)
+                                @Model[i].Id
                             </td>
                             <td>@Html.TextBoxFor(m=>m[i].Name)</td>
                             <td>@Html.TextBoxFor(m=>m[i].Description)</td>
@@ -34,16 +35,23 @@
         <button type="submit">Save Changes</button>
     }
 
-    @using (Html.BeginForm(method: FormMethod.Post, controllerName:"UserGroups",  actionName:"AddGroup"))
+    @using (Html.BeginForm(method: FormMethod.Post, controllerName: "UserGroups", actionName: "AddGroup"))
     {
-        var vm=new Exhys.WebContestHost.Areas.Shared.ViewModels.UserGroupViewModel();
-
-        @Html.TextBoxFor(m => vm.Name, new { placeholder = "Group Name" })
-        @Html.TextBoxFor(m => vm.Description, new { placeholder = "Group Description" })
-        @Html.LabelFor(m=>vm.IsAdmin, "Is Admin")
-        @Html.CheckBoxFor(m => vm.IsAdmin)
-        @Html.LabelFor(m=>vm.IsOpen, "Is Open")
-        @Html.CheckBoxFor(m => vm.IsOpen)
+        var vm = new Exhys.WebContestHost.Areas.Shared.ViewModels.UserGroupViewModel();
+        <div>
+            @Html.TextBoxFor(m => vm.Name, new { placeholder = "Group Name" })
+        </div>
+        <div>
+            @Html.TextBoxFor(m => vm.Description, new { placeholder = "Group Description" })
+        </div>
+        <div>
+            @Html.LabelFor(m => vm.IsAdmin, "Is Admin")
+            @Html.CheckBoxFor(m => vm.IsAdmin)
+        </div>
+        <div>
+            @Html.LabelFor(m => vm.IsOpen, "Is Open")
+            @Html.CheckBoxFor(m => vm.IsOpen)
+        </div>
 
         <button type="submit">Add Group</button>
     }

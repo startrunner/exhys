@@ -9,22 +9,38 @@ using Exhys.WebContestHost.Areas.Shared.ViewModels;
 using Exhys.WebContestHost.DataModels;
 using CodeBits;
 using Exhys.WebContestHost.Areas.Shared.Mvc;
+using Exhys.WebContestHost.Areas.Shared.Extensions;
 
 namespace Exhys.WebContestHost.Areas.Administration.Controllers
 {
     public class UserAccountsController : ExhysController
     {
+        private const int List_PageSize= 40;
 		[HttpGet]
-        public ActionResult List()
+        public ActionResult List(uint? page)
         {
+            if (page == null) page = 1;
+
             AddSignedInUserInformation();
             AddUserGroupOptions();
 
 			using (var db=new ExhysContestEntities())
             {
+                int itemCount = db.UserAccounts.Count();
+
+                ViewData.SetPageSize(List_PageSize);
+                ViewData.SetPageCount(itemCount / List_PageSize + (itemCount % List_PageSize == 0 ? 0 : 1));
+                ViewData.SetCurrentPage((int)page);
+
+
                 var vm = new List<UserAccountViewModel>();
+
+                int skip = (int)((((int)page) - 1) * List_PageSize);
+
                 db.UserAccounts
                     .OrderBy(a=>a.Username)
+                    .Skip(skip)
+                    .Take(List_PageSize)
                     .ToList()
                     .ForEach((acc) =>
                     {
@@ -51,8 +67,7 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
                         user.FirstName = v.FirstName;
                         user.LastName = v.LastName;
                         user.Password = v.Password;
-                        user.UserSessions.Clear();
-                        var gr = db.UserGroups.Where(g => g.Id == v.GroupId).Take(1).ToList()[0];
+                        var gr = db.UserGroups.Where(g => g.Id == v.GroupId).FirstOrDefault();
                         user.UserGroup = gr;
                     }
                     else

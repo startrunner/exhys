@@ -1,0 +1,10 @@
+﻿[
+  {
+    "outputFile": "WebRoot/Styles/participation.css",
+    "inputFile": "WebRoot/Styles/participation.scss"
+  },
+  {
+    "outputFile": "WebRoot/Styles/style.css",
+    "inputFile": "WebRoot/Styles/style.scss"
+  }
+]

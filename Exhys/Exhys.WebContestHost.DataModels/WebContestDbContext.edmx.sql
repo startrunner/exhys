@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 08/01/2015 11:42:57
+-- Date Created: 08/07/2015 10:50:33
 -- Generated from EDMX file: C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost.DataModels\WebContestDbContext.edmx
 -- --------------------------------------------------
 
@@ -32,14 +32,23 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_Problems_Solutions]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[ProblemSolutions] DROP CONSTRAINT [FK_Problems_Solutions];
 GO
-IF OBJECT_ID(N'[dbo].[FK_ProblemSolutions_UserAccounts]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ProblemSolutions] DROP CONSTRAINT [FK_ProblemSolutions_UserAccounts];
-GO
 IF OBJECT_ID(N'[dbo].[FK_ProblemProblemStatement]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[ProblemStatements] DROP CONSTRAINT [FK_ProblemProblemStatement];
 GO
 IF OBJECT_ID(N'[dbo].[FK_Problems_ProblemTests]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[ProblemTests] DROP CONSTRAINT [FK_Problems_ProblemTests];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UserAccounts_ProblemSolutions]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ProblemSolutions] DROP CONSTRAINT [FK_UserAccounts_ProblemSolutions];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ActiveCheckerProgrammingLanguage]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ProgrammingLanguages] DROP CONSTRAINT [FK_ActiveCheckerProgrammingLanguage];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ActiveCheckerPerformanceMetric]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PerformanceMetrics] DROP CONSTRAINT [FK_ActiveCheckerPerformanceMetric];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ProblemSolutionSolutionTestStatus]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[SolutionTestStatuses] DROP CONSTRAINT [FK_ProblemSolutionSolutionTestStatus];
 GO
 
 -- --------------------------------------------------
@@ -70,6 +79,18 @@ GO
 IF OBJECT_ID(N'[dbo].[ProblemTests]', 'U') IS NOT NULL
     DROP TABLE [dbo].[ProblemTests];
 GO
+IF OBJECT_ID(N'[dbo].[ActiveCheckers]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ActiveCheckers];
+GO
+IF OBJECT_ID(N'[dbo].[ProgrammingLanguages]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ProgrammingLanguages];
+GO
+IF OBJECT_ID(N'[dbo].[PerformanceMetrics]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PerformanceMetrics];
+GO
+IF OBJECT_ID(N'[dbo].[SolutionTestStatuses]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[SolutionTestStatuses];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -92,8 +113,8 @@ CREATE TABLE [dbo].[UserSessions] (
     [UserAgentString] nvarchar(400)  NOT NULL,
     [BrowserName] nvarchar(400)  NOT NULL,
     [IPAdress] nvarchar(64)  NOT NULL,
-    [UserAccount_Id] int  NULL,
-    [UserAccount_Username] nvarchar(32)  NULL
+    [UserAccount_Id] int  NOT NULL,
+    [UserAccount_Username] nvarchar(32)  NOT NULL
 );
 GO
 
@@ -133,9 +154,11 @@ CREATE TABLE [dbo].[ProblemSolutions] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [SourceCode] nvarchar(max)  NOT NULL,
     [LanguageAlias] nvarchar(8)  NOT NULL,
-    [Problem_Id] int  NULL,
-    [Author_Id] int  NULL,
-    [Author_Username] nvarchar(32)  NULL
+    [StatusCode] tinyint  NOT NULL,
+    [Message] nvarchar(max)  NULL,
+    [Problem_Id] int  NOT NULL,
+    [Author_Id] int  NOT NULL,
+    [Author_Username] nvarchar(32)  NOT NULL
 );
 GO
 
@@ -155,6 +178,55 @@ CREATE TABLE [dbo].[ProblemTests] (
     [Output] nvarchar(max)  NULL,
     [GroupName] nvarchar(max)  NOT NULL,
     [Problem_Id] int  NULL
+);
+GO
+
+-- Creating table 'ActiveCheckers'
+CREATE TABLE [dbo].[ActiveCheckers] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(max)  NOT NULL,
+    [IPAdress] nvarchar(max)  NOT NULL,
+    [LastActive] datetime  NOT NULL
+);
+GO
+
+-- Creating table 'ProgrammingLanguages'
+CREATE TABLE [dbo].[ProgrammingLanguages] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Alias] nvarchar(max)  NOT NULL,
+    [Name] nvarchar(max)  NOT NULL,
+    [Description] nvarchar(max)  NULL,
+    [Checker_Id] int  NOT NULL
+);
+GO
+
+-- Creating table 'PerformanceMetrics'
+CREATE TABLE [dbo].[PerformanceMetrics] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] nvarchar(max)  NOT NULL,
+    [Description] nvarchar(max)  NULL,
+    [CPULoad] float  NOT NULL,
+    [MaximumMemory] bigint  NOT NULL,
+    [UtilizedMemory] bigint  NOT NULL,
+    [Checker_Id] int  NOT NULL
+);
+GO
+
+-- Creating table 'SolutionTestStatuses'
+CREATE TABLE [dbo].[SolutionTestStatuses] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [TestNumber] int  NOT NULL,
+    [Input] nvarchar(max)  NULL,
+    [SolutionOutput] nvarchar(max)  NULL,
+    [ExpectedOutput] nvarchar(max)  NULL,
+    [StatusCode] nvarchar(max)  NOT NULL,
+    [Points] float  NOT NULL,
+    [Feedback_ShowStatus] bit  NOT NULL,
+    [Feedback_ShowPoints] bit  NOT NULL,
+    [Feedback_ShowInput] bit  NOT NULL,
+    [Feedback_ShowOutput] bit  NOT NULL,
+    [Feedback_ShowExpectedOutput] bit  NOT NULL,
+    [ProblemSolutionSolutionTestStatus_SolutionTestStatus_Id] int  NOT NULL
 );
 GO
 
@@ -207,6 +279,30 @@ GO
 -- Creating primary key on [Id] in table 'ProblemTests'
 ALTER TABLE [dbo].[ProblemTests]
 ADD CONSTRAINT [PK_ProblemTests]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'ActiveCheckers'
+ALTER TABLE [dbo].[ActiveCheckers]
+ADD CONSTRAINT [PK_ActiveCheckers]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'ProgrammingLanguages'
+ALTER TABLE [dbo].[ProgrammingLanguages]
+ADD CONSTRAINT [PK_ProgrammingLanguages]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'PerformanceMetrics'
+ALTER TABLE [dbo].[PerformanceMetrics]
+ADD CONSTRAINT [PK_PerformanceMetrics]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'SolutionTestStatuses'
+ALTER TABLE [dbo].[SolutionTestStatuses]
+ADD CONSTRAINT [PK_SolutionTestStatuses]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -289,21 +385,6 @@ ON [dbo].[ProblemSolutions]
     ([Problem_Id]);
 GO
 
--- Creating foreign key on [Author_Id], [Author_Username] in table 'ProblemSolutions'
-ALTER TABLE [dbo].[ProblemSolutions]
-ADD CONSTRAINT [FK_ProblemSolutions_UserAccounts]
-    FOREIGN KEY ([Author_Id], [Author_Username])
-    REFERENCES [dbo].[UserAccounts]
-        ([Id], [Username])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_ProblemSolutions_UserAccounts'
-CREATE INDEX [IX_FK_ProblemSolutions_UserAccounts]
-ON [dbo].[ProblemSolutions]
-    ([Author_Id], [Author_Username]);
-GO
-
 -- Creating foreign key on [ProblemProblemStatement_ProblemStatement_Id] in table 'ProblemStatements'
 ALTER TABLE [dbo].[ProblemStatements]
 ADD CONSTRAINT [FK_ProblemProblemStatement]
@@ -332,6 +413,66 @@ GO
 CREATE INDEX [IX_FK_Problems_ProblemTests]
 ON [dbo].[ProblemTests]
     ([Problem_Id]);
+GO
+
+-- Creating foreign key on [Author_Id], [Author_Username] in table 'ProblemSolutions'
+ALTER TABLE [dbo].[ProblemSolutions]
+ADD CONSTRAINT [FK_UserAccounts_ProblemSolutions]
+    FOREIGN KEY ([Author_Id], [Author_Username])
+    REFERENCES [dbo].[UserAccounts]
+        ([Id], [Username])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_UserAccounts_ProblemSolutions'
+CREATE INDEX [IX_FK_UserAccounts_ProblemSolutions]
+ON [dbo].[ProblemSolutions]
+    ([Author_Id], [Author_Username]);
+GO
+
+-- Creating foreign key on [Checker_Id] in table 'ProgrammingLanguages'
+ALTER TABLE [dbo].[ProgrammingLanguages]
+ADD CONSTRAINT [FK_ActiveCheckerProgrammingLanguage]
+    FOREIGN KEY ([Checker_Id])
+    REFERENCES [dbo].[ActiveCheckers]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ActiveCheckerProgrammingLanguage'
+CREATE INDEX [IX_FK_ActiveCheckerProgrammingLanguage]
+ON [dbo].[ProgrammingLanguages]
+    ([Checker_Id]);
+GO
+
+-- Creating foreign key on [Checker_Id] in table 'PerformanceMetrics'
+ALTER TABLE [dbo].[PerformanceMetrics]
+ADD CONSTRAINT [FK_ActiveCheckerPerformanceMetric]
+    FOREIGN KEY ([Checker_Id])
+    REFERENCES [dbo].[ActiveCheckers]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ActiveCheckerPerformanceMetric'
+CREATE INDEX [IX_FK_ActiveCheckerPerformanceMetric]
+ON [dbo].[PerformanceMetrics]
+    ([Checker_Id]);
+GO
+
+-- Creating foreign key on [ProblemSolutionSolutionTestStatus_SolutionTestStatus_Id] in table 'SolutionTestStatuses'
+ALTER TABLE [dbo].[SolutionTestStatuses]
+ADD CONSTRAINT [FK_ProblemSolutionSolutionTestStatus]
+    FOREIGN KEY ([ProblemSolutionSolutionTestStatus_SolutionTestStatus_Id])
+    REFERENCES [dbo].[ProblemSolutions]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ProblemSolutionSolutionTestStatus'
+CREATE INDEX [IX_FK_ProblemSolutionSolutionTestStatus]
+ON [dbo].[SolutionTestStatuses]
+    ([ProblemSolutionSolutionTestStatus_SolutionTestStatus_Id]);
 GO
 
 -- --------------------------------------------------

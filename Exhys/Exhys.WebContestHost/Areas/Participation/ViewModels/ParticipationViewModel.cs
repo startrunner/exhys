@@ -12,6 +12,7 @@ namespace Exhys.WebContestHost.Areas.Participation.ViewModels
     {
         public CompetitionViewModel Competition { get; set; }
         public List<ProblemViewModel> Problems { get; set; }
+        public ProblemSolutionViewModel Solution { get; set; }
 
         public ParticipationViewModel(Competition model)
         {
@@ -21,6 +22,8 @@ namespace Exhys.WebContestHost.Areas.Participation.ViewModels
             {
                 this.Problems.Add(new ProblemViewModel(p));
             }
+
+            this.Solution = new ProblemSolutionViewModel();
         }
     }
 }

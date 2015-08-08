@@ -14,6 +14,10 @@
     <EntitySet Name="ProblemSolutions" EntityType="ExhysContestModel.Store.ProblemSolutions" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProblemStatements" EntityType="ExhysContestModel.Store.ProblemStatements" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProblemTests" EntityType="ExhysContestModel.Store.ProblemTests" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ActiveCheckers" EntityType="ExhysContestModel.Store.ActiveCheckers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProgrammingLanguages" EntityType="ExhysContestModel.Store.ProgrammingLanguages" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PerformanceMetrics" EntityType="ExhysContestModel.Store.PerformanceMetrics" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SolutionTestStatuses" EntityType="ExhysContestModel.Store.SolutionTestStatuses" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="UserAccounts_UserSessions" Association="ExhysContestModel.Store.UserAccounts_UserSessions">
       <End Role="UserSession" EntitySet="UserSessions" />
       <End Role="UserAccount" EntitySet="UserAccounts" />
@@ -34,10 +38,6 @@
       <End Role="Problem" EntitySet="Problems" />
       <End Role="ProblemSolution" EntitySet="ProblemSolutions" />
     </AssociationSet>
-    <AssociationSet Name="ProblemSolutions_UserAccounts" Association="ExhysContestModel.Store.ProblemSolutions_UserAccounts">
-      <End Role="ProblemSolution" EntitySet="ProblemSolutions" />
-      <End Role="UserAccount" EntitySet="UserAccounts" />
-    </AssociationSet>
     <AssociationSet Name="ProblemProblemStatement" Association="ExhysContestModel.Store.ProblemProblemStatement">
       <End Role="Problem" EntitySet="Problems" />
       <End Role="ProblemStatement" EntitySet="ProblemStatements" />
@@ -45,6 +45,22 @@
     <AssociationSet Name="Problems_ProblemTests" Association="ExhysContestModel.Store.Problems_ProblemTests">
       <End Role="Problem" EntitySet="Problems" />
       <End Role="ProblemTest" EntitySet="ProblemTests" />
+    </AssociationSet>
+    <AssociationSet Name="UserAccounts_ProblemSolutions" Association="ExhysContestModel.Store.UserAccounts_ProblemSolutions">
+      <End Role="UserAccount" EntitySet="UserAccounts" />
+      <End Role="ProblemSolution" EntitySet="ProblemSolutions" />
+    </AssociationSet>
+    <AssociationSet Name="ActiveCheckerProgrammingLanguage" Association="ExhysContestModel.Store.ActiveCheckerProgrammingLanguage">
+      <End Role="ActiveChecker" EntitySet="ActiveCheckers" />
+      <End Role="ProgrammingLanguage" EntitySet="ProgrammingLanguages" />
+    </AssociationSet>
+    <AssociationSet Name="ActiveCheckerPerformanceMetric" Association="ExhysContestModel.Store.ActiveCheckerPerformanceMetric">
+      <End Role="ActiveChecker" EntitySet="ActiveCheckers" />
+      <End Role="PerformanceMetric" EntitySet="PerformanceMetrics" />
+    </AssociationSet>
+    <AssociationSet Name="ProblemSolutionSolutionTestStatus" Association="ExhysContestModel.Store.ProblemSolutionSolutionTestStatus">
+      <End Role="ProblemSolution" EntitySet="ProblemSolutions" />
+      <End Role="SolutionTestStatus" EntitySet="SolutionTestStatuses" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="UserAccounts">
@@ -67,8 +83,8 @@
     <Property Name="UserAgentString" Type="nvarchar" Nullable="false" MaxLength="400" />
     <Property Name="BrowserName" Type="nvarchar" Nullable="false" MaxLength="400" />
     <Property Name="IPAdress" Type="nvarchar" Nullable="false" MaxLength="64" />
-    <Property Name="UserAccount_Id" Type="int" Nullable="true" />
-    <Property Name="UserAccount_Username" Type="nvarchar" MaxLength="32" Nullable="true" />
+    <Property Name="UserAccount_Id" Type="int" Nullable="false" />
+    <Property Name="UserAccount_Username" Type="nvarchar" MaxLength="32" Nullable="false" />
   </EntityType>
   <EntityType Name="UserGroups">
     <Key>
@@ -108,9 +124,11 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="SourceCode" Type="nvarchar(max)" Nullable="false" />
     <Property Name="LanguageAlias" Type="nvarchar" Nullable="false" MaxLength="8" />
-    <Property Name="Problem_Id" Type="int" Nullable="true" />
-    <Property Name="Author_Id" Type="int" Nullable="true" />
-    <Property Name="Author_Username" Type="nvarchar" MaxLength="32" Nullable="true" />
+    <Property Name="StatusCode" Type="tinyint" Nullable="false" />
+    <Property Name="Message" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Problem_Id" Type="int" Nullable="false" />
+    <Property Name="Author_Id" Type="int" Nullable="false" />
+    <Property Name="Author_Username" Type="nvarchar" MaxLength="32" Nullable="false" />
   </EntityType>
   <EntityType Name="ProblemStatements">
     <Key>
@@ -131,9 +149,58 @@
     <Property Name="GroupName" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Problem_Id" Type="int" Nullable="true" />
   </EntityType>
+  <EntityType Name="ActiveCheckers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IPAdress" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LastActive" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProgrammingLanguages">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Alias" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Checker_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PerformanceMetrics">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="CPULoad" Type="float" Nullable="false" />
+    <Property Name="MaximumMemory" Type="bigint" Nullable="false" />
+    <Property Name="UtilizedMemory" Type="bigint" Nullable="false" />
+    <Property Name="Checker_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SolutionTestStatuses">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TestNumber" Type="int" Nullable="false" />
+    <Property Name="Input" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="SolutionOutput" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="ExpectedOutput" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="StatusCode" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Points" Type="float" Nullable="false" />
+    <Property Name="Feedback_ShowStatus" Type="bit" Nullable="false" />
+    <Property Name="Feedback_ShowPoints" Type="bit" Nullable="false" />
+    <Property Name="Feedback_ShowInput" Type="bit" Nullable="false" />
+    <Property Name="Feedback_ShowOutput" Type="bit" Nullable="false" />
+    <Property Name="Feedback_ShowExpectedOutput" Type="bit" Nullable="false" />
+    <Property Name="ProblemSolutionSolutionTestStatus_SolutionTestStatus_Id" Type="int" Nullable="false" />
+  </EntityType>
   <Association Name="UserAccounts_UserSessions">
     <End Role="UserSession" Type="ExhysContestModel.Store.UserSessions" Multiplicity="*" />
-    <End Role="UserAccount" Type="ExhysContestModel.Store.UserAccounts" Multiplicity="0..1" />
+    <End Role="UserAccount" Type="ExhysContestModel.Store.UserAccounts" Multiplicity="1" />
     <ReferentialConstraint>
       <Principal Role="UserAccount">
         <PropertyRef Name="Id" />
@@ -182,7 +249,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="Problems_Solutions">
-    <End Role="Problem" Type="ExhysContestModel.Store.Problems" Multiplicity="0..1" />
+    <End Role="Problem" Type="ExhysContestModel.Store.Problems" Multiplicity="1" />
     <End Role="ProblemSolution" Type="ExhysContestModel.Store.ProblemSolutions" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Problem">
@@ -190,20 +257,6 @@
       </Principal>
       <Dependent Role="ProblemSolution">
         <PropertyRef Name="Problem_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="ProblemSolutions_UserAccounts">
-    <End Role="ProblemSolution" Type="ExhysContestModel.Store.ProblemSolutions" Multiplicity="*" />
-    <End Role="UserAccount" Type="ExhysContestModel.Store.UserAccounts" Multiplicity="0..1" />
-    <ReferentialConstraint>
-      <Principal Role="UserAccount">
-        <PropertyRef Name="Id" />
-        <PropertyRef Name="Username" />
-      </Principal>
-      <Dependent Role="ProblemSolution">
-        <PropertyRef Name="Author_Id" />
-        <PropertyRef Name="Author_Username" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -228,6 +281,56 @@
       </Principal>
       <Dependent Role="ProblemTest">
         <PropertyRef Name="Problem_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserAccounts_ProblemSolutions">
+    <End Role="UserAccount" Type="ExhysContestModel.Store.UserAccounts" Multiplicity="1" />
+    <End Role="ProblemSolution" Type="ExhysContestModel.Store.ProblemSolutions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserAccount">
+        <PropertyRef Name="Id" />
+        <PropertyRef Name="Username" />
+      </Principal>
+      <Dependent Role="ProblemSolution">
+        <PropertyRef Name="Author_Id" />
+        <PropertyRef Name="Author_Username" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ActiveCheckerProgrammingLanguage">
+    <End Role="ActiveChecker" Type="ExhysContestModel.Store.ActiveCheckers" Multiplicity="1" />
+    <End Role="ProgrammingLanguage" Type="ExhysContestModel.Store.ProgrammingLanguages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ActiveChecker">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProgrammingLanguage">
+        <PropertyRef Name="Checker_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ActiveCheckerPerformanceMetric">
+    <End Role="ActiveChecker" Type="ExhysContestModel.Store.ActiveCheckers" Multiplicity="1" />
+    <End Role="PerformanceMetric" Type="ExhysContestModel.Store.PerformanceMetrics" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ActiveChecker">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PerformanceMetric">
+        <PropertyRef Name="Checker_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProblemSolutionSolutionTestStatus">
+    <End Role="ProblemSolution" Type="ExhysContestModel.Store.ProblemSolutions" Multiplicity="1" />
+    <End Role="SolutionTestStatus" Type="ExhysContestModel.Store.SolutionTestStatuses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProblemSolution">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SolutionTestStatus">
+        <PropertyRef Name="ProblemSolutionSolutionTestStatus_SolutionTestStatus_Id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -262,10 +365,6 @@
             <End Role="Problem" EntitySet="Problems" />
             <End Role="ProblemSolution" EntitySet="ProblemSolutions" />
           </AssociationSet>
-          <AssociationSet Name="ProblemSolutions_UserAccounts" Association="ExhysContestModel.ProblemSolutions_UserAccounts">
-            <End Role="ProblemSolution" EntitySet="ProblemSolutions" />
-            <End Role="UserAccount" EntitySet="UserAccounts" />
-          </AssociationSet>
           <EntitySet Name="ProblemStatements" EntityType="ExhysContestModel.ProblemStatement" />
           <AssociationSet Name="ProblemProblemStatement" Association="ExhysContestModel.ProblemProblemStatement">
             <End Role="Problem" EntitySet="Problems" />
@@ -275,6 +374,26 @@
           <AssociationSet Name="Problems_ProblemTests" Association="ExhysContestModel.Problems_ProblemTests">
             <End Role="Problem" EntitySet="Problems" />
             <End Role="ProblemTest" EntitySet="ProblemTests" />
+          </AssociationSet>
+          <AssociationSet Name="UserAccounts_ProblemSolutions" Association="ExhysContestModel.UserAccounts_ProblemSolutions">
+            <End Role="UserAccount" EntitySet="UserAccounts" />
+            <End Role="ProblemSolution" EntitySet="ProblemSolutions" />
+          </AssociationSet>
+          <EntitySet Name="ActiveCheckers" EntityType="ExhysContestModel.ActiveChecker" />
+          <EntitySet Name="ProgrammingLanguages" EntityType="ExhysContestModel.ProgrammingLanguage" />
+          <EntitySet Name="PerformanceMetrics" EntityType="ExhysContestModel.PerformanceMetric" />
+          <AssociationSet Name="ActiveCheckerProgrammingLanguage" Association="ExhysContestModel.ActiveCheckerProgrammingLanguage">
+            <End Role="ActiveChecker" EntitySet="ActiveCheckers" />
+            <End Role="ProgrammingLanguage" EntitySet="ProgrammingLanguages" />
+          </AssociationSet>
+          <AssociationSet Name="ActiveCheckerPerformanceMetric" Association="ExhysContestModel.ActiveCheckerPerformanceMetric">
+            <End Role="ActiveChecker" EntitySet="ActiveCheckers" />
+            <End Role="PerformanceMetric" EntitySet="PerformanceMetrics" />
+          </AssociationSet>
+          <EntitySet Name="SolutionTestStatuses" EntityType="ExhysContestModel.SolutionTestStatus" />
+          <AssociationSet Name="ProblemSolutionSolutionTestStatus" Association="ExhysContestModel.ProblemSolutionSolutionTestStatus">
+            <End Role="ProblemSolution" EntitySet="ProblemSolutions" />
+            <End Role="SolutionTestStatus" EntitySet="SolutionTestStatuses" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="UserAccount">
@@ -289,7 +408,7 @@
           <Property Name="Password" Type="String" Nullable="false" MaxLength="32" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="UserSessions" Relationship="ExhysContestModel.UserAccounts_UserSessions" FromRole="UserAccount" ToRole="UserSession" />
           <NavigationProperty Name="UserGroup" Relationship="ExhysContestModel.UserAccounts_UserGroups" FromRole="UserAccount" ToRole="UserGroup" />
-          <NavigationProperty Name="AuthoredSolutions" Relationship="ExhysContestModel.ProblemSolutions_UserAccounts" FromRole="UserAccount" ToRole="ProblemSolution" />
+          <NavigationProperty Name="ProblemSolutions" Relationship="ExhysContestModel.UserAccounts_ProblemSolutions" FromRole="UserAccount" ToRole="ProblemSolution" />
         </EntityType>
         <EntityType Name="UserSession">
           <Key>
@@ -303,7 +422,7 @@
         </EntityType>
         <Association Name="UserAccounts_UserSessions">
           <End Type="ExhysContestModel.UserSession" Role="UserSession" Multiplicity="*" />
-          <End Type="ExhysContestModel.UserAccount" Role="UserAccount" Multiplicity="0..1" />
+          <End Type="ExhysContestModel.UserAccount" Role="UserAccount" Multiplicity="1" />
         </Association>
         <EntityType Name="UserGroup">
           <Key>
@@ -362,15 +481,14 @@
           <Property Name="SourceCode" Type="String" Nullable="false" />
           <Property Name="LanguageAlias" Type="String" Nullable="false" MaxLength="8" />
           <NavigationProperty Name="Problem" Relationship="ExhysContestModel.Problems_Solutions" FromRole="ProblemSolution" ToRole="Problem" />
-          <NavigationProperty Name="Author" Relationship="ExhysContestModel.ProblemSolutions_UserAccounts" FromRole="ProblemSolution" ToRole="UserAccount" />
+          <NavigationProperty Name="Author" Relationship="ExhysContestModel.UserAccounts_ProblemSolutions" FromRole="ProblemSolution" ToRole="UserAccount" />
+          <Property Name="StatusCode" Type="Byte" Nullable="false" a:SetterAccess="Private" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" a:GetterAccess="Public" />
+          <Property Name="Message" Type="String" Nullable="true" />
+          <NavigationProperty Name="TestStatuses" Relationship="ExhysContestModel.ProblemSolutionSolutionTestStatus" FromRole="ProblemSolution" ToRole="SolutionTestStatus" />
         </EntityType>
         <Association Name="Problems_Solutions">
-          <End Type="ExhysContestModel.Problem" Role="Problem" Multiplicity="0..1" />
+          <End Type="ExhysContestModel.Problem" Role="Problem" Multiplicity="1" />
           <End Type="ExhysContestModel.ProblemSolution" Role="ProblemSolution" Multiplicity="*" />
-        </Association>
-        <Association Name="ProblemSolutions_UserAccounts">
-          <End Type="ExhysContestModel.ProblemSolution" Role="ProblemSolution" Multiplicity="*" />
-          <End Type="ExhysContestModel.UserAccount" Role="UserAccount" Multiplicity="0..1" />
         </Association>
         <EntityType Name="ProblemStatement">
           <Key>
@@ -398,6 +516,72 @@
           <End Type="ExhysContestModel.Problem" Role="Problem" Multiplicity="0..1" />
           <End Type="ExhysContestModel.ProblemTest" Role="ProblemTest" Multiplicity="*" >
           </End>
+        </Association>
+        <Association Name="UserAccounts_ProblemSolutions">
+          <End Type="ExhysContestModel.UserAccount" Role="UserAccount" Multiplicity="1" />
+          <End Type="ExhysContestModel.ProblemSolution" Role="ProblemSolution" Multiplicity="*" />
+        </Association>
+        <EntityType Name="ActiveChecker">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="IPAdress" Type="String" Nullable="false" />
+          <Property Name="LastActive" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="ProgrammingLanguages" Relationship="ExhysContestModel.ActiveCheckerProgrammingLanguage" FromRole="ActiveChecker" ToRole="ProgrammingLanguage" />
+          <NavigationProperty Name="PerformanceMetrics" Relationship="ExhysContestModel.ActiveCheckerPerformanceMetric" FromRole="ActiveChecker" ToRole="PerformanceMetric" />
+        </EntityType>
+        <EntityType Name="ProgrammingLanguage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Alias" Type="String" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="true" />
+          <NavigationProperty Name="Checker" Relationship="ExhysContestModel.ActiveCheckerProgrammingLanguage" FromRole="ProgrammingLanguage" ToRole="ActiveChecker" />
+        </EntityType>
+        <EntityType Name="PerformanceMetric">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="true" />
+          <Property Name="CPULoad" Type="Double" Nullable="false" />
+          <Property Name="MaximumMemory" Type="Int64" Nullable="false" />
+          <Property Name="UtilizedMemory" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Checker" Relationship="ExhysContestModel.ActiveCheckerPerformanceMetric" FromRole="PerformanceMetric" ToRole="ActiveChecker" />
+        </EntityType>
+        <Association Name="ActiveCheckerProgrammingLanguage">
+          <End Type="ExhysContestModel.ActiveChecker" Role="ActiveChecker" Multiplicity="1" />
+          <End Type="ExhysContestModel.ProgrammingLanguage" Role="ProgrammingLanguage" Multiplicity="*" />
+        </Association>
+        <Association Name="ActiveCheckerPerformanceMetric">
+          <End Type="ExhysContestModel.ActiveChecker" Role="ActiveChecker" Multiplicity="1" />
+          <End Type="ExhysContestModel.PerformanceMetric" Role="PerformanceMetric" Multiplicity="*" />
+        </Association>
+        <EntityType Name="SolutionTestStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TestNumber" Type="Int32" Nullable="false" />
+          <Property Name="Input" Type="String" Nullable="true" />
+          <Property Name="SolutionOutput" Type="String" Nullable="true" />
+          <Property Name="ExpectedOutput" Type="String" Nullable="true" />
+          <Property Name="StatusCode" Type="String" Nullable="false" />
+          <Property Name="Points" Type="Double" Nullable="false" />
+          <Property Name="Feedback_ShowStatus" Type="Boolean" Nullable="false" />
+          <Property Name="Feedback_ShowPoints" Type="Boolean" Nullable="false" />
+          <Property Name="Feedback_ShowInput" Type="Boolean" Nullable="false" />
+          <Property Name="Feedback_ShowOutput" Type="Boolean" Nullable="false" />
+          <Property Name="Feedback_ShowExpectedOutput" Type="Boolean" Nullable="false" />
+          </EntityType>
+        <Association Name="ProblemSolutionSolutionTestStatus">
+          <End Type="ExhysContestModel.ProblemSolution" Role="ProblemSolution" Multiplicity="1" />
+          <End Type="ExhysContestModel.SolutionTestStatus" Role="SolutionTestStatus" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -464,6 +648,8 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="SourceCode" ColumnName="SourceCode" />
           <ScalarProperty Name="LanguageAlias" ColumnName="LanguageAlias" />
+          <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -486,6 +672,56 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ActiveCheckers">
+      <EntityTypeMapping TypeName="IsTypeOf(ExhysContestModel.ActiveChecker)">
+        <MappingFragment StoreEntitySet="ActiveCheckers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="IPAdress" ColumnName="IPAdress" />
+          <ScalarProperty Name="LastActive" ColumnName="LastActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProgrammingLanguages">
+      <EntityTypeMapping TypeName="IsTypeOf(ExhysContestModel.ProgrammingLanguage)">
+        <MappingFragment StoreEntitySet="ProgrammingLanguages">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Alias" ColumnName="Alias" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PerformanceMetrics">
+      <EntityTypeMapping TypeName="IsTypeOf(ExhysContestModel.PerformanceMetric)">
+        <MappingFragment StoreEntitySet="PerformanceMetrics">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="CPULoad" ColumnName="CPULoad" />
+          <ScalarProperty Name="MaximumMemory" ColumnName="MaximumMemory" />
+          <ScalarProperty Name="UtilizedMemory" ColumnName="UtilizedMemory" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SolutionTestStatuses">
+      <EntityTypeMapping TypeName="IsTypeOf(ExhysContestModel.SolutionTestStatus)">
+        <MappingFragment StoreEntitySet="SolutionTestStatuses">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="TestNumber" ColumnName="TestNumber" />
+          <ScalarProperty Name="Input" ColumnName="Input" />
+          <ScalarProperty Name="SolutionOutput" ColumnName="SolutionOutput" />
+          <ScalarProperty Name="ExpectedOutput" ColumnName="ExpectedOutput" />
+          <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+          <ScalarProperty Name="Points" ColumnName="Points" />
+          <ScalarProperty Name="Feedback_ShowStatus" ColumnName="Feedback_ShowStatus" />
+          <ScalarProperty Name="Feedback_ShowPoints" ColumnName="Feedback_ShowPoints" />
+          <ScalarProperty Name="Feedback_ShowInput" ColumnName="Feedback_ShowInput" />
+          <ScalarProperty Name="Feedback_ShowOutput" ColumnName="Feedback_ShowOutput" />
+          <ScalarProperty Name="Feedback_ShowExpectedOutput" ColumnName="Feedback_ShowExpectedOutput" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <AssociationSetMapping Name="UserAccounts_UserSessions" TypeName="ExhysContestModel.UserAccounts_UserSessions" StoreEntitySet="UserSessions">
       <EndProperty Name="UserAccount">
         <ScalarProperty Name="Id" ColumnName="UserAccount_Id" />
@@ -494,8 +730,6 @@
       <EndProperty Name="UserSession">
         <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
-      <Condition ColumnName="UserAccount_Id" IsNull="false" />
-      <Condition ColumnName="UserAccount_Username" IsNull="false" />
     </AssociationSetMapping>
     <AssociationSetMapping Name="UserAccounts_UserGroups" TypeName="ExhysContestModel.UserAccounts_UserGroups" StoreEntitySet="UserAccounts">
       <EndProperty Name="UserGroup">
@@ -532,18 +766,6 @@
       <EndProperty Name="ProblemSolution">
         <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
-      <Condition ColumnName="Problem_Id" IsNull="false" />
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="ProblemSolutions_UserAccounts" TypeName="ExhysContestModel.ProblemSolutions_UserAccounts" StoreEntitySet="ProblemSolutions">
-      <EndProperty Name="UserAccount">
-        <ScalarProperty Name="Id" ColumnName="Author_Id" />
-        <ScalarProperty Name="Username" ColumnName="Author_Username" />
-      </EndProperty>
-      <EndProperty Name="ProblemSolution">
-        <ScalarProperty Name="Id" ColumnName="Id" />
-      </EndProperty>
-      <Condition ColumnName="Author_Id" IsNull="false" />
-      <Condition ColumnName="Author_Username" IsNull="false" />
     </AssociationSetMapping>
     <AssociationSetMapping Name="ProblemProblemStatement" TypeName="ExhysContestModel.ProblemProblemStatement" StoreEntitySet="ProblemStatements">
       <EndProperty Name="Problem">
@@ -562,6 +784,39 @@
         <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
       <Condition ColumnName="Problem_Id" IsNull="false" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="UserAccounts_ProblemSolutions" TypeName="ExhysContestModel.UserAccounts_ProblemSolutions" StoreEntitySet="ProblemSolutions">
+      <EndProperty Name="UserAccount">
+        <ScalarProperty Name="Id" ColumnName="Author_Id" />
+        <ScalarProperty Name="Username" ColumnName="Author_Username" />
+      </EndProperty>
+      <EndProperty Name="ProblemSolution">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ActiveCheckerProgrammingLanguage" TypeName="ExhysContestModel.ActiveCheckerProgrammingLanguage" StoreEntitySet="ProgrammingLanguages">
+      <EndProperty Name="ActiveChecker">
+        <ScalarProperty Name="Id" ColumnName="Checker_Id" />
+      </EndProperty>
+      <EndProperty Name="ProgrammingLanguage">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ActiveCheckerPerformanceMetric" TypeName="ExhysContestModel.ActiveCheckerPerformanceMetric" StoreEntitySet="PerformanceMetrics">
+      <EndProperty Name="ActiveChecker">
+        <ScalarProperty Name="Id" ColumnName="Checker_Id" />
+      </EndProperty>
+      <EndProperty Name="PerformanceMetric">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ProblemSolutionSolutionTestStatus" TypeName="ExhysContestModel.ProblemSolutionSolutionTestStatus" StoreEntitySet="SolutionTestStatuses">
+      <EndProperty Name="ProblemSolution">
+        <ScalarProperty Name="Id" ColumnName="ProblemSolutionSolutionTestStatus_SolutionTestStatus_Id" />
+      </EndProperty>
+      <EndProperty Name="SolutionTestStatus">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
     </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>

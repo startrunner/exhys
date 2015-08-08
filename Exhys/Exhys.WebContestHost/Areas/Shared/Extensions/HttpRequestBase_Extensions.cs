@@ -27,7 +27,11 @@ namespace Exhys.WebContestHost.Areas.Shared.Extensions
                 .Take(1)
                 .ToList();
             if (sessions == null || sessions.Count == 0) return null;
-            else return sessions[0].UserAccount;
+            else
+            {
+                db.SaveChanges();
+                return sessions[0].UserAccount;
+            }
             
         }
 

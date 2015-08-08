@@ -69,7 +69,14 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
             }
 
             AddSignedInUserInformation();
-            AddProblemOptions((int)id);
+            try
+            {
+                AddProblemOptions((int)id);
+            }
+            catch
+            {
+                return RedirectToAction("List");
+            }
 
             Response.SetCurrentCompetitionCookie((int)id);
             using (var db = new ExhysContestEntities())

@@ -1,41 +1,67 @@
 ﻿@model List<UserAccountViewModel>
 <div>
-    @using (Html.BeginForm(FormMethod.Post))
-    {
-        <button type="submit">Save Changes</button>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>No.</th>
-                    <th>User ID</th>
-                    <th>Username</th>
-                    <th>Password</th>
-                    <th>User Group</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                @{ 
-                    for(int i=0;i<Model.Count;i++)
-                    {
-                        <tr>
-                            <td>@(i+1)</td>
-                            <td>@Html.TextBoxFor(m=>m[i].UserId, new { readOnly = "" })</td>
-                            <td>@Html.TextBoxFor(m=>m[i].Username, new { readOnly = "" })</td>
-                            <td>@Html.TextBoxFor(m=>m[i].Password)</td>
-                            <td>
-                                @Html.FixedDropDownListFor(m=>m[i].GroupId, ViewData.GetUserGroupOptions())
-                            </td>
-                            <td>@Html.TextBoxFor(m=>m[i].FirstName)</td>
-                            <td>@Html.TextBoxFor(m=>m[i].LastName)</td>
-                            <td>@Html.CheckBoxFor(m=>m[i].RequestDelete)</td>
-                        </tr>
+    <div>
+        @using (Html.BeginForm(FormMethod.Post))
+        {
+            <button type="submit">Save Changes</button>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>User ID</th>
+                        <th>Username</th>
+                        <th>Password</th>
+                        <th>Group</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        for (int i = 0; i < Model.Count; i++)
+                        {
+                            <tr>
+                                <td>@(i + 1+(ViewData.GetCurrentPage()-1)*ViewData.GetPageSize())</td>
+                                <td>
+                                    @Html.HiddenFor(m=>m[i].UserId)
+                                    @Model[i].UserId
+                                </td>
+                                <td>
+                                    @Html.HiddenFor(m => m[i].Username, new { readOnly = "" })
+                                    @Model[i].Username
+                                </td>
+                                <td>@Html.TextBoxFor(m => m[i].Password)</td>
+                                <td>
+                                    @Html.FixedDropDownListFor(m => m[i].GroupId, ViewData.GetUserGroupOptions())
+                                </td>
+                                <td>@Html.TextBoxFor(m => m[i].FirstName)</td>
+                                <td>@Html.TextBoxFor(m => m[i].LastName)</td>
+                                <td>
+                                    @Html.CheckBoxFor(m => m[i].RequestDelete)
+                                    <div class=" switch"></div>
+                                </td>
+                            </tr>
+                        }
                     }
+                </tbody>
+            </table>
+            <button type="submit">Save Changes</button>
+                        }
+    </div>
+    <div>
+        @{
+            for (int i = 1; i <= ViewData.GetPageCount(); i++)
+            {
+                if (i != ViewData.GetCurrentPage())
+                {
+                    <a href="?page=@i">@i</a>
                 }
-            </tbody>
-        </table>
-        <button type="submit">Save Changes</button>
-    }
+                else
+                {
+                    <a>@i</a>
+                }
+            }
+        }
+    </div>
 </div>

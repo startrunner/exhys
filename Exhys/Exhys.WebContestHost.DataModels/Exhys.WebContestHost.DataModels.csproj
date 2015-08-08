@@ -52,6 +52,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActiveChecker.cs">
+      <DependentUpon>WebContestDbContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Competition.cs">
       <DependentUpon>WebContestDbContext.tt</DependentUpon>
     </Compile>
@@ -59,8 +62,12 @@
     <Compile Include="Partials\ExhysContestEntities.cs" />
     <Compile Include="Partials\IDeletable.cs" />
     <Compile Include="Partials\Problem.cs" />
+    <Compile Include="Partials\ProblemSolution.cs" />
     <Compile Include="Partials\UserAccount.cs" />
     <Compile Include="Partials\UserGroup.cs" />
+    <Compile Include="PerformanceMetric.cs">
+      <DependentUpon>WebContestDbContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Problem.cs">
       <DependentUpon>WebContestDbContext.tt</DependentUpon>
     </Compile>
@@ -73,7 +80,13 @@
     <Compile Include="ProblemTest.cs">
       <DependentUpon>WebContestDbContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="ProgrammingLanguage.cs">
+      <DependentUpon>WebContestDbContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SolutionTestStatus.cs">
+      <DependentUpon>WebContestDbContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="UserAccount.cs">
       <DependentUpon>WebContestDbContext.tt</DependentUpon>
     </Compile>

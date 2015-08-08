@@ -127,6 +127,7 @@
     <Compile Include="Areas\Administration\Controllers\UserAccountsController.cs" />
     <Compile Include="Areas\Administration\Controllers\UserGroupsController.cs" />
     <Compile Include="Areas\Participation\Controllers\CompetitionsController.cs" />
+    <Compile Include="Areas\Participation\Controllers\ProblemsController.cs" />
     <Compile Include="Areas\Participation\ParticipationAreaRegistration.cs" />
     <Compile Include="Areas\Participation\ViewModels\ParticipationViewModel.cs" />
     <Compile Include="Areas\Shared\CookieNames.cs" />
@@ -138,6 +139,7 @@
     <Compile Include="Areas\Shared\Extensions\HttpResponseBase_Extensions.cs" />
     <Compile Include="Areas\Shared\ViewDataDictionary_Extensions.cs" />
     <Compile Include="Areas\Shared\ViewModels\CompetitionViewModel.cs" />
+    <Compile Include="Areas\Shared\ViewModels\ProblemSolutionViewModel.cs" />
     <Compile Include="Areas\Shared\ViewModels\ProblemViewModel.cs" />
     <Compile Include="Areas\Shared\ViewModels\SignedInUserViewModel.cs" />
     <Compile Include="Areas\Shared\ViewModels\UserAccountViewModel.cs" />
@@ -203,10 +205,26 @@
     </Content>
     <Content Include="Areas\Participation\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Participation\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Participation\Views\Competitions\List.cshtml" />
     <Content Include="Areas\Participation\Views\Competitions\Join.cshtml" />
     <Content Include="Areas\Participation\Views\Competitions\Participate.cshtml" />
+    <Content Include="Areas\Participation\Views\Competitions\List.cshtml" />
+    <Content Include="Areas\Participation\Views\Problems\SubmitSolution.cshtml" />
+    <None Include="compilerconfig.json" />
     <None Include="Project_Readme.html" />
+    <Content Include="WebRoot\Styles\participation.css">
+      <DependentUpon>participation.scss</DependentUpon>
+    </Content>
+    <Content Include="WebRoot\Styles\participation.min.css">
+      <DependentUpon>participation.css</DependentUpon>
+    </Content>
+    <Content Include="WebRoot\Styles\participation.scss" />
+    <Content Include="WebRoot\Styles\style.css">
+      <DependentUpon>style.scss</DependentUpon>
+    </Content>
+    <Content Include="WebRoot\Styles\style.min.css">
+      <DependentUpon>style.css</DependentUpon>
+    </Content>
+    <Content Include="WebRoot\Styles\style.scss" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CodeBits\CodeBits.csproj">

@@ -41,7 +41,11 @@ namespace Exhys.WebContestHost.DataModels
 
         public void DeleteFrom (ExhysContestEntities db)
         {
-            db.UserAccounts.Remove(this);
+            var user = db.UserAccounts.Where(a => a.Id == this.Id).FirstOrDefault();
+
+            db.ProblemSolutions.RemoveRange(user.ProblemSolutions);
+            db.UserSessions.RemoveRange(user.UserSessions);
+            db.UserAccounts.Remove(user);
         }
     }
 }

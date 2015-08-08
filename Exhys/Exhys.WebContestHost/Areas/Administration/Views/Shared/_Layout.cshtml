@@ -1,7 +1,7 @@
 ﻿
 <!doctype html>
 <head>
-
+    <link rel="stylesheet" href="~/WebRoot/Styles/style.min.css"/>
 </head>
 <body>
     <header>
@@ -18,13 +18,10 @@
     <nav>
         <ul>
             <li>
-                <a href="#">User Groups</a>
-                <ul>
-                    <li>@Html.ActionLink(linkText:"List Groups", controllerName:"UserGroups", actionName:"List")</li>
-                </ul>
+                @Html.ActionLink(linkText:"Groups", controllerName:"UserGroups", actionName:"List")
             </li>
             <li>
-                <a href="#">User Accounts</a>
+                <a href="#" onclick="return false;">User Accounts</a>
                 <ul>
                     <li>@Html.ActionLink(linkText:"List Users", controllerName:"UserAccounts", actionName:"List")</li>
                     <li>@Html.ActionLink(linkText:"Add Users", controllerName:"UserAccounts", actionName:"AddUsers")</li>
@@ -42,6 +39,34 @@
                 <ul>
                     <li>@Html.ActionLink(linkText: "List Problems", controllerName: "Problems", actionName: "List")</li>
                     <li>@Html.ActionLink(linkText:"Add Problem", controllerName:"Problems", actionName:"AddProblem")</li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="#">Extras</a>
+                <ul>
+                    <li><a href="http://www.google.com">Google</a></li>    
+                    <li><a href="http://www.google.com">Google</a></li>    
+                    <li><a href="http://www.google.com">Google</a></li>    
+                    <li><a href="http://www.google.com">Google</a></li>    
+                    <li>
+                        <a href="#">Advanced Extras</a>
+                        <ul>
+                            <li><a href="http://www.google.com">Google</a></li>
+                            <li><a href="http://www.google.com">Google</a></li>
+                            <li><a href="http://www.google.com">Google</a></li>
+                            <li><a href="http://www.google.com">Google</a></li> 
+                            <li>
+                                <a href="#">More Advanced Extras</a>
+                                <ul>
+                                    <li><a href="http://www.google.com">Google</a></li>
+                                    <li><a href="http://www.google.com">Google</a></li>
+                                    <li><a href="http://www.google.com">Google</a></li>
+                                    <li><a href="http://www.google.com">Google</a></li>
+                                </ul>
+                            </li>   
+                        </ul>
+                    </li>
                 </ul>
             </li>
         </ul>

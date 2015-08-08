@@ -15,6 +15,9 @@ namespace Exhys.WebContestHost.Areas.Shared.Extensions
             public const string ProblemOptions = "problem-options";
             public const string UserGroupOptions = "user=group-options";
             public const string CompetitionOptions = "competition-options";
+            public const string PageCount = "page-count";
+            public const string CurrentPage = "current-page";
+            public const string PageSize = "page-size";
         }
 
         public static List<SelectListItem> GetCompetitionOptions(this ViewDataDictionary that)
@@ -37,6 +40,21 @@ namespace Exhys.WebContestHost.Areas.Shared.Extensions
             return that[PropertyNames.SignedInUser] as SignedInUserViewModel;
         }
 
+        public static int? GetPageCount(this ViewDataDictionary that)
+        {
+            return that[PropertyNames.PageCount] as int?;
+        }
+
+        public static int? GetCurrentPage(this ViewDataDictionary that)
+        {
+            return that[PropertyNames.CurrentPage] as int?;
+        }
+
+        public static int? GetPageSize(this ViewDataDictionary that)
+        {
+            return that[PropertyNames.PageSize] as int?;
+        }
+
         public static void SetCompetitionOptions(this ViewDataDictionary that, List<SelectListItem> options)
         {
             that[PropertyNames.CompetitionOptions] = options;
@@ -55,6 +73,21 @@ namespace Exhys.WebContestHost.Areas.Shared.Extensions
         public static void SetSignedInUser(this ViewDataDictionary that, SignedInUserViewModel vm)
         {
             that[PropertyNames.SignedInUser] = vm;
+        }
+
+        public static void SetPageCount(this ViewDataDictionary that, int? val)
+        {
+            that[PropertyNames.PageCount] = val;
+        }
+
+        public static void SetCurrentPage(this ViewDataDictionary that, int? val)
+        {
+            that[PropertyNames.CurrentPage] = val;
+        }
+
+        public static void SetPageSize(this ViewDataDictionary that, int? val)
+        {
+            that[PropertyNames.PageSize] = val;
         }
     }
 }

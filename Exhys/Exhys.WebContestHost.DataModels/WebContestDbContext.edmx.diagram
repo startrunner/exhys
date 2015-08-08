@@ -4,23 +4,30 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="0c1651022ffa4ae1a7cf907a9ea83b41" Name="Diagram1" ZoomLevel="55" ShowGrid="false" SnapToGrid="true" DisplayType="true" >
-        <EntityTypeShape EntityType="ExhysContestModel.UserAccount" Width="3.25" PointX="4.5" PointY="6.25" />
-        <EntityTypeShape EntityType="ExhysContestModel.UserSession" Width="3.25" PointX="4.5" PointY="3.625" />
+      <Diagram DiagramId="0c1651022ffa4ae1a7cf907a9ea83b41" Name="Diagram1" ZoomLevel="28" ShowGrid="false" SnapToGrid="true" DisplayType="true" >
+        <EntityTypeShape EntityType="ExhysContestModel.UserAccount" Width="7" PointX="3" PointY="3.875" FillColor="Coral" />
+        <EntityTypeShape EntityType="ExhysContestModel.UserSession" Width="2.375" PointX="3" PointY="7.25" FillColor="Coral" />
         <AssociationConnector Association="ExhysContestModel.UserAccounts_UserSessions" />
-        <EntityTypeShape EntityType="ExhysContestModel.UserGroup" Width="3.25" PointX="4.5" PointY="0.875" />
+        <EntityTypeShape EntityType="ExhysContestModel.UserGroup" Width="12.375" PointX="3" PointY="0.75" />
         <AssociationConnector Association="ExhysContestModel.UserAccounts_UserGroups" ></AssociationConnector>
-        <EntityTypeShape EntityType="ExhysContestModel.Competition" Width="2.25" PointX="10.25" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ExhysContestModel.Problem" Width="2.625" PointX="10.25" PointY="3.375" />
+        <EntityTypeShape EntityType="ExhysContestModel.Competition" Width="4.25" PointX="11.125" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExhysContestModel.Problem" Width="4.25" PointX="11.125" PointY="6.25" />
         <AssociationConnector Association="ExhysContestModel.Competitions_Problems" />
         <AssociationConnector Association="ExhysContestModel.Competitions_UserGroups" />
-        <EntityTypeShape EntityType="ExhysContestModel.ProblemSolution" Width="2.25" PointX="10.25" PointY="7" />
+        <EntityTypeShape EntityType="ExhysContestModel.ProblemSolution" Width="4.125" PointX="5.875" PointY="7.25" FillColor="Coral" />
         <AssociationConnector Association="ExhysContestModel.Problems_Solutions" />
-        <AssociationConnector Association="ExhysContestModel.ProblemSolutions_UserAccounts" />
-        <EntityTypeShape EntityType="ExhysContestModel.ProblemStatement" Width="1.875" PointX="14.375" PointY="2.5" />
+        <EntityTypeShape EntityType="ExhysContestModel.ProblemStatement" Width="1.875" PointX="11.125" PointY="9.875" />
         <AssociationConnector Association="ExhysContestModel.ProblemProblemStatement" />
-        <EntityTypeShape EntityType="ExhysContestModel.ProblemTest" Width="2" PointX="14.125" PointY="6" />
+        <EntityTypeShape EntityType="ExhysContestModel.ProblemTest" Width="2" PointX="13.375" PointY="9.875" />
         <AssociationConnector Association="ExhysContestModel.Problems_ProblemTests" />
+        <AssociationConnector Association="ExhysContestModel.UserAccounts_ProblemSolutions" />
+        <EntityTypeShape EntityType="ExhysContestModel.ActiveChecker" Width="5.125" PointX="17.25" PointY="0.75" FillColor="Gold" />
+        <EntityTypeShape EntityType="ExhysContestModel.ProgrammingLanguage" Width="2.25" PointX="17.25" PointY="3.875" FillColor="Gold" />
+        <EntityTypeShape EntityType="ExhysContestModel.PerformanceMetric" Width="2.25" PointX="20.125" PointY="3.875" FillColor="Gold" />
+        <AssociationConnector Association="ExhysContestModel.ActiveCheckerProgrammingLanguage" />
+        <AssociationConnector Association="ExhysContestModel.ActiveCheckerPerformanceMetric" />
+        <EntityTypeShape EntityType="ExhysContestModel.SolutionTestStatus" Width="4.125" PointX="5.875" PointY="10.375" FillColor="Coral" />
+        <AssociationConnector Association="ExhysContestModel.ProblemSolutionSolutionTestStatus" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

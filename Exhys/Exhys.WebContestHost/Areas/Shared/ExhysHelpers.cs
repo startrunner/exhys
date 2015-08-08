@@ -22,8 +22,8 @@ namespace Exhys.WebContestHost.Areas.Shared
             return helper.FixedDropDownListFor(inputName, options, selectedValue);
         }
 
-        public static MvcHtmlString FixedDropDownListFor 
-            (this HtmlHelper helper, string inputName, IEnumerable<SelectListItem> options, string selectedValue=null)
+        public static MvcHtmlString FixedDropDownListFor
+            (this HtmlHelper helper, string inputName, IEnumerable<SelectListItem> options, string selectedValue = null)
         {
             StringBuilder rt = new StringBuilder();
 
