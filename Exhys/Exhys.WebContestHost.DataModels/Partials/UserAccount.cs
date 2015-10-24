@@ -5,11 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Exhys.WebContestHost.DataModels;
-using Exhys.WebContestHost.DataModels.Partials;
 
 namespace Exhys.WebContestHost.DataModels
 { 
-    public partial class UserAccount:IDeletable
+    public partial class UserAccount:ExhysContestEntities.ICascadeable
     {
         public bool IsAdmin ()
         {
@@ -39,13 +38,16 @@ namespace Exhys.WebContestHost.DataModels
             return string.Format("{0} {1}", FirstName, LastName);
         }
 
-        public void DeleteFrom (ExhysContestEntities db)
+        public void CascadeFrom (ExhysContestEntities db)
         {
-            var user = db.UserAccounts.Where(a => a.Id == this.Id).FirstOrDefault();
+            this.UserSessions.ToList().ForEach(db.CascadeFunc);
+            db.UserAccounts.Remove(this);
+            //db.SaveChanges();
+        }
 
-            db.ProblemSolutions.RemoveRange(user.ProblemSolutions);
-            db.UserSessions.RemoveRange(user.UserSessions);
-            db.UserAccounts.Remove(user);
+        public ICollection<Competition> GetAvaiableCompetitions()
+        {
+            return this.UserGroup.AvaiableCompetitions;
         }
     }
 }

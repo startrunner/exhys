@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 08/07/2015 10:50:33
+-- Date Created: 10/24/2015 21:06:04
 -- Generated from EDMX file: C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost.DataModels\WebContestDbContext.edmx
 -- --------------------------------------------------
 
@@ -103,7 +103,7 @@ CREATE TABLE [dbo].[UserAccounts] (
     [FirstName] nvarchar(32)  NULL,
     [LastName] nvarchar(32)  NULL,
     [Password] nvarchar(32)  NOT NULL,
-    [UserGroup_Id] int  NULL
+    [UserGroup_Id] int  NOT NULL
 );
 GO
 
@@ -133,7 +133,7 @@ CREATE TABLE [dbo].[Competitions] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(32)  NOT NULL,
     [Description] nvarchar(256)  NULL,
-    [UserGroup_Id] int  NULL
+    [UserGroup_Id] int  NOT NULL
 );
 GO
 
@@ -141,11 +141,13 @@ GO
 CREATE TABLE [dbo].[Problems] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
-    [IgnoreTestBlankSpaces] bit  NOT NULL,
-    [DummyTestCount] int  NOT NULL,
-    [PointsPerTest] float  NOT NULL,
-    [RequiresChecker] bit  NOT NULL,
-    [CompetitionGivenAt_Id] int  NULL
+    [T_TimeLimits] nvarchar(max)  NOT NULL,
+    [T_InputFeedbacks] nvarchar(max)  NOT NULL,
+    [T_OutputFeedbacks] nvarchar(max)  NOT NULL,
+    [T_SolutionFeedbacks] nvarchar(max)  NOT NULL,
+    [T_ScoreFeedbacks] nvarchar(max)  NOT NULL,
+    [T_StatusFeedbacks] nvarchar(max)  NOT NULL,
+    [CompetitionGivenAt_Id] int  NOT NULL
 );
 GO
 
@@ -156,9 +158,8 @@ CREATE TABLE [dbo].[ProblemSolutions] (
     [LanguageAlias] nvarchar(8)  NOT NULL,
     [StatusCode] tinyint  NOT NULL,
     [Message] nvarchar(max)  NULL,
-    [Problem_Id] int  NOT NULL,
-    [Author_Id] int  NOT NULL,
-    [Author_Username] nvarchar(32)  NOT NULL
+    [ParticipationId] int  NOT NULL,
+    [Problem_Id] int  NOT NULL
 );
 GO
 
@@ -167,7 +168,7 @@ CREATE TABLE [dbo].[ProblemStatements] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Bytes] varbinary(max)  NOT NULL,
     [Filename] nvarchar(max)  NOT NULL,
-    [ProblemProblemStatement_ProblemStatement_Id] int  NULL
+    [ProblemProblemStatement_ProblemStatement_Id] int  NOT NULL
 );
 GO
 
@@ -175,9 +176,16 @@ GO
 CREATE TABLE [dbo].[ProblemTests] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Input] nvarchar(max)  NULL,
-    [Output] nvarchar(max)  NULL,
+    [Solution] nvarchar(max)  NULL,
     [GroupName] nvarchar(max)  NOT NULL,
-    [Problem_Id] int  NULL
+    [TimeLimit] float  NOT NULL,
+    [Points] float  NOT NULL,
+    [InputFeedbackEnabled] bit  NOT NULL,
+    [OutputFeedbackEnabled] bit  NOT NULL,
+    [SolutionFeedbackEnabled] bit  NOT NULL,
+    [ScoreFeedbackEnabled] bit  NOT NULL,
+    [StatusFeedbackEnabled] bit  NOT NULL,
+    [Problem_Id] int  NOT NULL
 );
 GO
 
@@ -215,18 +223,26 @@ GO
 -- Creating table 'SolutionTestStatuses'
 CREATE TABLE [dbo].[SolutionTestStatuses] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [TestNumber] int  NOT NULL,
     [Input] nvarchar(max)  NULL,
-    [SolutionOutput] nvarchar(max)  NULL,
-    [ExpectedOutput] nvarchar(max)  NULL,
-    [StatusCode] nvarchar(max)  NOT NULL,
-    [Points] float  NOT NULL,
-    [Feedback_ShowStatus] bit  NOT NULL,
-    [Feedback_ShowPoints] bit  NOT NULL,
-    [Feedback_ShowInput] bit  NOT NULL,
-    [Feedback_ShowOutput] bit  NOT NULL,
-    [Feedback_ShowExpectedOutput] bit  NOT NULL,
+    [Output] nvarchar(max)  NULL,
+    [Solution] nvarchar(max)  NULL,
+    [Score] float  NOT NULL,
+    [StatusCode] tinyint  NOT NULL,
+    [InputFeedbackEnabled] bit  NOT NULL,
+    [OutputFeedbackEnabled] bit  NOT NULL,
+    [SolutionFeedbackEnabled] bit  NOT NULL,
+    [ScoreFeedbackEnabled] bit  NOT NULL,
+    [StatusFeedbackEnabled] bit  NOT NULL,
     [ProblemSolutionSolutionTestStatus_SolutionTestStatus_Id] int  NOT NULL
+);
+GO
+
+-- Creating table 'Participations'
+CREATE TABLE [dbo].[Participations] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [User_Id] int  NOT NULL,
+    [User_Username] nvarchar(32)  NOT NULL,
+    [Competition_Id] int  NOT NULL
 );
 GO
 
@@ -303,6 +319,12 @@ GO
 -- Creating primary key on [Id] in table 'SolutionTestStatuses'
 ALTER TABLE [dbo].[SolutionTestStatuses]
 ADD CONSTRAINT [PK_SolutionTestStatuses]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'Participations'
+ALTER TABLE [dbo].[Participations]
+ADD CONSTRAINT [PK_Participations]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -415,21 +437,6 @@ ON [dbo].[ProblemTests]
     ([Problem_Id]);
 GO
 
--- Creating foreign key on [Author_Id], [Author_Username] in table 'ProblemSolutions'
-ALTER TABLE [dbo].[ProblemSolutions]
-ADD CONSTRAINT [FK_UserAccounts_ProblemSolutions]
-    FOREIGN KEY ([Author_Id], [Author_Username])
-    REFERENCES [dbo].[UserAccounts]
-        ([Id], [Username])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_UserAccounts_ProblemSolutions'
-CREATE INDEX [IX_FK_UserAccounts_ProblemSolutions]
-ON [dbo].[ProblemSolutions]
-    ([Author_Id], [Author_Username]);
-GO
-
 -- Creating foreign key on [Checker_Id] in table 'ProgrammingLanguages'
 ALTER TABLE [dbo].[ProgrammingLanguages]
 ADD CONSTRAINT [FK_ActiveCheckerProgrammingLanguage]
@@ -473,6 +480,51 @@ GO
 CREATE INDEX [IX_FK_ProblemSolutionSolutionTestStatus]
 ON [dbo].[SolutionTestStatuses]
     ([ProblemSolutionSolutionTestStatus_SolutionTestStatus_Id]);
+GO
+
+-- Creating foreign key on [User_Id], [User_Username] in table 'Participations'
+ALTER TABLE [dbo].[Participations]
+ADD CONSTRAINT [FK_ParticipationUserAccount]
+    FOREIGN KEY ([User_Id], [User_Username])
+    REFERENCES [dbo].[UserAccounts]
+        ([Id], [Username])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ParticipationUserAccount'
+CREATE INDEX [IX_FK_ParticipationUserAccount]
+ON [dbo].[Participations]
+    ([User_Id], [User_Username]);
+GO
+
+-- Creating foreign key on [Competition_Id] in table 'Participations'
+ALTER TABLE [dbo].[Participations]
+ADD CONSTRAINT [FK_ParticipationCompetition]
+    FOREIGN KEY ([Competition_Id])
+    REFERENCES [dbo].[Competitions]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ParticipationCompetition'
+CREATE INDEX [IX_FK_ParticipationCompetition]
+ON [dbo].[Participations]
+    ([Competition_Id]);
+GO
+
+-- Creating foreign key on [ParticipationId] in table 'ProblemSolutions'
+ALTER TABLE [dbo].[ProblemSolutions]
+ADD CONSTRAINT [FK_ParticipationProblemSolution]
+    FOREIGN KEY ([ParticipationId])
+    REFERENCES [dbo].[Participations]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ParticipationProblemSolution'
+CREATE INDEX [IX_FK_ParticipationProblemSolution]
+ON [dbo].[ProblemSolutions]
+    ([ParticipationId]);
 GO
 
 -- --------------------------------------------------

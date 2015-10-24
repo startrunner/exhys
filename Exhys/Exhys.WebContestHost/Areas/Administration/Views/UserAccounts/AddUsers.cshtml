@@ -1,4 +1,7 @@
-﻿<div>
+﻿@{ 
+    ViewData.SetPageTitle("Add Users");
+}
+<div>
     @using (Html.BeginForm(FormMethod.Post))
     { 
         <input type="text" placeholder="Prefix" name="prefix" value="A"/>

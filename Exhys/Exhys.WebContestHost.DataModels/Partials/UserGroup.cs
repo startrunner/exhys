@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Exhys.WebContestHost.DataModels.Partials;
 
 namespace Exhys.WebContestHost.DataModels
 {
-    public partial class UserGroup : IDeletable
+    partial class UserGroup : ExhysContestEntities.ICascadeable
     {
-        public void DeleteFrom (ExhysContestEntities db)
-        { 
+        public void CascadeFrom (ExhysContestEntities db)
+        {
+            this.GroupMembers.ToList().ForEach(db.CascadeFunc);
+            this.AvaiableCompetitions.ToList().ForEach(db.CascadeFunc);
             db.UserGroups.Remove(this);
+            //db.SaveChanges();
         }
     }
 }

@@ -1,0 +1,22 @@
+﻿@model CompetitionViewModel
+    @{ 
+        ViewData.SetPageTitle("Add Competition");
+    }
+<div>
+    @using (Html.BeginForm(FormMethod.Post))
+    {
+        <div>
+            @Html.TextBoxFor(m => m.Name, new { placeholder="Competition Name" })
+        </div>
+        <div>
+            @Html.TextAreaFor(m => m.Description, new { placeholder="Competition Description" })
+        </div>
+        <div>
+            @Html.LabelFor(m=>m.GroupId, "User Group: ")
+            @Html.DropDownListFor(m => m.GroupId, ViewData.GetUserGroupOptions())
+        </div>
+        <div>
+            <button type="submit">Create Contest</button>
+        </div>
+    }
+</div>

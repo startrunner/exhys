@@ -98,6 +98,7 @@ namespace Exhys.WebContestHost.Areas.Shared.Mvc
         #endregion
 
         #region UserRequirements
+        [Obsolete]
         public void RequireSignedInUser()
         {
             using (var db = new ExhysContestEntities())
@@ -105,6 +106,7 @@ namespace Exhys.WebContestHost.Areas.Shared.Mvc
                 RequireSignedInUser(db);
             }
         }
+        [Obsolete]
         public void RequireSignedInUser(ExhysContestEntities db)
         {
             var user = Request.GetSignedInUser(db);

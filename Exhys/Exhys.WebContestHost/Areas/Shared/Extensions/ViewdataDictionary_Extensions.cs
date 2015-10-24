@@ -18,6 +18,7 @@ namespace Exhys.WebContestHost.Areas.Shared.Extensions
             public const string PageCount = "page-count";
             public const string CurrentPage = "current-page";
             public const string PageSize = "page-size";
+            public const string PageTitle = "page-title";
         }
 
         public static List<SelectListItem> GetCompetitionOptions(this ViewDataDictionary that)
@@ -55,6 +56,11 @@ namespace Exhys.WebContestHost.Areas.Shared.Extensions
             return that[PropertyNames.PageSize] as int?;
         }
 
+        public static string GetPageTitle(this ViewDataDictionary that)
+        {
+            return that[PropertyNames.PageTitle] as string;
+        }
+
         public static void SetCompetitionOptions(this ViewDataDictionary that, List<SelectListItem> options)
         {
             that[PropertyNames.CompetitionOptions] = options;
@@ -89,5 +95,12 @@ namespace Exhys.WebContestHost.Areas.Shared.Extensions
         {
             that[PropertyNames.PageSize] = val;
         }
+
+        public static void SetPageTitle(this ViewDataDictionary that, string val)
+        {
+            that[PropertyNames.PageTitle] = val;
+        }
+
+
     }
 }

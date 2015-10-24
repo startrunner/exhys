@@ -57,11 +57,8 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
             {
                 foreach (var v in vm)
                 {
-
                     var user = db.UserAccounts
-                        .Where(u => u.Id == v.UserId)
-                        .Take(1)
-                        .ToList()[0];
+                        .Where(u => u.Id == v.UserId).FirstOrDefault();
                     if (v.RequestDelete == false)
                     {
                         user.FirstName = v.FirstName;
@@ -72,11 +69,10 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
                     }
                     else
                     {
-                        user.DeleteFrom(db);
+                        user.CascadeFrom(db);
                     }
                     db.SaveChanges();
                 }
-                //db.SaveChanges();
             }
             return RedirectToAction("List");
         }
@@ -104,15 +100,15 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
                 using (var db = new ExhysContestEntities())
                 {
                     //var gr = db.GetDefaultUserGroup();
-                    var gr=db.UserGroups.Where(g=>g.Id==groupId).Take(1).ToList()[0];
+                    var gr = db.UserGroups.Where(g => g.Id == groupId).FirstOrDefault();
 
                     int addedCount = 0;
                     for (int currentNumber = 0; addedCount != count; currentNumber++)
                     {
                         string currentUsername = string.Format("{0}{1:000}", prefix, currentNumber);
 
-                        var existing = db.UserAccounts.Where(u => u.Username == currentUsername).ToList();
-                        if (existing != null && existing.Count != 0)
+                        var existing = db.UserAccounts.Where(u => u.Username == currentUsername).FirstOrDefault();
+                        if (existing != null)
                         {
                             //currentUsername is taken
                             continue;

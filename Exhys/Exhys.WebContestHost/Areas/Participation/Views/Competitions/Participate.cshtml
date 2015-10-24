@@ -1,45 +1,49 @@
 ﻿@model ParticipationViewModel
-@{ 
-    if (Model != null)
+    <!doctype html>
+<html>
+<head>
+    @if(Model!=null&&Model.Competition!=null)
     {
-        ViewBag.Title = Model.Competition.Name;
+        <title>@Model.Competition.Name - Exhys</title>
     }
-}
-
-<div>
-    <aside>
+</head>
+<body>
+    <section>
         <table border="1">
             <thead>
+                <tr>
+                    <th colspan="2">Problems</th>
+                </tr>
                 <tr>
                     <th>Name</th>
                     <th>Statement</th>
                 </tr>
             </thead>
             <tbody>
-                @{
-                    for (int i = 0; i < Model.Problems.Count; i++)
-                    {
-                        <tr>
-                            <td>@Model.Problems[i].Name</td>
-                            <td><a href="#">PDF</a></td>
-                        </tr>
-                    }
+                @for(int i=0;i<Model.Competition.Problems.Count;i++)
+                {
+                    <tr>
+                        <td>@Model.Competition.Problems[i].Name</td>
+                        <td>
+                            @for(int j=0;j<Model.Competition.Problems[i].ProblemStatements.Count;j++)
+                            {
+                                <div>
+                                    @using (Html.BeginForm(method: FormMethod.Get, actionName: "DownloadStatement", controllerName: "Competitions"))
+                                    {
+                                        <input type="hidden" name="id" value="@Model.Competition.Problems[i].ProblemStatements[j].Id"/>
+                                        <button type="submit">@Model.Competition.Problems[i].ProblemStatements[j].Filename</button>
+                                    }
+                                </div>
+                            }
+                        </td>
+                    </tr>
                 }
+                <tr>
+                    <td><br/></td>
+                    <td><br/></td>
+                </tr>
             </tbody>
-
         </table>
-    </aside>
-    <section>
-        @using (Html.BeginForm(method:FormMethod.Post, controllerName:"Problems", actionName:"SubmitSolution"))
-        {
-            var vm = Model.Solution;
-            <div>
-                @Html.FixedDropDownListFor(m => vm.ProblemId, ViewData.GetProblemOptions())
-            </div>
-            <div>
-                @Html.TextAreaFor(m => vm.SourceCode, new { placeholder = "Paste your source code here", style="resize:vertical; width:600px", rows=32 })
-            </div>
-            <button type="submit">Submit Solution</button>
-        }
     </section>
-</div>
+</body>
+</html>

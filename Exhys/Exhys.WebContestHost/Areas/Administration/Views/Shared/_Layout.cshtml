@@ -1,19 +1,25 @@
 ﻿
 <!doctype html>
 <head>
-    <link rel="stylesheet" href="~/WebRoot/Styles/style.min.css"/>
+    <link rel="stylesheet" href="~/WebRoot/Styles/style.css"/>
+    <title>@ViewData.GetPageTitle()- Exhys Admin</title>
 </head>
 <body>
     <header>
         Exhys Administration
-        @{ 
+        
+    </header>
+
+    <div>
+        @{
             var user = ViewData.GetSignedInUser();
-            if(user!=null)
+            if (user != null && user.IsGuest == false)
             {
                 <span>User: @(user.FullName)</span>
             }
         }
-    </header>
+    </div>
+
 
     <nav>
         <ul>
@@ -31,14 +37,14 @@
                 <a href="#">Competitions</a>
                 <ul>
                     <li>@Html.ActionLink(linkText: "List Competitions", controllerName: "Competitions", actionName: "List")</li>
-                    <li>@Html.ActionLink(linkText: "Add Competition", controllerName: "Competitions", actionName: "AddCompetition")</li>
+                    <li>@Html.ActionLink(linkText: "Add Competition", controllerName: "Competitions", actionName: "Add")</li>
                 </ul>
             </li>
             <li>
                 <a href="#">Problems</a>
                 <ul>
                     <li>@Html.ActionLink(linkText: "List Problems", controllerName: "Problems", actionName: "List")</li>
-                    <li>@Html.ActionLink(linkText:"Add Problem", controllerName:"Problems", actionName:"AddProblem")</li>
+                    <li>@Html.ActionLink(linkText:"Add Problem", controllerName:"Problems", actionName:"Add")</li>
                 </ul>
             </li>
 

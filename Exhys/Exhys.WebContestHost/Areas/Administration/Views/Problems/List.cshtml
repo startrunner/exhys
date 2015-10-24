@@ -1,40 +1,40 @@
-﻿@model IList<ProblemViewModel>
-<div>
+﻿@model List<ProblemViewModel>
+<section>
     @using (Html.BeginForm())
     {
-        <table border="1">
+        <button type="submit">Save Changes</button>
+        <table>
             <thead>
                 <tr>
-                    <th>Id</th>
                     <th>Name</th>
-                    <th>Competition</th>
-                    <td>Requires Checker</td>
-                    <td>Dummy T.C</td>
-                    <td>Points p. Test</td>
-                    <th>Delete</th>
+                    <th>Group</th>
+                    <th>Delete?</th>
                 </tr>
             </thead>
             <tbody>
-                @{
-                    for (int i = 0; i < Model.Count; i++)
-                    {
-                        <tr>
-                            <td>@Html.TextBoxFor(m => m[i].Id, new { readOnly="" })</td>
-                            <td>@Html.TextBoxFor(m => m[i].Name)</td>
-                            <td>
-                                @*@(Model[i].CompetitionName)*@
-                                @Html.FixedDropDownListFor(m=>m[i].CompetitionId, ViewData.GetCompetitionOptions())
-                            </td>
-                            <td>@Html.CheckBoxFor(m=>m[i].RequiresChecker)</td>
-                            <td>@Html.TextBoxFor(m=>m[i].DummyTestCount)</td>
-                            <td>@Html.TextBoxFor(m=>m[i].PointsPerTest)</td>
-                            <td>@Html.CheckBoxFor(m => m[i].RequestDelete)</td>
-                        </tr>
-                    }
+                @for(int i=0;i<Model.Count;i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.HiddenFor(m => m[i].Id)
+                            @Html.HiddenFor(m => m[i].T_InputFeedbacks)
+                            @Html.HiddenFor(m => m[i].T_OutputFeedbacks)
+                            @Html.HiddenFor(m => m[i].T_SolutionFeedbacks)
+                            @Html.HiddenFor(m => m[i].T_StatusFeedbacks)
+                            @Html.HiddenFor(m => m[i].T_TimeLimits)
+
+                            @Html.TextBoxFor(m => m[i].Name)
+                        </td>
+                        <td>
+                            @Html.FixedDropDownListFor(m => m[i].CompetitionId, ViewData.GetCompetitionOptions())
+                        </td>
+                        <td>
+                            @Html.CheckBoxFor(m => m[i].RequestDelete)
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
         <button type="submit">Save Changes</button>
     }
-</div>
-
+</section>

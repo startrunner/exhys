@@ -18,19 +18,17 @@ namespace Exhys.WebContestHost.Areas.Shared.Extensions
         {
             Guid? sessionId = request.GetSessionCookie();
             if (sessionId == null) return null;
-            var sessions = db
+            var session = db
                 .UserSessions
                 .Where(s =>
                     s.Id == sessionId &&
                     s.BrowserName == request.Browser.Browser &&
-                    s.UserAgentString == request.UserAgent)
-                .Take(1)
-                .ToList();
-            if (sessions == null || sessions.Count == 0) return null;
+                    s.UserAgentString == request.UserAgent).FirstOrDefault();
+            if (session == null) return null;
             else
             {
                 db.SaveChanges();
-                return sessions[0].UserAccount;
+                return session.UserAccount;
             }
             
         }

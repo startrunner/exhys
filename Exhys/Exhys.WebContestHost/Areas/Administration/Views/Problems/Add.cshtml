@@ -1,0 +1,71 @@
+﻿@model ProblemViewModel
+    <div>
+    </div>
+@{ 
+    ViewData.SetPageTitle("Add Problem");
+}
+@Html.ErrorListFor(ViewData)
+<div>
+    @using (Html.BeginForm("Add", "Problems", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div>
+            @Html.LabelFor(m=>m.CompetitionId, "Competition")
+            @Html.FixedDropDownListFor(m => m.CompetitionId, ViewData.GetCompetitionOptions())
+        </div>
+
+        <div>
+            @Html.LabelFor(m=>m.Name, "Problem Name")
+            @Html.TextBoxFor(m => m.Name, new { placeholder = "Problem Name" })
+        </div>
+
+        <div>
+            <label for="files-inp">Input Files</label>
+            <input id="files-inp" name="@ProblemViewModel.InputFilesInputName" type="file" multiple placeholder="Test Files"/>
+        </div>
+
+        <div>
+            <label for="files-sol">Solution Files</label>
+            <input id="files-sol" name="@ProblemViewModel.SolutionFilesInputName" type="file" multiple placeholder="Test Files"/>
+        </div>
+
+        <div>
+            <label for="files-stt">Statement Files</label>
+            <input id="files-stt" name="@ProblemViewModel.StatementFilesInputName" type="file" multiple placeholder="Statements"/>
+        </div>
+
+        <div>
+            @Html.LabelFor(m => m.T_InputFeedbacks, "Input Feedback")
+            @Html.TextBoxFor(m => m.T_InputFeedbacks, new { placeholder = "Input Feedbacks ('1;0;0')" })
+        </div>
+
+        <div>
+            @Html.LabelFor(m => m.T_OutputFeedbacks, "Output Feedback")
+            @Html.TextBoxFor(m => m.T_OutputFeedbacks, new { placeholder = "Output Feedbacks ('1;0;0')"})
+        </div>
+
+        <div>
+            @Html.LabelFor(m=>m.T_SolutionFeedbacks, "Solution   Feedback")
+            @Html.TextBoxFor(m=>m.T_SolutionFeedbacks, new { placeholder="Solution Feedbacks ('1;0;0')"})
+        </div>
+
+        <div>
+            @Html.LabelFor(m=>m.T_StatusFeedbacks, "Status Feedback")
+            @Html.TextBoxFor(m=>m.T_StatusFeedbacks, new { placeholder="Status Feedbacks ('1;0;0')"})
+        </div>
+
+        <div>
+            @Html.LabelFor(m=>m.T_ScoreFeedbacks, "Score Feedback")
+            @Html.TextBoxFor(m => m.T_ScoreFeedbacks, new { placeholder = "Score Feedback ('1;0;0')" })
+        </div>
+
+        <div>
+            @Html.LabelFor(m => m.T_TimeLimits, "Time Limits")
+            @Html.TextBoxFor(m => m.T_TimeLimits, new { placeholder = "Time Limits ('1.0;1.0')" })
+        </div>
+
+        <div>
+            <button type="submit">Add Problem</button>
+        </div>
+    }
+</div>
+

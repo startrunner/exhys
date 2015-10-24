@@ -17,12 +17,19 @@ namespace Exhys.WebContestHost.DataModels
         GradingCancelled = 6
     }
 
-    public partial class ProblemSolution
+    public partial class ProblemSolution:ExhysContestEntities.ICascadeable
     {
         public ProblemSolutionStatus Status
         {
             get { return (ProblemSolutionStatus)this.StatusCode; }
             set { this.StatusCode = (byte)value; }
+        }
+
+        public void CascadeFrom (ExhysContestEntities db)
+        {
+            this.TestStatuses.ToList().ForEach(db.CascadeFunc);
+            db.ProblemSolutions.Remove(this);
+            //db.SaveChanges();
         }
     }
 }

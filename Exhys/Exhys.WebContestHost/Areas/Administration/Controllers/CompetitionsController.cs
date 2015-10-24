@@ -14,12 +14,12 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
 {
     public class CompetitionsController : ExhysController
     {
+
         [HttpGet]
         public ActionResult List()
         {
             AddSignedInUserInformation();
             AddUserGroupOptions();
-
 
             var vm = new List<CompetitionViewModel>();
             using (var db=new ExhysContestEntities())
@@ -50,18 +50,17 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
                     }
                     else
                     {
-                        comp.DeleteFrom(db);
+                        comp.CascadeFrom(db);
                     }
 
                     db.SaveChanges();
                 }
-                //db.SaveChanges();
             }
             return RedirectToAction("List");
         }
 
         [HttpGet]
-        public ActionResult AddCompetition ()
+        public ActionResult Add ()
         {
             AddSignedInUserInformation();
             AddUserGroupOptions();
@@ -70,7 +69,7 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddCompetition(CompetitionViewModel vm)
+        public ActionResult Add(CompetitionViewModel vm)
         {
             using (var db = new ExhysContestEntities())
             {
@@ -84,8 +83,7 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
                 {
                     var gr = db.UserGroups
                         .Where(g => g.Id == vm.GroupId)
-                        .Take(1)
-                        .ToList()[0];
+                        .FirstOrDefault();
                     competition.UserGroup = gr;
                 }
 
@@ -104,18 +102,9 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
             if (id == null) return RedirectToAction("List");
             using (var db = new ExhysContestEntities())
             {
-                Competition comp;
-                try
-                {
-                    comp = db.Competitions
-                        .Where(c => c.Id == id)
-                        .Take(1)
-                        .ToList()[0];
-                }
-                catch (ArgumentOutOfRangeException) { return RedirectToAction("List"); }
-
-                var vm = new CompetitionViewModel(comp);
-                return View(vm);
+                Competition comp = db.Competitions.Where(c => c.Id == id).FirstOrDefault();
+                if (comp == null) return RedirectToAction("List");
+                return View(new CompetitionViewModel(comp));
             }
         }
 
@@ -124,7 +113,7 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
         {
             using (var db = new ExhysContestEntities())
             {
-                var competition = db.Competitions.Where(c => c.Id == vm.Id).Take(1).ToList()[0];
+                var competition = db.Competitions.Where(c => c.Id == vm.Id).FirstOrDefault();
                 competition.Name = vm.Name;
                 competition.Description = vm.Description;
                 competition.UserGroup = db.UserGroups.Where(g => g.Id == vm.GroupId).Take(1).ToList()[0];

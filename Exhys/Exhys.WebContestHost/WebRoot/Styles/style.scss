@@ -126,3 +126,12 @@ button{
         background:#DDD;
     }
 }
+
+ul.error-list{
+    list-style:none;
+    border-left:4px solid red;
+    padding-left:4px;
+    li::before{
+        content:"*"
+    }
+}

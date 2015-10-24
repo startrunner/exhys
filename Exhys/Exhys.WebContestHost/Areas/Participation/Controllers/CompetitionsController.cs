@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Exhys.WebContestHost.Areas.Participation.ViewModels;
 using Exhys.WebContestHost.Areas.Shared.Extensions;
 using Exhys.WebContestHost.Areas.Shared.Mvc;
 using Exhys.WebContestHost.Areas.Shared.ViewModels;
@@ -13,80 +12,111 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
 {
     public class CompetitionsController : ExhysController
     {
+        private ActionResult RedirectToSignIn()
+        {
+            return RedirectToAction(controllerName: "../Accounts/Accounts", actionName: "SignIn", routeValues: new { });
+        }
+        private ActionResult RedirectToList()
+        {
+            return RedirectToAction("List");
+        }
+
         [HttpGet]
         public ActionResult List()
         {
-
-            AddSignedInUserInformation();
-
             var vm = new List<CompetitionViewModel>();
+
             using (var db = new ExhysContestEntities())
             {
                 var user = Request.GetSignedInUser(db);
-                if (user == null) return Content("sry m8");
-                else
-                {
-                    var competitions = user.UserGroup.AvaiableCompetitions;
-                    foreach (var c in competitions)
-                        vm.Add(new CompetitionViewModel(c));
-                }
+                if (user == null) return RedirectToSignIn();
+
+                var competitions = user.GetAvaiableCompetitions().ToList();
+                foreach (var comp in competitions) vm.Add(new CompetitionViewModel(comp));
             }
+
             return View(vm);
         }
 
         [HttpGet]
-        public ActionResult Join (int? id)
+        public ActionResult Join(int id)
         {
-            AddSignedInUserInformation();
-
-            if (id == null) return RedirectToAction("List");
-            else
+            using (var db = new ExhysContestEntities())
             {
-                using (var db = new ExhysContestEntities())
+                var competition = db.Competitions.Where(c => c.Id == id).FirstOrDefault();
+                if(competition==null)
                 {
-                    var competition = db.Competitions.Where(c => c.Id == id).Take(1).ToList()[0];
-                    var vm = new CompetitionViewModel(competition);
-                    return View(vm);
+                    return RedirectToList();
+                }
+                else
+                {
+                    return View(new CompetitionViewModel(competition));
                 }
             }
         }
 
         [HttpPost]
-        public ActionResult Join(int id)
+        public ActionResult Join(CompetitionViewModel vm)
         {
-            return RedirectToAction("Participate", new { id = id });
+            using (var db = new ExhysContestEntities())
+            {
+                var competition = db.Competitions.Where(c => c.Id == vm.Id).FirstOrDefault();
+                if (competition == null) return RedirectToAction("List");
+
+                var user = Request.GetSignedInUser(db);
+                if (user == null) return RedirectToSignIn();
+
+                var participation=db.Participations
+                    .Where(p=>p.User.Id==user.Id && p.Competition.Id==competition.Id)
+                    .FirstOrDefault();
+                if (participation != null) return RedirectToAction("Participate", new { id = vm.Id });
+
+                participation = new DataModels.Participation();
+                participation.Competition = competition;
+                participation.User = user;
+
+                db.Participations.Add(participation);
+                db.SaveChanges();
+            }
+            return RedirectToList();
         }
 
         [HttpGet]
-
-        public ActionResult Participate (int? id = null)
+        public ActionResult Participate(int id)
         {
-            if (id == null)
-            {
-                id = Request.GetCurrentCompetitionCookie();
-                if (id == null) return RedirectToAction("List");
-                else return RedirectToAction("Participate", new { id = id });
-            }
-
-            AddSignedInUserInformation();
-            try
-            {
-                AddProblemOptions((int)id);
-            }
-            catch
-            {
-                return RedirectToAction("List");
-            }
-
-            Response.SetCurrentCompetitionCookie((int)id);
             using (var db = new ExhysContestEntities())
             {
-                var competition = db.Competitions.Where(c => c.Id == id).Take(1).ToList().FirstOrDefault();
-                var vm = new ParticipationViewModel(competition);
+                var competition = db.Competitions.Where(c => c.Id == id).FirstOrDefault();
+                if (competition == null) return RedirectToList();
+
+                var user = Request.GetSignedInUser(db);
+                if (user == null) return RedirectToSignIn();
+
+                var participation = db.Participations
+                    .Where(p => p.User.Id == user.Id && p.Competition.Id == competition.Id)
+                    .FirstOrDefault();
+                if (participation == null) return RedirectToList();
+
+                var vm = new ParticipationViewModel(participation);
+                vm.Competition.IncludeProblems().IncludeProblemStatements();
+
                 return View(vm);
             }
-
-            //return View();
         }
+
+        [HttpGet]
+        public ActionResult DownloadStatement(int id)
+        {
+            using (var db = new ExhysContestEntities())
+            {
+                ProblemStatement statement = db.ProblemStatements
+                    .Where(s => s.Id == id)
+                    .FirstOrDefault();
+
+                return File(fileContents: statement.Bytes, fileDownloadName: statement.Filename, contentType: "application/zip");
+            }
+        }
+
+
     }
 }

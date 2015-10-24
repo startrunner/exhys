@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Exhys.WebContestHost.DataModels.Partials;
 
 namespace Exhys.WebContestHost.DataModels
 {
-    public partial class Problem:IDeletable
+    partial class Problem : ExhysContestEntities.ICascadeable
     {
-        public void DeleteFrom (ExhysContestEntities db)
+        public void CascadeFrom (ExhysContestEntities db)
         {
-            this.ProblemTests.Clear();
-            this.ProblemSolutions.Clear();
-            this.ProblemStatements.Clear();
+            this.Tests.ToList().ForEach(db.CascadeFunc);
+            this.ProblemStatements.ToList().ForEach(db.CascadeFunc);
+            this.ProblemSolutions.ToList().ForEach(db.CascadeFunc);
             db.Problems.Remove(this);
+            //db.SaveChanges();
         }
     }
 }

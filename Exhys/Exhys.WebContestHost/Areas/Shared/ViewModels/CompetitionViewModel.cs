@@ -9,6 +9,30 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
 {
     public class CompetitionViewModel
     {
+        private Competition _model;
+
+        public List<ProblemViewModel> Problems { get; private set; }
+        public CompetitionViewModel IncludeProblems()
+        {
+            if (_model != null)
+            {
+                Problems = new List<ProblemViewModel>();
+                foreach (var v in _model.Problems)
+                {
+                    Problems.Add(new ProblemViewModel(v));
+                }
+            }
+            return this;
+        }
+        public CompetitionViewModel IncludeProblemStatements()
+        {
+            if (Problems == null) throw new InvalidOperationException("The problems must be included before theor statements.");
+
+            foreach (var p in Problems) p.IncludeStatements();
+
+            return this;
+        }
+
         private string _description;
 
         public int Id { get;  set; }
@@ -25,12 +49,14 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
         public bool RequestDelete { get; set; }
 
         public CompetitionViewModel () : this(null) { }
+
         public CompetitionViewModel (Competition model)
         {
             this.RequestDelete = false;
 
             if (model != null)
             {
+                this._model = model;
                 this.Name = model.Name;
                 this.Description = model.Description;
                 this.Id = model.Id;

@@ -42,6 +42,25 @@ namespace Exhys.WebContestHost.Areas.Shared
             return new MvcHtmlString(rt.ToString());
         }
 
+        public static MvcHtmlString ErrorListFor(this HtmlHelper helper, ViewDataDictionary viewData)
+        {
+            StringBuilder rt = new StringBuilder();
+
+            rt.Append("<ul class=\"error-list\">");
+
+            foreach(var v in viewData.ModelState.Values)
+            {
+                foreach(var v1 in v.Errors)
+                {
+                    rt.AppendFormat("<li>{0}</li>", v1.ErrorMessage); 
+                }
+            }
+
+            rt.Append("</ul>");
+
+            return new MvcHtmlString(rt.ToString());
+        }
+
         public static TabControlHelper TabControl(this HtmlHelper helper, string[] headers)
         {
             return new TabControlHelper(helper, headers);

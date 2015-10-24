@@ -6,13 +6,23 @@ using System.Threading.Tasks;
 
 namespace Exhys.WebContestHost.DataModels
 {
+    
+
     public partial class ExhysContestEntities
     {
+        public interface ICascadeable
+        {
+            void CascadeFrom (ExhysContestEntities db);
+        }
+
+        public void CascadeFunc(ICascadeable item)
+        {
+            item.CascadeFrom(this);
+        }
+
         public UserGroup GetDefaultUserGroup()
         {
-            var groups = this.UserGroups.Where(g => g.IsOpen).Take(1).ToList();
-            if (groups == null || groups.Count == 0) return null;
-            return groups[0];
+            return this.UserGroups.Where(g => g.IsOpen).FirstOrDefault();
         }
     }
 }

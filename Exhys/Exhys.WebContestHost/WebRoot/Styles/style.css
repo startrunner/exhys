@@ -1,4 +1,4 @@
-﻿* {
+* {
   margin: 0px;
   padding: 0px;
   font-family: sans-serif; }
@@ -87,3 +87,12 @@ button {
   border: 1px solid gray; }
   button:hover {
     background: #DDD; }
+
+ul.error-list {
+  list-style: none;
+  border-left: 4px solid red;
+  padding-left: 4px; }
+  ul.error-list li::before {
+    content: "*"; }
+
+/*# sourceMappingURL=style.css.map */

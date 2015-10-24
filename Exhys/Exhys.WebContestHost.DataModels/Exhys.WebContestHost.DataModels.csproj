@@ -29,6 +29,24 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
@@ -60,11 +78,18 @@
     </Compile>
     <Compile Include="Partials\Competition.cs" />
     <Compile Include="Partials\ExhysContestEntities.cs" />
-    <Compile Include="Partials\IDeletable.cs" />
+    <Compile Include="Partials\Participation.cs" />
     <Compile Include="Partials\Problem.cs" />
     <Compile Include="Partials\ProblemSolution.cs" />
+    <Compile Include="Partials\ProblemStatement.cs" />
+    <Compile Include="Partials\ProblemTest.cs" />
+    <Compile Include="Partials\SolutionTestStatus.cs" />
     <Compile Include="Partials\UserAccount.cs" />
     <Compile Include="Partials\UserGroup.cs" />
+    <Compile Include="Partials\UserSession.cs" />
+    <Compile Include="Participation.cs">
+      <DependentUpon>WebContestDbContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="PerformanceMetric.cs">
       <DependentUpon>WebContestDbContext.tt</DependentUpon>
     </Compile>

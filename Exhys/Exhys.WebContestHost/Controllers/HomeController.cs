@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using Exhys.WebContestHost.Areas.Shared.Mvc;
@@ -10,7 +12,7 @@ namespace Exhys.WebContestHost.Controllers
     public class HomeController : ExhysController
     {
         public ActionResult Index ()
-        { 
+        {
             return View();
         }
 

@@ -8,5 +8,9 @@ namespace Exhys.CheckerCore
 {
     public class Class1
     {
+        Class1()
+        {
+           
+        }
     }
 }

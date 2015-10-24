@@ -30,7 +30,7 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
             {
                 foreach(var grvm in vm)
                 {
-                    var group = db.UserGroups.Where(g => g.Id == grvm.Id).ToList()[0];
+                    var group = db.UserGroups.Where(g => g.Id == grvm.Id).FirstOrDefault();
 
                     if (grvm.RequestDelete == false)
                     {
@@ -41,8 +41,7 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
                     }
                     else
                     {
-                        group.GroupMembers.Clear();
-                        db.UserGroups.Remove(group);
+                        group.CascadeFrom(db);
                     }
                     db.SaveChanges();
                 }

@@ -1,4 +1,7 @@
 ﻿@model IList<CompetitionViewModel>
+    @{ 
+        ViewData.SetPageTitle("List Competitions");
+    }
 <div>
     @using (Html.BeginForm(FormMethod.Post))
     {
