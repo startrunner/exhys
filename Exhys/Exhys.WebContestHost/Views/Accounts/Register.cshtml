@@ -1,0 +1,39 @@
+﻿@model Exhys.WebContestHost.Areas.Shared.ViewModels.UserAccountViewModel
+<!doctype html>
+<html>
+<head>
+
+</head>
+<body>
+    <header></header>
+    <section>
+
+        @using (Html.BeginForm(FormMethod.Post))
+        {
+            <div>
+                @Html.ErrorListFor(ViewData)
+            </div>
+            <div>
+                @Html.FixedDropDownListFor(m => m.GroupId, ViewData.GetOpenUserGroupOptions())
+            </div>
+            <div>
+                @Html.TextBoxFor(m => m.Username, new { placeholder = "Username" })
+            </div>
+            <div>
+                @Html.PasswordFor(m => m.Password, new { placeholder = "Password" })
+            </div>
+            <div>
+                @Html.PasswordFor(m => m.ConfirmPassword, new { placeholder = "Confirm Password" })
+            </div>
+            <div>
+                @Html.TextBoxFor(m => m.FirstName, new { placeholder = "First Name" })
+            </div>
+            <div>
+                @Html.TextBoxFor(m => m.LastName, new { placeholder = "Last Name" })
+            </div>
+            <button type="submit">Register</button>
+        }
+    </section>
+    <footer></footer>
+</body>
+</html>

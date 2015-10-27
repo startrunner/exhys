@@ -10,17 +10,7 @@
         @using (Html.BeginForm(FormMethod.Post))
         {
             <div>
-                <ul>
-                    @{ 
-                        if (ViewBag.Errors is IEnumerable<string>)
-                        {
-                            foreach (var v in ViewBag.Errors)
-                            {
-                            <li>@v</li>
-                                }
-                            }
-                        }
-                </ul>
+                @Html.ErrorListFor(ViewData)
             </div>
             @Html.TextBoxFor(m => m.Username)
             @Html.PasswordFor(m => m.Password)

@@ -6,12 +6,8 @@ using System.Threading.Tasks;
 
 namespace Exhys.WebContestHost.DataModels
 {
-    partial class Participation : ExhysContestEntities.ICascadeable
+    partial class Participation 
     {
-        public void CascadeFrom (ExhysContestEntities db)
-        {
-            this.Submissions.ToList().ForEach(db.CascadeFunc);
-            db.Participations.Remove(this);
-        }
+
     }
 }

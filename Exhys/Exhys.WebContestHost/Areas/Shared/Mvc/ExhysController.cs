@@ -57,6 +57,7 @@ namespace Exhys.WebContestHost.Areas.Shared.Mvc
                 AddUserGroupOptions(db, allowNull);
             }
         }
+
         public void AddUserGroupOptions (ExhysContestEntities db, bool allowNull=false)
         {
             List<SelectListItem> options = new List<SelectListItem>();
@@ -74,6 +75,28 @@ namespace Exhys.WebContestHost.Areas.Shared.Mvc
             });
             ViewData.SetUserGroupOptions(options);
             //ViewBag.UserGroupOptions = options;
+        }
+
+        public void AddOpenUserGroupOptions(bool allowNull=false)
+        {
+            using (var db = new ExhysContestEntities())
+            {
+                AddOpenUserGroupOptions(db, allowNull);
+            }
+        }
+
+        public void AddOpenUserGroupOptions(ExhysContestEntities db, bool allowNull=false)
+        {
+            List<SelectListItem> options = new List<SelectListItem>();
+            if(allowNull)
+            {
+                options.Add(new SelectListItem { Text = "[NULL]", Value = null });
+            }
+            db.UserGroups
+                .Where(g => g.IsOpen)
+                .ToList()
+                .ForEach(g => options.Add(new SelectListItem() { Text = g.Name, Value = g.Id.ToString() }));
+            ViewData.SetOpenUserGroupOptions(options);
         }
 
         public void AddCompetitionOptions()

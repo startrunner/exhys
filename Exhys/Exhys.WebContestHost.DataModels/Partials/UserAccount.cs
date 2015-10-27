@@ -8,7 +8,7 @@ using Exhys.WebContestHost.DataModels;
 
 namespace Exhys.WebContestHost.DataModels
 { 
-    public partial class UserAccount:ExhysContestEntities.ICascadeable
+    public partial class UserAccount
     {
         public bool IsAdmin ()
         {
@@ -36,13 +36,6 @@ namespace Exhys.WebContestHost.DataModels
         public string GetFullName ()
         {
             return string.Format("{0} {1}", FirstName, LastName);
-        }
-
-        public void CascadeFrom (ExhysContestEntities db)
-        {
-            this.UserSessions.ToList().ForEach(db.CascadeFunc);
-            db.UserAccounts.Remove(this);
-            //db.SaveChanges();
         }
 
         public ICollection<Competition> GetAvaiableCompetitions()

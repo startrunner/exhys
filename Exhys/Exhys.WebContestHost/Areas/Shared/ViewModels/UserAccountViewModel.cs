@@ -4,6 +4,7 @@ using System.Collections;
 using System.Linq;
 using System.Web;
 using Exhys.WebContestHost.DataModels;
+using System.Web.Mvc;
 
 namespace Exhys.WebContestHost.Areas.Shared.ViewModels
 {
@@ -17,7 +18,7 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
         public bool IsAdmin { get; set; }
         public bool RequestDelete { get; set; }
         public int UserId { get;  set; }
-        public int GroupId { get; set; }
+        public int? GroupId { get; set; }
 
         public UserAccountViewModel () : this(null) { }
         public UserAccountViewModel (UserAccount model)
@@ -39,73 +40,76 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
             this.RequestDelete = false;
         }
 
-        public IEnumerable<string> GetRegistrationErrors ()
+        public bool ValidateForRegistration(ViewDataDictionary viewData)
         {
-            var rt = new LinkedList<string>();
-
             if (Username == null || Username.Length < 4)
             {
-                rt.AddLast("A username is required and must be at least 4 characters long.");
+                viewData.ModelState.AddModelError("short-username", "A username is required and must be at least 4 characters long.");
             }
-            else if (Username.Length > 32)
+            else if(Username.Length>32)
             {
-                rt.AddLast("A username cannot be longer than 32 characters");
+                viewData.ModelState.AddModelError("long-username", "A username cannot be longer than 32 characters.");
             }
 
-            if (Password == null || Password.Length < 6)
+            if(Password==null || Password.Length<6)
             {
-                rt.AddLast("A password is required and it must be at least 6 characters long.");
+                viewData.ModelState.AddModelError("short-password", "A password must be at least 6 characters long.");
             }
-            else if (Password.Length > 32)
+            else if(Password.Length>32)
             {
-                rt.AddLast("A password cannot be longer than 32 characters.");
-            }
-            else if (Password != ConfirmPassword)
-            {
-                rt.AddLast("The two passwords must match.");
+                viewData.ModelState.AddModelError("long-password", "A password cannot be longer than 32 characters.");
             }
 
-            else if ((FirstName != null && FirstName.Length > 32) | (LastName != null && LastName.Length > 32))
+            if(Password!=ConfirmPassword)
             {
-                rt.AddLast("A name cannot be longer than 32 characters.");
+                viewData.ModelState.AddModelError("unmatching-passwords", "The two passwords must match.");
             }
 
-            if (rt.Count == 0)
+            if ((FirstName != null && FirstName.Length > 32) || (LastName != null && LastName.Length > 32))
             {
-                rt.Clear();
-                return null;
+                viewData.ModelState.AddModelError("long-name", "A name cannot be longer than 32 characters");
             }
-            else return rt;
+
+            if(GroupId==null)
+            {
+                viewData.ModelState.AddModelError("null-group", "You must select a group");
+            }
+            return viewData.ModelState.IsValid;
         }
 
-        public IEnumerable<string> GetSignInErrors ()
+        public bool ValidateForSignIn(ViewDataDictionary viewData)
         {
-            var rt = new LinkedList<string>();
-
             if (Username == null || Username.Length < 4)
             {
-                rt.AddLast("A username is required and must be at least 4 characters long.");
+                viewData.ModelState.AddModelError("short-username", "A username is required and must be at least 4 characters long.");
             }
             else if (Username.Length > 32)
             {
-                rt.AddLast("A username cannot be longer than 32 characters");
+                viewData.ModelState.AddModelError("long-username", "A username cannot be longer than 32 characters.");
             }
 
             if (Password == null || Password.Length < 6)
             {
-                rt.AddLast("A password is required and it must be at least 6 characters long.");
+                viewData.ModelState.AddModelError("short-password", "A password must be at least 6 characters long.");
             }
             else if (Password.Length > 32)
             {
-                rt.AddLast("A password cannot be longer than 32 characters.");
+                viewData.ModelState.AddModelError("long-password", "A password cannot be longer than 32 characters.");
             }
 
-            if (rt.Count == 0)
-            {
-                rt.Clear();
-                return null;
-            }
-            else return rt;
+            return viewData.ModelState.IsValid;
+        }
+
+        [Obsolete]
+        public IEnumerable<string> GetRegistrationErrors ()
+        {
+            return null;
+        }
+
+        [Obsolete]
+        public IEnumerable<string> GetSignInErrors ()
+        {
+            return null;
         }
     }
 }

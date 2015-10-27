@@ -120,8 +120,6 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Areas\Accounts\AccountsAreaRegistration.cs" />
-    <Compile Include="Areas\Accounts\Controllers\AccountsController.cs" />
     <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
     <Compile Include="Areas\Administration\Controllers\CompetitionsController.cs" />
     <Compile Include="Areas\Administration\Controllers\ProblemsController.cs" />
@@ -148,6 +146,7 @@
     <Compile Include="Areas\Shared\ViewModels\UserAccountViewModel.cs" />
     <Compile Include="Areas\Shared\ViewModels\UserGroupViewModel.cs" />
     <Compile Include="Areas\Shared\ViewModels\ViewPermissions.cs" />
+    <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -186,12 +185,6 @@
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Areas\Accounts\Views\web.config" />
-    <Content Include="Areas\Accounts\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Accounts\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Accounts\Views\Accounts\Register.cshtml" />
-    <Content Include="Areas\Accounts\Views\Accounts\SignIn.cshtml" />
-    <Content Include="Areas\Accounts\Views\Accounts\Profile.cshtml" />
     <Content Include="Areas\Administration\Views\web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -236,6 +229,9 @@
       <DependentUpon>style.css</DependentUpon>
     </Content>
     <Content Include="WebRoot\Styles\style.scss" />
+    <Content Include="Views\Accounts\Profile.cshtml" />
+    <Content Include="Views\Accounts\Register.cshtml" />
+    <Content Include="Views\Accounts\SignIn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CodeBits\CodeBits.csproj">

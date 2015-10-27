@@ -194,7 +194,7 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
                         problem.Name = pvm.Name;
                         problem.CompetitionGivenAt = competition;
                     }
-                    else problem.CascadeFrom(db);
+                    else db.Problems.Remove(problem);
                     db.SaveChanges();
                 }
                 return RedirectToAction("List");

@@ -13,7 +13,8 @@ namespace Exhys.WebContestHost.Areas.Shared.Extensions
         {
             public const string SignedInUser = "signed-in-user";
             public const string ProblemOptions = "problem-options";
-            public const string UserGroupOptions = "user=group-options";
+            public const string UserGroupOptions = "user-group-options";
+            public const string OpenUserGroupOptions = "open-user-group-options";
             public const string CompetitionOptions = "competition-options";
             public const string PageCount = "page-count";
             public const string CurrentPage = "current-page";
@@ -61,6 +62,11 @@ namespace Exhys.WebContestHost.Areas.Shared.Extensions
             return that[PropertyNames.PageTitle] as string;
         }
 
+        public static List<SelectListItem> GetOpenUserGroupOptions(this ViewDataDictionary that)
+        {
+            return that[PropertyNames.OpenUserGroupOptions] as List<SelectListItem>;
+        }
+
         public static void SetCompetitionOptions(this ViewDataDictionary that, List<SelectListItem> options)
         {
             that[PropertyNames.CompetitionOptions] = options;
@@ -99,6 +105,11 @@ namespace Exhys.WebContestHost.Areas.Shared.Extensions
         public static void SetPageTitle(this ViewDataDictionary that, string val)
         {
             that[PropertyNames.PageTitle] = val;
+        }
+
+        public static void SetOpenUserGroupOptions(this ViewDataDictionary that, List<SelectListItem> options)
+        {
+            that[PropertyNames.OpenUserGroupOptions] = options;
         }
 
 

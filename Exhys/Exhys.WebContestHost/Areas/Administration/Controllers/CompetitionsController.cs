@@ -50,7 +50,7 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
                     }
                     else
                     {
-                        comp.CascadeFrom(db);
+                        db.Competitions.Remove(comp);
                     }
 
                     db.SaveChanges();

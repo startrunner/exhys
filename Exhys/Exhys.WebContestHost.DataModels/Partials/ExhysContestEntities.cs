@@ -15,11 +15,13 @@ namespace Exhys.WebContestHost.DataModels
             void CascadeFrom (ExhysContestEntities db);
         }
 
+        [Obsolete]
         public void CascadeFunc(ICascadeable item)
         {
             item.CascadeFrom(this);
         }
 
+        [Obsolete]
         public UserGroup GetDefaultUserGroup()
         {
             return this.UserGroups.Where(g => g.IsOpen).FirstOrDefault();

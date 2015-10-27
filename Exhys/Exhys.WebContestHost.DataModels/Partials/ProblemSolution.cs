@@ -17,7 +17,7 @@ namespace Exhys.WebContestHost.DataModels
         GradingCancelled = 6
     }
 
-    public partial class ProblemSolution:ExhysContestEntities.ICascadeable
+    public partial class ProblemSolution
     {
         public ProblemSolutionStatus Status
         {
@@ -25,11 +25,6 @@ namespace Exhys.WebContestHost.DataModels
             set { this.StatusCode = (byte)value; }
         }
 
-        public void CascadeFrom (ExhysContestEntities db)
-        {
-            this.TestStatuses.ToList().ForEach(db.CascadeFunc);
-            db.ProblemSolutions.Remove(this);
-            //db.SaveChanges();
-        }
+
     }
 }

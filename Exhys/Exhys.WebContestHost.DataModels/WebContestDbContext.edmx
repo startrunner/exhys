@@ -225,7 +225,9 @@
   </EntityType>
   <Association Name="UserAccounts_UserSessions">
     <End Role="UserSession" Type="ExhysContestModel.Store.UserSessions" Multiplicity="*" />
-    <End Role="UserAccount" Type="ExhysContestModel.Store.UserAccounts" Multiplicity="1" />
+    <End Role="UserAccount" Type="ExhysContestModel.Store.UserAccounts" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <ReferentialConstraint>
       <Principal Role="UserAccount">
         <PropertyRef Name="Id" />
@@ -238,7 +240,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="UserAccounts_UserGroups">
-    <End Role="UserGroup" Type="ExhysContestModel.Store.UserGroups" Multiplicity="1" />
+    <End Role="UserGroup" Type="ExhysContestModel.Store.UserGroups" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="UserAccount" Type="ExhysContestModel.Store.UserAccounts" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="UserGroup">
@@ -250,7 +254,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="Competitions_Problems">
-    <End Role="Competition" Type="ExhysContestModel.Store.Competitions" Multiplicity="1" />
+    <End Role="Competition" Type="ExhysContestModel.Store.Competitions" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Problem" Type="ExhysContestModel.Store.Problems" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Competition">
@@ -263,7 +269,9 @@
   </Association>
   <Association Name="Competitions_UserGroups">
     <End Role="Competition" Type="ExhysContestModel.Store.Competitions" Multiplicity="*" />
-    <End Role="UserGroup" Type="ExhysContestModel.Store.UserGroups" Multiplicity="1" />
+    <End Role="UserGroup" Type="ExhysContestModel.Store.UserGroups" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <ReferentialConstraint>
       <Principal Role="UserGroup">
         <PropertyRef Name="Id" />
@@ -286,7 +294,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="ProblemProblemStatement">
-    <End Role="Problem" Type="ExhysContestModel.Store.Problems" Multiplicity="1" />
+    <End Role="Problem" Type="ExhysContestModel.Store.Problems" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="ProblemStatement" Type="ExhysContestModel.Store.ProblemStatements" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Problem">
@@ -298,7 +308,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="Problems_ProblemTests">
-    <End Role="Problem" Type="ExhysContestModel.Store.Problems" Multiplicity="1" />
+    <End Role="Problem" Type="ExhysContestModel.Store.Problems" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="ProblemTest" Type="ExhysContestModel.Store.ProblemTests" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Problem">
@@ -334,7 +346,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="ProblemSolutionSolutionTestStatus">
-    <End Role="ProblemSolution" Type="ExhysContestModel.Store.ProblemSolutions" Multiplicity="1" />
+    <End Role="ProblemSolution" Type="ExhysContestModel.Store.ProblemSolutions" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="SolutionTestStatus" Type="ExhysContestModel.Store.SolutionTestStatuses" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="ProblemSolution">
@@ -347,7 +361,9 @@
   </Association>
   <Association Name="ParticipationUserAccount">
     <End Role="Participation" Type="ExhysContestModel.Store.Participations" Multiplicity="*" />
-    <End Role="UserAccount" Type="ExhysContestModel.Store.UserAccounts" Multiplicity="1" />
+    <End Role="UserAccount" Type="ExhysContestModel.Store.UserAccounts" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <ReferentialConstraint>
       <Principal Role="UserAccount">
         <PropertyRef Name="Id" />
@@ -361,7 +377,9 @@
   </Association>
   <Association Name="ParticipationCompetition">
     <End Role="Participation" Type="ExhysContestModel.Store.Participations" Multiplicity="*" />
-    <End Role="Competition" Type="ExhysContestModel.Store.Competitions" Multiplicity="1" />
+    <End Role="Competition" Type="ExhysContestModel.Store.Competitions" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <ReferentialConstraint>
       <Principal Role="Competition">
         <PropertyRef Name="Id" />
@@ -372,7 +390,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="ParticipationProblemSolution">
-    <End Role="Participation" Type="ExhysContestModel.Store.Participations" Multiplicity="1" />
+    <End Role="Participation" Type="ExhysContestModel.Store.Participations" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="ProblemSolution" Type="ExhysContestModel.Store.ProblemSolutions" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Participation">
@@ -481,6 +501,7 @@
         <Association Name="UserAccounts_UserSessions">
           <End Type="ExhysContestModel.UserSession" Role="UserSession" Multiplicity="*" />
           <End Type="ExhysContestModel.UserAccount" Role="UserAccount" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
           </End>
         </Association>
         <EntityType Name="UserGroup">
@@ -497,6 +518,7 @@
         </EntityType>
         <Association Name="UserAccounts_UserGroups">
           <End Type="ExhysContestModel.UserGroup" Multiplicity="1" Role="UserGroup" >
+            <OnDelete Action="Cascade" />
           </End>
           <End Type="ExhysContestModel.UserAccount" Multiplicity="*" Role="UserAccount" >
           </End>
@@ -531,6 +553,7 @@
         </EntityType>
         <Association Name="Competitions_Problems">
           <End Type="ExhysContestModel.Competition" Role="Competition" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
           </End>
           <End Type="ExhysContestModel.Problem" Role="Problem" Multiplicity="*" />
         </Association>
@@ -538,6 +561,7 @@
           <End Type="ExhysContestModel.Competition" Role="Competition" Multiplicity="*" >
           </End>
           <End Type="ExhysContestModel.UserGroup" Role="UserGroup" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
           </End>
         </Association>
         <EntityType Name="ProblemSolution">
@@ -569,6 +593,7 @@
         </EntityType>
         <Association Name="ProblemProblemStatement">
           <End Type="ExhysContestModel.Problem" Role="Problem" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
           </End>
           <End Type="ExhysContestModel.ProblemStatement" Role="ProblemStatement" Multiplicity="*" />
         </Association>
@@ -591,6 +616,7 @@
         </EntityType>
         <Association Name="Problems_ProblemTests">
           <End Type="ExhysContestModel.Problem" Role="Problem" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
           </End>
           <End Type="ExhysContestModel.ProblemTest" Role="ProblemTest" Multiplicity="*" >
           </End>
@@ -656,6 +682,7 @@
           </EntityType>
         <Association Name="ProblemSolutionSolutionTestStatus">
           <End Type="ExhysContestModel.ProblemSolution" Role="ProblemSolution" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
           </End>
           <End Type="ExhysContestModel.SolutionTestStatus" Role="SolutionTestStatus" Multiplicity="*" />
         </Association>
@@ -670,14 +697,20 @@
         </EntityType>
         <Association Name="ParticipationUserAccount">
           <End Type="ExhysContestModel.Participation" Role="Participation" Multiplicity="*" />
-          <End Type="ExhysContestModel.UserAccount" Role="UserAccount" Multiplicity="1" />
+          <End Type="ExhysContestModel.UserAccount" Role="UserAccount" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
         </Association>
         <Association Name="ParticipationCompetition">
           <End Type="ExhysContestModel.Participation" Role="Participation" Multiplicity="*" />
-          <End Type="ExhysContestModel.Competition" Role="Competition" Multiplicity="1" />
+          <End Type="ExhysContestModel.Competition" Role="Competition" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
         </Association>
         <Association Name="ParticipationProblemSolution">
-          <End Type="ExhysContestModel.Participation" Role="Participation" Multiplicity="1" />
+          <End Type="ExhysContestModel.Participation" Role="Participation" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="ExhysContestModel.ProblemSolution" Role="ProblemSolution" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Participation">

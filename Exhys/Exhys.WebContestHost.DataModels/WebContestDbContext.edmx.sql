@@ -2,13 +2,13 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/24/2015 21:06:04
+-- Date Created: 10/27/2015 01:25:20
 -- Generated from EDMX file: C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost.DataModels\WebContestDbContext.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [ExhysContest];
+USE [Collapsable];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -38,9 +38,6 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_Problems_ProblemTests]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[ProblemTests] DROP CONSTRAINT [FK_Problems_ProblemTests];
 GO
-IF OBJECT_ID(N'[dbo].[FK_UserAccounts_ProblemSolutions]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ProblemSolutions] DROP CONSTRAINT [FK_UserAccounts_ProblemSolutions];
-GO
 IF OBJECT_ID(N'[dbo].[FK_ActiveCheckerProgrammingLanguage]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[ProgrammingLanguages] DROP CONSTRAINT [FK_ActiveCheckerProgrammingLanguage];
 GO
@@ -49,6 +46,15 @@ IF OBJECT_ID(N'[dbo].[FK_ActiveCheckerPerformanceMetric]', 'F') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[FK_ProblemSolutionSolutionTestStatus]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[SolutionTestStatuses] DROP CONSTRAINT [FK_ProblemSolutionSolutionTestStatus];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ParticipationUserAccount]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Participations] DROP CONSTRAINT [FK_ParticipationUserAccount];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ParticipationCompetition]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Participations] DROP CONSTRAINT [FK_ParticipationCompetition];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ParticipationProblemSolution]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ProblemSolutions] DROP CONSTRAINT [FK_ParticipationProblemSolution];
 GO
 
 -- --------------------------------------------------
@@ -90,6 +96,9 @@ IF OBJECT_ID(N'[dbo].[PerformanceMetrics]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[SolutionTestStatuses]', 'U') IS NOT NULL
     DROP TABLE [dbo].[SolutionTestStatuses];
+GO
+IF OBJECT_ID(N'[dbo].[Participations]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Participations];
 GO
 
 -- --------------------------------------------------
@@ -338,7 +347,7 @@ ADD CONSTRAINT [FK_UserAccounts_UserSessions]
     FOREIGN KEY ([UserAccount_Id], [UserAccount_Username])
     REFERENCES [dbo].[UserAccounts]
         ([Id], [Username])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_UserAccounts_UserSessions'
@@ -353,7 +362,7 @@ ADD CONSTRAINT [FK_UserAccounts_UserGroups]
     FOREIGN KEY ([UserGroup_Id])
     REFERENCES [dbo].[UserGroups]
         ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_UserAccounts_UserGroups'
@@ -368,7 +377,7 @@ ADD CONSTRAINT [FK_Competitions_Problems]
     FOREIGN KEY ([CompetitionGivenAt_Id])
     REFERENCES [dbo].[Competitions]
         ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_Competitions_Problems'
@@ -383,7 +392,7 @@ ADD CONSTRAINT [FK_Competitions_UserGroups]
     FOREIGN KEY ([UserGroup_Id])
     REFERENCES [dbo].[UserGroups]
         ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_Competitions_UserGroups'
@@ -413,7 +422,7 @@ ADD CONSTRAINT [FK_ProblemProblemStatement]
     FOREIGN KEY ([ProblemProblemStatement_ProblemStatement_Id])
     REFERENCES [dbo].[Problems]
         ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_ProblemProblemStatement'
@@ -428,7 +437,7 @@ ADD CONSTRAINT [FK_Problems_ProblemTests]
     FOREIGN KEY ([Problem_Id])
     REFERENCES [dbo].[Problems]
         ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_Problems_ProblemTests'
@@ -473,7 +482,7 @@ ADD CONSTRAINT [FK_ProblemSolutionSolutionTestStatus]
     FOREIGN KEY ([ProblemSolutionSolutionTestStatus_SolutionTestStatus_Id])
     REFERENCES [dbo].[ProblemSolutions]
         ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_ProblemSolutionSolutionTestStatus'
@@ -488,7 +497,7 @@ ADD CONSTRAINT [FK_ParticipationUserAccount]
     FOREIGN KEY ([User_Id], [User_Username])
     REFERENCES [dbo].[UserAccounts]
         ([Id], [Username])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_ParticipationUserAccount'
@@ -503,7 +512,7 @@ ADD CONSTRAINT [FK_ParticipationCompetition]
     FOREIGN KEY ([Competition_Id])
     REFERENCES [dbo].[Competitions]
         ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_ParticipationCompetition'
@@ -518,7 +527,7 @@ ADD CONSTRAINT [FK_ParticipationProblemSolution]
     FOREIGN KEY ([ParticipationId])
     REFERENCES [dbo].[Participations]
         ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_ParticipationProblemSolution'

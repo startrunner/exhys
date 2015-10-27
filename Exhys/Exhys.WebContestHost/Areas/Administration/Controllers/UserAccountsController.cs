@@ -69,7 +69,7 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
                     }
                     else
                     {
-                        user.CascadeFrom(db);
+                        db.UserAccounts.Remove(user);
                     }
                     db.SaveChanges();
                 }

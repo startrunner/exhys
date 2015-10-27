@@ -6,12 +6,7 @@ using System.Threading.Tasks;
 
 namespace Exhys.WebContestHost.DataModels
 {
-    partial class UserSession : ExhysContestEntities.ICascadeable
+    partial class UserSession
     {
-        public void CascadeFrom (ExhysContestEntities db)
-        {
-            db.UserSessions.Remove(this);
-            //db.SaveChanges();
-        }
     }
 }
