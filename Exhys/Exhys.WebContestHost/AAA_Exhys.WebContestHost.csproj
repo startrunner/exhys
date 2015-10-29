@@ -238,9 +238,9 @@
       <Project>{a8b8cced-9569-4329-8bc6-e46f69364331}</Project>
       <Name>CodeBits</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Exhys.WebContestHost.DataModels\Exhys.WebContestHost.DataModels.csproj">
-      <Project>{6f2ba6d2-c380-4097-8e4f-562fa64f284b}</Project>
-      <Name>Exhys.WebContestHost.DataModels</Name>
+    <ProjectReference Include="..\Exhys.WebContestHost.CFDataModels\Exhys.WebContestHost.CFDataModels.csproj">
+      <Project>{7a72ba22-4c12-4979-bdb7-728e636d45d5}</Project>
+      <Name>Exhys.WebContestHost.CFDataModels</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
