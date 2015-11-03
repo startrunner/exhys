@@ -24,8 +24,9 @@ namespace Exhys.WebContestHost.DataModels
 
         [Required]
         public virtual Problem Problem { get; set; }
+
         [Required]
         public virtual Participation Participation { get; set; }
-        public virtual ICollection<SolutionTestStatus> TestStatuses { get; set; } = new HashSet<SolutionTestStatus>();
+        public virtual ICollection<SolutionTestStatus> TestStatuses { get; set; }
     }
 }

@@ -17,10 +17,11 @@ namespace Exhys.WebContestHost.DataModels
 
         public string Description { get; set; }
 
-        [Required]
+        //[Required]
         public virtual UserGroup UserGroup { get; set; }
 
-        public ICollection<Problem> Problems { get; set; } = new HashSet<Problem>();
-        public ICollection<Participation> Participations { get; set; } = new HashSet<Participation>();
+        public ICollection<Problem> Problems { get; set; }
+
+        public ICollection<Participation> Participations { get; set; }
     }
 }

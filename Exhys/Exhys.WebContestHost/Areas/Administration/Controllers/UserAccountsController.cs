@@ -61,8 +61,7 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
                         .Where(u => u.Id == v.UserId).FirstOrDefault();
                     if (v.RequestDelete == false)
                     {
-                        user.FirstName = v.FirstName;
-                        user.LastName = v.LastName;
+                        user.FullName = v.FullName;
                         user.Password = v.Password;
                         var gr = db.UserGroups.Where(g => g.Id == v.GroupId).FirstOrDefault();
                         user.UserGroup = gr;
@@ -87,15 +86,13 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddUsers (string prefix, int? count, string firstNames, string lastNames, int groupId)
+        public ActionResult AddUsers (string prefix, int? count, string fullNames, int groupId)
         { 
             if (prefix == null || count == null) return RedirectToAction("AddUsers");
             else
             {
-                string[] fNames = firstNames.Split('\n');
-                string[] lNames = lastNames.Split('\n');
-                for (int i = 0; i < fNames.Length; i++) fNames[i] = fNames[i].Trim();
-                for (int i = 0; i < lNames.Length; i++) lNames[i] = lNames[i].Trim();
+                string[] names = fullNames.Split('\n');
+                for (int i = 0; i < names.Length; i++) names[i] = names[i].Trim();
 
                 using (var db = new ExhysContestEntities())
                 {
@@ -118,8 +115,7 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
                         {
                             Username = currentUsername,
                             Password = PasswordGenerator.Generate(6, PasswordCharacters.AlphaNumeric).ToLower(),
-                            FirstName = addedCount < fNames.Length ? fNames[addedCount] : "",
-                            LastName = addedCount < lNames.Length ? lNames[addedCount] : "",
+                            FullName = addedCount < names.Length ? names[addedCount] : "",
                             UserGroup = gr
                         };
                         db.UserAccounts.Add(user);

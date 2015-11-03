@@ -52,8 +52,7 @@ namespace Exhys.WebContestHost.Controllers
                 var user = new UserAccount()
                 {
                     Username = vm.Username,
-                    FirstName = vm.FirstName,
-                    LastName = vm.LastName,
+                    FullName = vm.FullName,
                     Password = vm.Password
                 };
                 user.UserGroup = group;

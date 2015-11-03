@@ -22,10 +22,13 @@ namespace Exhys.WebContestHost.DataModels
         public string T_ScoreFeedbacks { get; set; }
         public string T_StatusFeedbacks { get; set; }
 
-        [Required]
+        //[Required]
         public virtual Competition CompetitionGivenAt { get; set; }
-        public virtual ICollection<ProblemSolution> ProblemSolutions { get; set; } = new HashSet<ProblemSolution>();
-        public virtual ICollection<ProblemStatement> ProblemStatements { get; set; } = new HashSet<ProblemStatement>();
-        public virtual ICollection<ProblemTest> Tests { get; set; } = new HashSet<ProblemTest>();
+
+        public virtual ICollection<ProblemSolution> ProblemSolutions { get; set; }
+
+        public virtual ICollection<ProblemStatement> ProblemStatements { get; set; }
+
+        public virtual ICollection<ProblemTest> Tests { get; set; }
     }
 }

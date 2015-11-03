@@ -11,8 +11,11 @@ namespace Exhys.WebContestHost.DataModels
     {
         [Key]
         public Guid Id { get; set; }
+
         public string UserAgentString { get; set; }
+
         public string BrowserName { get; set; }
+
         public string IPAdress { get; set; }
 
         [Required]

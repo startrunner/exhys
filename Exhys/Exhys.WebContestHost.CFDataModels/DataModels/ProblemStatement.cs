@@ -17,5 +17,8 @@ namespace Exhys.WebContestHost.DataModels
 
         [Required]
         public string Filename { get; set; }
+
+        [Required]
+        public virtual Problem Problem { get; set; }
     }
 }

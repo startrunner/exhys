@@ -11,17 +11,25 @@ namespace Exhys.WebContestHost.DataModels
     {
         [Key]
         public int Id { get; set; }
-
-        public string Input { get; set; }
+        
         public string Output { get; set; }
-        public string Solution { get; set; }
-        public double Score { get; set; }
-        public byte StatusCode { get; set; }
 
-        public bool InputFeedbackEnabled { get; set; }
-        public bool OutputFeedbackEnabled { get; set; }
-        public bool SolutionFeedbackEnabled { get; set; }
-        public bool ScoreFeedbackEnabled { get; set; }
-        public bool StatusFeedbackEnabled { get; set; }
+        [Required]
+        public double Score { get; set; }
+
+        [Required]
+        public Status ExecutionStatus { get; set; }
+
+        [Required]
+        public ProblemTest ProblemTest { get; set; }
+
+        public enum Status
+        {
+            SegmentationFault,
+            WrongAnswer,
+            CorrectAnswer,
+            Timeout
+        }
     }
+
 }

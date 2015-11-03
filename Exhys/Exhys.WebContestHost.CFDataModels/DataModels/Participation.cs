@@ -14,8 +14,10 @@ namespace Exhys.WebContestHost.DataModels
 
         [Required]
         public virtual UserAccount User { get; set; }
+
         [Required]
         public virtual Competition Competition { get; set; }
-        public virtual ICollection<ProblemSolution> Submissions { get; set; } = new HashSet<ProblemSolution>();
+
+        public virtual ICollection<ProblemSolution> Submissions { get; set; }
     }
 }

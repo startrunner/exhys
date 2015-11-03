@@ -1,4 +1,4 @@
-namespace Exhys.WebContestHost.CFDataModels.Migrations
+namespace Exhys.WebContestHost.DataModels.Migrations
 {
     using System;
     using System.Data.Entity;

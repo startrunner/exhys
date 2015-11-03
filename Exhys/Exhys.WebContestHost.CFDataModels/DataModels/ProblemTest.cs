@@ -21,13 +21,25 @@ namespace Exhys.WebContestHost.DataModels
         [Required]
         public string GroupName { get; set; }
 
+        [Required]
         public double TimeLimit { get; set; }
+
+        [Required]
         public double Points { get; set; }
 
+        [Required]
         public bool InputFeedbackEnabled { get; set; }
+
+        [Required]
         public bool OutputFeedbackEnabled { get; set; }
+
+        [Required]
         public bool SolutionFeedbackEnabled { get; set; }
+
+        [Required]
         public bool ScoreFeedbackEnabled { get; set; }
+
+        [Required]
         public bool StatusFeedbackEnabled { get; set; }
 
         [Required]

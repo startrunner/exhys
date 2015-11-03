@@ -1,4 +1,4 @@
-namespace Exhys.WebContestHost.CFDataModels.Migrations
+namespace Exhys.WebContestHost.DataModels.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
@@ -14,10 +14,10 @@ namespace Exhys.WebContestHost.CFDataModels.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false),
                         Description = c.String(),
-                        UserGroup_Id = c.Int(nullable: false),
+                        UserGroup_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.UserGroups", t => t.UserGroup_Id, cascadeDelete: true)
+                .ForeignKey("dbo.UserGroups", t => t.UserGroup_Id)
                 .Index(t => t.UserGroup_Id);
             
             CreateTable(
@@ -27,13 +27,12 @@ namespace Exhys.WebContestHost.CFDataModels.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         Competition_Id = c.Int(nullable: false),
                         User_Id = c.Int(nullable: false),
-                        User_Username = c.String(nullable: false, maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Competitions", t => t.Competition_Id, cascadeDelete: true)
-                .ForeignKey("dbo.UserAccounts", t => new { t.User_Id, t.User_Username }, cascadeDelete: true)
+                .ForeignKey("dbo.UserAccounts", t => t.User_Id, cascadeDelete: true)
                 .Index(t => t.Competition_Id)
-                .Index(t => new { t.User_Id, t.User_Username });
+                .Index(t => t.User_Id);
             
             CreateTable(
                 "dbo.ProblemSolutions",
@@ -65,10 +64,10 @@ namespace Exhys.WebContestHost.CFDataModels.Migrations
                         T_SolutionFeedbacks = c.String(),
                         T_ScoreFeedbacks = c.String(),
                         T_StatusFeedbacks = c.String(),
-                        CompetitionGivenAt_Id = c.Int(nullable: false),
+                        CompetitionGivenAt_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Competitions", t => t.CompetitionGivenAt_Id, cascadeDelete: true)
+                .ForeignKey("dbo.Competitions", t => t.CompetitionGivenAt_Id)
                 .Index(t => t.CompetitionGivenAt_Id);
             
             CreateTable(
@@ -78,10 +77,10 @@ namespace Exhys.WebContestHost.CFDataModels.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         Bytes = c.Binary(nullable: false),
                         Filename = c.String(nullable: false),
-                        Problem_Id = c.Int(),
+                        Problem_Id = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Problems", t => t.Problem_Id)
+                .ForeignKey("dbo.Problems", t => t.Problem_Id, cascadeDelete: true)
                 .Index(t => t.Problem_Id);
             
             CreateTable(
@@ -130,15 +129,17 @@ namespace Exhys.WebContestHost.CFDataModels.Migrations
                 "dbo.UserAccounts",
                 c => new
                     {
-                        Id = c.Int(nullable: false),
-                        Username = c.String(nullable: false, maxLength: 128),
+                        Id = c.Int(nullable: false, identity: true),
+                        Username = c.String(nullable: false, maxLength: 32),
                         FirstName = c.String(),
                         LastName = c.String(),
-                        Password = c.String(),
+                        Password = c.String(nullable: false),
+                        UserGroup_Id = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => new { t.Id, t.Username })
-                .ForeignKey("dbo.UserGroups", t => t.Id, cascadeDelete: true)
-                .Index(t => t.Id);
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.UserGroups", t => t.UserGroup_Id, cascadeDelete: true)
+                .Index(t => t.Username, unique: true)
+                .Index(t => t.UserGroup_Id);
             
             CreateTable(
                 "dbo.UserGroups",
@@ -161,20 +162,19 @@ namespace Exhys.WebContestHost.CFDataModels.Migrations
                         BrowserName = c.String(),
                         IPAdress = c.String(),
                         UserAccount_Id = c.Int(nullable: false),
-                        UserAccount_Username = c.String(nullable: false, maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.UserAccounts", t => new { t.UserAccount_Id, t.UserAccount_Username }, cascadeDelete: true)
-                .Index(t => new { t.UserAccount_Id, t.UserAccount_Username });
+                .ForeignKey("dbo.UserAccounts", t => t.UserAccount_Id, cascadeDelete: true)
+                .Index(t => t.UserAccount_Id);
             
         }
         
         public override void Down()
         {
+            DropForeignKey("dbo.Participations", "User_Id", "dbo.UserAccounts");
+            DropForeignKey("dbo.UserSessions", "UserAccount_Id", "dbo.UserAccounts");
+            DropForeignKey("dbo.UserAccounts", "UserGroup_Id", "dbo.UserGroups");
             DropForeignKey("dbo.Competitions", "UserGroup_Id", "dbo.UserGroups");
-            DropForeignKey("dbo.Participations", new[] { "User_Id", "User_Username" }, "dbo.UserAccounts");
-            DropForeignKey("dbo.UserSessions", new[] { "UserAccount_Id", "UserAccount_Username" }, "dbo.UserAccounts");
-            DropForeignKey("dbo.UserAccounts", "Id", "dbo.UserGroups");
             DropForeignKey("dbo.SolutionTestStatus", "ProblemSolution_Id", "dbo.ProblemSolutions");
             DropForeignKey("dbo.ProblemSolutions", "Problem_Id", "dbo.Problems");
             DropForeignKey("dbo.ProblemTests", "Problem_Id", "dbo.Problems");
@@ -182,15 +182,16 @@ namespace Exhys.WebContestHost.CFDataModels.Migrations
             DropForeignKey("dbo.Problems", "CompetitionGivenAt_Id", "dbo.Competitions");
             DropForeignKey("dbo.ProblemSolutions", "Participation_Id", "dbo.Participations");
             DropForeignKey("dbo.Participations", "Competition_Id", "dbo.Competitions");
-            DropIndex("dbo.UserSessions", new[] { "UserAccount_Id", "UserAccount_Username" });
-            DropIndex("dbo.UserAccounts", new[] { "Id" });
+            DropIndex("dbo.UserSessions", new[] { "UserAccount_Id" });
+            DropIndex("dbo.UserAccounts", new[] { "UserGroup_Id" });
+            DropIndex("dbo.UserAccounts", new[] { "Username" });
             DropIndex("dbo.SolutionTestStatus", new[] { "ProblemSolution_Id" });
             DropIndex("dbo.ProblemTests", new[] { "Problem_Id" });
             DropIndex("dbo.ProblemStatements", new[] { "Problem_Id" });
             DropIndex("dbo.Problems", new[] { "CompetitionGivenAt_Id" });
             DropIndex("dbo.ProblemSolutions", new[] { "Problem_Id" });
             DropIndex("dbo.ProblemSolutions", new[] { "Participation_Id" });
-            DropIndex("dbo.Participations", new[] { "User_Id", "User_Username" });
+            DropIndex("dbo.Participations", new[] { "User_Id" });
             DropIndex("dbo.Participations", new[] { "Competition_Id" });
             DropIndex("dbo.Competitions", new[] { "UserGroup_Id" });
             DropTable("dbo.UserSessions");

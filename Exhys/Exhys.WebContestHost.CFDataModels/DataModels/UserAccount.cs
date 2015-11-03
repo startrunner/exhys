@@ -11,47 +11,24 @@ namespace Exhys.WebContestHost.DataModels
 {
     public class UserAccount
     {
-        [Key][Column(Order =1)]
+        [Key]
         public int Id { get; set; }
 
-        [Key][Column(Order =2)]
+        [Index(IsUnique = true)]
+        [MaxLength(32)]
+        [Required]
         public string Username { get; set; }
 
-        public string FirstName { get; set; }   
-        public string LastName { get; set; }
+        public string FullName { get; set; }
+
+        [Required]
         public string Password { get; set; }
 
-        public virtual ICollection<UserSession> UserSessions { get; set; } = new HashSet<UserSession>();
-        public virtual ICollection<Participation> Participations { get; set; } = new HashSet<Participation>();
+        public virtual ICollection<UserSession> UserSessions { get; set; }
+
+        public virtual ICollection<Participation> Participations { get; set; }
+
         [Required]
         public virtual UserGroup UserGroup { get; set; }
-
-        public ICollection<Competition> GetAvaiableCompetitions ()
-        {
-            return this.UserGroup.AvaiableCompetition.ToList();
-        }
-
-        public bool IsAdmin()
-        {
-            return this.UserGroup.IsAdministrator;
-        }
-
-        public bool IsAdmin (ExhysContestEntities db)
-        {
-
-            try
-            {
-                db.UserAccounts.Attach(this);
-            }
-            catch (InvalidOperationException) {/*Already attached, nothing to do*/ }
-            if (this.UserGroup == null) return false;
-            if (this.UserGroup.IsAdministrator) return true;
-            return false;
-        }
-
-        public string GetFullName ()
-        {
-            return string.Format("{0} {1}", FirstName, LastName);
-        }
     }
 }
