@@ -26,10 +26,7 @@
                 @Html.PasswordFor(m => m.ConfirmPassword, new { placeholder = "Confirm Password" })
             </div>
             <div>
-                @Html.TextBoxFor(m => m.FirstName, new { placeholder = "First Name" })
-            </div>
-            <div>
-                @Html.TextBoxFor(m => m.LastName, new { placeholder = "Last Name" })
+                @Html.TextBoxFor(m => m.FullName, new { placeholder = "Name" })
             </div>
             <button type="submit">Register</button>
         }

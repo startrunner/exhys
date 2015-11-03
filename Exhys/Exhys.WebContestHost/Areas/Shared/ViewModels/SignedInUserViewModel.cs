@@ -18,7 +18,7 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
                 try
                 {
                     var user = model.UserAccount;
-                    this.FullName = user.GetFullName();
+                    this.FullName = model.UserAccount.FullName;
                     this.IsGuest = false;
                 }
                 catch { this.IsGuest = true; }
@@ -30,7 +30,7 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
         {
             if (model != null)
             {
-                this.FullName = model.GetFullName();
+                this.FullName = model.FullName;
                 this.IsGuest = false;
             }
             else { this.IsGuest = true; }

@@ -44,7 +44,7 @@ namespace Exhys.WebContestHost.Controllers
                 var users = db.UserAccounts.Where(u => u.Username == vm.Username).Take(1).ToList();
                 if (users != null && users.Count != 0)
                 {
-                    ViewData.ModelState.AddModelError("username-taken", "That username already exists.");
+                    ViewData.ModelState.AddModelError("username-taken", "That username already exists.");//
                     return PartialView(vm);
                 }
 
@@ -52,8 +52,7 @@ namespace Exhys.WebContestHost.Controllers
                 var user = new UserAccount()
                 {
                     Username = vm.Username,
-                    FirstName = vm.FirstName,
-                    LastName = vm.LastName,
+                    FullName = vm.FullName,
                     Password = vm.Password
                 };
                 user.UserGroup = group;

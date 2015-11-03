@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web.Mvc;
 using Exhys.WebContestHost.Areas.Shared.Extensions;
 using Exhys.WebContestHost.Areas.Shared.ViewModels;
-//using Exhys.WebContestHost.Areas.Shared.ViewModels.Embedded;
 using Exhys.WebContestHost.DataModels;
 
 namespace Exhys.WebContestHost.Areas.Shared.Mvc
@@ -121,30 +120,11 @@ namespace Exhys.WebContestHost.Areas.Shared.Mvc
         #endregion
 
         #region UserRequirements
-        [Obsolete]
-        public void RequireSignedInUser()
-        {
-            using (var db = new ExhysContestEntities())
-            {
-                RequireSignedInUser(db);
-            }
-        }
-        [Obsolete]
-        public void RequireSignedInUser(ExhysContestEntities db)
-        {
-            var user = Request.GetSignedInUser(db);
-            if(user==null)
-            {
-                Response.StatusCode = 401;
-                Response.Redirect(@"~/WebRoot/ErrorPages/401.html");
-                throw new UnauthorizedAccessException();
-            }
-        }
 
         public void RequireSignedInAdministrator (ExhysContestEntities db)
         {
             var user = Request.GetSignedInUser(db);
-            if (user == null || user.IsAdmin(db) == false)
+            if (user == null || user.UserGroup.IsAdministrator == false)
             {
                 Response.StatusCode = 401;
                 Response.Redirect(@"~/WebRoot/ErrorPages/401.html");

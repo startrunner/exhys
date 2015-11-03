@@ -13,8 +13,7 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
         public string Username { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string FullName { get; set; }
         public bool IsAdmin { get; set; }
         public bool RequestDelete { get; set; }
         public int UserId { get;  set; }
@@ -27,9 +26,8 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
             {
                 Username = model.Username;
                 Password = model.Password;
-                FirstName = model.FirstName;
-                LastName = model.LastName;
-                this.IsAdmin = model.IsAdmin();
+                FullName = model.FullName;
+                this.IsAdmin = model.UserGroup.IsAdministrator;
                 this.UserId = model.Id;
                 if(model.UserGroup!=null)this.GroupId = model.UserGroup.Id;
             }
@@ -65,7 +63,7 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
                 viewData.ModelState.AddModelError("unmatching-passwords", "The two passwords must match.");
             }
 
-            if ((FirstName != null && FirstName.Length > 32) || (LastName != null && LastName.Length > 32))
+            if ((FullName != null && FullName.Length > 32))
             {
                 viewData.ModelState.AddModelError("long-name", "A name cannot be longer than 32 characters");
             }
@@ -98,18 +96,6 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
             }
 
             return viewData.ModelState.IsValid;
-        }
-
-        [Obsolete]
-        public IEnumerable<string> GetRegistrationErrors ()
-        {
-            return null;
-        }
-
-        [Obsolete]
-        public IEnumerable<string> GetSignInErrors ()
-        {
-            return null;
         }
     }
 }

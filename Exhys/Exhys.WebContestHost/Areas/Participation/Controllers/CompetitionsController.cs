@@ -31,7 +31,7 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
                 var user = Request.GetSignedInUser(db);
                 if (user == null) return RedirectToSignIn();
 
-                var competitions = user.GetAvaiableCompetitions().ToList();
+                var competitions = user.UserGroup.AvaiableCompetition.ToList();
                 foreach (var comp in competitions) vm.Add(new CompetitionViewModel(comp));
             }
 
