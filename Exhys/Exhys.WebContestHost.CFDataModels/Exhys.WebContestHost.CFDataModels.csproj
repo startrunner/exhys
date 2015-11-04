@@ -74,6 +74,10 @@
     <Compile Include="Migrations\201511032016391_RefactoredProblemSolution.Designer.cs">
       <DependentUpon>201511032016391_RefactoredProblemSolution.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511040822583_AddedSeeding.cs" />
+    <Compile Include="Migrations\201511040822583_AddedSeeding.Designer.cs">
+      <DependentUpon>201511040822583_AddedSeeding.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataModels\UserAccount.cs" />
@@ -95,6 +99,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511032016391_RefactoredProblemSolution.resx">
       <DependentUpon>201511032016391_RefactoredProblemSolution.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511040822583_AddedSeeding.resx">
+      <DependentUpon>201511040822583_AddedSeeding.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

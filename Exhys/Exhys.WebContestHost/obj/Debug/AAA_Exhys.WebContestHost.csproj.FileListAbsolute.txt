@@ -1,4 +1,3 @@
-C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\obj\Debug\AAA_Exhys.WebContestHost.csprojResolveAssemblyReference.cache
 C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\Exhys.WebContestHost.dll.config
 C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\Exhys.WebContestHost.dll
 C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\Exhys.WebContestHost.pdb
@@ -6,6 +5,7 @@ C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\Antlr3.Runt
 C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\CodeBits.dll
 C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\EntityFramework.dll
 C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\EntityFramework.SqlServer.dll
+C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\Exhys.WebContestHost.DataModels.dll
 C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\Microsoft.Web.Infrastructure.dll
 C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\Newtonsoft.Json.dll
 C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.Helpers.dll
@@ -17,6 +17,7 @@ C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.
 C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.WebPages.Razor.dll
 C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\WebGrease.dll
 C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\CodeBits.pdb
+C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\Exhys.WebContestHost.DataModels.pdb
 C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\EntityFramework.xml
 C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\EntityFramework.SqlServer.xml
 C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.Helpers.xml
@@ -27,7 +28,6 @@ C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.
 C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.WebPages.Deployment.xml
 C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.WebPages.Razor.xml
 C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\Newtonsoft.Json.xml
+C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\obj\Debug\AAA_Exhys.WebContestHost.csprojResolveAssemblyReference.cache
 C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\obj\Debug\Exhys.WebContestHost.dll
 C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\obj\Debug\Exhys.WebContestHost.pdb
-C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\Exhys.WebContestHost.CFDataModels.dll
-C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\Exhys.WebContestHost.CFDataModels.pdb
