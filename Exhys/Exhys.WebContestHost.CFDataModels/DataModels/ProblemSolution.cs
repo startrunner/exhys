@@ -18,7 +18,7 @@ namespace Exhys.WebContestHost.DataModels
         [Required]
         public string LanguageAlias { get; set; }
 
-        public byte StatusCode { get; set; }
+        public ExecutionStatus Status { get; set; }
 
         public string Message { get; set; }
 
@@ -27,6 +27,14 @@ namespace Exhys.WebContestHost.DataModels
 
         [Required]
         public virtual Participation Participation { get; set; }
+
         public virtual ICollection<SolutionTestStatus> TestStatuses { get; set; }
+
+        public enum ExecutionStatus
+        {
+            Pending,
+            InProgress,
+            Completed
+        }
     }
 }

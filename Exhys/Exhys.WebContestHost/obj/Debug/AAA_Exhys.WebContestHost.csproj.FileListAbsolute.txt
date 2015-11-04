@@ -31,3 +31,36 @@ C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\obj\Debug\Exhys
 C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\obj\Debug\Exhys.WebContestHost.pdb
 C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\Exhys.WebContestHost.CFDataModels.dll
 C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\Exhys.WebContestHost.CFDataModels.pdb
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\Exhys.WebContestHost.dll.config
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\Exhys.WebContestHost.dll
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\Exhys.WebContestHost.pdb
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\Antlr3.Runtime.dll
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\CodeBits.dll
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\EntityFramework.dll
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\EntityFramework.SqlServer.dll
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\Exhys.WebContestHost.DataModels.dll
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\Microsoft.Web.Infrastructure.dll
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\Newtonsoft.Json.dll
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.Helpers.dll
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.Mvc.dll
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.Optimization.dll
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.Razor.dll
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.WebPages.Deployment.dll
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.WebPages.dll
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.WebPages.Razor.dll
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\WebGrease.dll
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\CodeBits.pdb
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\Exhys.WebContestHost.DataModels.pdb
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\EntityFramework.xml
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\EntityFramework.SqlServer.xml
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.Helpers.xml
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.Mvc.xml
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.Optimization.xml
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.Razor.xml
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.WebPages.xml
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.WebPages.Deployment.xml
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.WebPages.Razor.xml
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\Newtonsoft.Json.xml
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\obj\Debug\AAA_Exhys.WebContestHost.csprojResolveAssemblyReference.cache
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\obj\Debug\Exhys.WebContestHost.dll
+E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\obj\Debug\Exhys.WebContestHost.pdb

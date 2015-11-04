@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<layerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="6588e03e-a1c4-46b3-af43-3fd549b68094" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/LayerDesigner">
+  <layers>
+    <layer Id="bde0fd9b-40b3-4c30-8b67-906e605dddf5" name="Data Model">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="94741894-0d2d-485a-be80-84317e3c2ced" direction="Forward">
+          <layerMoniker Id="89da7ca4-b276-4962-bcf7-d051d37efbd0" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+    </layer>
+    <layer Id="474770f3-ae17-4d15-8def-22f8b4d51a06" name="WCF Duplex Service">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="dbea705a-8227-4c23-80e1-ed533b6e4fac" direction="Forward">
+          <layerMoniker Id="5c190e04-ef50-4d0e-a0c3-34fe0228f271" />
+        </dependencyFromLayerToLayer>
+        <dependencyFromLayerToLayer Id="62a86ca1-3c05-48eb-b81f-82296e2140ce" direction="Forward">
+          <layerMoniker Id="c07ee6a2-160b-49df-a95e-df5c87343ca9" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+    </layer>
+    <layer Id="dfc78124-3a02-42ee-9732-c0c9dd7538aa" name="WebSite">
+      <childLayers>
+        <layer Id="62ff6db8-b23b-42b2-9f88-f7e5fa2632ae" name="Presentation Logic">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="2db5018e-dd9c-473c-9ac8-f8d286587054" direction="Forward">
+              <layerMoniker Id="51babad2-7235-4005-8dce-bad432c5d0e7" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+          <childLayers>
+            <layer Id="43c04b4c-137b-4fcf-83de-37b6375f4f70" name="Views">
+              <dependencyToLayers>
+                <dependencyFromLayerToLayer Id="5510d64f-8336-4ccd-98c2-c8f9a0168feb" direction="Forward">
+                  <layerMoniker Id="d5f40a46-e0d2-4cf2-9afe-4cf561eefe7a" />
+                </dependencyFromLayerToLayer>
+              </dependencyToLayers>
+            </layer>
+            <layer Id="d5f40a46-e0d2-4cf2-9afe-4cf561eefe7a" name="ViewModels&#xD;&#xA;" />
+          </childLayers>
+        </layer>
+        <layer Id="51babad2-7235-4005-8dce-bad432c5d0e7" name="Business Logic">
+          <childLayers>
+            <layer Id="52b094bd-a1d2-45e9-9aba-00624951982e" name="Controllers">
+              <dependencyToLayers>
+                <dependencyFromLayerToLayer Id="ea5c3540-fb48-4194-a5a0-dc6f9abcf757" direction="Forward">
+                  <layerMoniker Id="d5f40a46-e0d2-4cf2-9afe-4cf561eefe7a" />
+                </dependencyFromLayerToLayer>
+                <dependencyFromLayerToLayer Id="430dbe32-9ce0-4356-87dd-bf75f550f5f6" direction="Forward">
+                  <layerMoniker Id="bde0fd9b-40b3-4c30-8b67-906e605dddf5" />
+                </dependencyFromLayerToLayer>
+                <dependencyFromLayerToLayer Id="6041cbb3-3648-43de-9029-9b3e435f82c5" direction="Forward">
+                  <layerMoniker Id="c07ee6a2-160b-49df-a95e-df5c87343ca9" />
+                </dependencyFromLayerToLayer>
+              </dependencyToLayers>
+            </layer>
+          </childLayers>
+        </layer>
+      </childLayers>
+    </layer>
+    <layer Id="102c0722-0bb9-4990-b761-730d32b0206c" name="Executioner&#xD;&#xA;">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="a3f87a9b-fa03-4b3e-aea1-a9b313a45197" direction="Forward">
+          <layerMoniker Id="5c190e04-ef50-4d0e-a0c3-34fe0228f271" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+    </layer>
+    <layer Id="5c190e04-ef50-4d0e-a0c3-34fe0228f271" name="Execution Contract&#xD;&#xA;" />
+    <layer Id="c07ee6a2-160b-49df-a95e-df5c87343ca9" name="Submission Contract&#xD;&#xA;" />
+    <layer Id="89da7ca4-b276-4962-bcf7-d051d37efbd0" name="Database" />
+  </layers>
+</layerModel>

@@ -18,12 +18,12 @@ namespace Exhys.WebContestHost.DataModels
         public double Score { get; set; }
 
         [Required]
-        public Status ExecutionStatus { get; set; }
+        public TestStatus Status { get; set; }
 
         [Required]
         public ProblemTest ProblemTest { get; set; }
 
-        public enum Status
+        public enum TestStatus
         {
             SegmentationFault,
             WrongAnswer,
