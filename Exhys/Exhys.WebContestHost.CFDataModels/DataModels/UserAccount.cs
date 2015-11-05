@@ -32,3 +32,4 @@ namespace Exhys.WebContestHost.DataModels
         public virtual UserGroup UserGroup { get; set; }
     }
 }
+

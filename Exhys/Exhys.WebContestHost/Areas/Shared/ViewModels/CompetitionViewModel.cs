@@ -17,9 +17,9 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
             if (_model != null)
             {
                 Problems = new List<ProblemViewModel>();
-                foreach (var v in _model.Problems)
+                if (_model.Problems != null)
                 {
-                    Problems.Add(new ProblemViewModel(v));
+                    Problems.AddRange(_model.Problems.Select(x => new ProblemViewModel(x)));
                 }
             }
             return this;

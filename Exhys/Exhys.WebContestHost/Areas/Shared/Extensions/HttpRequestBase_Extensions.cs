@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web;
 using Exhys.WebContestHost.DataModels;
+using System.Data.Entity;
 
 namespace Exhys.WebContestHost.Areas.Shared.Extensions
 {
@@ -23,11 +24,12 @@ namespace Exhys.WebContestHost.Areas.Shared.Extensions
                 .Where(s =>
                     s.Id == sessionId &&
                     s.BrowserName == request.Browser.Browser &&
-                    s.UserAgentString == request.UserAgent).FirstOrDefault();
+                    s.UserAgentString == request.UserAgent)
+                    .Include(x => x.UserAccount.UserGroup)
+                    .FirstOrDefault();
             if (session == null) return null;
             else
             {
-                db.SaveChanges();
                 return session.UserAccount;
             }
             

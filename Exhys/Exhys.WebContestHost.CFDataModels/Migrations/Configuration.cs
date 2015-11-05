@@ -14,18 +14,24 @@ namespace Exhys.WebContestHost.DataModels.Migrations
 
         protected override void Seed(Exhys.WebContestHost.DataModels.ExhysContestEntities context)
         {
-            //  This method will be called after migrating to the latest version.
+            var adminGroup = new UserGroup()
+            {
+                Name = "Administrators",
+                IsAdministrator = true,
+                IsOpen = false
+            };
+            context.UserGroups.AddOrUpdate(x => x.Name, adminGroup);
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            var adminUser = new UserAccount()
+            {
+                FullName = "Admin Administers",
+                Password = "123456",
+                Username = "admin",
+                UserGroup = adminGroup
+            };
+            context.UserAccounts.AddOrUpdate(x=>x.Username, adminUser);
+
+            context.SaveChanges();
         }
     }
 }
