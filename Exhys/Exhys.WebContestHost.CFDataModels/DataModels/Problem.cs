@@ -13,6 +13,8 @@ namespace Exhys.WebContestHost.DataModels
         public int Id { get; set; }
 
         [Required]
+        [MaxLength(DatabaseLimits.ProblemName_MaxLength)]
+        [MinLength(DatabaseLimits.ProblemName_MinLength)]
         public string Name { get; set; }
 
         public string T_TimeLimits { get; set; }

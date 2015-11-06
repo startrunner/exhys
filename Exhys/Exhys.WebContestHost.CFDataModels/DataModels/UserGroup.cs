@@ -13,6 +13,8 @@ namespace Exhys.WebContestHost.DataModels
         public int Id { get; set; }
 
         [Required]
+        [MaxLength(DatabaseLimits.UserGroupName_MaxLength)]
+        [MinLength(DatabaseLimits.UserGroupName_MinLength)]
         public string Name { get; set; }
 
         public string Description { get; set; }

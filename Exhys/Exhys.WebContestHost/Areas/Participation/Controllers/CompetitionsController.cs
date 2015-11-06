@@ -7,6 +7,7 @@ using Exhys.WebContestHost.Areas.Shared.Extensions;
 using Exhys.WebContestHost.Areas.Shared.Mvc;
 using Exhys.WebContestHost.Areas.Shared.ViewModels;
 using Exhys.WebContestHost.DataModels;
+using System.Data.Entity;
 
 namespace Exhys.WebContestHost.Areas.Participation.Controllers
 {
@@ -30,6 +31,11 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
             {
                 var user = Request.GetSignedInUser(db);
                 if (user == null) return RedirectToSignIn();
+
+                db.Entry(user)
+                    .Reference(u => u.UserGroup)
+                    .Query()
+                    .Include(u => u.AvaiableCompetition).Load();
 
                 var competitions = user.UserGroup.AvaiableCompetition.ToList();
                 foreach (var comp in competitions) vm.Add(new CompetitionViewModel(comp));
@@ -72,11 +78,14 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
                 if (participation != null) return RedirectToAction("Participate", new { id = vm.Id });
 
                 participation = new DataModels.Participation();
+                db.Entry(participation).State = EntityState.Added;
+
                 participation.Competition = competition;
                 participation.User = user;
 
-                db.Participations.Add(participation);
                 db.SaveChanges();
+
+                
             }
             return RedirectToList();
         }
@@ -94,6 +103,7 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
 
                 var participation = db.Participations
                     .Where(p => p.User.Id == user.Id && p.Competition.Id == competition.Id)
+                    .Include(p => p.Competition.Problems.Select(prob=>prob.ProblemStatements))
                     .FirstOrDefault();
                 if (participation == null) return RedirectToList();
 

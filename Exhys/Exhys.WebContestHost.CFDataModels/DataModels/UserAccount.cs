@@ -15,10 +15,13 @@ namespace Exhys.WebContestHost.DataModels
         public int Id { get; set; }
 
         [Index(IsUnique = true)]
-        [MaxLength(32)]
+        [MaxLength(DatabaseLimits.Username_MaxLength)]
+        [MinLength(DatabaseLimits.Username_MinLength)]
         [Required]
         public string Username { get; set; }
 
+        [MaxLength(DatabaseLimits.HumanName_MaxLength)]
+        //[MinLength(DatabaseLimits.HumanName_MinLength)]
         public string FullName { get; set; }
 
         [Required]

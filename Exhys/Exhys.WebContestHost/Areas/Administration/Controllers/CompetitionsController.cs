@@ -24,7 +24,9 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
             var vm = new List<CompetitionViewModel>();
             using (var db=new ExhysContestEntities())
             {
-                db.Competitions.ToList()
+                db.Competitions
+                    .Include(c=>c.UserGroup)
+                    .ToList()
                     .ForEach((c) =>
                     {
                         vm.Add(new CompetitionViewModel(c));
@@ -42,10 +44,11 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
                 {
                     var comp = db.Competitions
                         .Where(c => c.Id == compVm.Id)
-                        .Include((x)=>x.UserGroup)
+                        .Include((c)=>c.UserGroup)
                         .FirstOrDefault();
-                    if (compVm.RequestDelete == false)
+                    if (!compVm.RequestDelete&&compVm.Validate(ViewData))
                     {
+
                         var gr = db.UserGroups.Where(g => g.Id == compVm.GroupId).FirstOrDefault();
 
                         comp.UserGroup = gr;
@@ -76,6 +79,13 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
         [HttpPost]
         public ActionResult Add(CompetitionViewModel vm)
         {
+            if(!vm.Validate(ViewData))
+            {
+                AddSignedInUserInformation();
+                AddUserGroupOptions();
+
+                return View(vm);
+            }
             using (var db = new ExhysContestEntities())
             {
                 var competition = new Competition()

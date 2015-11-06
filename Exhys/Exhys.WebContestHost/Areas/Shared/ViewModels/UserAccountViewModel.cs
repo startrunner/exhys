@@ -40,59 +40,59 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
 
         public bool ValidateForRegistration(ViewDataDictionary viewData)
         {
-            if (Username == null || Username.Length < 4)
+            if (Username == null || Username.Length < DatabaseLimits.Username_MinLength)
             {
-                viewData.ModelState.AddModelError("short-username", "A username is required and must be at least 4 characters long.");
+                viewData.ModelState.AddModelError(FormErrors.UsernameTooShort);
             }
-            else if(Username.Length>32)
+            else if(Username.Length>DatabaseLimits.Username_MaxLength)
             {
-                viewData.ModelState.AddModelError("long-username", "A username cannot be longer than 32 characters.");
+                viewData.ModelState.AddModelError(FormErrors.UsernameTooLong);
             }
 
-            if(Password==null || Password.Length<6)
+            if(Password==null || Password.Length<DatabaseLimits.Username_MinLength)
             {
-                viewData.ModelState.AddModelError("short-password", "A password must be at least 6 characters long.");
+                viewData.ModelState.AddModelError(FormErrors.UsernameTooShort);
             }
-            else if(Password.Length>32)
+            else if(Password.Length>DatabaseLimits.Username_MaxLength)
             {
-                viewData.ModelState.AddModelError("long-password", "A password cannot be longer than 32 characters.");
+                viewData.ModelState.AddModelError(FormErrors.UsernameTooLong);
             }
 
             if(Password!=ConfirmPassword)
             {
-                viewData.ModelState.AddModelError("unmatching-passwords", "The two passwords must match.");
+                viewData.ModelState.AddModelError(FormErrors.PasswordMismatch);
             }
 
-            if ((FullName != null && FullName.Length > 32))
+            if ((FullName != null && FullName.Length > DatabaseLimits.HumanName_MaxLength))
             {
-                viewData.ModelState.AddModelError("long-name", "A name cannot be longer than 32 characters");
+                viewData.ModelState.AddModelError(FormErrors.HumanNameTooLong);
             }
 
             if(GroupId==null)
             {
-                viewData.ModelState.AddModelError("null-group", "You must select a group");
+                viewData.ModelState.AddModelError(FormErrors.NoGroupSelected);
             }
             return viewData.ModelState.IsValid;
         }
 
         public bool ValidateForSignIn(ViewDataDictionary viewData)
         {
-            if (Username == null || Username.Length < 4)
+            if (Username == null || Username.Length < DatabaseLimits.Username_MinLength)
             {
-                viewData.ModelState.AddModelError("short-username", "A username is required and must be at least 4 characters long.");
+                viewData.ModelState.AddModelError(FormErrors.UsernameTooShort);
             }
-            else if (Username.Length > 32)
+            else if (Username.Length > DatabaseLimits.Username_MaxLength)
             {
-                viewData.ModelState.AddModelError("long-username", "A username cannot be longer than 32 characters.");
+                viewData.ModelState.AddModelError(FormErrors.UsernameTooLong);
             }
 
-            if (Password == null || Password.Length < 6)
+            if (Password == null || Password.Length < DatabaseLimits.Password_MinLength)
             {
-                viewData.ModelState.AddModelError("short-password", "A password must be at least 6 characters long.");
+                viewData.ModelState.AddModelError(FormErrors.PasswordTooShort);
             }
-            else if (Password.Length > 32)
+            else if (Password.Length > DatabaseLimits.Password_MaxLength)
             {
-                viewData.ModelState.AddModelError("long-password", "A password cannot be longer than 32 characters.");
+                viewData.ModelState.AddModelError(FormErrors.PasswordTooLong);
             }
 
             return viewData.ModelState.IsValid;

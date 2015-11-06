@@ -24,13 +24,17 @@
     <nav>
         <ul>
             <li>
-                @Html.ActionLink(linkText:"Groups", controllerName:"UserGroups", actionName:"List")
+                <a href="#" onclick="return false;">User Groups</a>
+                <ul>
+                    <li>@Html.ActionLink(linkText: "List Groups", controllerName: "UserGroups", actionName: "List")</li>
+                    <li>@Html.ActionLink(linkText: "Add Groups", controllerName: "UserGroups", actionName: "Add")</li>
+                </ul>
             </li>
             <li>
                 <a href="#" onclick="return false;">User Accounts</a>
                 <ul>
                     <li>@Html.ActionLink(linkText:"List Users", controllerName:"UserAccounts", actionName:"List")</li>
-                    <li>@Html.ActionLink(linkText:"Add Users", controllerName:"UserAccounts", actionName:"AddUsers")</li>
+                    <li>@Html.ActionLink(linkText:"Add Users", controllerName:"UserAccounts", actionName:"AddMany")</li>
                 </ul>
             </li>
             <li>

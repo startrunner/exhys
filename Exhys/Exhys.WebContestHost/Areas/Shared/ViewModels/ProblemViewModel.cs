@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using Exhys.WebContestHost.DataModels;
 
 namespace Exhys.WebContestHost.Areas.Shared.ViewModels
@@ -34,13 +35,13 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
         public string T_StatusFeedbacks { get; set; }
 
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "You need to enter a name for the problem.")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "You need to enter a name for the problem.")]
         public string Name { get; set; }
 
         private Problem _model;
 
         public int Id { get;  set; }
-        public int CompetitionId { get;  set; }
+        public int? CompetitionId { get;  set; }
         public string CompetitionName { get; set; }
         public bool RequestDelete { get; set; }
 
@@ -82,6 +83,19 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
                     this.T_InputFeedbacks = model.T_InputFeedbacks;
                 }
             }
+        }
+
+        public bool Validate(ViewDataDictionary viewData)
+        {
+            if(Name==null || Name.Length < DatabaseLimits.ProblemName_MinLength)
+            {
+                viewData.ModelState.AddModelError(FormErrors.ProblemNameTooShort);
+            }
+            else if(Name.Length > DatabaseLimits.ProblemName_MaxLength)
+            {
+                viewData.ModelState.AddModelError(FormErrors.ProblemNameTooLong);
+            }
+            return viewData.ModelState.IsValid;
         }
     }
 }

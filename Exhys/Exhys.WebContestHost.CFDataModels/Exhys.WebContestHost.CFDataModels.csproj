@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DatabaseLimits.cs" />
     <Compile Include="DataModels\Competition.cs" />
     <Compile Include="DataModels\ExhysContestEntities.cs" />
     <Compile Include="DataModels\Participation.cs" />
@@ -78,6 +79,18 @@
     <Compile Include="Migrations\201511042019438_RefactoredProblemSolutionAgain.Designer.cs">
       <DependentUpon>201511042019438_RefactoredProblemSolutionAgain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511061006572_AddedLimitConstants.cs" />
+    <Compile Include="Migrations\201511061006572_AddedLimitConstants.Designer.cs">
+      <DependentUpon>201511061006572_AddedLimitConstants.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511061025187_RefactoredDatabaseLimits.cs" />
+    <Compile Include="Migrations\201511061025187_RefactoredDatabaseLimits.Designer.cs">
+      <DependentUpon>201511061025187_RefactoredDatabaseLimits.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201511061823383_ChangedLimitConstants.cs" />
+    <Compile Include="Migrations\201511061823383_ChangedLimitConstants.Designer.cs">
+      <DependentUpon>201511061823383_ChangedLimitConstants.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataModels\UserAccount.cs" />
@@ -102,6 +115,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511042019438_RefactoredProblemSolutionAgain.resx">
       <DependentUpon>201511042019438_RefactoredProblemSolutionAgain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511061006572_AddedLimitConstants.resx">
+      <DependentUpon>201511061006572_AddedLimitConstants.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511061025187_RefactoredDatabaseLimits.resx">
+      <DependentUpon>201511061025187_RefactoredDatabaseLimits.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511061823383_ChangedLimitConstants.resx">
+      <DependentUpon>201511061823383_ChangedLimitConstants.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -3,6 +3,9 @@
     @using (Html.BeginForm())
     {
         <div>
+            @Html.ErrorListFor(ViewData)
+        </div>
+        <div>
             @Html.TextBoxFor(m => m.Name, new { placeholder = "Group Name" })
         </div>
         <div>
