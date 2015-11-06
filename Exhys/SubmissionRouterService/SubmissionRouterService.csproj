@@ -77,6 +77,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Exhys.ExecutionCore\Exhys.ExecutionCore.csproj">
+      <Project>{7241fbcf-2387-485f-b4b2-8541de3a48bd}</Project>
+      <Name>Exhys.ExecutionCore</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SubmissionRouterDTOs\SubmissionRouterDTOs.csproj">
       <Project>{7ed4b3a4-b17b-4ae1-9b88-ae808343fc37}</Project>
       <Name>SubmissionRouterDTOs</Name>
