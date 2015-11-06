@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Exhys.ExecutionCore
 {
-    [DataContract]
+    [DataContract]//lol
     class Compiler
     {
 
