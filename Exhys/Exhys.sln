@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubmissionRouterService.Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubmissionRouterDTOs", "SubmissionRouterDTOs\SubmissionRouterDTOs.csproj", "{7ED4B3A4-B17B-4AE1-9B88-AE808343FC37}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exhys.ExecutionCore", "Exhys.ExecutionCore\Exhys.ExecutionCore.csproj", "{7241FBCF-2387-485F-B4B2-8541DE3A48BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -92,6 +94,14 @@ Global
 		{7ED4B3A4-B17B-4AE1-9B88-AE808343FC37}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7ED4B3A4-B17B-4AE1-9B88-AE808343FC37}.Release|x64.ActiveCfg = Release|Any CPU
 		{7ED4B3A4-B17B-4AE1-9B88-AE808343FC37}.Release|x64.Build.0 = Release|Any CPU
+		{7241FBCF-2387-485F-B4B2-8541DE3A48BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7241FBCF-2387-485F-B4B2-8541DE3A48BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7241FBCF-2387-485F-B4B2-8541DE3A48BD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7241FBCF-2387-485F-B4B2-8541DE3A48BD}.Debug|x64.Build.0 = Debug|Any CPU
+		{7241FBCF-2387-485F-B4B2-8541DE3A48BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7241FBCF-2387-485F-B4B2-8541DE3A48BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7241FBCF-2387-485F-B4B2-8541DE3A48BD}.Release|x64.ActiveCfg = Release|Any CPU
+		{7241FBCF-2387-485F-B4B2-8541DE3A48BD}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
