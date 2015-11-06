@@ -8,6 +8,7 @@ namespace SubmissionRouterService.Dtos
 {
     public class SubmissionResultDto
     {
+        public Guid ExecutionId { get; set; }
         public List<TestResultDto> TestResults { get; set; }
     }
 }

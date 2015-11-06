@@ -1,0 +1,55 @@
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SubmissionRouterService.Services;
+using SubmissionRouterService.Contracts;
+using System.Threading;
+
+namespace SubmissionRouterService.Test
+{
+    [TestClass]
+    public class ExecutionServiceTest
+    {
+        private static IExecutionService executionService;
+
+        [ClassInitialize]
+        public static void Initialize(TestContext context)
+        {
+            executionService = new ExecutionService();
+        }
+
+        [TestMethod]
+        public void TestRegisterUnregister()
+        {
+            Guid id = RegisterMockExecutioner();
+            UnregisterMockExecutioner(id);
+        }
+
+        private void UnregisterMockExecutioner(Guid id)
+        {
+            executionService.Unregister(id);
+        }
+
+        private Guid RegisterMockExecutioner()
+        {
+            MockExecutionCallback mockExecutioner = new MockExecutionCallback(executionService);
+            Guid id = executionService.Register(mockExecutioner);
+            return id;
+        }
+
+        [TestMethod]
+        public void TestRequestAndCompleteExecution()
+        {
+            RegisterMockExecutioner();
+            ManualResetEvent manualEvent = new ManualResetEvent(false);
+            bool isSubmissionCompleted = false;
+            ExecutionScheduler.Instance.SubmissionCompleted += (s,e)=>
+            {
+                isSubmissionCompleted = true;
+                manualEvent.Set();
+            };
+            ExecutionScheduler.Instance.RequestExecution(new Dtos.SubmissionDto());
+            manualEvent.WaitOne(3000, false);
+            Assert.IsTrue(isSubmissionCompleted);
+        }
+    }
+}

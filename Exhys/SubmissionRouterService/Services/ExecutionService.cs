@@ -17,15 +17,24 @@ namespace SubmissionRouterService.Services
         private Dictionary<Guid,Executioner> executioners;
         private Dictionary<Guid,ExecutionProcess> executionProcesses;
         private Queue<ExecutionDto> requestedExecutions;
+        private IExecutionScheduler executionScheduler;
         private Timer timer;
+        private object _lock;
 
         public ExecutionService()
+            :this(ExecutionScheduler.Instance)
         {
+            _lock = new object();
+        }
+
+        public ExecutionService(IExecutionScheduler executionScheduler)
+        {
+            this.executionScheduler = executionScheduler;
             executioners = new Dictionary<Guid, Executioner>();
             executionProcesses = new Dictionary<Guid, ExecutionProcess>();
             requestedExecutions = new Queue<ExecutionDto>();
 
-            ExecutionScheduler.Instance.ExecutionRequested += (s, e) => RequestExecution(e.Execution);
+            executionScheduler.ExecutionRequested += (s, e) => RequestExecution(e.Execution);
 
             timer = new Timer(1000);
             timer.Elapsed += (s,e) => ExecuteNextRequest();
@@ -35,7 +44,12 @@ namespace SubmissionRouterService.Services
 
         public Guid Register()
         {
-            IExecutionCallback callback = OperationContext.Current.GetCallbackChannel<IExecutionCallback>();
+            return Register(OperationContext.Current.GetCallbackChannel<IExecutionCallback>());
+        }
+
+        public Guid Register(IExecutionCallback executionCallback)
+        {
+            IExecutionCallback callback = executionCallback;
             Executioner executioner = new Executioner(callback);
             Guid id = Guid.NewGuid();
             executioners.Add(id, executioner);
@@ -56,7 +70,7 @@ namespace SubmissionRouterService.Services
 
         private void PublishExecutionResult(ExecutionResultDto executionResult)
         {
-            ExecutionScheduler.Instance.CompleteExecution(executionResult);
+            executionScheduler.CompleteExecution(executionResult);
         }
 
         private void RequestExecution(ExecutionDto execution)
@@ -67,17 +81,20 @@ namespace SubmissionRouterService.Services
 
         private void ExecuteNextRequest()
         {
-            ExecutionDto execution = requestedExecutions.Dequeue();
-            Executioner executioner = GetFreeExecutioner();
-
-            if (executioner != null)
+            lock(_lock)
             {
-                ExecuteRequest(execution, executioner);
-            }
+                ExecutionDto execution = requestedExecutions.Dequeue();
+                Executioner executioner = GetFreeExecutioner();
 
-            if (requestedExecutions.Count == 0)
-            {
-                StopTimer();
+                if (executioner != null)
+                {
+                    ExecuteRequest(execution, executioner);
+                }
+
+                if (requestedExecutions.Count == 0)
+                {
+                    StopTimer();
+                }
             }
         }
 

@@ -10,6 +10,6 @@ namespace SubmissionRouterService.Dtos
     {
         public Guid ExecutionId { get; set; }
 
-        public SubmissionResultDto SubmissionResult { get; set; }
+        public List<TestResultDto> TestResults { get; set; }
     }
 }

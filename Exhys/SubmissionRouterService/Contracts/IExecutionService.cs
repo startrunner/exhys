@@ -15,10 +15,12 @@ namespace SubmissionRouterService.Contracts
         [OperationContract(IsOneWay = false)]
         Guid Register();
 
+        Guid Register(IExecutionCallback executionCallback);
+
         [OperationContract(IsOneWay = true)]
         void Unregister(Guid id);
 
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void SubmitResult(Guid executionProcessId, ExecutionResultDto executionResult);
     }
 }

@@ -13,6 +13,8 @@ namespace SubmissionRouterService.Contracts
     public interface ISubmissionService
     {
         [OperationContract(IsOneWay = true)]
-        void Submit(SubmissionDto submission);
+        Guid Submit(SubmissionDto submission);
+        
+        Guid Submit(SubmissionDto submission,ISubmissionCallback callback);
     }
 }

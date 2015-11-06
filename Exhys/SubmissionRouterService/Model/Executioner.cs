@@ -20,7 +20,7 @@ namespace SubmissionRouterService.Model
         public ExecutionProcess Execute(Guid executionId, ExecutionDto execution)
         {
             ExecutionProcess executionProcess = new ExecutionProcess(this, execution);
-            executionCallback.ExecuteSubmission(executionId, execution);
+            Task.Run(()=>executionCallback.ExecuteSubmission(executionId, execution));
             IsBusy = true;
             return executionProcess;
         }
