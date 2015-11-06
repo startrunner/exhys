@@ -74,6 +74,7 @@
     <Compile Include="Model\ExecutionProcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ExecutionService.cs" />
+    <Compile Include="Services\LocalExecutionCallback.cs" />
     <Compile Include="Services\MockExecutionCallback.cs" />
     <Compile Include="Services\MockSubmissionCallback.cs" />
     <Compile Include="Services\SubmissionService.cs" />
