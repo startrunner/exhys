@@ -77,7 +77,7 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
         }
 
         [HttpGet]
-        public ActionResult AddUsers()
+        public ActionResult AddMany()
         {
             AddSignedInUserInformation();
             AddUserGroupOptions();
@@ -86,7 +86,7 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddUsers (string prefix, int? count, string fullNames, int groupId)
+        public ActionResult AddMany (string prefix, int? count, string fullNames, int groupId)
         { 
             if (prefix == null || count == null) return RedirectToAction("AddUsers");
             else

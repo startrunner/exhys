@@ -12,22 +12,27 @@ namespace Exhys.WebContestHost.Areas.Shared
     public static class ExhysHelpers
     {
         public static MvcHtmlString FixedDropDownListFor<TModel, TProperty>
-            (this HtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression, IEnumerable<SelectListItem> options, string selectedValue = null)
+            (this HtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression, IEnumerable<SelectListItem> options, string selectedValue = null, bool allowNull=false)
         {
             if (selectedValue == null && helper.ViewData.Model != null)
                 selectedValue = expression.Compile()(helper.ViewData.Model).ToString();
 
             string inputName = ExpressionHelper.GetExpressionText(expression);
 
-            return helper.FixedDropDownListFor(inputName, options, selectedValue);
+            return helper.FixedDropDownListFor(inputName, options, selectedValue, allowNull);
         }
 
         public static MvcHtmlString FixedDropDownListFor
-            (this HtmlHelper helper, string inputName, IEnumerable<SelectListItem> options, string selectedValue = null)
+            (this HtmlHelper helper, string inputName, IEnumerable<SelectListItem> options, string selectedValue = null, bool allowNull=false)
         {
             StringBuilder rt = new StringBuilder();
 
             rt.Append(string.Format(@"<select name={0} id={0}>", inputName));
+
+            if(allowNull)
+            {
+                rt.Append("<option value=\"\">[NULL]</option>");
+            }
 
             foreach (var v in options)
             {
@@ -39,6 +44,7 @@ namespace Exhys.WebContestHost.Areas.Shared
             }
 
             rt.Append(@"</select>");
+
             return new MvcHtmlString(rt.ToString());
         }
 

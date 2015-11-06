@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using Exhys.WebContestHost.Areas.Shared.Mvc;
+using Exhys.WebContestHost.DataModels;
 
 namespace Exhys.WebContestHost.Controllers
 {
@@ -18,6 +19,11 @@ namespace Exhys.WebContestHost.Controllers
 
         public ActionResult About ()
         {
+            using (var db = new ExhysContestEntities())
+            {
+                RequireSignedInAdministrator(db);
+            }
+            
             ViewBag.Message = "Your application description page.";
 
             return View();

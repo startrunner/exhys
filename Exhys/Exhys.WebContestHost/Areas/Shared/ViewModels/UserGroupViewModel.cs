@@ -8,7 +8,7 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
 {
     public class UserGroupViewModel
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public bool IsAdmin { get; set; }

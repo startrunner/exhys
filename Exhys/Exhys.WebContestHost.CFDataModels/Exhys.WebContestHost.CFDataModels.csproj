@@ -54,7 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataModels\Competition.cs" />
-    <Compile Include="DataModels\EXHYSCONTESTENTITIES.cs" />
+    <Compile Include="DataModels\ExhysContestEntities.cs" />
     <Compile Include="DataModels\Participation.cs" />
     <Compile Include="DataModels\Problem.cs" />
     <Compile Include="DataModels\ProblemSolution.cs" />

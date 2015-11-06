@@ -1,0 +1,21 @@
+﻿@{ 
+    ViewData.SetPageTitle("Add Users");
+}
+<div>
+    @using (Html.BeginForm(FormMethod.Post))
+    {
+        <div>
+            <input type="text" placeholder="Prefix" name="prefix" value="A" />
+        </div>
+        <div>
+            <input min="1" id="input-count" type="number" placeholder="Count" name="count" value="10" onchange="document.getElementById('txt1').rows=document.getElementById('txt2').rows = document.getElementById('input-count').value;" />
+        </div>
+        <div>
+            @Html.FixedDropDownListFor("groupId", ViewData.GetUserGroupOptions())
+        </div>
+        <div>
+            <textarea name="fullNames" rows="10" id="txt1" style="resize:none" placeholder="Competitor First Names (separated by new lines)"></textarea>
+        </div>
+        <button type="submit">Add Users</button>
+    }
+</div>

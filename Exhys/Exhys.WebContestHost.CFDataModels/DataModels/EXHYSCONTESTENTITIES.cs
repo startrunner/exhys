@@ -10,6 +10,7 @@ namespace Exhys.WebContestHost.DataModels
 {
     public class ExhysContestEntities:DbContext
     {
+       
         public const string ConnectionString = "Name=ExhysContestEntities";
         public ExhysContestEntities ()//:base(ConnectionString)
         {
