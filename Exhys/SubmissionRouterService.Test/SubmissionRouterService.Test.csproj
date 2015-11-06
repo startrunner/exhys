@@ -55,6 +55,10 @@
     <Compile Include="SubmissionServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SubmissionRouterDTOs\SubmissionRouterDTOs.csproj">
+      <Project>{7ed4b3a4-b17b-4ae1-9b88-ae808343fc37}</Project>
+      <Name>SubmissionRouterDTOs</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SubmissionRouterService\SubmissionRouterService.csproj">
       <Project>{49c07b5c-a484-4617-a1f2-92b14eef0603}</Project>
       <Name>SubmissionRouterService</Name>

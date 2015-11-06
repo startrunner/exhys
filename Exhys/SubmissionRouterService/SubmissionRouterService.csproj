@@ -57,18 +57,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\IExecutionScheduler.cs" />
-    <Compile Include="Dtos\ExecutionDto.cs" />
-    <Compile Include="Dtos\ExecutionResultDto.cs" />
-    <Compile Include="Dtos\SubmissionDto.cs" />
-    <Compile Include="Dtos\SubmissionResultDto.cs" />
     <Compile Include="Contracts\IExecutionCallback.cs" />
     <Compile Include="Contracts\IExecutionService.cs" />
     <Compile Include="Contracts\ISubmissionCallback.cs" />
     <Compile Include="Contracts\ISubmissionService.cs" />
-    <Compile Include="Dtos\TestDto.cs" />
-    <Compile Include="Dtos\TestResultDto.cs" />
     <Compile Include="Model\ExecutionCompletedEventArgs.cs" />
     <Compile Include="Model\ExecutionRequestedEventArgs.cs" />
+    <Compile Include="Model\LocalExecutioner.cs" />
     <Compile Include="Services\ExecutionScheduler.cs" />
     <Compile Include="Model\Executioner.cs" />
     <Compile Include="Model\ExecutionProcess.cs" />
@@ -81,6 +76,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SubmissionRouterDTOs\SubmissionRouterDTOs.csproj">
+      <Project>{7ed4b3a4-b17b-4ae1-9b88-ae808343fc37}</Project>
+      <Name>SubmissionRouterDTOs</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

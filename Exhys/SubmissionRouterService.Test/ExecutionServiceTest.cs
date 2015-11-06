@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SubmissionRouterService.Services;
 using SubmissionRouterService.Contracts;
 using System.Threading;
+using SubmissionRouterService.Dtos;
 
 namespace SubmissionRouterService.Test
 {
@@ -47,7 +48,7 @@ namespace SubmissionRouterService.Test
                 isSubmissionCompleted = true;
                 manualEvent.Set();
             };
-            ExecutionScheduler.Instance.RequestExecution(new Dtos.SubmissionDto());
+            ExecutionScheduler.Instance.RequestExecution(new SubmissionDto());
             manualEvent.WaitOne(3000, false);
             Assert.IsTrue(isSubmissionCompleted);
         }

@@ -10,9 +10,17 @@ namespace SubmissionRouterService.Services
 {
     public class LocalExecutionCallback : IExecutionCallback
     {
+        IExecutionCore executionCore;
+        IExecutionService executionService;
+        public LocalExecutionCallback(IExecutionCore executionCore, IExecutionService executionService)
+        {
+            this.executionCore = executionCore;
+            this.executionService = executionService;
+        }
         public void ExecuteSubmission(Guid submissionProcessId, ExecutionDto execution)
         {
-            
+            ExecutionResultDto result = executionCore.Execute(execution);
+            executionService.SubmitResult(submissionProcessId, result);
         }
     }
 }
