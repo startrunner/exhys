@@ -19,8 +19,8 @@ namespace SubmissionRouterService.Services
         private Queue<ExecutionDto> requestedExecutions;
         private IExecutionScheduler executionScheduler;
         private IExecutionCallback localExecutionCallback;
+        private Guid localExecutionerId;
         IExecutionCore executionCore;
-        private Executioner localExecutioner;
         private Timer timer;
         private object _lock;
 
@@ -35,7 +35,12 @@ namespace SubmissionRouterService.Services
 
         private void RegisterLocalExecutioner()
         {
-            Register(localExecutionCallback);
+            localExecutionerId = Register(localExecutionCallback);
+        }
+
+        private void UnregisterLocalExecutioner()
+        {
+            Unregister(localExecutionerId);
         }
 
         public ExecutionService(IExecutionScheduler executionScheduler)
@@ -64,12 +69,14 @@ namespace SubmissionRouterService.Services
             Executioner executioner = new Executioner(callback);
             Guid id = Guid.NewGuid();
             executioners.Add(id, executioner);
+            UnregisterLocalExecutioner();
             return id;
         }
 
         public void Unregister(Guid id)
         {
             executioners.Remove(id);
+            RegisterLocalExecutioner();
         }
 
         public void SubmitResult(Guid executionProcessId, ExecutionResultDto executionResult)
