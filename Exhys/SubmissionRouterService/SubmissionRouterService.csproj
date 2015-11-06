@@ -63,7 +63,6 @@
     <Compile Include="Contracts\ISubmissionService.cs" />
     <Compile Include="Model\ExecutionCompletedEventArgs.cs" />
     <Compile Include="Model\ExecutionRequestedEventArgs.cs" />
-    <Compile Include="Model\LocalExecutioner.cs" />
     <Compile Include="Services\ExecutionScheduler.cs" />
     <Compile Include="Model\Executioner.cs" />
     <Compile Include="Model\ExecutionProcess.cs" />

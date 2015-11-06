@@ -18,6 +18,9 @@ namespace SubmissionRouterService.Services
         private Dictionary<Guid,ExecutionProcess> executionProcesses;
         private Queue<ExecutionDto> requestedExecutions;
         private IExecutionScheduler executionScheduler;
+        private IExecutionCallback localExecutionCallback;
+        IExecutionCore executionCore;
+        private Executioner localExecutioner;
         private Timer timer;
         private object _lock;
 
@@ -25,6 +28,14 @@ namespace SubmissionRouterService.Services
             :this(ExecutionScheduler.Instance)
         {
             _lock = new object();
+            executionCore = new ExecutionCore();
+            localExecutionCallback = new LocalExecutionCallback(executionCore, this);
+            RegisterLocalExecutioner();
+        }
+
+        private void RegisterLocalExecutioner()
+        {
+            Register(localExecutionCallback);
         }
 
         public ExecutionService(IExecutionScheduler executionScheduler)
