@@ -28,9 +28,10 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
         {
             using (var db = new ExhysContestEntities())
             {
-                foreach(var grvm in vm)
+                foreach(UserGroupViewModel grvm in vm)
                 {
-                    var group = db.UserGroups.Where(g => g.Id == grvm.Id).FirstOrDefault();
+                    UserGroup group=null;
+                    if(grvm.Id!=null)group= db.UserGroups.Where(g => g.Id == grvm.Id).FirstOrDefault();
 
                     if (grvm.RequestDelete == false)
                     {
@@ -50,8 +51,14 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
             return RedirectToAction("List");
         }
 
+        [HttpGet]
+        public ActionResult Add()
+        {
+            return View();
+        }
+
         [HttpPost]
-        public ActionResult AddGroup(UserGroupViewModel vm)
+        public ActionResult Add(UserGroupViewModel vm)
         {
             using (var db = new ExhysContestEntities())
             {

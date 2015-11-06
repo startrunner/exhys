@@ -10,36 +10,11 @@ namespace Exhys.WebContestHost.DataModels
 {
     public class ExhysContestEntities:DbContext
     {
-        private class Initializer:DropCreateDatabaseAlways<ExhysContestEntities>
-        {
-            protected override void Seed (ExhysContestEntities db)
-            {
-                var adminGroup = new UserGroup()
-                {
-                    Name = "Administrators",
-                    IsAdministrator = true,
-                    IsOpen = false
-                };
-                db.UserGroups.Add(adminGroup);
-
-                var adminUser = new UserAccount()
-                {
-                    FullName = "Admin Administers",
-                    Password = "123456",
-                    Username = "admin",
-                    UserGroup = adminGroup
-                };
-
-                db.UserAccounts.Add(adminUser);
-
-                base.Seed(db);
-            }
-        }
-
+       
         public const string ConnectionString = "Name=ExhysContestEntities";
         public ExhysContestEntities ()//:base(ConnectionString)
         {
-            Database.SetInitializer(new Initializer());
+            Database.SetInitializer<ExhysContestEntities>(null);
         }
 
         public DbSet<UserGroup> UserGroups { get; set; }

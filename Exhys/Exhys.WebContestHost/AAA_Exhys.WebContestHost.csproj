@@ -137,7 +137,6 @@
     <Compile Include="Areas\Shared\Mvc\ExhysController.cs" />
     <Compile Include="Areas\Shared\Extensions\HttpRequestBase_Extensions.cs" />
     <Compile Include="Areas\Shared\Extensions\HttpResponseBase_Extensions.cs" />
-    <Compile Include="Areas\Shared\ViewDataDictionary_Extensions.cs" />
     <Compile Include="Areas\Shared\ViewModels\CompetitionViewModel.cs" />
     <Compile Include="Areas\Shared\ViewModels\ParticipationViewModel.cs" />
     <Compile Include="Areas\Shared\ViewModels\ProblemSolutionViewModel.cs" />
@@ -194,7 +193,7 @@
     <Content Include="Areas\Administration\Views\Shared\_Shared.cshtml" />
     <Content Include="Areas\Administration\Views\UserGroups\List.cshtml" />
     <Content Include="Areas\Administration\Views\UserAccounts\List.cshtml" />
-    <Content Include="Areas\Administration\Views\UserAccounts\AddUsers.cshtml" />
+    <Content Include="Areas\Administration\Views\UserAccounts\AddMany.cshtml" />
     <Content Include="Areas\Administration\Views\Competitions\List.cshtml" />
     <Content Include="Areas\Administration\Views\Competitions\Add.cshtml" />
     <Content Include="Areas\Administration\Views\Competitions\Edit.cshtml" />
@@ -207,6 +206,7 @@
     <Content Include="Areas\Participation\Views\Competitions\Join.cshtml" />
     <Content Include="Areas\Participation\Views\Competitions\Participate.cshtml" />
     <Content Include="Areas\Administration\Views\Problems\List.cshtml" />
+    <Content Include="Areas\Administration\Views\UserGroups\Add.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="Project_Readme.html" />
     <Content Include="WebRoot\Styles\participation.css">

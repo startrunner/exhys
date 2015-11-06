@@ -8,7 +8,7 @@ using Exhys.WebContestHost.Areas.Shared.Extensions;
 using Exhys.WebContestHost.Areas.Shared.Mvc;
 using Exhys.WebContestHost.Areas.Shared.ViewModels;
 using Exhys.WebContestHost.DataModels;
-
+using System.Data.Entity;
 
 namespace Exhys.WebContestHost.Areas.Administration.Controllers
 {
@@ -38,15 +38,20 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
         {
             using (var db = new ExhysContestEntities())
             {
-                foreach(var v in vm)
+                foreach(CompetitionViewModel compVm in vm)
                 {
-                    var comp = db.Competitions.Where(c => c.Id == v.Id).Take(1).ToList()[0];
-                    if (v.RequestDelete == false)
+                    var comp = db.Competitions
+                        .Where(c => c.Id == compVm.Id)
+                        .Include((x)=>x.UserGroup)
+                        .FirstOrDefault();
+                    if (compVm.RequestDelete == false)
                     {
-                        var gr = db.UserGroups.Where(g => g.Id == v.GroupId).Take(1).ToList()[0];
+                        var gr = db.UserGroups.Where(g => g.Id == compVm.GroupId).FirstOrDefault();
+
                         comp.UserGroup = gr;
-                        comp.Name = v.Name;
-                        comp.Description = v.Description;
+
+                        comp.Name = compVm.Name;
+                        comp.Description = compVm.Description;
                     }
                     else
                     {

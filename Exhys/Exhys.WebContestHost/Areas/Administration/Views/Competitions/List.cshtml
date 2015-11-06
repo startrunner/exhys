@@ -26,7 +26,7 @@
                             <td>@Html.TextBoxFor(m => m[i].Name)</td>
                             <td>@Html.TextBoxFor(m => m[i].Description)</td>
                             <td>
-                                @Html.FixedDropDownListFor(m=>m[i].GroupId, ViewData.GetUserGroupOptions())
+                                @Html.FixedDropDownListFor(m=>m[i].GroupId, ViewData.GetUserGroupOptions(), null, true)
                             </td>
                             <td>@Html.CheckBoxFor(m => m[i].RequestDelete)</td>
                             @*<td>
