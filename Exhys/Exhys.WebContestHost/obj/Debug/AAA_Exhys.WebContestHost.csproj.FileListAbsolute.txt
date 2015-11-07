@@ -64,3 +64,36 @@ E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\obj\D
 E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\obj\Debug\Exhys.WebContestHost.pdb
 C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\Exhys.WebContestHost.DataModels.dll
 C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\Exhys.WebContestHost.DataModels.pdb
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\bin\Exhys.WebContestHost.dll.config
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\bin\Exhys.WebContestHost.dll
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\bin\Exhys.WebContestHost.pdb
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\bin\Antlr3.Runtime.dll
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\bin\CodeBits.dll
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\bin\EntityFramework.dll
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\bin\EntityFramework.SqlServer.dll
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\bin\Exhys.WebContestHost.DataModels.dll
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\bin\Microsoft.Web.Infrastructure.dll
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\bin\Newtonsoft.Json.dll
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.Helpers.dll
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.Mvc.dll
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.Optimization.dll
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.Razor.dll
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.WebPages.Deployment.dll
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.WebPages.dll
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.WebPages.Razor.dll
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\bin\WebGrease.dll
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\bin\CodeBits.pdb
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\bin\Exhys.WebContestHost.DataModels.pdb
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\bin\EntityFramework.xml
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\bin\EntityFramework.SqlServer.xml
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.Helpers.xml
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.Mvc.xml
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.Optimization.xml
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.Razor.xml
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.WebPages.xml
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.WebPages.Deployment.xml
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.WebPages.Razor.xml
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\bin\Newtonsoft.Json.xml
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\obj\Debug\AAA_Exhys.WebContestHost.csprojResolveAssemblyReference.cache
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\obj\Debug\Exhys.WebContestHost.dll
+D:\Visual Studio\Team Projects\Exhys\Exhys\Exhys.WebContestHost\obj\Debug\Exhys.WebContestHost.pdb
