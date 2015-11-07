@@ -13,6 +13,7 @@ namespace Exhys.WebContestHost.DataModels
         public ExhysContestEntities ()
         {
             Database.SetInitializer<ExhysContestEntities>(null);
+            Configuration.LazyLoadingEnabled = false;
         }
 
         public DbSet<UserGroup> UserGroups { get; set; }
