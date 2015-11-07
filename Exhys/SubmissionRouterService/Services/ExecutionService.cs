@@ -1,39 +1,51 @@
-﻿using System;
+﻿using SubmissionRouterService.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
-using SubmissionRouterService.Contracts;
+using System.Threading.Tasks;
+using SubmissionRouterDTOs;
 using SubmissionRouterService.Model;
 using System.Timers;
-using Exhys.ExecutionCore;
 using Exhys.ExecutionCore.Contracts;
-using SubmissionRouterDTOs;
 
 namespace SubmissionRouterService.Services
 {
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
-    public class ExecutionService : IExecutionService
+    public class ExecutionService : IExecutionService, ISubmissionService
     {
-        private Dictionary<Guid,Executioner> executioners;
-        private Dictionary<Guid,ExecutionProcess> executionProcesses;
+        private event EventHandler ExecutionAdded;
+
+        private Dictionary<Guid, Executioner> executioners;
+        private Dictionary<Guid, ExecutionProcess> executionProcesses;
+        private Dictionary<Guid, ISubmissionCallback> submissions;
         private Queue<ExecutionDto> requestedExecutions;
-        private IExecutionScheduler executionScheduler;
         private IExecutionCallback localExecutionCallback;
         private Guid localExecutionerId;
-        IExecutionCore executionCore;
-        private Timer timer;
+        private Timer executionTimer;
         private object _lock;
 
         public ExecutionService()
-            :this(ExecutionScheduler.Instance)
         {
             _lock = new object();
-            executionCore = new ExecutionCore();
-            localExecutionCallback = new LocalExecutionCallback(executionCore, this);
+            executioners = new Dictionary<Guid, Executioner>();
+            executionProcesses = new Dictionary<Guid, ExecutionProcess>();
+            submissions = new Dictionary<Guid, ISubmissionCallback>();
+            requestedExecutions = new Queue<ExecutionDto>();
+            localExecutionCallback = new LocalExecutionCallback(GetExecutionCore(), this);
+            executionTimer = new Timer(1000);
+            executionTimer.Elapsed += (s, e) => ExecuteNextRequest();
+
             RegisterLocalExecutioner();
         }
+
+        private IExecutionCore GetExecutionCore()
+        {
+            return null;
+        }
+
+        #region IExecutionService implementation
 
         private void RegisterLocalExecutioner()
         {
@@ -43,21 +55,6 @@ namespace SubmissionRouterService.Services
         private void UnregisterLocalExecutioner()
         {
             Unregister(localExecutionerId);
-        }
-
-        public ExecutionService(IExecutionScheduler executionScheduler)
-        {
-            this.executionScheduler = executionScheduler;
-            executioners = new Dictionary<Guid, Executioner>();
-            executionProcesses = new Dictionary<Guid, ExecutionProcess>();
-            requestedExecutions = new Queue<ExecutionDto>();
-
-            executionScheduler.ExecutionRequested += (s, e) => RequestExecution(e.Execution);
-
-            timer = new Timer(1000);
-            timer.Elapsed += (s,e) => ExecuteNextRequest();
-
-            ExecutionAdded += (s,e) => StartTimer();
         }
 
         public Guid Register()
@@ -71,7 +68,7 @@ namespace SubmissionRouterService.Services
             Executioner executioner = new Executioner(callback);
             Guid id = Guid.NewGuid();
             executioners.Add(id, executioner);
-            if (executionCallback!=localExecutionCallback)
+            if (executionCallback != localExecutionCallback)
             {
                 UnregisterLocalExecutioner();
             }
@@ -91,35 +88,29 @@ namespace SubmissionRouterService.Services
         {
             executionProcesses[executionProcessId].Executioner.OnExecutionFinished();
             executionProcesses.Remove(executionProcessId);
-            PublishExecutionResult(executionResult);
-        }
-
-        private void PublishExecutionResult(ExecutionResultDto executionResult)
-        {
-            executionScheduler.CompleteExecution(executionResult);
+            ExecutionCompleted(executionResult);
         }
 
         private void RequestExecution(ExecutionDto execution)
         {
             requestedExecutions.Enqueue(execution);
-            OnExecutionAdded();
+            executionTimer.Start();
         }
 
         private void ExecuteNextRequest()
         {
-            lock(_lock)
+            lock (_lock)
             {
                 ExecutionDto execution = requestedExecutions.Dequeue();
+                if (requestedExecutions.Count == 0)
+                {
+                    executionTimer.Stop();
+                }
                 Executioner executioner = GetFreeExecutioner();
 
                 if (executioner != null)
                 {
                     ExecuteRequest(execution, executioner);
-                }
-
-                if (requestedExecutions.Count == 0)
-                {
-                    StopTimer();
                 }
             }
         }
@@ -136,24 +127,43 @@ namespace SubmissionRouterService.Services
             return executioners.FirstOrDefault(x => !x.Value.IsBusy).Value;
         }
 
-        private void StartTimer()
+        #endregion
+
+        #region ISubmissionService
+
+        public Guid Submit(SubmissionDto submission)
         {
-            timer.Start();
+            return Submit(submission, OperationContext.Current.GetCallbackChannel<ISubmissionCallback>());
         }
 
-        private void StopTimer()
+        public Guid Submit(SubmissionDto submission, ISubmissionCallback callback)
         {
-            timer.Stop();
-        }
-
-        private void OnExecutionAdded()
-        {
-            if(ExecutionAdded!=null)
+            ExecutionDto execution = new ExecutionDto()
             {
-                ExecutionAdded(this, EventArgs.Empty);
+                Id = Guid.NewGuid(),
+                Submission = submission
+            };
+            RequestExecution(execution);
+            submissions.Add(execution.Id, callback);
+            return execution.Id;
+        }
+
+        private void ExecutionCompleted(ExecutionResultDto executionResult)
+        {
+            if (submissions.ContainsKey(executionResult.ExecutionId))
+            {
+                SubmissionResultDto submissionResult = new SubmissionResultDto()
+                {
+                    ExecutionId = executionResult.ExecutionId,
+                    TestResults = executionResult.TestResults
+                };
+
+                ISubmissionCallback callback = submissions[submissionResult.ExecutionId];
+                submissions.Remove(submissionResult.ExecutionId);
+                callback.SubmissionProcessed(submissionResult);
             }
         }
 
-        private event EventHandler ExecutionAdded;
+        #endregion
     }
 }

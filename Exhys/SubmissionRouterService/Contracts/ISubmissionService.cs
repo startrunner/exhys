@@ -12,7 +12,7 @@ namespace SubmissionRouterService.Contracts
                  CallbackContract = typeof(ISubmissionCallback))]
     public interface ISubmissionService
     {
-        [OperationContract(IsOneWay = true)]
+        [OperationContract(IsOneWay = false)]
         Guid Submit(SubmissionDto submission);
         
         Guid Submit(SubmissionDto submission,ISubmissionCallback callback);
