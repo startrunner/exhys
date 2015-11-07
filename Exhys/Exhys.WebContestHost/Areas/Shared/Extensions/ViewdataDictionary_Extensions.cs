@@ -17,8 +17,8 @@ namespace Exhys.WebContestHost.Areas.Shared.Extensions
             public const string OpenUserGroupOptions = "open-user-group-options";
             public const string CompetitionOptions = "competition-options";
             public const string PageCount = "page-count";
-            public const string CurrentPage = "current-page";
-            public const string PageSize = "page-size";
+            //public const string CurrentPage = "current-page";
+            //public const string PageSize = "page-size";
             public const string PageTitle = "page-title";
         }
 
@@ -47,24 +47,14 @@ namespace Exhys.WebContestHost.Areas.Shared.Extensions
             return that[PropertyNames.PageCount] as int?;
         }
 
-        public static int? GetCurrentPage(this ViewDataDictionary that)
+        public static List<SelectListItem> GetOpenUserGroupOptions(this ViewDataDictionary that)
         {
-            return that[PropertyNames.CurrentPage] as int?;
-        }
-
-        public static int? GetPageSize(this ViewDataDictionary that)
-        {
-            return that[PropertyNames.PageSize] as int?;
+            return that[PropertyNames.OpenUserGroupOptions] as List<SelectListItem>;
         }
 
         public static string GetPageTitle(this ViewDataDictionary that)
         {
             return that[PropertyNames.PageTitle] as string;
-        }
-
-        public static List<SelectListItem> GetOpenUserGroupOptions(this ViewDataDictionary that)
-        {
-            return that[PropertyNames.OpenUserGroupOptions] as List<SelectListItem>;
         }
 
         public static void SetCompetitionOptions(this ViewDataDictionary that, List<SelectListItem> options)
@@ -90,16 +80,6 @@ namespace Exhys.WebContestHost.Areas.Shared.Extensions
         public static void SetPageCount(this ViewDataDictionary that, int? val)
         {
             that[PropertyNames.PageCount] = val;
-        }
-
-        public static void SetCurrentPage(this ViewDataDictionary that, int? val)
-        {
-            that[PropertyNames.CurrentPage] = val;
-        }
-
-        public static void SetPageSize(this ViewDataDictionary that, int? val)
-        {
-            that[PropertyNames.PageSize] = val;
         }
 
         public static void SetPageTitle(this ViewDataDictionary that, string val)

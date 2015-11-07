@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 using Exhys.WebContestHost.Areas.Shared.Mvc;
+using Exhys.WebContestHost.DataModels;
 
 namespace Exhys.WebContestHost.Controllers
 {

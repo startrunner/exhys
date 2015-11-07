@@ -34,25 +34,4 @@
         </table>
         <button type="submit">Save Changes</button>
     }
-
-    @using (Html.BeginForm(method: FormMethod.Post, controllerName: "UserGroups", actionName: "AddGroup"))
-    {
-        var vm = new Exhys.WebContestHost.Areas.Shared.ViewModels.UserGroupViewModel();
-        <div>
-            @Html.TextBoxFor(m => vm.Name, new { placeholder = "Group Name" })
-        </div>
-        <div>
-            @Html.TextBoxFor(m => vm.Description, new { placeholder = "Group Description" })
-        </div>
-        <div>
-            @Html.LabelFor(m => vm.IsAdmin, "Is Admin")
-            @Html.CheckBoxFor(m => vm.IsAdmin)
-        </div>
-        <div>
-            @Html.LabelFor(m => vm.IsOpen, "Is Open")
-            @Html.CheckBoxFor(m => vm.IsOpen)
-        </div>
-
-        <button type="submit">Add Group</button>
-    }
 </div>

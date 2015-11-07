@@ -15,6 +15,7 @@ namespace Exhys.WebContestHost.Areas.Shared.Extensions
                 return that.GetSignedInUser(db);
             }
         }
+
         public static UserAccount GetSignedInUser (this HttpRequestBase request, ExhysContestEntities db)
         {
             Guid? sessionId = request.GetSessionCookie();

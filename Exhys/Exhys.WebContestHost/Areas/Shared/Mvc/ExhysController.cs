@@ -49,21 +49,17 @@ namespace Exhys.WebContestHost.Areas.Shared.Mvc
             ViewData.SetProblemOptions(options);
         }
 
-        public void AddUserGroupOptions(bool allowNull=false)
+        public void AddUserGroupOptions()
         {
             using (var db = new ExhysContestEntities())
             {
-                AddUserGroupOptions(db, allowNull);
+                AddUserGroupOptions(db);
             }
         }
 
-        public void AddUserGroupOptions (ExhysContestEntities db, bool allowNull=false)
+        public void AddUserGroupOptions (ExhysContestEntities db)
         {
             List<SelectListItem> options = new List<SelectListItem>();
-            if(allowNull)
-            {
-                options.Add(new SelectListItem() { Text = "[NULL]", Value = null });
-            }
             db.UserGroups.ToList().ForEach((g) =>
             {
                 options.Add(new SelectListItem()
@@ -76,21 +72,17 @@ namespace Exhys.WebContestHost.Areas.Shared.Mvc
             //ViewBag.UserGroupOptions = options;
         }
 
-        public void AddOpenUserGroupOptions(bool allowNull=false)
+        public void AddOpenUserGroupOptions()
         {
             using (var db = new ExhysContestEntities())
             {
-                AddOpenUserGroupOptions(db, allowNull);
+                AddOpenUserGroupOptions(db);
             }
         }
 
-        public void AddOpenUserGroupOptions(ExhysContestEntities db, bool allowNull=false)
+        public void AddOpenUserGroupOptions(ExhysContestEntities db)
         {
             List<SelectListItem> options = new List<SelectListItem>();
-            if(allowNull)
-            {
-                options.Add(new SelectListItem { Text = "[NULL]", Value = null });
-            }
             db.UserGroups
                 .Where(g => g.IsOpen)
                 .ToList()

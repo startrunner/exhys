@@ -11,6 +11,7 @@ using System.IO;
 using System.Reflection;
 using Exhys.WebContestHost.Areas.Shared.Extensions;
 using Exhys.WebContestHost.Areas.Shared.Mvc;
+using System.Data.Entity;
 
 namespace Exhys.WebContestHost.Areas.Administration.Controllers
 {
@@ -26,80 +27,84 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
             return View();
         }
 
+        #region Add_UtilityFunctions
+        private void Add_FetchPostFiles(ref List<HttpPostedFileBase> inputFiles, ref List<HttpPostedFileBase> solutionFiles, ref List<HttpPostedFileBase> statementFiles)
+        {
+            for (int i = 0; i < Request.Files.Count; i++)
+            {
+                switch (Request.Files.GetKey(i))
+                {
+                    case ProblemViewModel.InputFilesInputName:
+                        inputFiles.Add(Request.Files.Get(i));
+                        break;
+                    case ProblemViewModel.SolutionFilesInputName:
+                        solutionFiles.Add(Request.Files.Get(i));
+                        break;
+                    case ProblemViewModel.StatementFilesInputName:
+                        statementFiles.Add(Request.Files.Get(i));
+                        break;
+                }
+            }
+            inputFiles = inputFiles.OrderBy(f => f.FileName).ToList();
+            solutionFiles = solutionFiles.OrderBy(f => f.FileName).ToList();
+        }
+
+        private void Add_ParseFeedbackArguments (ProblemViewModel vm, int testCount, ref List<bool> inputFeedbacks, ref List<bool> outputFeedbacks, ref List<bool> solutionFeedbacks, ref List<bool> scoreFeedbacks, ref List<bool> statusFeedbacks)
+        {
+            char[] sep = new char[] { ';' };
+            Func<string, bool> cFunc = (s => s.Contains("1") ? true : false);
+
+            inputFeedbacks = vm.T_InputFeedbacks.Split(sep, StringSplitOptions.RemoveEmptyEntries).Convert(cFunc);
+            outputFeedbacks = vm.T_OutputFeedbacks.Split(sep, StringSplitOptions.RemoveEmptyEntries).Convert(cFunc);
+            solutionFeedbacks = vm.T_SolutionFeedbacks.Split(sep, StringSplitOptions.RemoveEmptyEntries).Convert(cFunc);
+            scoreFeedbacks = vm.T_ScoreFeedbacks.Split(sep, StringSplitOptions.RemoveEmptyEntries).Convert(cFunc);
+            statusFeedbacks = vm.T_StatusFeedbacks.Split(sep, StringSplitOptions.RemoveEmptyEntries).Convert(cFunc);
+
+            inputFeedbacks.Resize(testCount, inputFeedbacks.LastByIndex());
+            outputFeedbacks.Resize(testCount, outputFeedbacks.LastByIndex());
+            solutionFeedbacks.Resize(testCount, solutionFeedbacks.LastByIndex());
+            scoreFeedbacks.Resize(testCount, scoreFeedbacks.LastByIndex());
+            statusFeedbacks.Resize(testCount, statusFeedbacks.LastByIndex());
+        }
+        
+        private void Add_ParseTimeLimitArguments(ProblemViewModel vm, int testCount, ref List<double> timeLimits)
+        {
+            char[] sep = new char[] { ';' };
+            timeLimits = vm.T_TimeLimits.Split(sep, StringSplitOptions.RemoveEmptyEntries).Convert(s => double.Parse(s));
+            timeLimits.Resize(testCount, timeLimits.LastByIndex());
+        }
+        #endregion
+
         [HttpPost]
         public ActionResult Add(ProblemViewModel vm)
         {
-            if(!ModelState.IsValid)
+            if(!vm.Validate(ViewData))
             {
                 AddCompetitionOptions();
                 AddSignedInUserInformation();
                 return View(vm);
             }
 
-            List<HttpPostedFileBase> inputFiles, solutionFiles, statementFiles;
-            #region FilesInit();
-            do
-            {
-                inputFiles = new List<HttpPostedFileBase>();
-                solutionFiles = new List<HttpPostedFileBase>();
+            List<HttpPostedFileBase>
+                inputFiles = new List<HttpPostedFileBase>(),
+                solutionFiles = new List<HttpPostedFileBase>(),
                 statementFiles = new List<HttpPostedFileBase>();
+            Add_FetchPostFiles(ref inputFiles, ref solutionFiles, ref statementFiles);
 
-                for (int i = 0; i < Request.Files.Count; i++)
-                {
-                    switch (Request.Files.GetKey(i))
-                    {
-                        case ProblemViewModel.InputFilesInputName:
-                            inputFiles.Add(Request.Files.Get(i));
-                            break;
-                        case ProblemViewModel.SolutionFilesInputName:
-                            solutionFiles.Add(Request.Files.Get(i));
-                            break;
-                        case ProblemViewModel.StatementFilesInputName:
-                            statementFiles.Add(Request.Files.Get(i));
-                            break;
-                    }
-                }
-                inputFiles = inputFiles.OrderBy(f => f.FileName).ToList();
-                solutionFiles = solutionFiles.OrderBy(f => f.FileName).ToList();
-            } while (false);
-            #endregion
+            List<bool>
+                inputFeedbacks = new List<bool>(),
+                outputFeedbacks = new List<bool>(),
+                solutionFeedbacks = new List<bool>(),
+                scoreFeedbacks = new List<bool>(),
+                statusFeedbacks = new List<bool>();
+            Add_ParseFeedbackArguments(vm, inputFiles.Count, ref inputFeedbacks, ref outputFeedbacks, ref solutionFeedbacks, ref scoreFeedbacks, ref statusFeedbacks);
 
-            List<bool> inputFeedbacks, outputFeedbacks, solutionFeedbacks, scoreFeedbacks, statusFeedbacks;
-            #region FeedbacksInit();
-            do
-            {
-                char[] sep = new char[] { ';' };
-                Func<string, bool> cFunc = (s => s.Contains("1") ? true : false);
-
-                inputFeedbacks = vm.T_InputFeedbacks.Split(sep, StringSplitOptions.RemoveEmptyEntries).Convert(cFunc);
-                outputFeedbacks = vm.T_OutputFeedbacks.Split(sep, StringSplitOptions.RemoveEmptyEntries).Convert(cFunc);
-                solutionFeedbacks = vm.T_SolutionFeedbacks.Split(sep, StringSplitOptions.RemoveEmptyEntries).Convert(cFunc);
-                scoreFeedbacks = vm.T_ScoreFeedbacks.Split(sep, StringSplitOptions.RemoveEmptyEntries).Convert(cFunc);
-                statusFeedbacks = vm.T_StatusFeedbacks.Split(sep, StringSplitOptions.RemoveEmptyEntries).Convert(cFunc);
-
-                int min = inputFiles.Count;
-                while (inputFeedbacks.Count < min) inputFeedbacks.Add(inputFeedbacks[inputFeedbacks.Count - 1]);
-                while (outputFeedbacks.Count < min) outputFeedbacks.Add(outputFeedbacks[outputFeedbacks.Count - 1]);
-                while (solutionFeedbacks.Count < min) solutionFeedbacks.Add(solutionFeedbacks[solutionFeedbacks.Count - 1]);
-                while (scoreFeedbacks.Count < min) scoreFeedbacks.Add(scoreFeedbacks[scoreFeedbacks.Count - 1]);
-                while (statusFeedbacks.Count < min) statusFeedbacks.Add(statusFeedbacks[statusFeedbacks.Count - 1]);
-            } while (false);
-            #endregion
-
-            List<double> timeLimits;
-            #region TimeLimitsInit();
-            do
-            {
-                char[] sep = new char[] { ';' };
-                timeLimits = vm.T_TimeLimits.Split(sep, StringSplitOptions.RemoveEmptyEntries).Convert(s => double.Parse(s));
-                int min = inputFiles.Count;
-                while (timeLimits.Count < min) timeLimits.Add(timeLimits[timeLimits.Count - 1]);
-
-            } while (false);
-            #endregion
+            List<double> timeLimits=new List<double>();
+            Add_ParseTimeLimitArguments(vm, inputFiles.Count, ref timeLimits);
 
             if (inputFiles.Count!=solutionFiles.Count)
             {
+                ModelState.AddModelError(FormErrors.FileCountMismatch);
                 return RedirectToAction("Add");
             }
 
@@ -118,6 +123,11 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
                     T_StatusFeedbacks = vm.T_StatusFeedbacks,
                     T_TimeLimits = vm.T_TimeLimits
                 };
+                problem = db.Problems.Add(problem);
+                db.SaveChanges();
+                db.Entry(problem).Collection(p => p.Tests).Load();
+                db.Entry(problem).Collection(p => p.ProblemStatements).Load();
+                
 
                 for(int i=0;i<inputFiles.Count;i++)
                 {
@@ -147,7 +157,6 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
                     problem.ProblemStatements.Add(statement);
                 }
 
-                db.Problems.Add(problem);
                 db.SaveChanges();
 
             }
@@ -158,6 +167,9 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
         [HttpGet]
         public ActionResult List()
         {
+            AddSignedInUserInformation();
+            AddCompetitionOptions();
+
             using (var db = new ExhysContestEntities())
             {
                 AddSignedInUserInformation();
@@ -181,6 +193,7 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
                 {
                     Problem problem = db.Problems
                         .Where(p => p.Id == pvm.Id)
+                        .Include(p=>p.CompetitionGivenAt)
                         .FirstOrDefault();
                     if (problem == null) continue;
 

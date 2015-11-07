@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using Exhys.WebContestHost.Areas.Shared.Mvc;
 using Exhys.WebContestHost.Areas.Shared.ViewModels;
 using Exhys.WebContestHost.DataModels;
+using System.Data.Entity.Validation;
+using System.Data.Entity;
 
 namespace Exhys.WebContestHost.Areas.Administration.Controllers
 {
@@ -28,9 +30,12 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
         {
             using (var db = new ExhysContestEntities())
             {
-                foreach(var grvm in vm)
+                foreach(UserGroupViewModel grvm in vm)
                 {
-                    var group = db.UserGroups.Where(g => g.Id == grvm.Id).FirstOrDefault();
+                    UserGroup group = db.UserGroups
+                        .Where(g => g.Id == grvm.Id)
+                        .Include((g)=>g.AvaiableCompetition)
+                        .FirstOrDefault();
 
                     if (grvm.RequestDelete == false)
                     {
@@ -50,9 +55,20 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
             return RedirectToAction("List");
         }
 
-        [HttpPost]
-        public ActionResult AddGroup(UserGroupViewModel vm)
+        [HttpGet]
+        public ActionResult Add()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Add(UserGroupViewModel vm)
+        {
+            if(!vm.Validate(ViewData))
+            {
+                return View(vm);
+
+            }
             using (var db = new ExhysContestEntities())
             {
                 var gr = new UserGroup()

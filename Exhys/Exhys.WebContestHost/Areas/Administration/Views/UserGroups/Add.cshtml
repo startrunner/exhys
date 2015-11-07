@@ -1,0 +1,24 @@
+﻿@model UserGroupViewModel
+<div>
+    @using (Html.BeginForm())
+    {
+        <div>
+            @Html.ErrorListFor(ViewData)
+        </div>
+        <div>
+            @Html.TextBoxFor(m => m.Name, new { placeholder = "Group Name" })
+        </div>
+        <div>
+            @Html.TextAreaFor(m => m.Description, new { placeholder = "Description" })
+        </div>
+        <div>
+            @Html.LabelFor(m => m.IsAdmin, "Is Administrator")
+            @Html.CheckBoxFor(m=>m.IsAdmin)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.IsOpen, "Is Open")
+            @Html.CheckBoxFor(m=>m.IsOpen)
+        </div>
+        <button type="submit">Add Group</button>
+    }
+</div>

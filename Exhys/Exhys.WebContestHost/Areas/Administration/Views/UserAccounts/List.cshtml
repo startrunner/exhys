@@ -1,68 +1,60 @@
 ﻿@model List<UserAccountViewModel>
-    @{ 
-        ViewData.SetPageTitle("List Users");
-    }
+@{
+	ViewData.SetPageTitle("List Users");
+}
 <div>
-    <div>
-        @using (Html.BeginForm(FormMethod.Post))
-        {
-            <button type="submit">Save Changes</button>
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>No.</th>
-                        <th>User ID</th>
-                        <th>Username</th>
-                        <th>Password</th>
-                        <th>Group</th>
-                        <th>Name</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{
-                        for (int i = 0; i < Model.Count; i++)
-                        {
-                            <tr>
-                                <td>@(i + 1+(ViewData.GetCurrentPage()-1)*ViewData.GetPageSize())</td>
-                                <td>
-                                    @Html.HiddenFor(m=>m[i].UserId)
-                                    @Model[i].UserId
-                                </td>
-                                <td>
-                                    @Html.HiddenFor(m => m[i].Username, new { readOnly = "" })
-                                    @Model[i].Username
-                                </td>
-                                <td>@Html.TextBoxFor(m => m[i].Password)</td>
-                                <td>
-                                    @Html.FixedDropDownListFor(m => m[i].GroupId, ViewData.GetUserGroupOptions())
-                                </td>
-                                <td>@Html.TextBoxFor(m => m[i].FullName)</td>
-                                <td>
-                                    @Html.CheckBoxFor(m => m[i].RequestDelete)
-                                    <div class=" switch"></div>
-                                </td>
-                            </tr>
-                        }
-                    }
-                </tbody>
-            </table>
-            <button type="submit">Save Changes</button>
-                        }
-    </div>
-    <div>
-        @{
-            for (int i = 1; i <= ViewData.GetPageCount(); i++)
-            {
-                if (i != ViewData.GetCurrentPage())
-                {
-                    <a href="?page=@i">@i</a>
-                }
-                else
-                {
-                    <a>@i</a>
-                }
-            }
-        }
-    </div>
+	<div>
+		<br />
+		@using(Html.BeginForm(FormMethod.Post))
+		{
+			<button type="submit">Save Changes</button>
+			<br /><br />
+			<table class="table table-hover table-bordered table-striped">
+				<thead class="th-center">
+					<tr>
+						<th>No.</th>
+						<th>User ID</th>
+						<th>Username</th>
+						<th>Password</th>
+						<th>Group</th>
+						<th>Name</th>
+						<th>Delete</th>
+					</tr>
+				</thead>
+				<tbody>
+					@{
+						for(int i = 0; i < Model.Count; i++)
+						{
+							<tr>
+								<td class="text-center">
+									@(i + 1)
+								</td>
+								<td class="text-center">
+									@Html.HiddenFor(m => m[i].UserId)
+									@Model[i].UserId
+								</td>
+								<td>
+									@Html.HiddenFor(m => m[i].Username, new { readOnly = "" })
+									@Model[i].Username
+								</td>
+								<td>
+									@Html.TextBoxFor(m => m[i].Password, new { Class = "form-control height-25px" })
+								</td>
+								<td>
+									@Html.FixedDropDownListFor(m => m[i].GroupId, ViewData.GetUserGroupOptions(), new { Class= "form-control height-25px combobox-padding-0" })
+								</td>
+								<td>
+									@Html.TextBoxFor(m => m[i].FullName, new { Class = "form-control height-25px" })
+								</td>
+								<td class="text-center">
+									@Html.CheckBoxFor(m => m[i].RequestDelete)
+								</td>
+							</tr>
+						}
+					}
+				</tbody>
+			</table>
+			<button type="submit">Save Changes</button>
+		}
+	</div>
 </div>

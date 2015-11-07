@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using Exhys.WebContestHost.DataModels;
 
 namespace Exhys.WebContestHost.Areas.Shared.ViewModels
@@ -63,5 +64,21 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
                 if (model.UserGroup != null) this.GroupId = model.UserGroup.Id;
             }
         }
+
+        public bool Validate(ViewDataDictionary viewData)
+        {
+            if(Name==null  || Name.Length< DatabaseLimits.CompetitionName_MinLength)
+            {
+                viewData.ModelState.AddModelError(FormErrors.CompetitionNameTooShort);
+            }
+            else if(Name.Length>DatabaseLimits.CompetitionName_MaxLength)
+            {
+                viewData.ModelState.AddModelError(FormErrors.CompetitionNameTooLong);
+            }
+
+            return viewData.ModelState.IsValid;
+        }
+
+        //public bool ValidateForCreation()
     }
 }
