@@ -1,5 +1,5 @@
-﻿using SubmissionRouterService.Contracts;
-using SubmissionRouterService.Dtos;
+﻿using SubmissionRouterDTOs;
+using SubmissionRouterService.Contracts;
 using SubmissionRouterService.Model;
 using System;
 using System.Collections.Generic;

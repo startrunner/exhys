@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SubmissionRouterService.Services;
 using SubmissionRouterService.Contracts;
 using System.Threading;
-using SubmissionRouterService.Dtos;
+using SubmissionRouterDTOs;
 
 namespace SubmissionRouterService.Test
 {
@@ -40,7 +40,6 @@ namespace SubmissionRouterService.Test
         [TestMethod]
         public void TestRequestAndCompleteExecution()
         {
-            //RegisterMockExecutioner();
             ManualResetEvent manualEvent = new ManualResetEvent(false);
             bool isSubmissionCompleted = false;
             ExecutionScheduler.Instance.SubmissionCompleted += (s,e)=>

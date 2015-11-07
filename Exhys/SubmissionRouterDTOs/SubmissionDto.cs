@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SubmissionRouterService.Dtos
+namespace SubmissionRouterDTOs
 {
     public class SubmissionDto
     {
