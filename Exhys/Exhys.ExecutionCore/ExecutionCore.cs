@@ -16,7 +16,14 @@ namespace Exhys.ExecutionCore
 
         public async Task<ExecutionResultDto> ExecuteAsync (ExecutionDto execution)
         {
-            return new ExecutionResultDto() { ExecutionId = execution.Id, TestResults = new List<TestResultDto>() { new TestResultDto() { ExecutionTime = 0, Output = "na maika ti putkata" } } }
+            return new ExecutionResultDto()
+            {
+                ExecutionId = execution.Id,
+                TestResults = new List<TestResultDto>()
+                {
+                    new TestResultDto() { ExecutionTime = 0, Output = "na maika ti putkata" }
+                }
+            };
         }
     }
 }
