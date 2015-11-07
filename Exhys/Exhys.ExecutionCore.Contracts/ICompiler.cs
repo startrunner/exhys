@@ -9,9 +9,9 @@ namespace Exhys.ExecutionCore.Contracts
 {
     public interface ICompiler
     {
-        string LanguageName { get; set; }
+        string LanguageName { get; }
 
-        string LanguageAlias { get; set; }
+        string LanguageAlias { get; }
 
         /// <returns>File path to compiled executable</returns>
         string Compile (string sourceCode);

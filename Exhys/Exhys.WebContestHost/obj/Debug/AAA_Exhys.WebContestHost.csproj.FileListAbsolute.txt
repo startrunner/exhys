@@ -29,8 +29,6 @@ C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\System.Web.
 C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\Newtonsoft.Json.xml
 C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\obj\Debug\Exhys.WebContestHost.dll
 C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\obj\Debug\Exhys.WebContestHost.pdb
-C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\Exhys.WebContestHost.CFDataModels.dll
-C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\Exhys.WebContestHost.CFDataModels.pdb
 E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\Exhys.WebContestHost.dll.config
 E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\Exhys.WebContestHost.dll
 E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\Exhys.WebContestHost.pdb
@@ -64,3 +62,5 @@ E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\bin\N
 E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\obj\Debug\AAA_Exhys.WebContestHost.csprojResolveAssemblyReference.cache
 E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\obj\Debug\Exhys.WebContestHost.dll
 E:\Important Data\Source Control\GitRepos\Exhys\Exhys\Exhys.WebContestHost\obj\Debug\Exhys.WebContestHost.pdb
+C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\Exhys.WebContestHost.DataModels.dll
+C:\Users\Alexander\Source\Repos\Exhys\Exhys\Exhys.WebContestHost\bin\Exhys.WebContestHost.DataModels.pdb
