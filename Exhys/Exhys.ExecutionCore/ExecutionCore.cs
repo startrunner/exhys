@@ -16,7 +16,6 @@ namespace Exhys.ExecutionCore
 
         public async Task<ExecutionResultDto> ExecuteAsync (ExecutionDto execution)
         {
-            
             throw new NotImplementedException();
         }
     }

@@ -40,7 +40,7 @@ namespace SubmissionRouterService.Test
         [TestMethod]
         public void TestRequestAndCompleteExecution()
         {
-            RegisterMockExecutioner();
+            //RegisterMockExecutioner();
             ManualResetEvent manualEvent = new ManualResetEvent(false);
             bool isSubmissionCompleted = false;
             ExecutionScheduler.Instance.SubmissionCompleted += (s,e)=>
