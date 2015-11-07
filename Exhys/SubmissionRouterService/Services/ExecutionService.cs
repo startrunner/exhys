@@ -71,14 +71,20 @@ namespace SubmissionRouterService.Services
             Executioner executioner = new Executioner(callback);
             Guid id = Guid.NewGuid();
             executioners.Add(id, executioner);
-            UnregisterLocalExecutioner();
+            if (executionCallback!=localExecutionCallback)
+            {
+                UnregisterLocalExecutioner();
+            }
             return id;
         }
 
         public void Unregister(Guid id)
         {
             executioners.Remove(id);
-            RegisterLocalExecutioner();
+            if (localExecutionerId != id)
+            {
+                RegisterLocalExecutioner();
+            }
         }
 
         public void SubmitResult(Guid executionProcessId, ExecutionResultDto executionResult)
