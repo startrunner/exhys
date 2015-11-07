@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SubmissionRouterService.Contracts
 {
-    [ServiceContract(SessionMode = SessionMode.NotAllowed,
+    [ServiceContract(SessionMode = SessionMode.Allowed,
                  CallbackContract = typeof(ISubmissionCallback))]
     public interface IExecutionService
     {

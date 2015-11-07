@@ -50,9 +50,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ExecutionServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SubmissionServiceTest.cs" />
+    <Compile Include="ExecutionServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SubmissionRouterDTOs\SubmissionRouterDTOs.csproj">

@@ -56,22 +56,17 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contracts\IExecutionScheduler.cs" />
     <Compile Include="Contracts\IExecutionCallback.cs" />
     <Compile Include="Contracts\IExecutionService.cs" />
     <Compile Include="Contracts\ISubmissionCallback.cs" />
     <Compile Include="Contracts\ISubmissionService.cs" />
-    <Compile Include="Model\ExecutionCompletedEventArgs.cs" />
-    <Compile Include="Model\ExecutionRequestedEventArgs.cs" />
-    <Compile Include="Services\ExecutionScheduler.cs" />
     <Compile Include="Model\Executioner.cs" />
     <Compile Include="Model\ExecutionProcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\ExecutionService.cs" />
     <Compile Include="Services\LocalExecutionCallback.cs" />
     <Compile Include="Services\MockExecutionCallback.cs" />
     <Compile Include="Services\MockSubmissionCallback.cs" />
-    <Compile Include="Services\SubmissionService.cs" />
+    <Compile Include="Services\ExecutionService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
