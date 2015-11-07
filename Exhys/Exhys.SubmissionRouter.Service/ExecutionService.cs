@@ -15,7 +15,7 @@ namespace Exhys.SubmissionRouter.Service
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class ExecutionService : IExecutionService, ISubmissionService
     {
-        private event EventHandler ExecutionAdded;
+        private event EventHandler ExecutionAdded; 
 
         private Dictionary<Guid, Executioner> executioners;
         private Dictionary<Guid, ExecutionProcess> executionProcesses;
