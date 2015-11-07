@@ -4,8 +4,7 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>@ViewData.GetPageTitle()- Exhys Admin</title>
-	@Styles.Render("~/Content/css")
-	@Scripts.Render("~/bundles/modernizr")
+	@Styles.Render("~/Content/css", "~/Content/custom-css")
 </head>
 <body>
 	<header>
@@ -82,67 +81,12 @@
 	<div class="container body-content">
 		@RenderBody()
 	</div>
-	<!--nav >
-		<ul>
-			<li>
-				<a href="#" onclick="return false;">User Groups</a>
-				<ul>
-					<li>@Html.ActionLink(linkText: "List Groups", controllerName: "UserGroups", actionName: "List")</li>
-					<li>@Html.ActionLink(linkText: "Add Groups", controllerName: "UserGroups", actionName: "Add")</li>
-				</ul>
-			</li>
-			<li>
-				<a href="#" onclick="return false;">User Accounts</a>
-				<ul>
-					<li>@Html.ActionLink(linkText: "List Users", controllerName: "UserAccounts", actionName: "List")</li>
-					<li>@Html.ActionLink(linkText: "Add Users", controllerName: "UserAccounts", actionName: "AddMany")</li>
-				</ul>
-			</li>
-			<li>
-				<a href="#">Competitions</a>
-				<ul>
-					<li>@Html.ActionLink(linkText: "List Competitions", controllerName: "Competitions", actionName: "List")</li>
-					<li>@Html.ActionLink(linkText: "Add Competition", controllerName: "Competitions", actionName: "Add")</li>
-				</ul>
-			</li>
-			<li>
-				<a href="#">Problems</a>
-				<ul>
-					<li>@Html.ActionLink(linkText: "List Problems", controllerName: "Problems", actionName: "List")</li>
-					<li>@Html.ActionLink(linkText: "Add Problem", controllerName: "Problems", actionName: "Add")</li>
-				</ul>
-			</li>
-			<li>
-				<a href="#">Extras</a>
-				<ul>
-					<li><a href="http://www.google.com">Google</a></li>
-					<li><a href="http://www.google.com">Google</a></li>
-					<li><a href="http://www.google.com">Google</a></li>
-					<li><a href="http://www.google.com">Google</a></li>
-					<li>
-						<a href="#">Advanced Extras</a>
-						<ul>
-							<li><a href="http://www.google.com">Google</a></li>
-							<li><a href="http://www.google.com">Google</a></li>
-							<li><a href="http://www.google.com">Google</a></li>
-							<li><a href="http://www.google.com">Google</a></li>
-							<li>
-								<a href="#">More Advanced Extras</a>
-								<ul>
-									<li><a href="http://www.google.com">Google</a></li>
-									<li><a href="http://www.google.com">Google</a></li>
-									<li><a href="http://www.google.com">Google</a></li>
-									<li><a href="http://www.google.com">Google</a></li>
-								</ul>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</li>
-		</ul>
-	</!--nav-->
+	
 	@Scripts.Render("~/bundles/jquery")
 	@Scripts.Render("~/bundles/bootstrap")
 	@RenderSection("scripts", required: false)
+	<script>
+		$('button').addClass('btn btn-default');
+	</script>
 </body>
 </html>

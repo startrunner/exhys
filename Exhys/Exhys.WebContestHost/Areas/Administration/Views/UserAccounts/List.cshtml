@@ -7,18 +7,18 @@
 		<br />
 		@using(Html.BeginForm(FormMethod.Post))
 		{
-			<button class="btn btn-default" type="submit">Save Changes</button>
+			<button type="submit">Save Changes</button>
 			<br /><br />
-			<table class="table table-hover table-bordered">
-				<thead>
+			<table class="table table-hover table-bordered table-striped">
+				<thead class="th-center">
 					<tr>
-						<th class="text-center">No.</th>
-						<th class="text-center">User ID</th>
-						<th class="text-center">Username</th>
-						<th class="text-center">Password</th>
-						<th class="text-center">Group</th>
-						<th class="text-center">Name</th>
-						<th class="text-center">Delete</th>
+						<th>No.</th>
+						<th>User ID</th>
+						<th>Username</th>
+						<th>Password</th>
+						<th>Group</th>
+						<th>Name</th>
+						<th>Delete</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -57,7 +57,7 @@
 					}
 				</tbody>
 			</table>
-			<button class="btn btn-default" type="submit">Save Changes</button>
-						}
+			<button type="submit">Save Changes</button>
+		}
 	</div>
 </div>
