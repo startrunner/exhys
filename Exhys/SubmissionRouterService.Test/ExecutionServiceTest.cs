@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SubmissionRouterService.Services;
 using SubmissionRouterService.Contracts;
 using System.Threading;
-using SubmissionRouterService.Dtos;
+using SubmissionRouterDTOs;
 
 namespace SubmissionRouterService.Test
 {

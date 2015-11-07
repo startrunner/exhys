@@ -4,11 +4,11 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
-using SubmissionRouterService.Dtos;
 using SubmissionRouterService.Contracts;
 using SubmissionRouterService.Model;
 using System.Timers;
 using Exhys.ExecutionCore;
+using SubmissionRouterDTOs;
 
 namespace SubmissionRouterService.Services
 {

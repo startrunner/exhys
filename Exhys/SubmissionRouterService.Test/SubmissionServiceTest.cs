@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SubmissionRouterDTOs;
 using SubmissionRouterService.Contracts;
-using SubmissionRouterService.Dtos;
 using SubmissionRouterService.Services;
 using System;
 using System.Threading;

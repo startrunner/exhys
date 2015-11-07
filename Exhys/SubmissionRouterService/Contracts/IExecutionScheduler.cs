@@ -1,4 +1,4 @@
-﻿using SubmissionRouterService.Dtos;
+﻿using SubmissionRouterDTOs;
 using SubmissionRouterService.Model;
 using System;
 using System.Collections.Generic;
