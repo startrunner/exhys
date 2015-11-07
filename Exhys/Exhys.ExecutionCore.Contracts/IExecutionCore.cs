@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SubmissionRouterService.Dtos;
 
-namespace Exhys.ExecutionCore
+namespace Exhys.ExecutionCore.Contracts
 {
     public interface IExecutionCore
     {
