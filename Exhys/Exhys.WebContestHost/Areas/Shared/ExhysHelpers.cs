@@ -31,6 +31,12 @@ namespace Exhys.WebContestHost.Areas.Shared
         }
 
         public static MvcHtmlString FixedDropDownListFor
+            (this HtmlHelper helper, string name, IEnumerable<SelectListItem> options, object htmlAttributes = null)
+        {
+            return helper.FixedDropDownListFor(name, options, null, false, htmlAttributes);
+        }
+
+        public static MvcHtmlString FixedDropDownListFor
             (this HtmlHelper helper, string inputName, IEnumerable<SelectListItem> options, string selectedValue = null, bool allowNull=false, object htmlAttributes=null)
         {
             TagBuilder selectTb = new TagBuilder("select");
