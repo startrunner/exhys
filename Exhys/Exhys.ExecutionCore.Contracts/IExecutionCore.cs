@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Exhys.ExecutionCore
+namespace Exhys.ExecutionCore.Contracts
 {
     public interface IExecutionCore
     {

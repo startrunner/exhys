@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Exhys.ExecutionCore;
+using Exhys.ExecutionCore.Contracts;
 using SubmissionRouterDTOs;
 
 namespace SubmissionRouterService.Services

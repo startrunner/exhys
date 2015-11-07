@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Exhys.ExecutionCore.Contracts;
 
 namespace Exhys.ExecutionCore
 {
@@ -21,7 +22,11 @@ namespace Exhys.ExecutionCore
                 ExecutionId = execution.Id,
                 TestResults = new List<TestResultDto>()
                 {
-                    new TestResultDto() { ExecutionTime = 0, Output = "na maika ti putkata" }
+                    new TestResultDto()
+                    {
+                        ExecutionTime = 0,
+                        Output = "na maika ti putkata"
+                    }
                 }
             };
         }
