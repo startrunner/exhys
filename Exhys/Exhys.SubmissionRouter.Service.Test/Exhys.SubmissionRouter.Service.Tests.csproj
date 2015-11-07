@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{958EFCD4-776F-45C6-A38C-40A445210C2A}</ProjectGuid>
+    <ProjectGuid>{3B871164-D0EB-4E31-9A04-BCB9E372DC50}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Exhys.ExecutionCore.Tests</RootNamespace>
-    <AssemblyName>Exhys.ExecutionCore.Tests</AssemblyName>
+    <RootNamespace>Exhys.SubmissionRouter.Service.Test</RootNamespace>
+    <AssemblyName>Exhys.SubmissionRouter.Service.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -51,17 +51,19 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="MockExecutionCallback.cs" />
+    <Compile Include="MockSubmissionCallback.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ExecutionServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Exhys.ExecutionCore.Contracts\Exhys.ExecutionCore.Contracts.csproj">
-      <Project>{7efa5797-224b-4a1a-b7b4-5297b1071ac1}</Project>
-      <Name>Exhys.ExecutionCore.Contracts</Name>
+    <ProjectReference Include="..\Exhys.SubmissionRouter.Dtos\Exhys.SubmissionRouter.Dtos.csproj">
+      <Project>{7ed4b3a4-b17b-4ae1-9b88-ae808343fc37}</Project>
+      <Name>Exhys.SubmissionRouter.Dtos</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Exhys.ExecutionCore\Exhys.ExecutionCore.csproj">
-      <Project>{7241fbcf-2387-485f-b4b2-8541de3a48bd}</Project>
-      <Name>Exhys.ExecutionCore</Name>
+    <ProjectReference Include="..\Exhys.SubmissionRouter.Service\Exhys.SubmissionRouter.Service.csproj">
+      <Project>{49c07b5c-a484-4617-a1f2-92b14eef0603}</Project>
+      <Name>Exhys.SubmissionRouter.Service</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

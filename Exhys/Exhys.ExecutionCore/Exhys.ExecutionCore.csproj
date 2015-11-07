@@ -21,6 +21,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>CS1998;</NoWarn>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -57,9 +58,9 @@
       <Project>{7efa5797-224b-4a1a-b7b4-5297b1071ac1}</Project>
       <Name>Exhys.ExecutionCore.Contracts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SubmissionRouterDTOs\SubmissionRouterDTOs.csproj">
+    <ProjectReference Include="..\Exhys.SubmissionRouter.Dtos\Exhys.SubmissionRouter.Dtos.csproj">
       <Project>{7ed4b3a4-b17b-4ae1-9b88-ae808343fc37}</Project>
-      <Name>SubmissionRouterDTOs</Name>
+      <Name>Exhys.SubmissionRouter.Dtos</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

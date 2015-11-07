@@ -1,6 +1,6 @@
 ﻿using Exhys.WebContestHost.DataModels;
-using SubmissionRouterDTOs;
-using SubmissionRouterService.Contracts;
+using Exhys.SubmissionRouter.Dtos;
+using Exhys.SubmissionRouter.Service.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +19,7 @@ namespace Exhys.WebContestHost.Communication
 
         public void SubmitRequest(ProblemSolution problemSolution)
         {
-            //DuplexClientBase<ISubmissionService>
+            
         }
 
         private SubmissionDto CreateSubmission(ProblemSolution problemSolution)
