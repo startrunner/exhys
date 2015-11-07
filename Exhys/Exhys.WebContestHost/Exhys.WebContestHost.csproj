@@ -137,7 +137,6 @@
     <Compile Include="Areas\Shared\Mvc\ExhysController.cs" />
     <Compile Include="Areas\Shared\Extensions\HttpRequestBase_Extensions.cs" />
     <Compile Include="Areas\Shared\Extensions\HttpResponseBase_Extensions.cs" />
-    <Compile Include="Areas\Shared\ViewDataDictionary_Extensions.cs" />
     <Compile Include="Areas\Shared\ViewModels\CompetitionViewModel.cs" />
     <Compile Include="Areas\Shared\ViewModels\ParticipationViewModel.cs" />
     <Compile Include="Areas\Shared\ViewModels\ProblemSolutionViewModel.cs" />
@@ -149,6 +148,7 @@
     <Compile Include="Areas\Shared\ViewModels\ViewPermissions.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="FormErrors.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
