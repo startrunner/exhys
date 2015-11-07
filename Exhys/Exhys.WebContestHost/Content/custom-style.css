@@ -7430,3 +7430,10 @@ button {
 .th-center tr th {
   text-align: center;
 }
+.combobox-padding-0 {
+  padding: 0 !important;
+}
+input[type=text] {
+  line-height: 5px;
+  padding: 2px 12px !important;
+}
