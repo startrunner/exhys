@@ -1,86 +1,92 @@
-﻿
-<!doctype html>
+﻿<!doctype html>
+<html>
 <head>
-    <link rel="stylesheet" href="~/WebRoot/Styles/style.css"/>
-    <title>@ViewData.GetPageTitle()- Exhys Admin</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>@ViewData.GetPageTitle()- Exhys Admin</title>
+	@Styles.Render("~/Content/css", "~/Content/custom-css")
 </head>
 <body>
-    <header>
-        Exhys Administration
-        
-    </header>
+	<header>
+		Exhys Administration
 
-    <div>
-        @{
-            var user = ViewData.GetSignedInUser();
-            if (user != null && user.IsGuest == false)
-            {
-                <span>User: @(user.FullName)</span>
-            }
-        }
-    </div>
+	</header>
+	<div>
+		@{
+			var user = ViewData.GetSignedInUser();
+			if(user != null && user.IsGuest == false)
+			{
+				<span>User: @(user.FullName)</span>
+			}
+		}
+	</div>
+	<div class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				@Html.ActionLink("Exhys", "Index", "Home", new { area = "" }, new { @class = "navbar-brand"})
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes" aria-expanded="true">
+							User Groups
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="usergroups">
+							<li>@Html.ActionLink(linkText: "List Groups", controllerName: "UserGroups", actionName: "List")</li>
+							<li>@Html.ActionLink(linkText: "Add Groups", controllerName: "UserGroups", actionName: "Add")</li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes" aria-expanded="true">
+							User Accounts
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="users">
+							<li>@Html.ActionLink(linkText: "List Users", controllerName: "UserAccounts", actionName: "List")</li>
+							<li>@Html.ActionLink(linkText: "Add Users", controllerName: "UserAccounts", actionName: "AddMany")</li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes" aria-expanded="true">
+							Competitions
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="competitions">
+							<li>@Html.ActionLink(linkText: "List Competitions", controllerName: "Competitions", actionName: "List")</li>
+							<li>@Html.ActionLink(linkText: "Add Competitions", controllerName: "Competitions", actionName: "Add")</li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes" aria-expanded="true">
+							Problems
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="problems">
+							<li>@Html.ActionLink(linkText: "List Problems", controllerName: "Problems", actionName: "List")</li>
+							<li>@Html.ActionLink(linkText: "Add Problem", controllerName: "Problems", actionName: "Add")</li>
+						</ul>
+					</li>
 
-
-    <nav>
-        <ul>
-            <li>
-                @Html.ActionLink(linkText:"Groups", controllerName:"UserGroups", actionName:"List")
-            </li>
-            <li>
-                <a href="#" onclick="return false;">User Accounts</a>
-                <ul>
-                    <li>@Html.ActionLink(linkText:"List Users", controllerName:"UserAccounts", actionName:"List")</li>
-                    <li>@Html.ActionLink(linkText:"Add Users", controllerName:"UserAccounts", actionName:"AddUsers")</li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">Competitions</a>
-                <ul>
-                    <li>@Html.ActionLink(linkText: "List Competitions", controllerName: "Competitions", actionName: "List")</li>
-                    <li>@Html.ActionLink(linkText: "Add Competition", controllerName: "Competitions", actionName: "Add")</li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">Problems</a>
-                <ul>
-                    <li>@Html.ActionLink(linkText: "List Problems", controllerName: "Problems", actionName: "List")</li>
-                    <li>@Html.ActionLink(linkText:"Add Problem", controllerName:"Problems", actionName:"Add")</li>
-                </ul>
-            </li>
-
-            <li>
-                <a href="#">Extras</a>
-                <ul>
-                    <li><a href="http://www.google.com">Google</a></li>    
-                    <li><a href="http://www.google.com">Google</a></li>    
-                    <li><a href="http://www.google.com">Google</a></li>    
-                    <li><a href="http://www.google.com">Google</a></li>    
-                    <li>
-                        <a href="#">Advanced Extras</a>
-                        <ul>
-                            <li><a href="http://www.google.com">Google</a></li>
-                            <li><a href="http://www.google.com">Google</a></li>
-                            <li><a href="http://www.google.com">Google</a></li>
-                            <li><a href="http://www.google.com">Google</a></li> 
-                            <li>
-                                <a href="#">More Advanced Extras</a>
-                                <ul>
-                                    <li><a href="http://www.google.com">Google</a></li>
-                                    <li><a href="http://www.google.com">Google</a></li>
-                                    <li><a href="http://www.google.com">Google</a></li>
-                                    <li><a href="http://www.google.com">Google</a></li>
-                                </ul>
-                            </li>   
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </nav>
-
-    <section>@RenderBody()</section>
-
-    <footer>
-
-    </footer>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<br />
+	<div class="container body-content">
+		@RenderBody()
+	</div>
+	
+	@Scripts.Render("~/bundles/jquery")
+	@Scripts.Render("~/bundles/bootstrap")
+	@RenderSection("scripts", required: false)
+	<script>
+		$('button').addClass('btn btn-default');
+	</script>
 </body>
+</html>

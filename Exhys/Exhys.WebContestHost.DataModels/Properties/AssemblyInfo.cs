@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Exhys.WebContestHost.DataModels")]
+[assembly: AssemblyTitle("Exhys.WebContestHost.CFDataModels")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Exhys.WebContestHost.DataModels")]
+[assembly: AssemblyProduct("Exhys.WebContestHost.CFDataModels")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("6f2ba6d2-c380-4097-8e4f-562fa64f284b")]
+[assembly: Guid("7a72ba22-4c12-4979-bdb7-728e636d45d5")]
 
 // Version information for an assembly consists of the following four values:
 //

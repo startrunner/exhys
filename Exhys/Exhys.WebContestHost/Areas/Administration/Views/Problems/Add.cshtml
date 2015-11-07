@@ -10,7 +10,7 @@
     {
         <div>
             @Html.LabelFor(m=>m.CompetitionId, "Competition")
-            @Html.FixedDropDownListFor(m => m.CompetitionId, ViewData.GetCompetitionOptions())
+            @Html.FixedDropDownListFor(m => m.CompetitionId, ViewData.GetCompetitionOptions(), null, true)
         </div>
 
         <div>

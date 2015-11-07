@@ -19,11 +19,6 @@ namespace Exhys.WebContestHost.Controllers
 
         public ActionResult About ()
         {
-            using (var db = new ExhysContestEntities())
-            {
-                RequireSignedInAdministrator(db);
-            }
-            
             ViewBag.Message = "Your application description page.";
 
             return View();
