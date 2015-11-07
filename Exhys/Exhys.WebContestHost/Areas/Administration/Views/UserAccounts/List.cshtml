@@ -41,7 +41,7 @@
 									@Html.TextBoxFor(m => m[i].Password, new { Class = "form-control height-25px" })
 								</td>
 								<td>
-									@Html.FixedDropDownListFor(m => m[i].GroupId, ViewData.GetUserGroupOptions())
+									@Html.FixedDropDownListFor(m => m[i].GroupId, ViewData.GetUserGroupOptions(), new { Class="form-control" })
 									@*
 										class="form-control"
 									*@
