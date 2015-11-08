@@ -9,7 +9,7 @@ using Exhys.ExecutionCore.Contracts;
 
 namespace Exhys.ExecutionCore
 {
-    public class PrimitiveCompilerFactory:ICompilerFactory
+    public class PrimitiveCompilerFactory
     {
         private string folderPath = @"C:\ExhysCompilers";
 

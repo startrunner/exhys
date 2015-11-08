@@ -9,15 +9,15 @@ using System.Reflection;
 
 namespace Exhys.ExecutionCore
 {
-    public class MefCompilerFactory : ICompilerFactory
+    public static class CompilerFactory
     {
-        Dictionary<string,ICompiler> compilers;
-        public MefCompilerFactory()
+        static Dictionary<string,ICompiler> compilers;
+        static CompilerFactory()
         {
             LoadAllCompilers();
         }
 
-        private void LoadAllCompilers()
+        private static void LoadAllCompilers()
         {
             AggregateCatalog catalog = new AggregateCatalog();
             catalog.Catalogs.Add(new DirectoryCatalog(".\\compilers"));
@@ -26,7 +26,7 @@ namespace Exhys.ExecutionCore
             compilers = loadedLazyCompilers.ToDictionary(x => x.Value.LanguageAlias, x=>x.Value);
         }
 
-        public ICompiler Get(string languageAlias)
+        public static ICompiler Get(string languageAlias)
         {
             if (compilers.ContainsKey(languageAlias))
             {

@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A22E3F81-A7BC-4365-8F4E-2C18673D62AE}</ProjectGuid>
+    <ProjectGuid>{D7AB6D44-41F1-41ED-8DC8-610CDC3FDAE0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MiniGWCpp11.Tests</RootNamespace>
-    <AssemblyName>MiniGWCpp11.Tests</AssemblyName>
+    <RootNamespace>Exhys.ExecutionCore.Tests</RootNamespace>
+    <AssemblyName>Exhys.ExecutionCore.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -21,7 +21,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\bin\Debug\Compilers\</OutputPath>
+    <OutputPath>..\bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -50,17 +50,19 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="MiniGWCpp11Tests.cs" />
+    <Compile Include="CompilerFactoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Exhys.ExecutionCore.Contracts\Exhys.ExecutionCore.Contracts.csproj">
       <Project>{7efa5797-224b-4a1a-b7b4-5297b1071ac1}</Project>
       <Name>Exhys.ExecutionCore.Contracts</Name>
+      <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\MiniGWCpp11\MiniGWCpp11.csproj">
-      <Project>{0ccf4541-2838-4277-8850-989e5e269ccd}</Project>
-      <Name>MiniGWCpp11</Name>
+    <ProjectReference Include="..\Exhys.ExecutionCore\Exhys.ExecutionCore.csproj">
+      <Project>{7241fbcf-2387-485f-b4b2-8541de3a48bd}</Project>
+      <Name>Exhys.ExecutionCore</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Choose>
