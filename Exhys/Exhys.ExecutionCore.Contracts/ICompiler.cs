@@ -14,6 +14,8 @@ namespace Exhys.ExecutionCore.Contracts
         string LanguageAlias { get; }
 
         /// <returns>File path to compiled executable</returns>
-        string Compile (string sourceCode);
+        //string Compile (string sourceCode);
+
+        CompilationResult Compile (string sourceCode);
     }
 }
