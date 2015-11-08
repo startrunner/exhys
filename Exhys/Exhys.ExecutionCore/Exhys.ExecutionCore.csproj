@@ -37,6 +37,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
@@ -47,11 +48,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Compiler.cs" />
-    <Compile Include="CompilerFactory.cs" />
+    <Compile Include="MefCompilerFactory.cs" />
+    <Compile Include="PrimitiveCompilerFactory.cs" />
     <Compile Include="ExecutionCore.cs" />
     <Compile Include="ExecutionCoreFactory.cs" />
+    <Compile Include="ICompilerFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestRunner.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Exhys.ExecutionCore.Contracts\Exhys.ExecutionCore.Contracts.csproj">

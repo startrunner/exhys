@@ -17,17 +17,23 @@ namespace Exhys.ExecutionCore
 
         public async Task<ExecutionResultDto> ExecuteAsync (ExecutionDto execution)
         {
+            SubmissionDto submission = execution.Submission;
+            ICompiler compiler = PrimitiveCompilerFactory.Get(submission.LanguageAlias);
+            CompilationResult compilationResult = compiler.Compile(submission.SourceCode);
+            List<TestResultDto> testResults = null;
+
+            if (compilationResult.IsSuccessful)
+            {
+                TestRunner testRunner = new TestRunner(compilationResult.ExecutablePath, submission.Tests);
+                testResults = TestRunner.Run();
+            }
+
             return new ExecutionResultDto()
             {
                 ExecutionId = execution.Id,
-                TestResults = new List<TestResultDto>()
-                {
-                    new TestResultDto()
-                    {
-                        ExecutionTime = 0,
-                        Output = "na maika ti putkata"
-                    }
-                }
+                TestResults = testResults,
+                CompilerOutput = compilationResult.Output,
+                IsExecutionSuccessful = compilationResult.IsSuccessful
             };
         }
     }

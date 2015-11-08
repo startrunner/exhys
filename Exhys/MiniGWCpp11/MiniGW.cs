@@ -2,9 +2,11 @@
 using System.Diagnostics;
 using System.IO;
 using Exhys.ExecutionCore.Contracts;
+using System.ComponentModel.Composition;
 
 namespace MiniGWCpp11
 {
+    [Export(typeof(ICompiler))]
     public class MiniGW : ICompiler
     {
         public string LanguageAlias { get { return "c++"; } }

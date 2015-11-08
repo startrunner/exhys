@@ -11,5 +11,9 @@ namespace Exhys.SubmissionRouter.Dtos
         public Guid ExecutionId { get; set; }
 
         public List<TestResultDto> TestResults { get; set; }
+
+        public bool IsExecutionSuccessful { get; set; }
+
+        public string CompilerOutput { get; set; }
     }
 }

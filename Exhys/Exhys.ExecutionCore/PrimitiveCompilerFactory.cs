@@ -9,10 +9,11 @@ using Exhys.ExecutionCore.Contracts;
 
 namespace Exhys.ExecutionCore
 {
-    public static class CompilerFactory
+    public class PrimitiveCompilerFactory:ICompilerFactory
     {
-        private static string folderPath = @"C:\ExhysCompilers";
-        public static ICompiler Generate(string languageAlias)
+        private string folderPath = @"C:\ExhysCompilers";
+
+        public ICompiler Get(string languageAlias)
         {
             List<string> dllPaths = Directory.GetFiles(folderPath)
                 .Where(p => p.EndsWith(".dll"))
