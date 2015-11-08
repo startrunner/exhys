@@ -42,8 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
-    <Compile Include="CompilatorDependencyNotFulfilledException.cs" />
-    <Compile Include="CompilationErrorException.cs" />
     <Compile Include="ExecutionResult.cs" />
     <Compile Include="ICompiler.cs" />
     <Compile Include="IExecutionCore.cs" />

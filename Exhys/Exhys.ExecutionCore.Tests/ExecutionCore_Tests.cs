@@ -11,17 +11,16 @@ namespace Exhys.ExecutionCore.Tests
     {
         public string LanguageAlias { get { return "c++"; } }
 
-        public string LanguageName { get { return "C++ (1998)"; } }
+        public string LanguageName { get { return "C++ 2011"; } }
 
         const string SourceFileExtension = ".cpp";
         const string ExecutableFileExtension = ".exe";
 
         public CompilationResult Compile (string sourceCode)
         {
-
             if(GetFullFilePath("g++.exe")==null)
-            { 
-                throw new CompilatorDependencyNotFulfilledException("MiniGW g++.exe not found. Please add the MiniGW/bin folder path to your system's PATH variable.");
+            {
+                return new CompilationResult("Compiler Dependency requirement not fulfulled");
             }
 
             string srcFile = Path.GetTempFileName().Replace(".tmp", SourceFileExtension);
@@ -31,7 +30,7 @@ namespace Exhys.ExecutionCore.Tests
 
             File.WriteAllText(srcFile, sourceCode);
 
-            ProcessStartInfo psi = new ProcessStartInfo("g++.exe", string.Format("{0} -o {1}", srcFile, executablePath));
+            ProcessStartInfo psi = new ProcessStartInfo("g++.exe", string.Format("{0} -std=c++11 -O3 -o {1}", srcFile, executablePath));
             psi.UseShellExecute = false;
             psi.RedirectStandardOutput = true;
             psi.RedirectStandardError = true;
@@ -46,12 +45,10 @@ namespace Exhys.ExecutionCore.Tests
 
             if (!File.Exists(executablePath))
             {
-                throw new CompilationErrorException(compilerOutput);
+                return new CompilationResult(compilerOutput);
             }
 
-            string s = p.StandardOutput.ReadToEnd();
-
-            return new CompilationResult(executablePath, compilerOutput);
+            return new CompilationResult(executablePath, compilerOutput, true);
         }
 
         private static string GetFullFilePath (string fileName)
@@ -90,16 +87,9 @@ namespace Exhys.ExecutionCore.Tests
         public void TestGnuGppHelloWorldWithError()
         {
             ICompiler gpp = new MiniGW();
-            try
-            {
-                gpp.Compile(cppHelloWorldWithError);
-            }
-            catch(CompilationErrorException e)
-            {
-                Debug.WriteLine(e.CompilerOutput);
-                return;
-            }
-            throw new Exception("Shoud've yelded an error.");
+            var program=gpp.Compile(cppHelloWorldWithError);
+
+            if(program.IsSuccessful)throw new Exception("Shoud've yelded an error.");
         }
 
         const string cppHelloWorld = @"

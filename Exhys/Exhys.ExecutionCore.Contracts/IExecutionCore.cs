@@ -9,6 +9,11 @@ namespace Exhys.ExecutionCore.Contracts
 {
     public interface IExecutionCore
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="execution"></param>
+        /// <returns></returns>
         ExecutionResultDto Execute (ExecutionDto execution);
         Task<ExecutionResultDto> ExecuteAsync (ExecutionDto execution);
     }

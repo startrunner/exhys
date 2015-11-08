@@ -6,14 +6,19 @@ using System.Threading.Tasks;
 
 namespace Exhys.ExecutionCore.Contracts
 {
-    public struct CompilationResult
+    public class CompilationResult
     {
         public string ExecutablePath { get; private set; }
-        public string CompilerOutput { get; private set; }
-        public CompilationResult(string exe, string compOut)
+        public string Output { get; private set; }
+        public bool IsSuccessful { get; private set; }
+
+        public CompilationResult(string exe, string output, bool isSuccessful)
         {
             ExecutablePath = exe;
-            CompilerOutput = compOut;
+            Output = output;
+            IsSuccessful = isSuccessful;
         }
+
+        public CompilationResult(string output):this(null, output, false) { }
     }
 }
