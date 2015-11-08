@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Exhys.ExecutionCore.Tests")]
+[assembly: AssemblyTitle("MiniGWCpp11")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Exhys.ExecutionCore.Tests")]
+[assembly: AssemblyProduct("MiniGWCpp11")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("958efcd4-776f-45c6-a38c-40a445210c2a")]
+[assembly: Guid("0ccf4541-2838-4277-8850-989e5e269ccd")]
 
 // Version information for an assembly consists of the following four values:
 //

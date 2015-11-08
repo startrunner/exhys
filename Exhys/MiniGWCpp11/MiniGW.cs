@@ -2,12 +2,10 @@
 using System.Diagnostics;
 using System.IO;
 using Exhys.ExecutionCore.Contracts;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using static System.Environment;
 
-namespace Exhys.ExecutionCore.Tests
+namespace MiniGWCpp11
 {
-    class MiniGW : ICompiler
+    public class MiniGW : ICompiler
     {
         public string LanguageAlias { get { return "c++"; } }
 
@@ -18,7 +16,7 @@ namespace Exhys.ExecutionCore.Tests
 
         public CompilationResult Compile (string sourceCode)
         {
-            if(GetFullFilePath("g++.exe")==null)
+            if (GetFullFilePath("g++.exe") == null)
             {
                 return new CompilationResult("Compiler Dependency requirement not fulfulled");
             }
@@ -53,63 +51,15 @@ namespace Exhys.ExecutionCore.Tests
 
         private static string GetFullFilePath (string fileName)
         {
-            if (File.Exists(fileName))return Path.GetFullPath(fileName);
-            foreach (var path in GetEnvironmentVariable("PATH").Split(';'))
+            if (File.Exists(fileName)) return Path.GetFullPath(fileName);
+            foreach (var path in Environment.GetEnvironmentVariable("PATH").Split(';'))
             {
                 var fullPath = Path.Combine(path, fileName);
-                if (File.Exists(fullPath))return fullPath;
+                if (File.Exists(fullPath)) return fullPath;
             }
             return null;
         }
 
         public MiniGW () { }
     }
-
-    [TestClass]
-    public class ExecutionCore_Tests
-    {
-        [TestMethod]
-        public void TestGnuGppHelloWorld ()
-        {
-            Debug.WriteLine("Shit");
-            ICompiler gpp = new MiniGW();
-
-            CompilationResult helloWorldProgram = gpp.Compile(cppHelloWorld);
-
-            Process testProcess = Process.Start(new ProcessStartInfo(helloWorldProgram.ExecutablePath) { UseShellExecute = false, RedirectStandardOutput = true });
-            testProcess.WaitForExit();
-
-            string programOut = testProcess.StandardOutput.ReadToEnd();
-            if (!programOut.Contains("H")) throw new Exception("Compiler Failed");
-        } 
-
-        [TestMethod]
-        public void TestGnuGppHelloWorldWithError()
-        {
-            ICompiler gpp = new MiniGW();
-            var program=gpp.Compile(cppHelloWorldWithError);
-
-            if(program.IsSuccessful)throw new Exception("Shoud've yelded an error.");
-        }
-
-        const string cppHelloWorld = @"
-        #include <iostream>
-        #warning some warning
-        using namespace std;
-        int main()
-        {
-            cout<<'H'<<endl;;;
-            return 0;
-        }";
-
-        const string cppHelloWorldWithError = @"
-        #include <iostream>
-        #warning some warning
-        //using namespace std;
-        int main()
-        {
-            cout<<'H'<<endl;
-            return 0;
-        }";
-    };
 }
