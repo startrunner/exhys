@@ -17,10 +17,10 @@ namespace Exhys.SubmissionRouter.Service.Model
             this.executionCallback = executionCallback;
         }
 
-        public ExecutionProcess Execute(Guid executionId, ExecutionDto execution)
+        public ExecutionProcess Execute(Guid executionProcessId, ExecutionDto execution)
         {
             ExecutionProcess executionProcess = new ExecutionProcess(this, execution);
-            Task.Run(()=>executionCallback.ExecuteSubmission(executionId, execution));
+            Task.Run(()=>executionCallback.ExecuteSubmission(executionProcessId, execution));
             IsBusy = true;
             return executionProcess;
         }

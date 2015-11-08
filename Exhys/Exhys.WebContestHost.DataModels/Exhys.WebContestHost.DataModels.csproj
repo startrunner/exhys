@@ -79,6 +79,10 @@
     <Compile Include="Migrations\201511042019438_RefactoredProblemSolutionAgain.Designer.cs">
       <DependentUpon>201511042019438_RefactoredProblemSolutionAgain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201511081829587_FixUserGroupAndAccountLength.cs" />
+    <Compile Include="Migrations\201511081829587_FixUserGroupAndAccountLength.Designer.cs">
+      <DependentUpon>201511081829587_FixUserGroupAndAccountLength.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataModels\UserAccount.cs" />
@@ -103,6 +107,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511042019438_RefactoredProblemSolutionAgain.resx">
       <DependentUpon>201511042019438_RefactoredProblemSolutionAgain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201511081829587_FixUserGroupAndAccountLength.resx">
+      <DependentUpon>201511081829587_FixUserGroupAndAccountLength.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
