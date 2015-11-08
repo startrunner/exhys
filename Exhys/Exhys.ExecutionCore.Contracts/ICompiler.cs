@@ -15,7 +15,7 @@ namespace Exhys.ExecutionCore.Contracts
 
         /// <returns>File path to compiled executable</returns>
         //string Compile (string sourceCode);
-
+          
         CompilationResult Compile (string sourceCode);
     }
 }
