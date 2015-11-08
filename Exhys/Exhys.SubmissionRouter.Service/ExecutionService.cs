@@ -62,8 +62,7 @@ namespace Exhys.SubmissionRouter.Service
 
         public Guid Register(IExecutionCallback executionCallback)
         {
-            IExecutionCallback callback = executionCallback;
-            Executioner executioner = new Executioner(callback);
+            Executioner executioner = new Executioner(executionCallback);
             Guid id = Guid.NewGuid();
             executioners.Add(id, executioner);
             if (executionCallback != localExecutionCallback)
@@ -76,7 +75,7 @@ namespace Exhys.SubmissionRouter.Service
         public void Unregister(Guid id)
         {
             executioners.Remove(id);
-            if (localExecutionerId != id)
+            if (localExecutionerId != id && executioners.Count==0)
             {
                 RegisterLocalExecutioner();
             }
