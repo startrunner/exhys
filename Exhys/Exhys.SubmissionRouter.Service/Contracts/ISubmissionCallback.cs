@@ -12,5 +12,8 @@ namespace Exhys.SubmissionRouter.Service.Contracts
     {
         [OperationContract(IsOneWay = true)]
         void SubmissionProcessed(SubmissionResultDto result);
+
+        [OperationContract(IsOneWay = true)]
+        void Pong();
     }
 }

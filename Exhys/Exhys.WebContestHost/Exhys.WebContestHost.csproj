@@ -29,7 +29,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\bin\Debug\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -242,7 +242,7 @@
     <ProjectReference Include="..\Exhys.WebContestHost.DataModels\Exhys.WebContestHost.DataModels.csproj">
       <Project>{7a72ba22-4c12-4979-bdb7-728e636d45d5}</Project>
       <Name>Exhys.WebContestHost.DataModels</Name>
-      <Private>False</Private>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

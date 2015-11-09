@@ -4,15 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{467E611E-9A27-40ED-96EE-499C0FDC347F}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{1D312CE6-F948-4CD1-9748-1F3413D90374}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Exhys.WebContestHost.Communication</RootNamespace>
-    <AssemblyName>Exhys.WebContestHost.Communication</AssemblyName>
+    <RootNamespace>WcfTestClient</RootNamespace>
+    <AssemblyName>WcfTestClient</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -20,9 +22,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -35,7 +37,6 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
-    <Reference Include="System.ServiceModel.Channels" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,52 +45,55 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Service References\SubmissionRouter\Reference.cs">
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\SubmissionService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="SubmissionClient.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Exhys.WebContestHost.DataModels\Exhys.WebContestHost.DataModels.csproj">
-      <Project>{7a72ba22-4c12-4979-bdb7-728e636d45d5}</Project>
-      <Name>Exhys.WebContestHost.DataModels</Name>
-    </ProjectReference>
+    <None Include="App.config" />
+    <None Include="Service References\SubmissionService\Exhys.SubmissionRouter.Dtos.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SubmissionService\service.wsdl" />
+    <None Include="Service References\SubmissionService\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SubmissionService\service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Exhys.SubmissionRouter.Dtos\Exhys.SubmissionRouter.Dtos.csproj">
       <Project>{7ed4b3a4-b17b-4ae1-9b88-ae808343fc37}</Project>
       <Name>Exhys.SubmissionRouter.Dtos</Name>
-      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Exhys.WebContestHost.Communication\Exhys.WebContestHost.Communication.csproj">
+      <Project>{467e611e-9a27-40ed-96ee-499c0fdc347f}</Project>
+      <Name>Exhys.WebContestHost.Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Exhys.WebContestHost.DataModels\Exhys.WebContestHost.DataModels.csproj">
+      <Project>{7a72ba22-4c12-4979-bdb7-728e636d45d5}</Project>
+      <Name>Exhys.WebContestHost.DataModels</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
-    <None Include="Service References\SubmissionRouter\Exhys.SubmissionRouter.Dtos.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\SubmissionRouter\service.wsdl" />
-    <None Include="Service References\SubmissionRouter\service.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\SubmissionRouter\service1.xsd">
-      <SubType>Designer</SubType>
-    </None>
+    <WCFMetadataStorage Include="Service References\SubmissionService\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\SubmissionRouter\" />
+    <None Include="Service References\SubmissionService\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\SubmissionRouter\configuration91.svcinfo" />
+    <None Include="Service References\SubmissionService\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\SubmissionRouter\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\SubmissionRouter\Reference.svcmap">
+    <None Include="Service References\SubmissionService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

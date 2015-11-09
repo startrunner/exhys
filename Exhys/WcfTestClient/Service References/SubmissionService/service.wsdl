@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ExecutionService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="SubmissionService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="ExecutionService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/Exhys.SubmissionRouter.Dtos" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ISubmissionService_Submit_InputMessage">
+    <wsdl:part name="parameters" element="tns:Submit" />
+  </wsdl:message>
+  <wsdl:message name="ISubmissionService_Submit_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SubmitResponse" />
+  </wsdl:message>
+  <wsdl:message name="ISubmissionService_Ping_InputMessage">
+    <wsdl:part name="parameters" element="tns:Ping" />
+  </wsdl:message>
+  <wsdl:message name="ISubmissionService_SubmissionProcessed_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:SubmissionProcessed" />
+  </wsdl:message>
+  <wsdl:message name="ISubmissionService_Pong_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:Pong" />
+  </wsdl:message>
+  <wsdl:message name="IExecutionService_Register_InputMessage">
+    <wsdl:part name="parameters" element="tns:Register" />
+  </wsdl:message>
+  <wsdl:message name="IExecutionService_Register_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RegisterResponse" />
+  </wsdl:message>
+  <wsdl:message name="IExecutionService_Unregister_InputMessage">
+    <wsdl:part name="parameters" element="tns:Unregister" />
+  </wsdl:message>
+  <wsdl:message name="IExecutionService_SubmitResult_InputMessage">
+    <wsdl:part name="parameters" element="tns:SubmitResult" />
+  </wsdl:message>
+  <wsdl:message name="IExecutionService_SubmissionProcessed_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:SubmissionProcessed" />
+  </wsdl:message>
+  <wsdl:message name="IExecutionService_Pong_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:Pong" />
+  </wsdl:message>
+  <wsdl:portType msc:usingSession="true" name="ISubmissionService">
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Submit">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISubmissionService/Submit" message="tns:ISubmissionService_Submit_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISubmissionService/SubmitResponse" message="tns:ISubmissionService_Submit_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Ping">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISubmissionService/Ping" message="tns:ISubmissionService_Ping_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="SubmissionProcessed">
+      <wsdl:output wsaw:Action="http://tempuri.org/ISubmissionService/SubmissionProcessed" message="tns:ISubmissionService_SubmissionProcessed_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation msc:isInitiating="true" msc:isTerminating="false" name="Pong">
+      <wsdl:output wsaw:Action="http://tempuri.org/ISubmissionService/Pong" message="tns:ISubmissionService_Pong_OutputCallbackMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="IExecutionService">
+    <wsdl:operation name="Register">
+      <wsdl:input wsaw:Action="http://tempuri.org/IExecutionService/Register" message="tns:IExecutionService_Register_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IExecutionService/RegisterResponse" message="tns:IExecutionService_Register_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Unregister">
+      <wsdl:input wsaw:Action="http://tempuri.org/IExecutionService/Unregister" message="tns:IExecutionService_Unregister_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SubmitResult">
+      <wsdl:input wsaw:Action="http://tempuri.org/IExecutionService/SubmitResult" message="tns:IExecutionService_SubmitResult_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SubmissionProcessed">
+      <wsdl:output wsaw:Action="http://tempuri.org/IExecutionService/SubmissionProcessed" message="tns:IExecutionService_SubmissionProcessed_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Pong">
+      <wsdl:output wsaw:Action="http://tempuri.org/IExecutionService/Pong" message="tns:IExecutionService_Pong_OutputCallbackMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SubmissionService" type="tns:ISubmissionService">
+    <wsp:PolicyReference URI="#SubmissionService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/websocket" />
+    <wsdl:operation name="Submit">
+      <soap12:operation soapAction="http://tempuri.org/ISubmissionService/Submit" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Ping">
+      <soap12:operation soapAction="http://tempuri.org/ISubmissionService/Ping" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="SubmissionProcessed">
+      <soap12:operation soapAction="http://tempuri.org/ISubmissionService/SubmissionProcessed" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Pong">
+      <soap12:operation soapAction="http://tempuri.org/ISubmissionService/Pong" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ExecutionService" type="tns:IExecutionService">
+    <wsp:PolicyReference URI="#ExecutionService_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/websocket" />
+    <wsdl:operation name="Register">
+      <soap12:operation soapAction="http://tempuri.org/IExecutionService/Register" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Unregister">
+      <soap12:operation soapAction="http://tempuri.org/IExecutionService/Unregister" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="SubmitResult">
+      <soap12:operation soapAction="http://tempuri.org/IExecutionService/SubmitResult" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="SubmissionProcessed">
+      <soap12:operation soapAction="http://tempuri.org/IExecutionService/SubmissionProcessed" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Pong">
+      <soap12:operation soapAction="http://tempuri.org/IExecutionService/Pong" style="document" />
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ExecutionService">
+    <wsdl:port name="SubmissionService" binding="tns:SubmissionService">
+      <soap12:address location="ws://localhost:9080/SubmissionRouter" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>ws://localhost:9080/SubmissionRouter</wsa10:Address>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+    <wsdl:port name="ExecutionService" binding="tns:ExecutionService">
+      <soap12:address location="ws://localhost:9080/SubmissionRouter" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>ws://localhost:9080/SubmissionRouter</wsa10:Address>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A22E3F81-A7BC-4365-8F4E-2C18673D62AE}</ProjectGuid>
+    <ProjectGuid>{B9B283C6-AC5D-41B3-8B2F-93343604023B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MiniGWCpp11.Tests</RootNamespace>
-    <AssemblyName>MiniGWCpp11.Tests</AssemblyName>
+    <RootNamespace>Exhys.WebContestHost.Communication.Test</RootNamespace>
+    <AssemblyName>Exhys.WebContestHost.Communication.Test</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -50,18 +50,22 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="MiniGWCpp11Tests.cs" />
+    <Compile Include="SubmissionClientTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Exhys.ExecutionCore.Contracts\Exhys.ExecutionCore.Contracts.csproj">
-      <Project>{7efa5797-224b-4a1a-b7b4-5297b1071ac1}</Project>
-      <Name>Exhys.ExecutionCore.Contracts</Name>
+    <ProjectReference Include="..\Exhys.SubmissionRouter.Dtos\Exhys.SubmissionRouter.Dtos.csproj">
+      <Project>{7ed4b3a4-b17b-4ae1-9b88-ae808343fc37}</Project>
+      <Name>Exhys.SubmissionRouter.Dtos</Name>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </ProjectReference>
-    <ProjectReference Include="..\MiniGWCpp11\MiniGWCpp11.csproj">
-      <Project>{0ccf4541-2838-4277-8850-989e5e269ccd}</Project>
-      <Name>MiniGWCpp11</Name>
-      <Private>True</Private>
+    <ProjectReference Include="..\Exhys.WebContestHost.Communication\Exhys.WebContestHost.Communication.csproj">
+      <Project>{467e611e-9a27-40ed-96ee-499c0fdc347f}</Project>
+      <Name>Exhys.WebContestHost.Communication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Exhys.WebContestHost.DataModels\Exhys.WebContestHost.DataModels.csproj">
+      <Project>{7a72ba22-4c12-4979-bdb7-728e636d45d5}</Project>
+      <Name>Exhys.WebContestHost.DataModels</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

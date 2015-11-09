@@ -13,7 +13,7 @@ namespace Exhys.ExecutionCore
     {
         public static IExecutionCore Generate()
         {
-            return null;
+            return new ExecutionCore();
         }
     }
 }

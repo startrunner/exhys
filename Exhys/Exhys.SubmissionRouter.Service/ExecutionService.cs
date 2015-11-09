@@ -9,10 +9,12 @@ using Exhys.SubmissionRouter.Dtos;
 using Exhys.SubmissionRouter.Service.Model;
 using System.Timers;
 using Exhys.ExecutionCore.Contracts;
+using System.Diagnostics;
+using Exhys.ExecutionCore;
 
 namespace Exhys.SubmissionRouter.Service
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Reentrant)]
     public class ExecutionService : IExecutionService, ISubmissionService
     {
         private Dictionary<Guid, Executioner> executioners;
@@ -40,7 +42,7 @@ namespace Exhys.SubmissionRouter.Service
 
         private IExecutionCore GetExecutionCore()
         {
-            return null;
+            return ExecutionCoreFactory.Generate();
         }
 
         #region IExecutionService implementation
@@ -63,6 +65,7 @@ namespace Exhys.SubmissionRouter.Service
         public Guid Register(IExecutionCallback executionCallback)
         {
             Executioner executioner = new Executioner(executionCallback);
+            executioner.ExceptionOccured += (s, e) => OnExecutionerExceptionOccured(e.ExecutionProcessId);
             Guid id = Guid.NewGuid();
             executioners.Add(id, executioner);
             if (executionCallback != localExecutionCallback)
@@ -81,11 +84,18 @@ namespace Exhys.SubmissionRouter.Service
             }
         }
 
+        public void OnExecutionerExceptionOccured(Guid executionProcessId)
+        {
+            ExecutionResultDto executionResult = new ExecutionResultDto();
+            executionResult.IsExecutionSuccessful = false;
+            SubmitResult(executionProcessId, executionResult);
+        }
+
         public void SubmitResult(Guid executionProcessId, ExecutionResultDto executionResult)
         {
             executionProcesses[executionProcessId].Executioner.OnExecutionFinished();
             executionProcesses.Remove(executionProcessId);
-            ExecutionCompleted(executionResult);
+            OnExecutionCompleted(executionResult);
         }
 
         private void RequestExecution(ExecutionDto execution)
@@ -142,10 +152,11 @@ namespace Exhys.SubmissionRouter.Service
             };
             RequestExecution(execution);
             submissions.Add(execution.Id, callback);
+            
             return execution.Id;
         }
 
-        private void ExecutionCompleted(ExecutionResultDto executionResult)
+        private void OnExecutionCompleted(ExecutionResultDto executionResult)
         {
             if (submissions.ContainsKey(executionResult.ExecutionId))
             {
@@ -157,8 +168,27 @@ namespace Exhys.SubmissionRouter.Service
 
                 ISubmissionCallback callback = submissions[submissionResult.ExecutionId];
                 submissions.Remove(submissionResult.ExecutionId);
-                callback.SubmissionProcessed(submissionResult);
+                try
+                {
+                    Debug.WriteLine(callback.GetType().FullName.ToString());
+                    Debug.WriteLine(((ICommunicationObject)callback).State);
+                    callback.SubmissionProcessed(submissionResult);
+                }
+                catch
+                {
+                    Debug.WriteLine("Unable to notify client of completed execution!");
+                }
             }
+        }
+
+        public void Ping()
+        {
+            var callback = OperationContext.Current.GetCallbackChannel<ISubmissionCallback>();
+            Task.Run(() =>
+            {
+                System.Threading.Thread.Sleep(3000);
+                callback.Pong();
+            });
         }
 
         #endregion

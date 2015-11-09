@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/Exhys.SubmissionRouter.Dtos" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Exhys.SubmissionRouter.Dtos" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="SubmissionDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="LanguageAlias" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SourceCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Tests" nillable="true" type="tns:ArrayOfTestDto" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SubmissionDto" nillable="true" type="tns:SubmissionDto" />
+  <xs:complexType name="ArrayOfTestDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="TestDto" nillable="true" type="tns:TestDto" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTestDto" nillable="true" type="tns:ArrayOfTestDto" />
+  <xs:complexType name="TestDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Input" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Solution" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TimeLimit" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TestDto" nillable="true" type="tns:TestDto" />
+  <xs:complexType name="SubmissionResultDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ExecutionId" type="ser:guid" />
+      <xs:element minOccurs="0" name="TestResults" nillable="true" type="tns:ArrayOfTestResultDto" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SubmissionResultDto" nillable="true" type="tns:SubmissionResultDto" />
+  <xs:complexType name="ArrayOfTestResultDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="TestResultDto" nillable="true" type="tns:TestResultDto" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTestResultDto" nillable="true" type="tns:ArrayOfTestResultDto" />
+  <xs:complexType name="TestResultDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ExecutionTime" type="xs:double" />
+      <xs:element minOccurs="0" name="Output" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TestResultDto" nillable="true" type="tns:TestResultDto" />
+  <xs:complexType name="ExecutionResultDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CompilerOutput" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ExecutionId" type="ser:guid" />
+      <xs:element minOccurs="0" name="IsExecutionSuccessful" type="xs:boolean" />
+      <xs:element minOccurs="0" name="TestResults" nillable="true" type="tns:ArrayOfTestResultDto" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ExecutionResultDto" nillable="true" type="tns:ExecutionResultDto" />
+</xs:schema>

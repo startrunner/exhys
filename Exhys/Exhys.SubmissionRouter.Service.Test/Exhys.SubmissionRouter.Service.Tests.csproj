@@ -21,7 +21,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\bin\Debug\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -60,12 +60,12 @@
     <ProjectReference Include="..\Exhys.SubmissionRouter.Dtos\Exhys.SubmissionRouter.Dtos.csproj">
       <Project>{7ed4b3a4-b17b-4ae1-9b88-ae808343fc37}</Project>
       <Name>Exhys.SubmissionRouter.Dtos</Name>
-      <Private>False</Private>
+      <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\Exhys.SubmissionRouter.Service\Exhys.SubmissionRouter.Service.csproj">
       <Project>{49c07b5c-a484-4617-a1f2-92b14eef0603}</Project>
       <Name>Exhys.SubmissionRouter.Service</Name>
-      <Private>False</Private>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <Choose>

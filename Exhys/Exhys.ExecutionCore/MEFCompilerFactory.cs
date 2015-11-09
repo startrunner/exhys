@@ -20,7 +20,7 @@ namespace Exhys.ExecutionCore
         private static void LoadAllCompilers()
         {
             AggregateCatalog catalog = new AggregateCatalog();
-            catalog.Catalogs.Add(new DirectoryCatalog(".\\compilers"));
+            catalog.Catalogs.Add(new DirectoryCatalog("..\\..\\..\\Compilers"));
             CompositionContainer container = new CompositionContainer(catalog);
             IEnumerable<Lazy<ICompiler>> loadedLazyCompilers = container.GetExports<ICompiler>();
             compilers = loadedLazyCompilers.ToDictionary(x => x.Value.LanguageAlias, x=>x.Value);

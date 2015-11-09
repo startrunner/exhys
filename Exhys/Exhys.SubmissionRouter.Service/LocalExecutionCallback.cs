@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 using Exhys.ExecutionCore;
 using Exhys.ExecutionCore.Contracts;
 using Exhys.SubmissionRouter.Dtos;
+using System.ServiceModel;
 
 namespace Exhys.SubmissionRouter.Service
 {
+    [CallbackBehavior(UseSynchronizationContext = true)]
     public class LocalExecutionCallback : IExecutionCallback
     {
         IExecutionCore executionCore;

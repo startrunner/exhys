@@ -15,6 +15,12 @@ namespace Exhys.SubmissionRouter.Service.Test
         {
             this.callback = callback;
         }
+
+        public void Pong()
+        {
+            
+        }
+
         public void SubmissionProcessed(SubmissionResultDto result)
         {
             callback();

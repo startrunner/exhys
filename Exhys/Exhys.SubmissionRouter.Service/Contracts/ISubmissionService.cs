@@ -16,5 +16,8 @@ namespace Exhys.SubmissionRouter.Service.Contracts
         Guid Submit(SubmissionDto submission);
         
         Guid Submit(SubmissionDto submission,ISubmissionCallback callback);
+
+        [OperationContract(IsOneWay = true)]
+        void Ping();
     }
 }
