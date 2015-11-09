@@ -25,7 +25,7 @@ namespace Exhys.ExecutionCore
             if (compilationResult.IsSuccessful)
             {
                 TestRunner testRunner = new TestRunner(compilationResult.ExecutablePath, submission.Tests);
-                testResults = TestRunner.Run();
+                testResults = testRunner.Run();
             }
 
             return new ExecutionResultDto()
