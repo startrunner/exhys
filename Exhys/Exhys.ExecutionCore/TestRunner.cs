@@ -36,7 +36,7 @@ namespace Exhys.ExecutionCore
             This temporaryly disables Windows Error reporting for the duration
             of this method's execution.
             */
-            SetWindowsErrorMode(3);
+            int oldErrorMode = Kernel32.SetErrorMode(3);
 
             Process proc = Process.Start(new ProcessStartInfo(ExecutablePath)
             {
@@ -61,7 +61,7 @@ namespace Exhys.ExecutionCore
                     //The program hasn't crashed
                     if (output.Trim() == test.Solution.Trim())
                     {
-                        RevertWindowsErrorMode();
+                        Kernel32.SetErrorMode(oldErrorMode);
                         return new TestResultDto()
                         {
                             ExecutionTime = executionTime,
@@ -71,7 +71,7 @@ namespace Exhys.ExecutionCore
                     }
                     else
                     {
-                        RevertWindowsErrorMode();
+                        Kernel32.SetErrorMode(oldErrorMode);
                         return new TestResultDto()
                         {
                             ExecutionTime = executionTime,
@@ -83,7 +83,7 @@ namespace Exhys.ExecutionCore
                 else
                 {
                     //A non-zero exit code usually means that the program has crashed.
-                    RevertWindowsErrorMode();
+                    Kernel32.SetErrorMode(oldErrorMode);
                     return new TestResultDto()
                     {
                         Output = null,
@@ -95,7 +95,7 @@ namespace Exhys.ExecutionCore
             else
             {
                 proc.Kill();
-                RevertWindowsErrorMode();
+                Kernel32.SetErrorMode(oldErrorMode);
                 return new TestResultDto()
                 {
                     ExecutionTime = test.TimeLimit,
@@ -104,24 +104,5 @@ namespace Exhys.ExecutionCore
                 };
             }
         }
-
-        #region Kernel32 Windows Error Mode
-        static int? _previousWindowsErrorMode = null;
-        static void SetWindowsErrorMode (int value)
-        {
-            if (_previousWindowsErrorMode == null)
-            {
-                _previousWindowsErrorMode = Kernel32.SetErrorMode(value);
-            }
-        }
-        static void RevertWindowsErrorMode ()
-        {
-            if (_previousWindowsErrorMode != null)
-            {
-                Kernel32.SetErrorMode(_previousWindowsErrorMode.Value);
-                _previousWindowsErrorMode = null;
-            }
-        }
-        #endregion
     }
 }
