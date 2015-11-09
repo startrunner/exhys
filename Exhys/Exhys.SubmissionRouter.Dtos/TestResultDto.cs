@@ -10,7 +10,8 @@ namespace Exhys.SubmissionRouter.Dtos
     {
         public double ExecutionTime { get; set; }
         public string Output { get; set; }
-        public enum Status
+        public ResultStatus Status { get; set; }
+        public enum ResultStatus
         {
             CorrectAnswer,
             WrongAnswer,

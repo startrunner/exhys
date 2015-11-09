@@ -48,6 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConsoleApplicationHost.cs" />
+    <Compile Include="Kernel32.cs" />
     <Compile Include="MefCompilerFactory.cs" />
     <Compile Include="PrimitiveCompilerFactory.cs" />
     <Compile Include="ExecutionCore.cs" />

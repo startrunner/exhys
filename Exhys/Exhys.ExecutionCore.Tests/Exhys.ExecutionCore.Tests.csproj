@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="CompilerFactoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestRunnerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Exhys.ExecutionCore.Contracts\Exhys.ExecutionCore.Contracts.csproj">
@@ -63,6 +64,10 @@
       <Project>{7241fbcf-2387-485f-b4b2-8541de3a48bd}</Project>
       <Name>Exhys.ExecutionCore</Name>
       <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Exhys.SubmissionRouter.Dtos\Exhys.SubmissionRouter.Dtos.csproj">
+      <Project>{7ed4b3a4-b17b-4ae1-9b88-ae808343fc37}</Project>
+      <Name>Exhys.SubmissionRouter.Dtos</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
