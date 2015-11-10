@@ -17,7 +17,7 @@ namespace Exhys.SubmissionRouter.Service.Test
             this.executionService = executionService;
         }
 
-        public void ExecuteSubmission(Guid submissionProcessId, ExecutionDto execution)
+        public void ExecuteSubmission(ExecutionDto execution)
         {
             ExecutionResultDto executionResult = new ExecutionResultDto()
             {
@@ -41,7 +41,7 @@ namespace Exhys.SubmissionRouter.Service.Test
                     },
                 }
             };
-            executionService.SubmitResult(submissionProcessId, executionResult);
+            executionService.SubmitResult(executionResult);
         }
     }
 }

@@ -21,6 +21,6 @@ namespace Exhys.SubmissionRouter.Service.Contracts
         void Unregister(Guid id);
 
         [OperationContract(IsOneWay = true)]
-        void SubmitResult(Guid executionProcessId, ExecutionResultDto executionResult);
+        void SubmitResult(ExecutionResultDto executionResult);
     }
 }

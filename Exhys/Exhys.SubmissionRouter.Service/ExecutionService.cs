@@ -18,8 +18,7 @@ namespace Exhys.SubmissionRouter.Service
     public class ExecutionService : IExecutionService, ISubmissionService
     {
         private Dictionary<Guid, Executioner> executioners;
-        private Dictionary<Guid, ExecutionProcess> executionProcesses;
-        private Dictionary<Guid, ISubmissionCallback> submissions;
+        private Dictionary<Guid, ISubmissionCallback> callbacks;
         private Queue<ExecutionDto> requestedExecutions;
         private IExecutionCallback localExecutionCallback;
         private Guid localExecutionerId;
@@ -30,8 +29,7 @@ namespace Exhys.SubmissionRouter.Service
         {
             _lock = new object();
             executioners = new Dictionary<Guid, Executioner>();
-            executionProcesses = new Dictionary<Guid, ExecutionProcess>();
-            submissions = new Dictionary<Guid, ISubmissionCallback>();
+            callbacks = new Dictionary<Guid, ISubmissionCallback>();
             requestedExecutions = new Queue<ExecutionDto>();
             localExecutionCallback = new LocalExecutionCallback(GetExecutionCore(), this);
             executionTimer = new Timer(1000);
@@ -84,17 +82,21 @@ namespace Exhys.SubmissionRouter.Service
             }
         }
 
-        public void OnExecutionerExceptionOccured(Guid executionProcessId)
+        public void OnExecutionerExceptionOccured(Guid executionId)
         {
             ExecutionResultDto executionResult = new ExecutionResultDto();
+            executionResult.ExecutionId = executionId;
             executionResult.IsExecutionSuccessful = false;
-            SubmitResult(executionProcessId, executionResult);
+            SubmitResult(executionResult);
         }
 
-        public void SubmitResult(Guid executionProcessId, ExecutionResultDto executionResult)
+        public void SubmitResult(ExecutionResultDto executionResult)
         {
-            executionProcesses[executionProcessId].Executioner.OnExecutionFinished();
-            executionProcesses.Remove(executionProcessId);
+            Executioner executioner = executioners.FirstOrDefault(x => x.Value.CurrentExecutionId == executionResult.ExecutionId).Value;
+            if (executioner != null)
+            {
+                executioner.OnExecutionFinished();
+            }
             OnExecutionCompleted(executionResult);
         }
 
@@ -124,9 +126,7 @@ namespace Exhys.SubmissionRouter.Service
 
         private void ExecuteRequest(ExecutionDto execution, Executioner executioner)
         {
-            Guid executionProcessId = Guid.NewGuid();
-            ExecutionProcess executionProcess = executioner.Execute(executionProcessId, execution);
-            executionProcesses.Add(executionProcessId, executionProcess);
+            executioner.Execute(execution);
         }
 
         private Executioner GetFreeExecutioner()
@@ -151,33 +151,27 @@ namespace Exhys.SubmissionRouter.Service
                 Submission = submission
             };
             RequestExecution(execution);
-            submissions.Add(execution.Id, callback);
+            callbacks.Add(execution.Id, callback);
             
             return execution.Id;
         }
 
         private void OnExecutionCompleted(ExecutionResultDto executionResult)
         {
-            if (submissions.ContainsKey(executionResult.ExecutionId))
+            SubmissionResultDto submissionResult = new SubmissionResultDto()
             {
-                SubmissionResultDto submissionResult = new SubmissionResultDto()
-                {
-                    ExecutionId = executionResult.ExecutionId,
-                    TestResults = executionResult.TestResults
-                };
+                ExecutionId = executionResult.ExecutionId,
+                TestResults = executionResult.TestResults
+            };
 
-                ISubmissionCallback callback = submissions[submissionResult.ExecutionId];
-                submissions.Remove(submissionResult.ExecutionId);
-                try
-                {
-                    Debug.WriteLine(callback.GetType().FullName.ToString());
-                    Debug.WriteLine(((ICommunicationObject)callback).State);
-                    callback.SubmissionProcessed(submissionResult);
-                }
-                catch
-                {
-                    Debug.WriteLine("Unable to notify client of completed execution!");
-                }
+            ISubmissionCallback callback = callbacks[submissionResult.ExecutionId];
+            try
+            {
+                callback.SubmissionProcessed(submissionResult);
+            }
+            catch
+            {
+                Debug.WriteLine("Unable to notify client of completed execution!");
             }
         }
 

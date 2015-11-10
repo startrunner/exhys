@@ -100,10 +100,10 @@ namespace Exhys.WebContestHost.Communication.SubmissionRouter {
         System.Threading.Tasks.Task UnregisterAsync(System.Guid id);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IExecutionService/SubmitResult")]
-        void SubmitResult(System.Guid executionProcessId, Exhys.SubmissionRouter.Dtos.ExecutionResultDto executionResult);
+        void SubmitResult(Exhys.SubmissionRouter.Dtos.ExecutionResultDto executionResult);
         
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/IExecutionService/SubmitResult")]
-        System.Threading.Tasks.Task SubmitResultAsync(System.Guid executionProcessId, Exhys.SubmissionRouter.Dtos.ExecutionResultDto executionResult);
+        System.Threading.Tasks.Task SubmitResultAsync(Exhys.SubmissionRouter.Dtos.ExecutionResultDto executionResult);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -160,12 +160,12 @@ namespace Exhys.WebContestHost.Communication.SubmissionRouter {
             return base.Channel.UnregisterAsync(id);
         }
         
-        public void SubmitResult(System.Guid executionProcessId, Exhys.SubmissionRouter.Dtos.ExecutionResultDto executionResult) {
-            base.Channel.SubmitResult(executionProcessId, executionResult);
+        public void SubmitResult(Exhys.SubmissionRouter.Dtos.ExecutionResultDto executionResult) {
+            base.Channel.SubmitResult(executionResult);
         }
         
-        public System.Threading.Tasks.Task SubmitResultAsync(System.Guid executionProcessId, Exhys.SubmissionRouter.Dtos.ExecutionResultDto executionResult) {
-            return base.Channel.SubmitResultAsync(executionProcessId, executionResult);
+        public System.Threading.Tasks.Task SubmitResultAsync(Exhys.SubmissionRouter.Dtos.ExecutionResultDto executionResult) {
+            return base.Channel.SubmitResultAsync(executionResult);
         }
     }
 }

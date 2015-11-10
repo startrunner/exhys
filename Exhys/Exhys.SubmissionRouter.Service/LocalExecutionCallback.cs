@@ -21,10 +21,10 @@ namespace Exhys.SubmissionRouter.Service
             this.executionCore = executionCore;
             this.executionService = executionService;
         }
-        public void ExecuteSubmission(Guid submissionProcessId, ExecutionDto execution)
+        public void ExecuteSubmission(ExecutionDto execution)
         {
             ExecutionResultDto result = executionCore.Execute(execution);
-            executionService.SubmitResult(submissionProcessId, result);
+            executionService.SubmitResult(result);
         }
     }
 }

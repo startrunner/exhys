@@ -40,9 +40,20 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="ExecutionTime" type="xs:double" />
       <xs:element minOccurs="0" name="Output" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Status" type="tns:TestResultDto.ResultStatus" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="TestResultDto" nillable="true" type="tns:TestResultDto" />
+  <xs:simpleType name="TestResultDto.ResultStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="CorrectAnswer" />
+      <xs:enumeration value="WrongAnswer" />
+      <xs:enumeration value="TimeOut" />
+      <xs:enumeration value="MemoryLimitExceeded" />
+      <xs:enumeration value="SegmentationFault" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="TestResultDto.ResultStatus" nillable="true" type="tns:TestResultDto.ResultStatus" />
   <xs:complexType name="ExecutionResultDto">
     <xs:sequence>
       <xs:element minOccurs="0" name="CompilerOutput" nillable="true" type="xs:string" />

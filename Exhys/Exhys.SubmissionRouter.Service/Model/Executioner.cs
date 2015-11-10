@@ -17,32 +17,39 @@ namespace Exhys.SubmissionRouter.Service.Model
         public Executioner(IExecutionCallback executionCallback)
         {
             this.executionCallback = executionCallback;
-        }
-
-        public ExecutionProcess Execute(Guid executionProcessId, ExecutionDto execution)
-        {
-            IsBusy = true;
             ExceptionOccured += (s, e) =>
             {
                 Debug.WriteLine("Failed to communicate with client!");
+                OnExecutionFinished();
             };
+        }
+
+        public void Execute(ExecutionDto execution)
+        {
                 
             Task.Run(() =>
             {
                 try
                 {
-                    executionCallback.ExecuteSubmission(executionProcessId, execution);
+                    executionCallback.ExecuteSubmission(execution);
                 }
                 catch
                 {
-                    OnExceptionOccured(executionProcessId);
+                    OnExceptionOccured(execution.Id);
                 }
             });
-            ExecutionProcess executionProcess = new ExecutionProcess(this, execution);
-            return executionProcess;
+            CurrentExecutionId = execution.Id;
         }
 
-        public bool IsBusy { get; private set; }
+        public bool IsBusy
+        {
+            get
+            {
+                return CurrentExecutionId != null;
+            }
+        }
+
+        public Guid? CurrentExecutionId { get; private set; }
 
         private void OnExceptionOccured(Guid executionProcessId)
         {
@@ -54,7 +61,7 @@ namespace Exhys.SubmissionRouter.Service.Model
 
         public void OnExecutionFinished()
         {
-            IsBusy = false;
+            CurrentExecutionId = null;
         }
     }
 }

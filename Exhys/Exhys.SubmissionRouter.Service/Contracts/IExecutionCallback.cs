@@ -11,6 +11,6 @@ namespace Exhys.SubmissionRouter.Service.Contracts
     public interface IExecutionCallback
     {
         [OperationContract(IsOneWay = true)]
-        void ExecuteSubmission(Guid submissionProcessId, ExecutionDto execution);
+        void ExecuteSubmission(ExecutionDto execution);
     }
 }
