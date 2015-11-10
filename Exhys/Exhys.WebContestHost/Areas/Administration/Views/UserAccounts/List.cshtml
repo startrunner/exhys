@@ -25,7 +25,7 @@
 					@{
 						for(int i = 0; i < Model.Count; i++)
 						{
-							<tr>
+							<tr class="valign-middle">
 								<td class="text-center">
 									@(i + 1)
 								</td>
@@ -41,7 +41,7 @@
 									@Html.TextBoxFor(m => m[i].Password, new { Class = "form-control height-25px" })
 								</td>
 								<td>
-									@Html.FixedDropDownListFor(m => m[i].GroupId, ViewData.GetUserGroupOptions(), new { Class= "form-control height-25px combobox-padding-0" })
+									@Html.FixedDropDownListFor(m => m[i].GroupId, ViewData.GetUserGroupOptions(), new { Class= "form-control height-25px padding-0" })
 								</td>
 								<td>
 									@Html.TextBoxFor(m => m[i].FullName, new { Class = "form-control height-25px" })

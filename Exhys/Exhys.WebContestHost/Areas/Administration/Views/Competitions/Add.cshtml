@@ -1,22 +1,46 @@
 ﻿@model CompetitionViewModel
     @{ 
-        ViewData.SetPageTitle("Add Competition");
+        ViewData.SetPageTitle("Create Competition");
     }
 <div>
-    @using (Html.BeginForm(FormMethod.Post))
-    {
-        <div>
-            @Html.TextBoxFor(m => m.Name, new { placeholder="Competition Name" })
-        </div>
-        <div>
-            @Html.TextAreaFor(m => m.Description, new { placeholder="Competition Description" })
-        </div>
-        <div>
-            @Html.LabelFor(m=>m.GroupId, "User Group: ")
-            @Html.FixedDropDownListFor(m => m.GroupId, ViewData.GetUserGroupOptions(), null, true)
-        </div>
-        <div>
-            <button type="submit">Create Contest</button>
-        </div>
-    }
+	<br />
+	<div class="col-lg-7">
+		@using(Html.BeginForm("Add", "Competitions", FormMethod.Post, new { @class = "form-horizontal well" }))
+		{
+			<fieldset>
+				<legend>Create Competition</legend>
+				@if(Html.ErrorListFor(ViewData) != null)
+				{
+					<div class="alert alert-dismissible alert-danger">
+						<button id="btn-close" type="button" class="close" data-dismiss="alert">×</button>
+						@Html.ErrorListFor(ViewData)
+					</div>
+				}
+				<div class="form-group">
+					@Html.LabelFor(m => m.Name, new { @class = "col-lg-2 control-label" })
+					<div class="col-lg-10">
+						@Html.TextBoxFor(m => m.Name, new { placeholder = "Competition Name", @class = "form-control lineH" })
+					</div>
+				</div>
+				<div class="form-group">
+					@Html.LabelFor(m => m.Description, new { @class = "col-lg-2 control-label" })
+					<div class="col-lg-10">
+						@Html.TextAreaFor(m => m.Description, new { placeholder = "Competition Description", @class = "form-control lineH" })
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="select" class="col-lg-2 control-label padding-left-0">User Group</label>
+					<div class="col-lg-10">
+						@Html.FixedDropDownListFor(m => m.GroupId, ViewData.GetUserGroupOptions(), new { @class = "form-control padding-0" })
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-lg-10 col-lg-offset-2">
+						<button type="reset" class="btn btn-default">Reset</button>
+						<button type="submit" class="btn btn-primary">Add Group</button>
+					</div>
+				</div>
+			</fieldset>
+		}
+	</div>
 </div>

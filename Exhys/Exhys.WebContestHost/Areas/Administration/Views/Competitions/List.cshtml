@@ -3,11 +3,13 @@
         ViewData.SetPageTitle("List Competitions");
     }
 <div>
+	<br />
     @using (Html.BeginForm(FormMethod.Post))
     {
         <button type="submit">Save Changes</button>
-        <table border="1">
-            <thead>
+		<br /><br />
+        <table class="table table-bordered table-hover table-striped">
+            <thead class="th-center">
                 <tr>
                     <th>ID</th>
                     <th>Name</th>
@@ -21,14 +23,17 @@
                 @{ 
                     for (int i = 0; i < Model.Count; i++)
                     {
-                        <tr>
-                            <td>@Html.TextBoxFor(m => m[i].Id, new { readOnly = "" })</td>
-                            <td>@Html.TextBoxFor(m => m[i].Name)</td>
-                            <td>@Html.TextBoxFor(m => m[i].Description)</td>
+                        <tr class="valign-middle">
+							<td class="text-center">
+								@Html.HiddenFor(m => m[i].Id)
+								<span>@Model[i].Id</span>
+							</td>
+                            <td>@Html.TextBoxFor(m => m[i].Name, new { @class = "form-control height-25px" })</td>
+                            <td>@Html.TextBoxFor(m => m[i].Description, new { @class = "form-control height-25px" })</td>
                             <td>
-                                @Html.FixedDropDownListFor(m=>m[i].GroupId, ViewData.GetUserGroupOptions(), null, true)
+								@Html.FixedDropDownListFor(m => m[i].GroupId, ViewData.GetUserGroupOptions(), new { @class = "form-control height-25px padding-0" })
                             </td>
-                            <td>@Html.CheckBoxFor(m => m[i].RequestDelete)</td>
+                            <td class="text-center">@Html.CheckBoxFor(m => m[i].RequestDelete)</td>
                             @*<td>
                                 @Html.ActionLink(linkText: "Edit", actionName: "Edit", routeValues: new { id = Model[i].Id })
                             </td>*@

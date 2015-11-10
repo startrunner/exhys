@@ -1,71 +1,311 @@
 ﻿@model ProblemViewModel
-    <div>
-    </div>
-@{ 
-    ViewData.SetPageTitle("Add Problem");
-}
-@Html.ErrorListFor(ViewData)
 <div>
-    @using (Html.BeginForm("Add", "Problems", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        <div>
-            @Html.LabelFor(m=>m.CompetitionId, "Competition")
-            @Html.FixedDropDownListFor(m => m.CompetitionId, ViewData.GetCompetitionOptions(), null, true)
-        </div>
-
-        <div>
-            @Html.LabelFor(m=>m.Name, "Problem Name")
-            @Html.TextBoxFor(m => m.Name, new { placeholder = "Problem Name" })
-        </div>
-
-        <div>
-            <label for="files-inp">Input Files</label>
-            <input id="files-inp" name="@ProblemViewModel.InputFilesInputName" type="file" multiple placeholder="Test Files"/>
-        </div>
-
-        <div>
-            <label for="files-sol">Solution Files</label>
-            <input id="files-sol" name="@ProblemViewModel.SolutionFilesInputName" type="file" multiple placeholder="Test Files"/>
-        </div>
-
-        <div>
-            <label for="files-stt">Statement Files</label>
-            <input id="files-stt" name="@ProblemViewModel.StatementFilesInputName" type="file" multiple placeholder="Statements"/>
-        </div>
-
-        <div>
-            @Html.LabelFor(m => m.T_InputFeedbacks, "Input Feedback")
-            @Html.TextBoxFor(m => m.T_InputFeedbacks, new { placeholder = "Input Feedbacks ('1;0;0')" })
-        </div>
-
-        <div>
-            @Html.LabelFor(m => m.T_OutputFeedbacks, "Output Feedback")
-            @Html.TextBoxFor(m => m.T_OutputFeedbacks, new { placeholder = "Output Feedbacks ('1;0;0')"})
-        </div>
-
-        <div>
-            @Html.LabelFor(m=>m.T_SolutionFeedbacks, "Solution   Feedback")
-            @Html.TextBoxFor(m=>m.T_SolutionFeedbacks, new { placeholder="Solution Feedbacks ('1;0;0')"})
-        </div>
-
-        <div>
-            @Html.LabelFor(m=>m.T_StatusFeedbacks, "Status Feedback")
-            @Html.TextBoxFor(m=>m.T_StatusFeedbacks, new { placeholder="Status Feedbacks ('1;0;0')"})
-        </div>
-
-        <div>
-            @Html.LabelFor(m=>m.T_ScoreFeedbacks, "Score Feedback")
-            @Html.TextBoxFor(m => m.T_ScoreFeedbacks, new { placeholder = "Score Feedback ('1;0;0')" })
-        </div>
-
-        <div>
-            @Html.LabelFor(m => m.T_TimeLimits, "Time Limits")
-            @Html.TextBoxFor(m => m.T_TimeLimits, new { placeholder = "Time Limits ('1.0;1.0')" })
-        </div>
-
-        <div>
-            <button type="submit">Add Problem</button>
-        </div>
-    }
 </div>
+@{
+	ViewData.SetPageTitle("Add Problem");
+}
+<div>
+	<br />
+	<div>
+		@using(Html.BeginForm("Add", "Problems", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal well" }))
+		{
+			<fieldset>
+				<legend>Add Problem</legend>
+				@if(Html.ErrorListFor(ViewData) != null)
+				{
+					<div class="alert alert-dismissible alert-danger">
+						<button id="btn-close" type="button" class="close" data-dismiss="alert">×</button>
+						@Html.ErrorListFor(ViewData)
+					</div>
+				}
 
+				<div class="form-group">
+					@Html.LabelFor(m => m.CompetitionId, "Competition Id", new { @class = "col-lg-2 control-label" })
+					<div class="col-lg-10">
+						@Html.FixedDropDownListFor(m => m.CompetitionId, ViewData.GetCompetitionOptions(), new { @class = "form-control padding-0" })
+					</div>
+				</div>
+				<div class="form-group">
+					@Html.LabelFor(m => m.Name, new { @class = "col-lg-2 control-label" })
+					<div class="col-lg-10">
+						@Html.TextBoxFor(m => m.Name, new { placeholder = "Problem Name", @class = "form-control lineH" })
+					</div>
+				</div>
+				<div class="form-group" id="inputFilesGroup1">
+					<label for="files-inp" class="col-lg-2 control-label">Input Files</label>
+					<div class="col-lg-10">
+						<label class="fileContainer">
+							<span class="box js">
+								<input type="file" name="@ProblemViewModel.InputFilesInputName" id="file-1" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple />
+								<label for="file-1" class=" btn btn-default"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z" /></svg> <span>Choose files&hellip;</span></label>
+							</span>
+						</label>
+						@*<input id="files-inp" name="@ProblemViewModel.InputFilesInputName" type="file" multiple placeholder="Test Files" class="form-control" />*@
+					</div>
+				</div>
+				<div class="form-group" id="inputFilesGroup2">
+					<label for="files-sol" class="col-lg-2 control-label">Solution Files</label>
+					<div class="col-lg-10">
+						<label class="fileContainer">
+							<span class="box js">
+								<input type="file" name="@ProblemViewModel.SolutionFilesInputName" id="file-2" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple />
+								<label for="file-2" class=" btn btn-default"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z" /></svg> <span>Choose files&hellip;</span></label>
+							</span>
+						</label>
+						@*<input id="files-sol" name="@ProblemViewModel.SolutionFilesInputName" type="file" multiple placeholder="Test Files" class="form-control" />*@
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="files-stt" class="col-lg-2 control-label">Statement Files</label>
+					<div class="col-lg-10">
+						<label class="fileContainer">
+							<span class="box js">
+								<input type="file" name="@ProblemViewModel.StatementFilesInputName" id="file-3" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple />
+								<label for="file-3" class=" btn btn-default"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z" /></svg> <span>Choose a file&hellip;</span></label>
+							</span>
+						</label>
+						@*Click here to trigger the file uploader!
+							<input id="files-stt" name="@ProblemViewModel.StatementFilesInputName" type="file" multiple placeholder="Statements" class="form-control" />*@
+
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-lg-2 control-label">Input Feedback</label>
+					<div class="col-lg-10 horizontal-scroll" id="div1">
+						<table class="table table-bordered table-editor border-brush-black" id="table1">
+							<thead class="th-center">
+								<tr>
+
+								</tr>
+							</thead>
+							<tr class="valign-middle text-center">
+
+							</tr>
+						</table>
+					</div>
+				</div>
+
+
+
+
+
+				<div class="form-group">
+					<div class="col-lg-10 col-lg-offset-2">
+						<button type="reset" class="btn btn-default">Reset</button>
+						<button type="submit" class="btn btn-primary">Add Problem</button>
+					</div>
+				</div>
+			</fieldset>
+			<div>
+				@Html.LabelFor(m => m.T_InputFeedbacks, "Input Feedback")
+				@Html.TextBoxFor(m => m.T_InputFeedbacks, new { placeholder = "Input Feedbacks ('1;0;0')" })
+			</div>
+
+			<div>
+				@Html.LabelFor(m => m.T_OutputFeedbacks, "Output Feedback")
+				@Html.TextBoxFor(m => m.T_OutputFeedbacks, new { placeholder = "Output Feedbacks ('1;0;0')" })
+			</div>
+
+			<div>
+				@Html.LabelFor(m => m.T_SolutionFeedbacks, "Solution   Feedback")
+				@Html.TextBoxFor(m => m.T_SolutionFeedbacks, new { placeholder = "Solution Feedbacks ('1;0;0')" })
+			</div>
+
+			<div>
+				@Html.LabelFor(m => m.T_StatusFeedbacks, "Status Feedback")
+				@Html.TextBoxFor(m => m.T_StatusFeedbacks, new { placeholder = "Status Feedbacks ('1;0;0')" })
+			</div>
+
+			<div>
+				@Html.LabelFor(m => m.T_ScoreFeedbacks, "Score Feedback")
+				@Html.TextBoxFor(m => m.T_ScoreFeedbacks, new { placeholder = "Score Feedback ('1;0;0')" })
+			</div>
+
+			<div>
+				@Html.LabelFor(m => m.T_TimeLimits, "Time Limits")
+				@Html.TextBoxFor(m => m.T_TimeLimits, new { placeholder = "Time Limits ('1.0;1.0')" })
+			</div>
+		}
+	</div>
+</div>
+@section scripts{
+	@*Scroll table with dragging*@
+	<script>
+		
+
+	</script>
+
+	@*GenerateCheckboxColumns*@
+	<script>
+		var lastBrCol = 0, currBrCol = 0;
+		$("#file-1").change(function () {
+			lastBrCol = currBrCol;
+			currBrCol = $("#file-1")[0].files.length;
+			if (currBrCol - lastBrCol > 0) {
+				for (var i = lastBrCol; i < currBrCol ; i++) {
+					addColumn(i + 1);
+					initCheckBoxes('table1');
+				}
+			}
+			else {
+				for (var i = 0; i < lastBrCol - currBrCol; i++) {
+					removeColumn();
+				}
+			}
+		});
+		function addColumn(p) {
+			var $tablerow = $('table.table-editor').find('thead');
+			count = 0;
+
+			$tablerow.each(function (index, value) {
+				count += 1;
+				//alert('Working on row: ' + count);
+				var $listitem = $(this);
+				//alert('ListItem: ' + $listitem.index());
+				n = parseInt($listitem.index());
+				//alert('Value of n: ' + n);
+				var $newHead = $("<th>" + p + "</th>");
+				$("table.table-editor thead tr:eq(" + n + ")").append($newHead);
+
+				var $newRow = $('<td><input name="checks" type="checkbox"></td>');
+				$("table.table-editor tr:eq(" + n+1 + ")").append($newRow);
+			});
+		};
+		function removeColumn() {
+			var $tablerow = $('table.table-editor').find('tr');
+			$("table.table-editor thead tr th:eq(-1)").remove();
+			$("table.table-editor tr:eq(" + 1 + ") td:eq(-1)").remove();
+
+
+			$tablerow.each(function (index, value) {
+				
+			});
+		};
+	</script>
+
+
+	@*FindFilesCountMismatch*@
+	<script>
+		$("#file-1").change(function () {
+			checkAndMark();
+		});
+		$("#file-2").change(function () {
+			checkAndMark();
+		});
+		function checkAndMark() {
+			if ($("#file-1")[0].files.length != $("#file-2")[0].files.length) {
+				$("#inputFilesGroup1")[0].classList.add("has-error");
+				$("#inputFilesGroup2")[0].classList.add("has-error");
+			}
+			else {
+				$("#inputFilesGroup1")[0].classList.remove("has-error");
+				$("#inputFilesGroup2")[0].classList.remove("has-error");
+			}
+		}
+
+	</script>
+
+	@*Dragable Checkboxes*@
+	<script>
+
+		window.onload = function () {
+			initCheckBoxes('table1');
+		};
+		/* Click-n-Drag Checkboxes */
+		var gCheckedValue = null;
+		function initCheckBoxes(sTblId) {
+			xTableIterate(sTblId,
+			  function (td, isRow) {
+			  	if (!isRow) {
+			  		var cb = td.getElementsByTagName('input');
+			  		if (typeof cb[0] !="undefined")
+			  		if (cb && cb[0].type.toLowerCase() == 'checkbox') {
+			  			td.checkBoxObj = cb[0];
+			  			td.onmousedown = tdOnMouseDown;
+			  			td.onmouseover = tdOnMouseOver;
+			  			td.onclick = tdOnClick;
+			  		}
+			  	}
+			  }
+			);
+		}
+		function tdOnMouseDown(ev) {
+			if (this.checkBoxObj) {
+				gCheckedValue = this.checkBoxObj.checked = !this.checkBoxObj.checked;
+				document.onmouseup = docOnMouseUp;
+				document.onselectstart = docOnSelectStart; // for IE
+				xPreventDefault(ev); // cancel text selection
+			}
+		}
+		function tdOnMouseOver(ev) {
+			if (gCheckedValue != null && this.checkBoxObj) {
+				this.checkBoxObj.checked = gCheckedValue;
+			}
+		}
+		function docOnMouseUp() {
+			document.onmouseup = null;
+			document.onselectstart = null;
+			gCheckedValue = null;
+		}
+		function tdOnClick() {
+			// Cancel a click on the checkbox itself. Let it bubble up to the TD
+			return false;
+		}
+		function docOnSelectStart(ev) {
+			return false; // cancel text selection
+		}
+		function xTableIterate(sec, fnCallback, data) {
+			var r, c;
+			sec = xGetElementById(sec);
+			if (!sec || !fnCallback) { return; }
+			for (r = 0; r < sec.rows.length; ++r) {
+				if (false == fnCallback(sec.rows[r], true, r, c, data)) { return; }
+				for (c = 0; c < sec.rows[r].cells.length; ++c) {
+					if (false == fnCallback(sec.rows[r].cells[c], false, r, c, data)) { return; }
+				}
+			}
+		}
+		function xGetElementById(e) {
+			if (typeof (e) == 'string') {
+				if (document.getElementById) e = document.getElementById(e);
+				else if (document.all) e = document.all[e];
+				else e = null;
+			}
+			return e;
+		}
+		function xPreventDefault(e) {
+			if (e && e.preventDefault) e.preventDefault();
+			else if (window.event) window.event.returnValue = false;
+		}
+
+	</script>
+
+	@*File Inputs*@
+	<script>
+		; (function (document, window, index) {
+			var inputs = document.querySelectorAll('.inputfile');
+			Array.prototype.forEach.call(inputs, function (input) {
+				var label = input.nextElementSibling,
+					labelVal = label.innerHTML;
+
+				input.addEventListener('change', function (e) {
+					var fileName = '';
+					if (this.files && this.files.length > 1)
+						fileName = (this.getAttribute('data-multiple-caption') || '').replace('{count}', this.files.length);
+					else
+						fileName = e.target.value.split('\\').pop();
+
+					if (fileName)
+						label.querySelector('span').innerHTML = fileName;
+					else
+						label.innerHTML = labelVal;
+				});
+
+				// Firefox bug fix
+				input.addEventListener('focus', function () { input.classList.add('has-focus'); });
+				input.addEventListener('blur', function () { input.classList.remove('has-focus'); });
+			});
+		}(document, window, 0));
+	</script>
+}

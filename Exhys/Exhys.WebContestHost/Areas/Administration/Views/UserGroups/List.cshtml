@@ -1,37 +1,38 @@
 ﻿@model IList<UserGroupViewModel>
 <div>
-    @using (Html.BeginForm(FormMethod.Post))
-    {
-        <table border="1">
-            <thead>
-                <tr>
-                    <td>Group Id</td>
-                    <td>Name</td>
-                    <td>Description</td>
-                    <td>Is Admin</td>
-                    <td>Is Open</td>
-                    <td>Delete Group</td>
-                </tr>
-            </thead>
-            <tbody>
-                @{ 
-                    for(int i=0;i<Model.Count;i++)
-                    {
-                        <tr>
-                            <td>
-                                @Html.HiddenFor(m=>m[i].Id)
-                                @Model[i].Id
-                            </td>
-                            <td>@Html.TextBoxFor(m=>m[i].Name)</td>
-                            <td>@Html.TextBoxFor(m=>m[i].Description)</td>
-                            <td>@Html.CheckBoxFor(m=>m[i].IsAdmin)</td>
-                            <td>@Html.CheckBoxFor(m=>m[i].IsOpen)</td>
-                            <td>@Html.CheckBoxFor(m=>m[i].RequestDelete)</td>
-                        </tr>
-                    }
-                }
-            </tbody>
-        </table>
-        <button type="submit">Save Changes</button>
-    }
+	@using(Html.BeginForm(FormMethod.Post))
+	{
+		<br /><br />
+		<table border="1" class="table table-hover table-striped table-bordered">
+			<thead class="th-center">
+				<tr>
+					<th>Group Id</th>
+					<th>Name</th>
+					<th>Description</th>
+					<th>Is Admin</th>
+					<th>Is Open</th>
+					<th>Delete Group</th>
+				</tr>
+			</thead>
+			<tbody>
+				@{
+					for(int i = 0; i < Model.Count; i++)
+					{
+						<tr class="valign-middle">
+							<td class="text-center">
+								@Html.HiddenFor(m => m[i].Id)
+								<span>@Model[i].Id</span> 
+							</td>
+							<td>@Html.TextBoxFor(m => m[i].Name, new { Class = "form-control height-25px" })</td>
+							<td>@Html.TextBoxFor(m => m[i].Description, new { Class = "form-control height-25px" })</td>
+							<td class="text-center">@Html.CheckBoxFor(m => m[i].IsAdmin)</td>
+							<td class="text-center">@Html.CheckBoxFor(m => m[i].IsOpen)</td>
+							<td class="text-center">@Html.CheckBoxFor(m => m[i].RequestDelete)</td>
+						</tr>
+					}
+				}
+			</tbody>
+		</table>
+		<button type="submit">Save Changes</button>
+					}
 </div>
