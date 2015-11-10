@@ -22,7 +22,6 @@ namespace Exhys.SubmissionRouter.Service
         private Queue<ExecutionDto> requestedExecutions;
         private IExecutionCallback localExecutionCallback;
         private Guid localExecutionerId;
-        private Timer executionTimer;
         private object _lock;
 
         public ExecutionService()
@@ -32,8 +31,6 @@ namespace Exhys.SubmissionRouter.Service
             callbacks = new Dictionary<Guid, ISubmissionCallback>();
             requestedExecutions = new Queue<ExecutionDto>();
             localExecutionCallback = new LocalExecutionCallback(GetExecutionCore(), this);
-            executionTimer = new Timer(1000);
-            executionTimer.Elapsed += (s, e) => ExecuteNextRequest();
 
             RegisterLocalExecutioner();
         }
@@ -100,33 +97,17 @@ namespace Exhys.SubmissionRouter.Service
             OnExecutionCompleted(executionResult);
         }
 
-        private void RequestExecution(ExecutionDto execution)
-        {
-            requestedExecutions.Enqueue(execution);
-            executionTimer.Start();
-        }
-
-        private void ExecuteNextRequest()
+        private void ExecuteRequest(ExecutionDto execution)
         {
             lock (_lock)
             {
-                ExecutionDto execution = requestedExecutions.Dequeue();
-                if (requestedExecutions.Count == 0)
-                {
-                    executionTimer.Stop();
-                }
                 Executioner executioner = GetFreeExecutioner();
 
                 if (executioner != null)
                 {
-                    ExecuteRequest(execution, executioner);
+                    executioner.Execute(execution);
                 }
             }
-        }
-
-        private void ExecuteRequest(ExecutionDto execution, Executioner executioner)
-        {
-            executioner.Execute(execution);
         }
 
         private Executioner GetFreeExecutioner()
@@ -150,7 +131,7 @@ namespace Exhys.SubmissionRouter.Service
                 Id = Guid.NewGuid(),
                 Submission = submission
             };
-            RequestExecution(execution);
+            ExecuteRequest(execution);
             callbacks.Add(execution.Id, callback);
             
             return execution.Id;
