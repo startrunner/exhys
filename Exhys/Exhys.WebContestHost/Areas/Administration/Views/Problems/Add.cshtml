@@ -174,7 +174,63 @@
 
 	@*GenerateCheckboxColumns*@
 	<script>
-		
+		var next = 0;
+		var checkboxColumnUpdater = {
+			lastBrCol: Array(),
+			currBrCol: Array(),
+			registerInput: function (tableId, fileInputId) {
+				//alert("registering " + tableId + ' ' + fileInputId);
+				var that = checkboxColumnUpdater;
+				$("#" + fileInputId).bind('change', function () {
+					//alert("changing " + tableId);
+					if (typeof (that.lastBrCol[tableId]) === 'undefined') that.lastBrCol[tableId] = that.currBrCol[tableId] = 0;
+
+					that.lastBrCol[tableId] = that.currBrCol[tableId];
+					that.currBrCol[tableId] = $("#file-1")[0].files.length;
+					if (that.currBrCol[tableId] - that.lastBrCol[tableId] > 0) {
+						for (var i = that.lastBrCol[tableId]; i < that.currBrCol[tableId]; i++) {
+							that.addColumn(tableId, i + 1);
+							initCheckBoxes(tableId);
+						}
+					}
+					else {
+						for (var i = 0; i < that.lastBrCol[tableId] - that.currBrCol[tableId]; i++) {
+							that.removeColumn(tableId);
+						}
+					}
+				});
+			},
+			addColumn: function (tableId, number) {
+				//alert("adding to " + tableId);
+				//var $tablerow = $('table.table-editor').find('thead');
+				var $tableRow = $('#' + tableId).find('thead');
+				count = 0;
+
+				var $newHead = $("<th>" + number + "</th>");
+				//$("table.table-editor thead tr:eq(" + n + ")").append($newHead);
+				$("#" + tableId + " thead tr:eq(" + n + ")").append($newHead);
+
+
+				$tableRow.each(function (index, value) {
+					count += 1;
+					var $listitem = $(this);
+					n = parseInt($listitem.index());
+
+
+					var $newRow = $('<td><input name="checks" type="checkbox" id="c' + next + '" ><label for="c' + next++ + '"><span></span></label> </td>');
+					$("#" + tableId + " tr:eq(" + n + 1 + ")").append($newRow);
+				});
+			},
+			removeColumn: function (tableId) {
+				//var $tablerow = $('table.table-editor').find('tr');
+				var $tableRow = $('#' + tableId).find('tr');
+				$("#" + tableId + " thead tr th:eq(-1)").remove();
+				$("#" + tableId + " tr:eq(" + 1 + ") td:eq(-1)").remove();
+			}
+		};
+		checkboxColumnUpdater.registerInput('table-input-feedback', "file-1");
+		checkboxColumnUpdater.registerInput('table-output-feedback', "file-1");
+		checkboxColumnUpdater.registerInput('table-solution-feedback', "file-1");
 
 	</script>
 
