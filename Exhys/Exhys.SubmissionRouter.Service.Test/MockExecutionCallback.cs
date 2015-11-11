@@ -43,5 +43,9 @@ namespace Exhys.SubmissionRouter.Service.Test
             };
             executionService.SubmitResult(executionResult);
         }
+        public bool TestConnection()
+        {
+            return true;
+        }
     }
 }

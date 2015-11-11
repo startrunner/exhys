@@ -12,5 +12,8 @@ namespace Exhys.SubmissionRouter.Service.Contracts
     {
         [OperationContract(IsOneWay = true)]
         void ExecuteSubmission(ExecutionDto execution);
+
+        [OperationContract(IsOneWay = false)]
+        bool TestConnection();
     }
 }

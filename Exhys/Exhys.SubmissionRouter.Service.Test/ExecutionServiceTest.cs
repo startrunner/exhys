@@ -19,7 +19,7 @@ namespace Exhys.SubmissionRouter.Service.Test
             ISubmissionService service = new ExecutionService();
             ManualResetEvent manualEvent = new ManualResetEvent(false);
             bool isSubmissionCompleted = false;
-            service.Submit(new SubmissionDto(), new MockSubmissionCallback(() =>
+            service.Submit(new SubmissionDto { LanguageAlias = "c++" }, new MockSubmissionCallback(() =>
             {
                 isSubmissionCompleted = true;
                 manualEvent.Set();

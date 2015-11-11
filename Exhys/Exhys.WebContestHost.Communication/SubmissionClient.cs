@@ -45,7 +45,7 @@ namespace Exhys.WebContestHost.Communication
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromMilliseconds(timeoutMs));
             CancellationTokenRegistration token = tokenSource.Token.Register(() => 
             {
-                //submissionCompletionSource.TrySetCanceled();
+                submissionCompletionSource.TrySetCanceled();
             }, false);
 
             SubmissionDto submission = CreateSubmission(problemSolution);
@@ -61,6 +61,7 @@ namespace Exhys.WebContestHost.Communication
             {
                 throw new Exception($"Unable to communicate with server! {ex.Message}");
             }
+
             SubmissionResultDto result = null;
             if (submissionCompletionSource.Task.Status == TaskStatus.RanToCompletion)
             {

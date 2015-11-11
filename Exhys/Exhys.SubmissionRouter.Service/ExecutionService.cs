@@ -17,7 +17,7 @@ namespace Exhys.SubmissionRouter.Service
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Reentrant)]
     public class ExecutionService : IExecutionService, ISubmissionService
     {
-        private Dictionary<Guid, Executioner> executioners;
+        private List<Executioner> executioners;
         private Dictionary<Guid, ISubmissionCallback> callbacks;
         private Queue<ExecutionDto> requestedExecutions;
         private IExecutionCallback localExecutionCallback;
@@ -27,7 +27,7 @@ namespace Exhys.SubmissionRouter.Service
         public ExecutionService()
         {
             _lock = new object();
-            executioners = new Dictionary<Guid, Executioner>();
+            executioners = new List<Executioner>();
             callbacks = new Dictionary<Guid, ISubmissionCallback>();
             requestedExecutions = new Queue<ExecutionDto>();
             localExecutionCallback = new LocalExecutionCallback(GetExecutionCore(), this);
@@ -60,19 +60,18 @@ namespace Exhys.SubmissionRouter.Service
         public Guid Register(IExecutionCallback executionCallback)
         {
             Executioner executioner = new Executioner(executionCallback);
-            executioner.ExceptionOccured += (s, e) => OnExecutionerExceptionOccured(e.ExecutionProcessId);
-            Guid id = Guid.NewGuid();
-            executioners.Add(id, executioner);
+            executioner.Guid = Guid.NewGuid();
+            executioners.Add(executioner);
             if (executionCallback != localExecutionCallback)
             {
                 UnregisterLocalExecutioner();
             }
-            return id;
+            return executioner.Guid;
         }
 
         public void Unregister(Guid id)
         {
-            executioners.Remove(id);
+            executioners.RemoveAll(x=>x.Guid==id);
             if (localExecutionerId != id && executioners.Count==0)
             {
                 RegisterLocalExecutioner();
@@ -81,15 +80,12 @@ namespace Exhys.SubmissionRouter.Service
 
         public void OnExecutionerExceptionOccured(Guid executionId)
         {
-            ExecutionResultDto executionResult = new ExecutionResultDto();
-            executionResult.ExecutionId = executionId;
-            executionResult.IsExecutionSuccessful = false;
-            SubmitResult(executionResult);
+            
         }
 
         public void SubmitResult(ExecutionResultDto executionResult)
         {
-            Executioner executioner = executioners.FirstOrDefault(x => x.Value.CurrentExecutionId == executionResult.ExecutionId).Value;
+            Executioner executioner = executioners.FirstOrDefault(x => x.CurrentExecutionId == executionResult.ExecutionId);
             if (executioner != null)
             {
                 executioner.OnExecutionFinished();
@@ -97,7 +93,7 @@ namespace Exhys.SubmissionRouter.Service
             OnExecutionCompleted(executionResult);
         }
 
-        private void ExecuteRequest(ExecutionDto execution)
+        private void ExecuteRequest(ExecutionDto execution, int retriesCount = 0)
         {
             lock (_lock)
             {
@@ -105,14 +101,32 @@ namespace Exhys.SubmissionRouter.Service
 
                 if (executioner != null)
                 {
-                    executioner.Execute(execution);
+                    try
+                    {
+                        executioner.Execute(execution);
+                    }
+                    catch(ExecutionFailedException)
+                    {
+                        ExecutionResultDto executionResult = new ExecutionResultDto();
+                        executionResult.ExecutionId = execution.Id;
+                        executionResult.IsExecutionSuccessful = false;
+                        SubmitResult(executionResult);
+                    }
+                    catch(ConnectionFailedException)
+                    {
+                        Unregister(executioner.Guid);
+                        if (retriesCount < 2)
+                        {
+                            ExecuteRequest(execution, retriesCount++);
+                        }
+                    }
                 }
             }
         }
 
         private Executioner GetFreeExecutioner()
         {
-            return executioners.FirstOrDefault(x => !x.Value.IsBusy).Value;
+            return executioners.FirstOrDefault(x => !x.IsBusy);
         }
 
         #endregion

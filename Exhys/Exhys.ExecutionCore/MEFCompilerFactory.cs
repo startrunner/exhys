@@ -28,7 +28,7 @@ namespace Exhys.ExecutionCore
 
         public static ICompiler Get(string languageAlias)
         {
-            if (compilers.ContainsKey(languageAlias))
+            if (compilers.ContainsKey(languageAlias.ToLower()))
             {
                 return compilers[languageAlias];
             }

@@ -61,8 +61,10 @@
     <Compile Include="Contracts\IExecutionService.cs" />
     <Compile Include="Contracts\ISubmissionCallback.cs" />
     <Compile Include="Contracts\ISubmissionService.cs" />
+    <Compile Include="Model\ConnectionFailedException.cs" />
     <Compile Include="Model\ExceptionOccuredEventArgs.cs" />
     <Compile Include="Model\Executioner.cs" />
+    <Compile Include="Model\ExecutionException.cs" />
     <Compile Include="Model\ExecutionProcess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LocalExecutionCallback.cs" />
