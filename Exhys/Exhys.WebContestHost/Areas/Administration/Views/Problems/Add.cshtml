@@ -88,11 +88,16 @@
 				<div class="form-group">
 					<label class="col-lg-2 control-label">Input Feedback</label>
 					<div class="col-lg-10 horizontal-scroll" id="div1">
-						<table class="table table-bordered table-editor border-brush-black" id="table-input-feedback">
+						<table class="table table-bordered table-editor border-brush-black" id="table-feedback">
 							<thead class="th-center">
-								<tr></tr>
+								<tr><th>Property</th></tr>
 							</thead>
-							<tr class="valign-middle text-center"></tr>
+                            <tr class="valign-middle text-center"><td>Input Feedback</td></tr>
+                            <tr class="valign-middle text-center"><td>Output Feedback</td></tr>
+                            <tr class="valign-middle text-center"><td>Solution Feedback</td></tr>
+                            <tr class="valign-middle text-center"><td>Status Feedback</td></tr>
+                            <tr class="valign-middle text-center"><td>Score Feedback</td></tr>
+							<tr class="valign-middle text-center"><td>Time Limits</td></tr>
 						</table>
 					</div>
 				</div>
@@ -104,7 +109,7 @@
 							<thead class="th-center">
 								<tr></tr>
 							</thead>
-							<tr class="valign-middle text-center"></tr>
+                            <!--tr class="valign-middle text-center"></tr-->
 						</table>
 					</div>
 				</div>
@@ -116,7 +121,7 @@
 							<thead class="th-center">
 								<tr></tr>
 							</thead>
-							<tr class="valign-middle text-center"></tr>
+                            <!--tr class="valign-middle text-center"></tr-->
 						</table>
 					</div>
 				</div>
@@ -133,33 +138,33 @@
 					<label class="col-lg-2 control-label">PlainText Parameters</label>
 					<div class="col-lg-10">
 						<div>
-							@Html.LabelFor(m => m.T_InputFeedbacks, "Input Feedback", new { id = "txt-input-feedback" })
-							@Html.TextBoxFor(m => m.T_InputFeedbacks, new { placeholder = "Input Feedbacks ('1;0;0')" })
+							@Html.LabelFor(m => m.T_InputFeedbacks, "Input Feedback")
+							@Html.TextBoxFor(m => m.T_InputFeedbacks, new { placeholder = "Input Feedbacks ('1;0;0')", @class = "plainTextParameter" })
 						</div>
 
 						<div>
 							@Html.LabelFor(m => m.T_OutputFeedbacks, "Output Feedback")
-							@Html.TextBoxFor(m => m.T_OutputFeedbacks, new { placeholder = "Output Feedbacks ('1;0;0')" })
+							@Html.TextBoxFor(m => m.T_OutputFeedbacks, new { placeholder = "Output Feedbacks ('1;0;0')", @class = "plainTextParameter" })
 						</div>
 
 						<div>
 							@Html.LabelFor(m => m.T_SolutionFeedbacks, "Solution   Feedback")
-							@Html.TextBoxFor(m => m.T_SolutionFeedbacks, new { placeholder = "Solution Feedbacks ('1;0;0')" })
+							@Html.TextBoxFor(m => m.T_SolutionFeedbacks, new { placeholder = "Solution Feedbacks ('1;0;0')", @class = "plainTextParameter" })
 						</div>
 
 						<div>
 							@Html.LabelFor(m => m.T_StatusFeedbacks, "Status Feedback")
-							@Html.TextBoxFor(m => m.T_StatusFeedbacks, new { placeholder = "Status Feedbacks ('1;0;0')" })
+							@Html.TextBoxFor(m => m.T_StatusFeedbacks, new { placeholder = "Status Feedbacks ('1;0;0')", @class = "plainTextParameter"})
 						</div>
 
 						<div>
 							@Html.LabelFor(m => m.T_ScoreFeedbacks, "Score Feedback")
-							@Html.TextBoxFor(m => m.T_ScoreFeedbacks, new { placeholder = "Score Feedback ('1;0;0')" })
+							@Html.TextBoxFor(m => m.T_ScoreFeedbacks, new { placeholder = "Score Feedback ('1;0;0')", @class = "plainTextParameter" })
 						</div>
 
 						<div>
 							@Html.LabelFor(m => m.T_TimeLimits, "Time Limits")
-							@Html.TextBoxFor(m => m.T_TimeLimits, new { placeholder = "Time Limits ('1.0;1.0')" })
+							@Html.TextBoxFor(m => m.T_TimeLimits, new { placeholder = "Time Limits ('1.0;1.0')", @class = "plainTextParameter" })
 						</div>
 					</div>
 				</div>
@@ -174,68 +179,64 @@
 
 	@*GenerateCheckboxColumns*@
 	<script>
-		var next = 0;
-		var checkboxColumnUpdater = {
-			lastBrCol: Array(),
-			currBrCol: Array(),
+        var checkBoxTableManager = {
 			registerInput: function (tableId, fileInputId) {
-				//alert("registering " + tableId + ' ' + fileInputId);
-				var that = checkboxColumnUpdater;
-				$("#" + fileInputId).bind('change', function () {
-					//alert("changing " + tableId);
-					if (typeof (that.lastBrCol[tableId]) === 'undefined') that.lastBrCol[tableId] = that.currBrCol[tableId] = 0;
+			    var that = checkBoxTableManager;
+			    $("#" + fileInputId).bind('change', function () {
 
-					that.lastBrCol[tableId] = that.currBrCol[tableId];
-					that.currBrCol[tableId] = $("#file-1")[0].files.length;
-					if (that.currBrCol[tableId] - that.lastBrCol[tableId] > 0) {
-						for (var i = that.lastBrCol[tableId]; i < that.currBrCol[tableId]; i++) {
+					var currentColumnsCount = that.getColumnsCount(tableId);
+					var newColumnsCount = $("#" + fileInputId)[0].files.length;
+
+					var columnsCountDifference = newColumnsCount - currentColumnsCount;
+
+					if (columnsCountDifference > 0) {
+					    for (var i = currentColumnsCount; i < newColumnsCount; i++) {
 							that.addColumn(tableId, i + 1);
-							initCheckBoxes(tableId);
 						}
 					}
-					else {
-						for (var i = 0; i < that.lastBrCol[tableId] - that.currBrCol[tableId]; i++) {
+					else if(columnsCountDifference < 0){
+					    for (var i = 0; i < currentColumnsCount - newColumnsCount; i++) {
 							that.removeColumn(tableId);
 						}
 					}
+					initCheckBoxes(tableId);
 				});
+			},
+			getColumnsCount: function(tableId){
+			    return $('#' + tableId + ' thead th').length - 1;
 			},
 			addColumn: function (tableId, number) {
-				//alert("adding to " + tableId);
-				//var $tablerow = $('table.table-editor').find('thead');
-				var $tableRow = $('#' + tableId).find('thead');
-				count = 0;
+				var $newHeaderCell = $("<th>" + number + "</th>");
+				$("#" + tableId + " thead tr").append($newHeaderCell);
 
-				var $newHead = $("<th>" + number + "</th>");
-				//$("table.table-editor thead tr:eq(" + n + ")").append($newHead);
-				$("#" + tableId + " thead tr:eq(" + n + ")").append($newHead);
-
-
-				$tableRow.each(function (index, value) {
-					count += 1;
-					var $listitem = $(this);
-					n = parseInt($listitem.index());
-
-
-					var $newRow = $('<td><input name="checks" type="checkbox" id="c' + next + '" ><label for="c' + next++ + '"><span></span></label> </td>');
-					$("#" + tableId + " tr:eq(" + n + 1 + ")").append($newRow);
-				});
+				var $newCheckBoxCell = $('<td><label><input name="checks" type="checkbox"><span></span></label></td>');
+				$("#" + tableId + " tr").not("thead tr").append($newCheckBoxCell);
 			},
 			removeColumn: function (tableId) {
-				//var $tablerow = $('table.table-editor').find('tr');
-				var $tableRow = $('#' + tableId).find('tr');
-				$("#" + tableId + " thead tr th:eq(-1)").remove();
-				$("#" + tableId + " tr:eq(" + 1 + ") td:eq(-1)").remove();
+			    $("#" + tableId + " tr").find("th:last, td:last").remove();
 			}
 		};
-		checkboxColumnUpdater.registerInput('table-input-feedback', "file-1");
-		checkboxColumnUpdater.registerInput('table-output-feedback', "file-1");
-		checkboxColumnUpdater.registerInput('table-solution-feedback', "file-1");
-
+        checkBoxTableManager.registerInput('table-feedback', "file-1");
 	</script>
 
+    @*SerializeCheckBoxRow*@
 	<script>
+        function refreshPlainTextParameters(tableId)
+        {
+            $(".plainTextParameter").each(function (index) {
+                $(this).val(serializeCheckBoxRow(tableId, index));
+            });
+        }
+        function serializeCheckBoxRow(tableId, rowNumber)
+        {
+            var serializedString = '';
+            $checkBoxes = $('#' + tableId + ' tr').not('thead tr').eq(rowNumber).find('td').not(":first").find(":checkbox");
+            $checkBoxes.each(function () {
+                serializedString += ($(this).is(":checked")?1:0) + ",";
+            });
 
+            return serializedString.slice(0,-1);
+        }
 	</script>
 
 	<script>
@@ -265,11 +266,11 @@
 	@*Draggable Checkboxes*@
 	<script>
 
-		@*window.onload = function () {
+		window.onload = function () {
 			initCheckBoxes('table-input-feedback');
 			initCheckBoxes('table-output-feedback');
 			initCheckBoxes('table-solution-feedback');
-		};*@
+		};
 		/* Click-n-Drag Checkboxes */
 		var gCheckedValue = null;
 		function initCheckBoxes(sTblId) {
@@ -291,18 +292,22 @@
 		function tdOnMouseDown(ev) {
 			if (this.checkBoxObj) {
 				gCheckedValue = this.checkBoxObj.checked = !this.checkBoxObj.checked;
-				//jQuery(this.checkBoxObj).trigger('change');
-				//updateBooleanSequences();
 				document.onmouseup = docOnMouseUp;
 				document.onselectstart = docOnSelectStart; // for IE
 				xPreventDefault(ev); // cancel text selection
+				refreshPlainTextParameters('table-feedback')
 			}
 		}
 		function tdOnMouseOver(ev) {
-			if (gCheckedValue != null && this.checkBoxObj) {
-				this.checkBoxObj.checked = gCheckedValue;
-				//jQuery(this.checkBoxObj).trigger('change');
-				//updateBooleanSequences();
+		    if (gCheckedValue != null && this.checkBoxObj) {
+		        var refresh = false;
+		        if (this.checkBoxObj.checked != gCheckedValue) {
+		            refresh = true;
+		        }
+		        this.checkBoxObj.checked = gCheckedValue;
+		        if (refresh) {
+		            refreshPlainTextParameters('table-feedback')
+		        }
 			}
 		}
 		function docOnMouseUp() {
