@@ -31,11 +31,13 @@ namespace MiniGWCpp11
             File.WriteAllText(srcFile, sourceCode);
 
             ProcessStartInfo psi = new ProcessStartInfo("g++.exe", string.Format("{0} -std=c++11 -O3 -o {1}", srcFile, executablePath));
+            psi.CreateNoWindow = true;
             psi.UseShellExecute = false;
             psi.RedirectStandardOutput = true;
             psi.RedirectStandardError = true;
-
+            psi.RedirectStandardInput = true;
             Process p = Process.Start(psi);
+            
             p.WaitForExit();
 
             string compilerOutput = string.Format("{0}\n{1}", p.StandardOutput.ReadToEnd(), p.StandardError.ReadToEnd());

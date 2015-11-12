@@ -26,7 +26,7 @@ namespace Exhys.WebContestHost.Communication
             submissionCompletionSource.TrySetResult(result);
         }
 
-        async public Task<SubmissionResultDto> SubmitRequestAsync (ProblemSolution problemSolution)
+        async public Task<List<SolutionTestStatus>> SubmitRequestAsync (ProblemSolution problemSolution)
         {
             if(submissionCompletionSource!=null)
             {
@@ -45,7 +45,7 @@ namespace Exhys.WebContestHost.Communication
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromMilliseconds(timeoutMs));
             CancellationTokenRegistration token = tokenSource.Token.Register(() => 
             {
-                submissionCompletionSource.TrySetCanceled();
+                //submissionCompletionSource.TrySetCanceled();
             }, false);
 
             SubmissionDto submission = CreateSubmission(problemSolution);
@@ -69,7 +69,43 @@ namespace Exhys.WebContestHost.Communication
             }
             submissionCompletionSource = null;
             token.Dispose();
-            return result;
+            return CreateSolutionTestStatuses(result, problemSolution.Problem);
+        }
+
+        private List<SolutionTestStatus> CreateSolutionTestStatuses(SubmissionResultDto submissionResult, Problem problem)
+        {
+            return submissionResult.TestResults
+                .ToList()
+                .Select((x, i) => CreateSolutionTestStatus(x, problem.Tests.ElementAt(i)))
+                .ToList();
+        }
+
+        private SolutionTestStatus CreateSolutionTestStatus(TestResultDto testResult, ProblemTest test)
+        {
+            return new SolutionTestStatus
+            {
+                Output = testResult.Output,
+                Status = CreateTestStatus(testResult.Status),
+                ProblemTest = test                
+            };
+        }
+
+        private SolutionTestStatus.TestStatus CreateTestStatus(TestResultDto.ResultStatus resultStatus)
+        {
+            switch(resultStatus)
+            {
+                case TestResultDto.ResultStatus.CorrectAnswer:
+                    return SolutionTestStatus.TestStatus.CorrectAnswer;
+                case TestResultDto.ResultStatus.MemoryLimitExceeded:
+                    return SolutionTestStatus.TestStatus.MemoryLimitExceeded;
+                case TestResultDto.ResultStatus.SegmentationFault:
+                    return SolutionTestStatus.TestStatus.SegmentationFault;
+                case TestResultDto.ResultStatus.TimeOut:
+                    return SolutionTestStatus.TestStatus.TimeOut;
+                case TestResultDto.ResultStatus.WrongAnswer:
+                    return SolutionTestStatus.TestStatus.WrongAnswer;
+                default: return SolutionTestStatus.TestStatus.WrongAnswer;
+            }
         }
 
         public SubmissionServiceClient CreateClientInstance()

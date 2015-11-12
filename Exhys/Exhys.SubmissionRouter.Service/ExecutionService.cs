@@ -19,7 +19,6 @@ namespace Exhys.SubmissionRouter.Service
     {
         private List<Executioner> executioners;
         private Dictionary<Guid, ISubmissionCallback> callbacks;
-        private Queue<ExecutionDto> requestedExecutions;
         private IExecutionCallback localExecutionCallback;
         private Guid localExecutionerId;
         private object _lock;
@@ -29,7 +28,6 @@ namespace Exhys.SubmissionRouter.Service
             _lock = new object();
             executioners = new List<Executioner>();
             callbacks = new Dictionary<Guid, ISubmissionCallback>();
-            requestedExecutions = new Queue<ExecutionDto>();
             localExecutionCallback = new LocalExecutionCallback(GetExecutionCore(), this);
 
             RegisterLocalExecutioner();
@@ -78,11 +76,6 @@ namespace Exhys.SubmissionRouter.Service
             }
         }
 
-        public void OnExecutionerExceptionOccured(Guid executionId)
-        {
-            
-        }
-
         public void SubmitResult(ExecutionResultDto executionResult)
         {
             Executioner executioner = executioners.FirstOrDefault(x => x.CurrentExecutionId == executionResult.ExecutionId);
@@ -93,7 +86,7 @@ namespace Exhys.SubmissionRouter.Service
             OnExecutionCompleted(executionResult);
         }
 
-        private void ExecuteRequest(ExecutionDto execution, int retriesCount = 0)
+        private void ExecuteRequest(ExecutionDto execution, int retriesCount = 3)
         {
             lock (_lock)
             {
@@ -115,9 +108,9 @@ namespace Exhys.SubmissionRouter.Service
                     catch(ConnectionFailedException)
                     {
                         Unregister(executioner.Guid);
-                        if (retriesCount < 2)
+                        if (retriesCount > 0)
                         {
-                            ExecuteRequest(execution, retriesCount++);
+                            ExecuteRequest(execution, retriesCount-1);
                         }
                     }
                 }

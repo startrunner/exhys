@@ -32,7 +32,7 @@ namespace Exhys.ExecutionCore
             return new ExecutionResultDto()
             {
                 ExecutionId = execution.Id,
-                TestResults = null,//testResults,
+                TestResults = testResults,
                 CompilerOutput = compilationResult.Output,
                 IsExecutionSuccessful = compilationResult.IsSuccessful
             };

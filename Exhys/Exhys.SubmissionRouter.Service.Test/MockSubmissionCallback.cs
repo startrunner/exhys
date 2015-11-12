@@ -10,8 +10,8 @@ namespace Exhys.SubmissionRouter.Service.Test
 {
     public class MockSubmissionCallback : ISubmissionCallback
     {
-        Action callback;
-        public MockSubmissionCallback(Action callback)
+        Action<SubmissionResultDto> callback;
+        public MockSubmissionCallback(Action<SubmissionResultDto> callback)
         {
             this.callback = callback;
         }
@@ -23,7 +23,7 @@ namespace Exhys.SubmissionRouter.Service.Test
 
         public void SubmissionProcessed(SubmissionResultDto result)
         {
-            callback();
+            callback(result);
         }
     }
 }

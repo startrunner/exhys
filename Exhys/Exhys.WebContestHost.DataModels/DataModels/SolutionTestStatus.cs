@@ -28,7 +28,8 @@ namespace Exhys.WebContestHost.DataModels
             SegmentationFault,
             WrongAnswer,
             CorrectAnswer,
-            Timeout
+            TimeOut,
+            MemoryLimitExceeded
         }
     }
 
