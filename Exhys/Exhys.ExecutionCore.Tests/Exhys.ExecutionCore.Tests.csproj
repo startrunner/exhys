@@ -69,6 +69,10 @@
       <Project>{7ed4b3a4-b17b-4ae1-9b88-ae808343fc37}</Project>
       <Name>Exhys.SubmissionRouter.Dtos</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MiniGWCpp11\MiniGWCpp11.csproj">
+      <Project>{0ccf4541-2838-4277-8850-989e5e269ccd}</Project>
+      <Name>MiniGWCpp11</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
