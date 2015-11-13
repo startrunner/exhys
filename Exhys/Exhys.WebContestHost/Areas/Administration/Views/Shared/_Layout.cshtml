@@ -4,6 +4,7 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>@ViewData.GetPageTitle()- Exhys Admin</title>
+	@RenderSection("styles", required: false)
 	@Styles.Render("~/Content/css", "~/Content/custom-css")
 </head>
 <body>
@@ -59,7 +60,7 @@
 						</a>
 						<ul class="dropdown-menu" aria-labelledby="competitions">
 							<li>@Html.ActionLink(linkText: "List Competitions", controllerName: "Competitions", actionName: "List")</li>
-							<li>@Html.ActionLink(linkText: "Add Competitions", controllerName: "Competitions", actionName: "Add")</li>
+							<li>@Html.ActionLink(linkText: "Create Competition", controllerName: "Competitions", actionName: "Add")</li>
 						</ul>
 					</li>
 					<li class="dropdown">
