@@ -53,7 +53,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(TargetPath)" "$(ProjectDir)..\Compilers\$(TargetFileName)"</PostBuildEvent>
+    <PostBuildEvent>if not exist "$(ProjectDir)..\Compilers\" mkdir "$(ProjectDir)..\Compilers\"
+copy "$(TargetPath)" "$(ProjectDir)..\Compilers\$(TargetFileName)"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
