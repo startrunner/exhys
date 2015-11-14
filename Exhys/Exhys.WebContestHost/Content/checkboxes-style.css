@@ -1,7 +1,7 @@
 input[type="checkbox"] {
   display: none;
 }
-input[type="checkbox"] + span {
+input[type="checkbox"] + label span {
   display: inline-block;
   width: 23px;
   height: 23px;
@@ -11,7 +11,7 @@ input[type="checkbox"] + span {
   background-size: contain;
   cursor: pointer;
 }
-input[type="checkbox"]:checked + span {
+input[type="checkbox"]:checked + label span {
   background: url("/Content/Pictures/Check_box_checked.png") no-repeat center;
   width: 23px;
   height: 23px;
