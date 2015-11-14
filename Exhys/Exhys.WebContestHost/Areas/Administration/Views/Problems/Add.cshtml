@@ -209,6 +209,8 @@
 				var $newHeaderCell = $("<th>" + number + "</th>");
 				$("#" + tableId + " thead tr").append($newHeaderCell);
 
+				console.log("column added");
+
 				var $newCheckBoxCell = $('<td><label><input name="checks" type="checkbox"><span></span></label></td>');
 				$("#" + tableId + " tr").not("thead tr").append($newCheckBoxCell);
 			},
