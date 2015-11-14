@@ -10,7 +10,6 @@ namespace Exhys.WebContestHost.Areas.Shared.Mvc
 {
     public class ExhysController:Controller
     {
-
         #region SignedInUser
         public void AddSignedInUserInformation ()
         {

@@ -8,15 +8,25 @@ using Exhys.WebContestHost.Areas.Shared.Mvc;
 using Exhys.WebContestHost.Areas.Shared.ViewModels;
 using Exhys.WebContestHost.DataModels;
 using System.Data.Entity;
+using Exhys.WebContestHost.Areas.Shared;
 
 namespace Exhys.WebContestHost.Areas.Participation.Controllers
 {
     public class CompetitionsController : ExhysController
     {
+        /// <summary>
+        /// A user should not participate in any competition if they are not signed in
+        /// </summary>
+        /// <returns></returns>
         private ActionResult RedirectToSignIn()
         {
-            return RedirectToAction(controllerName: "../Accounts/Accounts", actionName: "SignIn", routeValues: new { });
+            TempData[FormErrors.DictionaryKey] = new List<FormErrors.FormError>()
+            {
+                FormErrors.SignInRequired("participate in a competition")
+            };
+            return RedirectToAction(controllerName: "../Accounts", actionName: "SignIn", routeValues: new { });
         }
+
         private ActionResult RedirectToList()
         {
             return RedirectToAction("List");
@@ -37,8 +47,23 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
                     .Query()
                     .Include(u => u.AvaiableCompetition).Load();
 
+                var participations = db.Participations
+                    .Where(p => p.User.Id == user.Id)
+                    .Include(p=>p.Competition)
+                    .ToList();
+
                 var competitions = user.UserGroup.AvaiableCompetition.ToList();
-                foreach (var comp in competitions) vm.Add(new CompetitionViewModel(comp));
+                foreach (var comp in competitions)
+                {
+                    var compVm = new CompetitionViewModel(comp);
+
+                    if(participations.Where(p=>p.Competition.Id==comp.Id).Count()!=0)
+                    {
+                        compVm.IsUserParticipating = true;
+                    }
+
+                    vm.Add(compVm);
+                }
             }
 
             return View(vm);
@@ -85,9 +110,9 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
 
                 db.SaveChanges();
 
+                return RedirectToAction("Participate", new { id = competition.Id });
                 
             }
-            return RedirectToList();
         }
 
         [HttpGet]
@@ -95,7 +120,9 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
         {
             using (var db = new ExhysContestEntities())
             {
-                var competition = db.Competitions.Where(c => c.Id == id).FirstOrDefault();
+                var competition = db.Competitions.Where(c => c.Id == id)
+                    
+                    .FirstOrDefault();
                 if (competition == null) return RedirectToList();
 
                 var user = Request.GetSignedInUser(db);
@@ -126,7 +153,5 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
                 return File(fileContents: statement.Bytes, fileDownloadName: statement.Filename, contentType: "application/zip");
             }
         }
-
-
     }
 }

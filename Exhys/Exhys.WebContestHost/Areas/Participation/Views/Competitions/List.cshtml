@@ -15,10 +15,21 @@
                 <td>@competition.Name</td>
                 <td>@competition.Description</td>
                 <td>
-                    @using (Html.BeginForm("Join", "Competitions", FormMethod.Get))
+                    @if (competition.IsUserParticipating == false)
                     {
-                        <input type="hidden" name="id" value="@competition.Id" />
-                        <button type="submit">Join</button>
+                        using (Html.BeginForm("Join", "Competitions", FormMethod.Get))
+                        {
+                            <input type="hidden" name="id" value="@competition.Id" />
+                            <button type="submit">Join</button>
+                        }
+                    }
+                    else
+                    {
+                        using (Html.BeginForm("Participate", "Competitions", FormMethod.Get))
+                        {
+                            <input type="hidden" name="id" value="@competition.Id" />
+                            <button type="submit">Already Joined</button>
+                        }
                     }
                 </td>
             </tr>

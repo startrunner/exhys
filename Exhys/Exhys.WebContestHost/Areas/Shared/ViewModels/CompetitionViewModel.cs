@@ -48,6 +48,7 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
         }
 
         public bool RequestDelete { get; set; }
+        public bool IsUserParticipating { get; set; }
 
         public CompetitionViewModel () : this(null) { }
 

@@ -9,6 +9,7 @@ namespace Exhys.WebContestHost.Areas.Shared
 {
     public static class FormErrors
     {
+        public const string DictionaryKey = "form-errors-key1234312313";
         public class FormError
         {
             public string Key { get; set; }
@@ -23,6 +24,14 @@ namespace Exhys.WebContestHost.Areas.Shared
         public static void AddModelError (this ModelStateDictionary that, FormError error)
         {
             that.AddModelError(error.Key, error.ErrorMessage);
+        }
+
+        public static void AddModelErrorRange(this ModelStateDictionary that, IEnumerable<FormError> errors)
+        {
+            if(errors!=null)
+            {
+                foreach (var v in errors) that.AddModelError(v);
+            }
         }
 
         public static readonly FormError UsernameTooLong = new FormError("username-too-long", string.Format("A username must be at most {0} characters long.", DatabaseLimits.UserGroupName_MaxLength));
@@ -48,5 +57,10 @@ namespace Exhys.WebContestHost.Areas.Shared
         public static readonly FormError PasswordMismatch = new FormError("password-mismatch", "The two passwords must match.");
 
         public static readonly FormError FileCountMismatch = new FormError("file-count-mismatch", "The number of files for each input must be equal.");
+
+        public static FormError SignInRequired(string forWhatAction)
+        {
+            return new FormError("sign-in-required", string.Format("You need to be signed in in order to {0}", forWhatAction));
+        }
     }
 }

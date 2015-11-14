@@ -17,7 +17,7 @@ namespace Exhys.WebContestHost.Areas.Participation
             context.MapRoute(
                 "Participation_default",
                 "Participation/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                new { controller="Competitions", action = "List", id = UrlParameter.Optional }
             );
         }
     }

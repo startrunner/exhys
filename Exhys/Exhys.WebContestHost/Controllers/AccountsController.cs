@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Exhys.WebContestHost.Areas.Shared;
 using Exhys.WebContestHost.Areas.Shared.Extensions;
 using Exhys.WebContestHost.Areas.Shared.Mvc;
 using Exhys.WebContestHost.Areas.Shared.ViewModels;
@@ -70,7 +71,12 @@ namespace Exhys.WebContestHost.Controllers
             {
                 return RedirectToAction("Profile");
             }
-            return PartialView();
+            else
+            {
+                IEnumerable<FormErrors.FormError> errors = TempData[FormErrors.DictionaryKey] as IEnumerable<FormErrors.FormError>;
+                ViewData.ModelState.AddModelErrorRange(errors);
+                return PartialView();
+            }
         }
 
         [HttpPost]
