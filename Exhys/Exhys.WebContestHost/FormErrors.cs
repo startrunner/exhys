@@ -9,7 +9,10 @@ namespace Exhys.WebContestHost.Areas.Shared
 {
     public static class FormErrors
     {
-        public const string DictionaryKey = "form-errors-key1234312313";
+        public static class Actions
+        {
+            public const string ParticipateInACompetition = "participate in a competition";
+        }
         public class FormError
         {
             public string Key { get; set; }
@@ -57,6 +60,8 @@ namespace Exhys.WebContestHost.Areas.Shared
         public static readonly FormError PasswordMismatch = new FormError("password-mismatch", "The two passwords must match.");
 
         public static readonly FormError FileCountMismatch = new FormError("file-count-mismatch", "The number of files for each input must be equal.");
+
+        public static readonly FormError InvalidCredentials = new FormError("invalid-credentials", "These credentials are invalid. Please check your username and password.");
 
         public static FormError SignInRequired(string forWhatAction)
         {

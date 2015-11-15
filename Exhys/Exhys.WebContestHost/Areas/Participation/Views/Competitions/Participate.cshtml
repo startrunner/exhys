@@ -6,6 +6,7 @@
     {
         <title>@Model.Competition.Name - Exhys</title>
     }
+    @*@Styles.Render("~/Content/css", "~/Content/custom-css")*@
 </head>
 <body>
     <section>
@@ -45,5 +46,80 @@
             </tbody>
         </table>
     </section>
+    <section>
+        <span>Submit a Solution</span>
+        @using (Html.BeginForm())
+        {
+            <div class="form-group">
+                <input type="file" id="input-sol-file" name="@ProblemSolutionViewModel.FileInputName" />
+            </div>
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.SolutionSubmitVm.LanguageAlias, new { placeholder = "Language Alias" })
+            </div>
+            <div class="form-group">
+                @Html.TextAreaFor(m => m.SolutionSubmitVm.SourceCode, new { placeholder = "Source Code" })
+            </div>
+
+            <div class="form-group">
+                <button type="submit">Submit Solution</button>
+            </div>
+        }
+        
+    </section>
+
+    <section>
+        <span>Previous Submissions</span>
+        <table>
+            <thead>
+                <tr>
+                    <th>Problem</th>
+                    <th>Score</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Pr1</td>
+                    <td>
+                        <span>10</span>
+                        <span>10</span>
+                        <span>10</span>
+                        <span>10</span>
+                        <span>10</span>
+                        <strong>Total: 10</strong>
+                    </td>
+                    <td>12:30</td>
+                </tr>
+
+                <tr>
+                    <td>Pr2</td>
+                    <td>
+                        <span>10</span>
+                        <span>10</span>
+                        <span>10</span>
+                        <span>10</span>
+                        <span>10</span>
+                        <strong>Total: 10</strong>
+                    </td>
+                    <td>12:30</td>
+                </tr>
+
+                <tr>
+                    <td>Pr1</td>
+                    <td>
+                        <strong>Pending Evaluation</strong>
+                    </td>
+                    <td>12:30</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    @*@Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")*@
+    <script>
+        $('button').addClass('btn btn-default');
+
+    </script>
 </body>
 </html>

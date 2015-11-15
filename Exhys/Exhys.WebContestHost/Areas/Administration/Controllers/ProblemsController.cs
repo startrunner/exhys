@@ -15,6 +15,7 @@ using System.Data.Entity;
 
 namespace Exhys.WebContestHost.Areas.Administration.Controllers
 {
+    [AuthorizeExhysAdmin]
     public class ProblemsController : ExhysController
     {
 

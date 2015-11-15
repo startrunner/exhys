@@ -21,7 +21,7 @@ namespace Exhys.WebContestHost.Areas.Shared.Mvc
 
         public void AddSignedInUserInformation (ExhysContestEntities db)
         {
-            var user = Request.GetSignedInUser(db);
+            var user = Request.GetSignedInUserQuery(db).FirstOrDefault();
             var vm = new SignedInUserViewModel(user);
             ViewData.SetSignedInUser(vm);
         }
@@ -114,7 +114,7 @@ namespace Exhys.WebContestHost.Areas.Shared.Mvc
 
         public void RequireSignedInAdministrator (ExhysContestEntities db)
         {
-            var user = Request.GetSignedInUser(db);
+            var user = Request.GetSignedInUserQuery(db).FirstOrDefault();
             if (user == null || user.UserGroup.IsAdministrator == false)
             {
                 Response.StatusCode = 401;

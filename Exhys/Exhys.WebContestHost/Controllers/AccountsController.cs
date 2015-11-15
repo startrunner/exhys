@@ -18,9 +18,12 @@ namespace Exhys.WebContestHost.Controllers
         {
             AddOpenUserGroupOptions();
 
-            if (Request.GetSignedInUser() != null)
+            using (var db = new ExhysContestEntities())
             {
-                return RedirectToAction("Profile");
+                if (Request.GetSignedInUserQuery(db).FirstOrDefault() != null)
+                {
+                    return RedirectToAction("Profile");
+                }
             }
             return PartialView();
         }
@@ -28,9 +31,12 @@ namespace Exhys.WebContestHost.Controllers
         [HttpPost]
         public ActionResult Register (UserAccountViewModel vm)
         {
-            if (Request.GetSignedInUser() != null)
+            using (var db = new ExhysContestEntities())
             {
-                return RedirectToAction("Profile");
+                if (Request.GetSignedInUserQuery(db).FirstOrDefault() != null)
+                {
+                    return RedirectToAction("Profile");
+                }
             }
 
             if (!vm.ValidateForRegistration(ViewData))
@@ -67,24 +73,30 @@ namespace Exhys.WebContestHost.Controllers
         [HttpGet]
         public ActionResult SignIn ()
         {
-            if (Request.GetSignedInUser() != null)
+            using (var db = new ExhysContestEntities())
             {
-                return RedirectToAction("Profile");
-            }
-            else
-            {
-                IEnumerable<FormErrors.FormError> errors = TempData[FormErrors.DictionaryKey] as IEnumerable<FormErrors.FormError>;
-                ViewData.ModelState.AddModelErrorRange(errors);
-                return PartialView();
+                if (Request.GetSignedInUserQuery(db).FirstOrDefault() != null)
+                {
+                    return RedirectToAction("Profile");
+                }
+                else
+                {
+                    IEnumerable<FormErrors.FormError> errors = TempData.GetFormErrors();
+                    ViewData.ModelState.AddModelErrorRange(errors);
+                    return PartialView();
+                }
             }
         }
 
         [HttpPost]
         public ActionResult SignIn (UserAccountViewModel vm)
         {
-            if (Request.GetSignedInUser() != null)
+            using (var db = new ExhysContestEntities())
             {
-                return RedirectToAction("Profile");
+                if (Request.GetSignedInUserQuery(db).FirstOrDefault() != null)
+                {
+                    return RedirectToAction("Profile");
+                }
             }
             if (!vm.ValidateForSignIn(ViewData))
             {
@@ -112,21 +124,25 @@ namespace Exhys.WebContestHost.Controllers
                 db.SaveChanges();
 
                 Response.SetSessionCookie(session.Id);
+
+                return RedirectToAction("Profile");
             }
 
-            return RedirectToAction("Profile");
-
-            invalid_credentials:
-            ViewBag.Errors = new[] { "Invalid Credentials. Please try again" };
+        invalid_credentials:
+            ViewData.ModelState.AddModelError(FormErrors.InvalidCredentials);
             return PartialView(vm);
         }
 
         [HttpGet]
         public new ActionResult Profile ()
         {
-            var user = Request.GetSignedInUser();
-            if (user == null) return RedirectToAction("SignIn");
-            return PartialView(new UserAccountViewModel(user));
+            using (var db = new ExhysContestEntities())
+            {
+                var user = Request.GetSignedInUserQuery(db).FirstOrDefault();
+
+                if (user == null) return RedirectToAction("SignIn");
+                return PartialView(new UserAccountViewModel(user));
+            }
         }
 
         [HttpGet]

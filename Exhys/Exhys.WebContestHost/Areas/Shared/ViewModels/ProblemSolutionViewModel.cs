@@ -8,6 +8,9 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
 {
     public class ProblemSolutionViewModel
     {
+        public const string FileInputName = "input-src-file";
+
+        public string LanguageAlias { get; set; }
         public string ProblemName { get; set; }
         public int? ProblemId { get; set; }
         public string SourceCode { get; set; }

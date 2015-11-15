@@ -12,18 +12,20 @@ using Exhys.WebContestHost.Areas.Shared;
 
 namespace Exhys.WebContestHost.Areas.Participation.Controllers
 {
+    [AuthorizeExhysUser]
     public class CompetitionsController : ExhysController
     {
         /// <summary>
         /// A user should not participate in any competition if they are not signed in
         /// </summary>
         /// <returns></returns>
-        private ActionResult RedirectToSignIn()
+        private ActionResult RedirectToSignIn ()
         {
-            TempData[FormErrors.DictionaryKey] = new List<FormErrors.FormError>()
-            {
-                FormErrors.SignInRequired("participate in a competition")
-            };
+            TempData.SetFormErrors(
+                new List<FormErrors.FormError>
+                {
+                    FormErrors.SignInRequired("participate in a competition")
+                });
             return RedirectToAction(controllerName: "../Accounts", actionName: "SignIn", routeValues: new { });
         }
 
@@ -39,7 +41,7 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
 
             using (var db = new ExhysContestEntities())
             {
-                var user = Request.GetSignedInUser(db);
+                var user = Request.GetSignedInUserQuery(db).FirstOrDefault();
                 if (user == null) return RedirectToSignIn();
 
                 db.Entry(user)
@@ -94,7 +96,7 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
                 var competition = db.Competitions.Where(c => c.Id == vm.Id).FirstOrDefault();
                 if (competition == null) return RedirectToAction("List");
 
-                var user = Request.GetSignedInUser(db);
+                var user = Request.GetSignedInUserQuery(db).FirstOrDefault();
                 if (user == null) return RedirectToSignIn();
 
                 var participation=db.Participations
@@ -116,8 +118,21 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
         }
 
         [HttpGet]
-        public ActionResult Participate(int id)
+        public ActionResult Participate(int? id)
         {
+            if(id==null)
+            {
+                id = Request.GetCurrentCompetitionCookie();
+                if(id==null)
+                {
+                    return RedirectToAction("List");
+                }
+            }
+            else
+            {
+                Response.SetCurrentCompetitionCookie(id.Value);
+            }
+
             using (var db = new ExhysContestEntities())
             {
                 var competition = db.Competitions.Where(c => c.Id == id)
@@ -125,7 +140,7 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
                     .FirstOrDefault();
                 if (competition == null) return RedirectToList();
 
-                var user = Request.GetSignedInUser(db);
+                var user = Request.GetSignedInUserQuery(db).FirstOrDefault();
                 if (user == null) return RedirectToSignIn();
 
                 var participation = db.Participations

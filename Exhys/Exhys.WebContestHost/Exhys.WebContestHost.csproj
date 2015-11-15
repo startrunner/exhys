@@ -133,7 +133,10 @@
     <Compile Include="Areas\Shared\Extensions\HttpPostedFileBase_Extensions.cs" />
     <Compile Include="Areas\Shared\Extensions\List_Extensions.cs" />
     <Compile Include="Areas\Shared\Extensions\Stream_Extensions.cs" />
+    <Compile Include="Areas\Shared\Extensions\TempDataDictionary_Extensions.cs" />
     <Compile Include="Areas\Shared\Extensions\ViewdataDictionary_Extensions.cs" />
+    <Compile Include="Areas\Shared\Mvc\AuthorizeExhysAdminAttribute.cs" />
+    <Compile Include="Areas\Shared\Mvc\AuthorizeExhysUserAttribute.cs" />
     <Compile Include="Areas\Shared\Mvc\ExhysController.cs" />
     <Compile Include="Areas\Shared\Extensions\HttpRequestBase_Extensions.cs" />
     <Compile Include="Areas\Shared\Extensions\HttpResponseBase_Extensions.cs" />

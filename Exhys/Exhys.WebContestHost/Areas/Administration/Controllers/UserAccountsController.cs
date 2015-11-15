@@ -13,9 +13,12 @@ using Exhys.WebContestHost.Areas.Shared.Extensions;
 using System.Data.Entity;
 
 namespace Exhys.WebContestHost.Areas.Administration.Controllers
+
 {
+    [AuthorizeExhysAdmin]
     public class UserAccountsController : ExhysController
     {
+
 		[HttpGet]
         public ActionResult List()
         {
