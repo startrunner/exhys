@@ -11,7 +11,11 @@ namespace Exhys.WebContestHost
 			bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
 						"~/Scripts/jquery-{version}.js"));
 
-			bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
+            bundles.Add(new ScriptBundle("~/bundles/jquery-ui").Include(
+                        "~/Scripts/jquery-ui.min.js",
+                        "~/Scripts/selectableScroll.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
 						"~/Scripts/jquery.validate*"));
 
 			bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
@@ -24,7 +28,10 @@ namespace Exhys.WebContestHost
 
 			bundles.Add(new StyleBundle("~/Content/custom-css").Include(
 					  "~/Content/custom-style.css",
-					  "~/Content/shit.css"));
-		}
+					  "~/Content/shit.css",
+                      "~/Content/jquery-ui.min.css",
+                      "~/Content/jquery-ui.structure.min.css"));            
+
+        }
     }
 }

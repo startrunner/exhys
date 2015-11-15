@@ -17,3 +17,7 @@ input[type="checkbox"]:checked + span {
   height: 23px;
   background-size: contain;
 }
+.ui-selecting
+{
+    background:red;
+}
