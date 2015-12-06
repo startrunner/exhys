@@ -22,7 +22,7 @@
 <div>
 	<br />
 	<div>
-		@using(Html.BeginForm("Add", "Problems", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal well" }))
+		@using(Html.BeginForm("Add", "Problems", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal well", id="add-problem-form" }))
 		{
 			<fieldset>
 				<legend>Add Problem</legend>
@@ -92,12 +92,12 @@
 							<thead class="th-center">
 								<tr><th class="table-selector">Property</th></tr>
 							</thead>
-                            <tr class="valign-middle text-center"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',0)">Input Feedback</th></tr>
-                            <tr class="valign-middle text-center"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',1)">Output Feedback</th></tr>
-                            <tr class="valign-middle text-center"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',2)">Solution Feedback</th></tr>
-                            <tr class="valign-middle text-center"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',3)">Status Feedback</th></tr>
-                            <tr class="valign-middle text-center"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',4)">Score Feedback</th></tr>
-							<tr class="valign-middle text-center"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',5)">Time Limits</th></tr>
+                            <tr class="valign-middle text-center" name="input-feedback"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',0)">Input Feedback</th></tr>
+                            <tr class="valign-middle text-center" name="output-feedback"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',1)">Output Feedback</th></tr>
+                            <tr class="valign-middle text-center" name="solution-feedback"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',2)">Solution Feedback</th></tr>
+                            <tr class="valign-middle text-center" name="status-feedback"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',3)">Status Feedback</th></tr>
+                            <tr class="valign-middle text-center" name="score-feedback"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',4)">Score Feedback</th></tr>
+							<!--<tr class="valign-middle text-center"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',5)">Time Limits</th></tr>-->
 						</table>
 					</div>
 				</div>
@@ -129,45 +129,45 @@
 				<div class="form-group">
 					<label class="col-lg-2 control-label">Submit Problem</label>
 					<div class="col-lg-10">
+                        <button type="submit" id="submit-button" class="btn btn-primary">Add Problem</button>
 						<button type="reset" class="btn btn-default">Reset</button>
-						<button type="submit" class="btn btn-primary">Add Problem</button>
 					</div>
 				</div>
 
-				<div class="form-group">
-					<label class="col-lg-2 control-label">PlainText Parameters</label>
-					<div class="col-lg-10">
-						<div>
-							@Html.LabelFor(m => m.T_InputFeedbacks, "Input Feedback")
-							@Html.TextBoxFor(m => m.T_InputFeedbacks, new { placeholder = "Input Feedbacks ('1;0;0')", @class = "plainTextParameter" })
-						</div>
+				@*<div class="form-group">
+        <label class="col-lg-2 control-label">PlainText Parameters</label>
+        <div class="col-lg-10">
+            <div>
+                @Html.LabelFor(m => m.T_InputFeedbacks, "Input Feedback")
+                @Html.TextBoxFor(m => m.T_InputFeedbacks, new { placeholder = "Input Feedbacks ('1;0;0')", @class = "plainTextParameter" })
+            </div>
 
-						<div>
-							@Html.LabelFor(m => m.T_OutputFeedbacks, "Output Feedback")
-							@Html.TextBoxFor(m => m.T_OutputFeedbacks, new { placeholder = "Output Feedbacks ('1;0;0')", @class = "plainTextParameter" })
-						</div>
+            <div>
+                @Html.LabelFor(m => m.T_OutputFeedbacks, "Output Feedback")
+                @Html.TextBoxFor(m => m.T_OutputFeedbacks, new { placeholder = "Output Feedbacks ('1;0;0')", @class = "plainTextParameter" })
+            </div>
 
-						<div>
-							@Html.LabelFor(m => m.T_SolutionFeedbacks, "Solution   Feedback")
-							@Html.TextBoxFor(m => m.T_SolutionFeedbacks, new { placeholder = "Solution Feedbacks ('1;0;0')", @class = "plainTextParameter" })
-						</div>
+            <div>
+                @Html.LabelFor(m => m.T_SolutionFeedbacks, "Solution   Feedback")
+                @Html.TextBoxFor(m => m.T_SolutionFeedbacks, new { placeholder = "Solution Feedbacks ('1;0;0')", @class = "plainTextParameter" })
+            </div>
 
-						<div>
-							@Html.LabelFor(m => m.T_StatusFeedbacks, "Status Feedback")
-							@Html.TextBoxFor(m => m.T_StatusFeedbacks, new { placeholder = "Status Feedbacks ('1;0;0')", @class = "plainTextParameter"})
-						</div>
+            <div>
+                @Html.LabelFor(m => m.T_StatusFeedbacks, "Status Feedback")
+                @Html.TextBoxFor(m => m.T_StatusFeedbacks, new { placeholder = "Status Feedbacks ('1;0;0')", @class = "plainTextParameter"})
+            </div>
 
-						<div>
-							@Html.LabelFor(m => m.T_ScoreFeedbacks, "Score Feedback")
-							@Html.TextBoxFor(m => m.T_ScoreFeedbacks, new { placeholder = "Score Feedback ('1;0;0')", @class = "plainTextParameter" })
-						</div>
+            <div>
+                @Html.LabelFor(m => m.T_ScoreFeedbacks, "Score Feedback")
+                @Html.TextBoxFor(m => m.T_ScoreFeedbacks, new { placeholder = "Score Feedback ('1;0;0')", @class = "plainTextParameter" })
+            </div>
 
-						<div>
-							@Html.LabelFor(m => m.T_TimeLimits, "Time Limits")
-							@Html.TextBoxFor(m => m.T_TimeLimits, new { placeholder = "Time Limits ('1.0;1.0')", @class = "plainTextParameter" })
-						</div>
-					</div>
-				</div>
+            <div>
+                @Html.LabelFor(m => m.T_TimeLimits, "Time Limits")
+                @Html.TextBoxFor(m => m.T_TimeLimits, new { placeholder = "Time Limits ('1.0;1.0')", @class = "plainTextParameter" })
+            </div>
+        </div>
+    </div>*@
 			</fieldset>
 
 		}
@@ -228,6 +228,23 @@
 			{
 			    var checkboxes = $('#' + tableId).find('tr:eq(' + (rowIndex + 1) + ') :checkbox');
 			    toggleCheckboxes(checkboxes);
+			},
+			serializeAllRows: function(tableId)
+			{
+			    var rows = $('#' + tableId + ' tr').not(':first');
+			    console.log(rows);
+			    var tableData = [];
+                rows.each(function(){
+			        var checkboxes = $(this).find(':checkbox');
+			        var rowData = [];
+			        checkboxes.each(function()
+			        {
+			            rowData.push($(this).is(":checked"));
+			        });
+			        console.log($(this).attr("name"));
+			        tableData.push({ name: $(this).attr("name"), value: rowData })
+                })
+                return JSON.stringify(tableData);
 			}
         };
 
@@ -363,14 +380,6 @@
                     selectedItem.addClass("ui-selecting");
                 }
             }
-            /*else if (selectedItem.hasClass("table-selector")) {
-                var cells = $('#' + tableId).find(".row-selector, column-selector td");
-                if (isSelecting) {
-                    cells.addClass("ui-selecting");
-                } else {
-                    cells.removeClass("ui-selecting");
-                }
-            } //TOO BUGGY*/
             else if (rowHeader.hasClass('row-selector')) {
                 if (isSelecting) {
                     selectedItem.parent().find('td').addClass('ui-selecting');
@@ -392,5 +401,15 @@
             $('.selectableScroll').selectableScroll("refresh");
         }
         bindTable('table-feedback');
+    </script>
+
+    @*Submit form*@
+    <script>
+        $("#add-problem-form").submit(function () {
+            var data = $(this).serializeArray();
+            data.push({name: 'parameters', value: checkBoxTableManager.serializeAllRows('table-feedback')});
+            var url = $(this).attr("action");
+            $.post(url, data);
+        });
     </script>
 }
