@@ -16,8 +16,17 @@ namespace Exhys.WebContestHost.Areas.Shared
 		public static MvcHtmlString FixedDropDownListFor<TModel, TProperty>
 			( this HtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression, IEnumerable<SelectListItem> options, string selectedValue, bool allowNull, object htmlAttributes = null )
 		{
-			if(selectedValue == null && helper.ViewData.Model != null)
-				selectedValue = expression.Compile()(helper.ViewData.Model).ToString();
+            if (selectedValue == null && helper.ViewData.Model != null)
+            {
+                try
+                {
+                    selectedValue = expression.Compile()(helper.ViewData.Model).ToString();
+                }
+                catch (NullReferenceException)
+                {
+                    if (options.FirstOrDefault() != null) selectedValue = options.First().Value;
+                }
+            }
 
 			string inputName = ExpressionHelper.GetExpressionText(expression);
 

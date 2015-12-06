@@ -9,8 +9,6 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
     {
         public CompetitionViewModel Competition { get; set; }
 
-        public ProblemSolutionViewModel SolutionSubmitVm { get; set; }
-
         public ParticipationViewModel () : this(null) { }
         public ParticipationViewModel (DataModels.Participation model)
         {

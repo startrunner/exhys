@@ -61,6 +61,7 @@
     <Compile Include="DataModels\ProblemSolution.cs" />
     <Compile Include="DataModels\ProblemStatement.cs" />
     <Compile Include="DataModels\ProblemTest.cs" />
+    <Compile Include="DataModels\ProgrammingLanguage.cs" />
     <Compile Include="DataModels\SolutionTestStatus.cs" />
     <Compile Include="DataModels\UserGroup.cs" />
     <Compile Include="Migrations\201511031948334_Initial.cs" />
@@ -82,6 +83,14 @@
     <Compile Include="Migrations\201511081829587_FixUserGroupAndAccountLength.cs" />
     <Compile Include="Migrations\201511081829587_FixUserGroupAndAccountLength.Designer.cs">
       <DependentUpon>201511081829587_FixUserGroupAndAccountLength.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512031904514_AddedProgrammingLanguages.cs" />
+    <Compile Include="Migrations\201512031904514_AddedProgrammingLanguages.Designer.cs">
+      <DependentUpon>201512031904514_AddedProgrammingLanguages.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201512051744222_RegisteredProgLanguagesInDatabaseModel.cs" />
+    <Compile Include="Migrations\201512051744222_RegisteredProgLanguagesInDatabaseModel.Designer.cs">
+      <DependentUpon>201512051744222_RegisteredProgLanguagesInDatabaseModel.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -110,6 +119,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201511081829587_FixUserGroupAndAccountLength.resx">
       <DependentUpon>201511081829587_FixUserGroupAndAccountLength.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512031904514_AddedProgrammingLanguages.resx">
+      <DependentUpon>201512031904514_AddedProgrammingLanguages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512051744222_RegisteredProgLanguagesInDatabaseModel.resx">
+      <DependentUpon>201512051744222_RegisteredProgLanguagesInDatabaseModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

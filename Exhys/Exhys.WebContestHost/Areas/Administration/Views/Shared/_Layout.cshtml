@@ -63,16 +63,27 @@
 							<li>@Html.ActionLink(linkText: "Create Competition", controllerName: "Competitions", actionName: "Add")</li>
 						</ul>
 					</li>
-					<li class="dropdown">
-						<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes" aria-expanded="true">
-							Problems
-							<span class="caret"></span>
-						</a>
-						<ul class="dropdown-menu" aria-labelledby="problems">
-							<li>@Html.ActionLink(linkText: "List Problems", controllerName: "Problems", actionName: "List")</li>
-							<li>@Html.ActionLink(linkText: "Add Problem", controllerName: "Problems", actionName: "Add")</li>
-						</ul>
-					</li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes" aria-expanded="true">
+                            Problems
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="problems">
+                            <li>@Html.ActionLink(linkText: "List Problems", controllerName: "Problems", actionName: "List")</li>
+                            <li>@Html.ActionLink(linkText: "Add Problem", controllerName: "Problems", actionName: "Add")</li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes" aria-expanded="true">
+                            Programming Languages
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="problems">
+                            <li>@Html.ActionLink(linkText: "List Languages", controllerName: "ProgrammingLanguages", actionName: "List")</li>
+                            <li>@Html.ActionLink(linkText: "Add Language", controllerName: "ProgrammingLanguages", actionName: "Add")</li>
+                        </ul>
+                    </li>
 
 				</ul>
 			</div>

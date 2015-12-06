@@ -5,6 +5,7 @@ using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Exhys.WebContestHost.DataModels.DataModels;
 
 namespace Exhys.WebContestHost.DataModels
 {
@@ -26,5 +27,6 @@ namespace Exhys.WebContestHost.DataModels
         public DbSet<SolutionTestStatus> SolutionTestStatuses { get; set; }
         public DbSet<ProblemStatement> ProblemStatements { get; set; }
         public DbSet<ProblemTest> ProblemTests { get; set; }
+        public DbSet<ProgrammingLanguage> ProgrammingLanguages { get; set; }
     }
 }

@@ -124,6 +124,7 @@
     <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
     <Compile Include="Areas\Administration\Controllers\CompetitionsController.cs" />
     <Compile Include="Areas\Administration\Controllers\ProblemsController.cs" />
+    <Compile Include="Areas\Administration\Controllers\ProgrammingLanguagesController.cs" />
     <Compile Include="Areas\Administration\Controllers\UserAccountsController.cs" />
     <Compile Include="Areas\Administration\Controllers\UserGroupsController.cs" />
     <Compile Include="Areas\Participation\Controllers\CompetitionsController.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="Areas\Shared\ViewModels\ProblemSolutionViewModel.cs" />
     <Compile Include="Areas\Shared\ViewModels\ProblemStatementViewModel.cs" />
     <Compile Include="Areas\Shared\ViewModels\ProblemViewModel.cs" />
+    <Compile Include="Areas\Shared\ViewModels\ProgrammingLanguageViewModel.cs" />
     <Compile Include="Areas\Shared\ViewModels\SignedInUserViewModel.cs" />
     <Compile Include="Areas\Shared\ViewModels\UserAccountViewModel.cs" />
     <Compile Include="Areas\Shared\ViewModels\UserGroupViewModel.cs" />
@@ -219,6 +221,8 @@
     <Content Include="Areas\Administration\Views\Problems\List.cshtml" />
     <Content Include="Areas\Administration\Views\UserGroups\Add.cshtml" />
     <Content Include="Areas\Administration\Views\UserAccounts\AddMany.cshtml" />
+    <Content Include="Areas\Administration\Views\ProgrammingLanguages\Add.cshtml" />
+    <Content Include="Areas\Administration\Views\ProgrammingLanguages\List.cshtml" />
     <None Include="compilerconfig.json" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />

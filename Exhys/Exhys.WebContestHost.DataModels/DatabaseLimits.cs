@@ -28,5 +28,10 @@ namespace Exhys.WebContestHost.DataModels
 
         public const int HumanName_MaxLength = 64;
         //public const int HumanName_MinLength = 2;//Some people are called Wu...
+
+        //public const int LanguageAlias_MinLength = 1;
+        public const int LanguageAlias_MaxLength = 12;
+
+        public const int LanguageName_MaxLength = 12;
     }
 }

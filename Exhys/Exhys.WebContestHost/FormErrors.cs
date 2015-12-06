@@ -63,6 +63,14 @@ namespace Exhys.WebContestHost.Areas.Shared
 
         public static readonly FormError InvalidCredentials = new FormError("invalid-credentials", "These credentials are invalid. Please check your username and password.");
 
+        //public static readonly FormError LanguageAliasTooShort = new FormError("language-alias-too-short", string.Format("A language alias must be at least {0} characters long.", DatabaseLimits.LanguageAlias_MinLength));
+        public static readonly FormError LanguageAliasTaken = new FormError("language-alias-taken", "A language alias must be unique. this one is already taken.");
+        public static readonly FormError LanguageAliasRequired = new FormError("language-alias-required", "A programming language must have a unique alias.");
+        public static readonly FormError LanguageAliasTooLong = new FormError("language-alias-too-long", string.Format("A language alias can be at most {0} characters long.", DatabaseLimits.LanguageAlias_MaxLength));
+
+        public static readonly FormError LanguageNameRequired = new FormError("language-name-required", "A language must have a name.");
+        public static readonly FormError LanguageNameTooLong = new FormError("language-name-too-long", string.Format("A language name can be at most {0} characters long.", DatabaseLimits.LanguageName_MaxLength));
+
         public static FormError SignInRequired(string forWhatAction)
         {
             return new FormError("sign-in-required", string.Format("You need to be signed in in order to {0}", forWhatAction));

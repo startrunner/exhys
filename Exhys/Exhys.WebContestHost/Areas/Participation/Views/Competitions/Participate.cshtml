@@ -1,14 +1,37 @@
 ﻿@model ParticipationViewModel
-    <!doctype html>
+@{ 
+    
+}
+<!doctype html>
 <html>
 <head>
     @if(Model!=null&&Model.Competition!=null)
     {
         <title>@Model.Competition.Name - Exhys</title>
     }
-    @*@Styles.Render("~/Content/css", "~/Content/custom-css")*@
+    @Styles.Render("~/Content/css", "~/Content/custom-css")
 </head>
 <body>
+
+    @*Navigation Bar*@
+    <section class="navbar navbar-default navbar-fixed-top">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand">
+                @if (Model != null && Model.Competition != null)
+                {
+                    @Model.Competition.Name
+                }
+            </a>
+        </div>
+    </section>
+
+    <br /><br /><br />
+    @*Problem List*@
     <section>
         <table border="1">
             <thead>
@@ -46,18 +69,25 @@
             </tbody>
         </table>
     </section>
+
+    <br /><br /><br />
+    @*Submission*@
     <section>
-        <span>Submit a Solution</span>
+        <label>Submit a Solution</label>
         @using (Html.BeginForm())
         {
+            var vm = new ProblemSolutionViewModel();
+
+            <div class="form-group">
+                @Html.FixedDropDownListFor(m => vm.ProblemId, ViewData.GetProblemOptions())
+            </div>
+
             <div class="form-group">
                 <input type="file" id="input-sol-file" name="@ProblemSolutionViewModel.FileInputName" />
             </div>
+
             <div class="form-group">
-                @Html.TextBoxFor(m => m.SolutionSubmitVm.LanguageAlias, new { placeholder = "Language Alias" })
-            </div>
-            <div class="form-group">
-                @Html.TextAreaFor(m => m.SolutionSubmitVm.SourceCode, new { placeholder = "Source Code" })
+                @Html.FixedDropDownListFor(m=>vm.LanguageAlias, ViewData.GetProgrammingLanguageOptions())
             </div>
 
             <div class="form-group">
@@ -67,6 +97,8 @@
         
     </section>
 
+    <br /><br /><br />
+    @*Previous Submissions*@
     <section>
         <span>Previous Submissions</span>
         <table>
@@ -115,11 +147,10 @@
         </table>
     </section>
 
-    @*@Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")*@
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
     <script>
         $('button').addClass('btn btn-default');
-
     </script>
 </body>
 </html>

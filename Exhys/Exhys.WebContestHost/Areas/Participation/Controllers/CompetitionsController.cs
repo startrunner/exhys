@@ -135,6 +135,9 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
 
             using (var db = new ExhysContestEntities())
             {
+                AddProgrammingLanguageOptions(db);
+                AddProblemOptions(db, id.Value);
+
                 var competition = db.Competitions.Where(c => c.Id == id)
                     
                     .FirstOrDefault();

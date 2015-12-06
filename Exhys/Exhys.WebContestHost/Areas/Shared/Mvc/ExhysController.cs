@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using Exhys.WebContestHost.Areas.Shared.Extensions;
@@ -28,6 +29,28 @@ namespace Exhys.WebContestHost.Areas.Shared.Mvc
         #endregion
 
         #region DropdownOptions
+
+        public void AddProgrammingLanguageOptions()
+        {
+            using (var db = new ExhysContestEntities())
+            {
+                AddProgrammingLanguageOptions(db);
+            }
+        }
+        public void AddProgrammingLanguageOptions(ExhysContestEntities db)
+        {
+            var options = new List<SelectListItem>();
+            db.ProgrammingLanguages.ToList().ForEach(lang =>
+            {
+                options.Add(new SelectListItem()
+                {
+                    Text = lang.Name,
+                    Value = lang.Alias
+                });
+            });
+            ViewData.SetProgrammingLanguageOptions(options);
+        }
+
         public void AddProblemOptions(int competitionId)
         {
             using (var db = new ExhysContestEntities())
@@ -38,7 +61,10 @@ namespace Exhys.WebContestHost.Areas.Shared.Mvc
 
         public void AddProblemOptions(ExhysContestEntities db, int competitionId)
         {
-            var competition = db.Competitions.Where(c => c.Id == competitionId).ToList()[0];
+            var competition = db.Competitions
+                .Where(c => c.Id == competitionId)
+                .Include(c=>c.Problems)
+                .FirstOrDefault();
             var problems = competition.Problems.ToList();
             List<SelectListItem> options = new List<SelectListItem>();
             foreach(var p in problems)

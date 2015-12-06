@@ -16,6 +16,7 @@ namespace Exhys.WebContestHost.Areas.Shared.Extensions
             public const string UserGroupOptions = "user-group-options";
             public const string OpenUserGroupOptions = "open-user-group-options";
             public const string CompetitionOptions = "competition-options";
+            public const string ProgrammingLanguageOptions = "programming-language-options";
             public const string PageCount = "page-count";
             //public const string CurrentPage = "current-page";
             //public const string PageSize = "page-size";
@@ -57,6 +58,11 @@ namespace Exhys.WebContestHost.Areas.Shared.Extensions
             return that[PropertyNames.PageTitle] as string;
         }
 
+        public static List<SelectListItem> GetProgrammingLanguageOptions(this ViewDataDictionary that)
+        {
+            return that[PropertyNames.ProgrammingLanguageOptions] as List<SelectListItem>;
+        }
+
         public static void SetCompetitionOptions(this ViewDataDictionary that, List<SelectListItem> options)
         {
             that[PropertyNames.CompetitionOptions] = options;
@@ -90,6 +96,11 @@ namespace Exhys.WebContestHost.Areas.Shared.Extensions
         public static void SetOpenUserGroupOptions(this ViewDataDictionary that, List<SelectListItem> options)
         {
             that[PropertyNames.OpenUserGroupOptions] = options;
+        }
+
+        public static void SetProgrammingLanguageOptions(this ViewDataDictionary that, List<SelectListItem> options)
+        {
+            that[PropertyNames.ProgrammingLanguageOptions] = options;
         }
 
 

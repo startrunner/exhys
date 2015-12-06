@@ -1,0 +1,51 @@
+﻿@model ProgrammingLanguageViewModel
+@{ 
+    ViewData.SetPageTitle("Add Language");
+}
+    <br />
+<div>
+    <br /><br />
+    <div class="col-lg-6">
+        @using (Html.BeginForm("Add", "ProgrammingLanguages", FormMethod.Post, new { @class = "form-horizontal well" }))
+        {
+            <fieldset>
+                <legend>Add Programming Language</legend>
+                @if (Html.ErrorListFor(ViewData) != null)
+                {
+                    <div class="alert alert-dismissible alert-danger">
+                        <button id="btn-close" type="button" class="close" data-dismiss="alert">×</button>
+                        @Html.ErrorListFor(ViewData)
+                    </div>
+                }
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Name, new { @class = "col-lg-2 control-label" })
+                    <div class="col-lg-10">
+                        @Html.TextBoxFor(m => m.Name, new { placeholder = "Language Name", @class = "form-control lineH" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Alias, new { @class = "col-lg-2 control-label" })
+                    <div class="col-lg-10">
+                        @Html.TextBoxFor(m => m.Alias, new { placeholder = "Language Alias", @class = "form-control lineH" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Description, new { @class = "col-lg-2 control-label" })
+                    <div class="col-lg-10">
+                        @Html.TextAreaFor(m => m.Description, new { placeholder = "Language Description", @class = "form-control lineH" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-lg-10 col-lg-offset-2">
+                        <button type="submit" class="btn btn-primary">Add Language</button>
+                        <button type="reset" class="btn btn-default">Reset</button>
+                    </div>
+                </div>
+            </fieldset>
+        }
+    </div>
+</div>
