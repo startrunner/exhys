@@ -78,7 +78,7 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
 
         [HttpPost]
         public ActionResult Add(ProblemViewModel vm)
-        {
+        {//bobi  e kurva
             if(!vm.Validate(ViewData))
             {
                 AddCompetitionOptions();

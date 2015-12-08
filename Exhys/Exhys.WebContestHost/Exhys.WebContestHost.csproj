@@ -258,7 +258,6 @@
     <Content Include="Areas\Administration\Views\Competitions\List.cshtml" />
     <Content Include="Areas\Administration\Views\Competitions\Add.cshtml" />
     <Content Include="Areas\Administration\Views\Competitions\Edit.cshtml" />
-    <Content Include="Areas\Administration\Views\Problems\Add.cshtml" />
     <Content Include="Areas\Participation\Views\web.config">
       <SubType>Designer</SubType>
     </Content>
