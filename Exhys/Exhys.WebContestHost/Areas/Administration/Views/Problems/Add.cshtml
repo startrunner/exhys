@@ -1,0 +1,402 @@
+﻿@model ProblemViewModel
+<div>
+</div>
+@{
+	ViewData.SetPageTitle("Add Problem");
+	/*
+	===============================BOBI SHTE TE PREBIQ==========================================
+	1. You've used Non-English Variable Names (lastBrCol, curBrCol). What the fuck does 'Br' mean!?
+	2. The script you wrote for updating the checkbox tables would only work for a single table and could not be reused.
+	3. You put a ton of functions in the global 'namespace'. Please have a look at this article: http://www.codeproject.com/Articles/19030/Namespaces-in-JavaScript
+	4. What the fuck does 'file-1' mean?
+		-Alexander Ivanov
+
+	===============================Aleksandre EBI SE==========================================
+												-s obich Bobby Rachkov
+											PS: Maika ti e kurva
+    ==============================Teq neshta trqbva da gi mahnem predi da si dadem source coda===========
+                            ama za sq shte gi ostaime
+                            i shte se nadqvame da ne zabraime :D
+                            #YOLO
+                                -Alexander
+                            PS: Lelq ti e kurva
+	*/
+}
+@section styles{
+	<link rel="stylesheet" type="text/css" href="~/Content/checkboxes-style.css">
+}
+<div>
+	<br />
+	<div>
+		@using(Html.BeginForm("Add", "Problems", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal well" }))
+		{
+			<fieldset>
+				<legend>Add Problem</legend>
+				@if(Html.ErrorListFor(ViewData) != null)
+				{
+					<div class="alert alert-dismissible alert-danger">
+						<button id="btn-close" type="button" class="close" data-dismiss="alert">×</button>
+						@Html.ErrorListFor(ViewData)
+					</div>
+				}
+
+				<div class="form-group">
+					@Html.LabelFor(m => m.CompetitionId, "Competition Id", new { @class = "col-lg-2 control-label" })
+					<div class="col-lg-10">
+						@Html.FixedDropDownListFor(m => m.CompetitionId, ViewData.GetCompetitionOptions(), new { @class = "form-control padding-0" })
+					</div>
+				</div>
+				<div class="form-group">
+					@Html.LabelFor(m => m.Name, new { @class = "col-lg-2 control-label" })
+					<div class="col-lg-10">
+						@Html.TextBoxFor(m => m.Name, new { placeholder = "Problem Name", @class = "form-control lineH" })
+					</div>
+				</div>
+				<div class="form-group" id="inputFilesGroup1">
+					<label for="files-inp" class="col-lg-2 control-label">Input Files</label>
+					<div class="col-lg-10">
+						<label class="fileContainer">
+							<span class="box js">
+								<input type="file" name="@ProblemViewModel.InputFilesInputName" id="file-1" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple />
+								<label for="file-1" class="btn btn-default"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z" /></svg> <span>Choose files&hellip;</span></label>
+							</span>
+						</label>
+						@*<input id="files-inp" name="@ProblemViewModel.InputFilesInputName" type="file" multiple placeholder="Test Files" class="form-control" />*@
+					</div>
+				</div>
+				<div class="form-group" id="inputFilesGroup2">
+					<label for="files-sol" class="col-lg-2 control-label">Solution Files</label>
+					<div class="col-lg-10">
+						<label class="fileContainer">
+							<span class="box js">
+								<input type="file" name="@ProblemViewModel.SolutionFilesInputName" id="file-2" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple />
+								<label for="file-2" class= "btn btn-default"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z" /></svg> <span>Choose files&hellip;</span></label>
+							</span>
+						</label>
+						@*<input id="files-sol" name="@ProblemViewModel.SolutionFilesInputName" type="file" multiple placeholder="Test Files" class="form-control" />*@
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="files-stt" class="col-lg-2 control-label">Statement Files</label>
+					<div class="col-lg-10">
+						<label class="fileContainer">
+							<span class="box js">
+								<input type="file" name="@ProblemViewModel.StatementFilesInputName" id="file-3" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple />
+								<label for="file-3" class="btn btn-default"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z" /></svg> <span>Choose a file&hellip;</span></label>
+							</span>
+						</label>
+						@*Click here to trigger the file uploader!
+							<input id="files-stt" name="@ProblemViewModel.StatementFilesInputName" type="file" multiple placeholder="Statements" class="form-control" />*@
+
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-lg-2 control-label">Input Feedback</label>
+					<div class="col-lg-10 horizontal-scroll selectableScroll" id="div1">
+						<table class="table table-bordered table-editor border-brush-black" id="table-feedback">
+							<thead class="th-center">
+								<tr><th class="table-selector">Property</th></tr>
+							</thead>
+                            <tr class="valign-middle text-center"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',0)">Input Feedback</th></tr>
+                            <tr class="valign-middle text-center"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',1)">Output Feedback</th></tr>
+                            <tr class="valign-middle text-center"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',2)">Solution Feedback</th></tr>
+                            <tr class="valign-middle text-center"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',3)">Status Feedback</th></tr>
+                            <tr class="valign-middle text-center"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',4)">Score Feedback</th></tr>
+							<tr class="valign-middle text-center"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',5)">Time Limits</th></tr>
+						</table>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-lg-2 control-label">Output Feedback</label>
+					<div class="col-lg-10 horizontal-scroll" id="div2">
+						<table class="table table-bordered table-editor border-brush-black" id="table-output-feedback">
+							<thead class="th-center">
+								<tr></tr>
+							</thead>
+                            <!--tr class="valign-middle text-center"></tr-->
+						</table>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-lg-2 control-label">Solution Feedback</label>
+					<div class="col-lg-10 horizontal-scroll" id="div3">
+						<table class="table table-bordered table-editor border-brush-black" id="table-solution-feedback">
+							<thead class="th-center">
+								<tr></tr>
+							</thead>
+                            <!--tr class="valign-middle text-center"></tr-->
+						</table>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-lg-2 control-label">Submit Problem</label>
+					<div class="col-lg-10">
+						<button type="reset" class="btn btn-default">Reset</button>
+						<button type="submit" class="btn btn-primary">Add Problem</button>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-lg-2 control-label">PlainText Parameters</label>
+					<div class="col-lg-10">
+						<div>
+							@Html.LabelFor(m => m.T_InputFeedbacks, "Input Feedback")
+							@Html.TextBoxFor(m => m.T_InputFeedbacks, new { placeholder = "Input Feedbacks ('1;0;0')", @class = "plainTextParameter" })
+						</div>
+
+						<div>
+							@Html.LabelFor(m => m.T_OutputFeedbacks, "Output Feedback")
+							@Html.TextBoxFor(m => m.T_OutputFeedbacks, new { placeholder = "Output Feedbacks ('1;0;0')", @class = "plainTextParameter" })
+						</div>
+
+						<div>
+							@Html.LabelFor(m => m.T_SolutionFeedbacks, "Solution   Feedback")
+							@Html.TextBoxFor(m => m.T_SolutionFeedbacks, new { placeholder = "Solution Feedbacks ('1;0;0')", @class = "plainTextParameter" })
+						</div>
+
+						<div>
+							@Html.LabelFor(m => m.T_StatusFeedbacks, "Status Feedback")
+							@Html.TextBoxFor(m => m.T_StatusFeedbacks, new { placeholder = "Status Feedbacks ('1;0;0')", @class = "plainTextParameter"})
+						</div>
+
+						<div>
+							@Html.LabelFor(m => m.T_ScoreFeedbacks, "Score Feedback")
+							@Html.TextBoxFor(m => m.T_ScoreFeedbacks, new { placeholder = "Score Feedback ('1;0;0')", @class = "plainTextParameter" })
+						</div>
+
+						<div>
+							@Html.LabelFor(m => m.T_TimeLimits, "Time Limits")
+							@Html.TextBoxFor(m => m.T_TimeLimits, new { placeholder = "Time Limits ('1.0;1.0')", @class = "plainTextParameter" })
+						</div>
+					</div>
+				</div>
+			</fieldset>
+
+		}
+	</div>
+</div>
+@section scripts{
+
+
+
+	@*GenerateCheckboxColumns*@
+	<script>
+        var checkBoxTableManager = {
+			registerInput: function (tableId, fileInputId) {
+			    var that = checkBoxTableManager;
+			    $("#" + fileInputId).bind('change', function () {
+
+					var currentColumnsCount = that.getColumnsCount(tableId);
+					var newColumnsCount = $("#" + fileInputId)[0].files.length;
+
+					var columnsCountDifference = newColumnsCount - currentColumnsCount;
+
+					if (columnsCountDifference > 0) {
+					    for (var i = currentColumnsCount; i < newColumnsCount; i++) {
+							that.addColumn(tableId, i + 1);
+					    }
+					    refreshSelectable();
+					}
+					else if(columnsCountDifference < 0){
+					    for (var i = 0; i < currentColumnsCount - newColumnsCount; i++) {
+							that.removeColumn(tableId);
+					    }
+					    refreshSelectable();
+					}
+				});
+			},
+			getColumnsCount: function(tableId){
+			    return $('#' + tableId + ' thead th').length - 1;
+			},
+			addColumn: function (tableId, number) {
+			    var $newHeaderCell = $('<th class="column-selector" onclick="checkBoxTableManager.selectWholeColumn(&quot;' + tableId + '&quot;,' + (number - 1) + ')">' + number + '</th>');
+				$("#" + tableId + " thead tr").append($newHeaderCell);
+
+				var $newCheckBoxCell = $('<td><label><input name="checks" type="checkbox"><span></span></label></td>');
+				$("#" + tableId + " tr").not("thead tr").append($newCheckBoxCell);
+
+			},
+			removeColumn: function (tableId) {
+			    $("#" + tableId + " tr:first").find("th:last").remove();
+			    $("#" + tableId + " tr").not(":first").find("td:last").remove();
+			},
+			selectWholeColumn: function(tableId, columnIndex)
+			{
+			    var rows = $('#' + tableId + ' tr');
+			    var checkboxes = rows.find('td:eq(' + columnIndex + ')').find(":checkbox");
+			    toggleCheckboxes(checkboxes);
+			},
+			selectWholeRow: function(tableId, rowIndex)
+			{
+			    var checkboxes = $('#' + tableId).find('tr:eq(' + (rowIndex + 1) + ') :checkbox');
+			    toggleCheckboxes(checkboxes);
+			}
+        };
+
+        checkBoxTableManager.registerInput('table-feedback', "file-1");
+	</script>
+
+    @*SerializeCheckBoxRow*@
+	<script>
+        function refreshPlainTextParameters(tableId)
+        {
+            $(".plainTextParameter").each(function (index) {
+                $(this).val(serializeCheckBoxRow(tableId, index));
+            });
+        }
+        function serializeCheckBoxRow(tableId, rowNumber)
+        {
+            var serializedString = '';
+            $checkBoxes = $('#' + tableId + ' tr').not('thead tr').eq(rowNumber).find('td').not(":first").find(":checkbox");
+            $checkBoxes.each(function () {
+                serializedString += ($(this).is(":checked")?1:0) + ",";
+            });
+
+            return serializedString.slice(0,-1);
+        }
+	</script>
+
+	@*FindFilesCountMismatch*@
+	<script>
+		$("#file-1").change(function () {
+			checkAndMark();
+		});
+		$("#file-2").change(function () {
+			checkAndMark();
+		});
+		function checkAndMark() {
+			if ($("#file-1")[0].files.length != $("#file-2")[0].files.length) {
+				$("#inputFilesGroup1")[0].classList.add("has-error");
+				$("#inputFilesGroup2")[0].classList.add("has-error");
+			}
+			else {
+				$("#inputFilesGroup1")[0].classList.remove("has-error");
+				$("#inputFilesGroup2")[0].classList.remove("has-error");
+			}
+		}
+	</script>
+
+	@*File Inputs*@
+	<script>
+		; (function (document, window, index) {
+			var inputs = document.querySelectorAll('.inputfile');
+			Array.prototype.forEach.call(inputs, function (input) {
+				var label = input.nextElementSibling,
+					labelVal = label.innerHTML;
+
+				input.addEventListener('change', function (e) {
+					var fileName = '';
+					if (this.files && this.files.length > 1)
+						fileName = (this.getAttribute('data-multiple-caption') || '').replace('{count}', this.files.length);
+					else
+						fileName = e.target.value.split('\\').pop();
+
+					if (fileName)
+						label.querySelector('span').innerHTML = fileName;
+					else
+						label.innerHTML = labelVal;
+				});
+
+				// Firefox bug fix
+				input.addEventListener('focus', function () { input.classList.add('has-focus'); });
+				input.addEventListener('blur', function () { input.classList.remove('has-focus'); });
+			});
+		}(document, window, 0));
+	</script>
+
+    @*Create Selectable*@
+    <script>
+        var selectingWholeRowColumn = false;
+        function bindTable(tableId) {
+
+            $('.selectableScroll')
+                .selectableScroll({
+                    filter: "td, th:not(.table-selector)",
+                    distance: 3,
+                    selecting: function(event,ui){
+                        selectingHeader(true, ui.selecting, tableId);
+                    },
+                    unselecting: function (event, ui) {
+                        selectingHeader(false, ui.unselecting, tableId);
+                    },
+                    stop: function (event, ui) {
+                        var checkboxes = $('#' + tableId).find('tr td')
+                            .filter('.ui-selected').find(':checkbox');
+                        toggleCheckboxes(checkboxes);
+                    },
+                    autoRefresh: false
+                });
+
+            $('#' + tableId).find('.table-selector').click(function () {
+                var checkboxes = $('#' + tableId).find(":checkbox");
+                toggleCheckboxes(checkboxes);
+            });
+        }
+        function toggleCheckboxes(checkboxes)
+        {
+            var checkValue = getCheckboxCheckValue(checkboxes, true);
+            checkboxes.prop("checked", checkValue);
+        }
+        function getCheckboxCheckValue(checkboxes)
+        {
+            var checkValue;
+            var allChecked = true;
+            checkboxes.each(function () {
+                if (!$(this).is(":checked")) {
+                    allChecked = false;
+                    return;
+                }
+            });
+            checkValue = !allChecked;
+            return checkValue;
+        }
+        function selectingHeader(isSelecting, item, tableId)
+        {
+            var selectedItem = $(item);
+
+            var rowHeader = selectedItem.parent().find('th').first();
+            var cellIndex = selectedItem.index();
+            var columnHeader = $('#' + tableId).find('tr').find("th:eq(" + (cellIndex) + ")");
+            var columnCells = $('#' + tableId).find('tr').not(":first")
+                .find("td:eq(" + (cellIndex - 1) + ")");
+
+            if (!selectedItem.is("th")) {
+                if (columnHeader.hasClass("ui-selecting") || rowHeader.hasClass("ui-selecting")) {
+                    selectedItem.addClass("ui-selecting");
+                }
+            }
+            /*else if (selectedItem.hasClass("table-selector")) {
+                var cells = $('#' + tableId).find(".row-selector, column-selector td");
+                if (isSelecting) {
+                    cells.addClass("ui-selecting");
+                } else {
+                    cells.removeClass("ui-selecting");
+                }
+            } //TOO BUGGY*/
+            else if (rowHeader.hasClass('row-selector')) {
+                if (isSelecting) {
+                    selectedItem.parent().find('td').addClass('ui-selecting');
+                } else {
+                    selectedItem.parent().find('td').removeClass('ui-selecting');
+                }
+            }
+            else if (columnHeader.hasClass('column-selector')) {
+                if (isSelecting) {
+                    columnCells.addClass('ui-selecting');
+                } else {
+                    columnCells.removeClass('ui-selecting');
+                }
+            }
+        }
+
+        function refreshSelectable()
+        {
+            $('.selectableScroll').selectableScroll("refresh");
+        }
+        bindTable('table-feedback');
+    </script>
+}
