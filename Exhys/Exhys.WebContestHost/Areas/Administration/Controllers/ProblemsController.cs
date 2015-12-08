@@ -29,7 +29,7 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
 
         #region Add_UtilityFunctions
         private void Add_FetchPostFiles(ref List<HttpPostedFileBase> inputFiles, ref List<HttpPostedFileBase> solutionFiles, ref List<HttpPostedFileBase> statementFiles)
-        {
+        { 
             for (int i = 0; i < Request.Files.Count; i++)
             {
                 switch (Request.Files.GetKey(i))
