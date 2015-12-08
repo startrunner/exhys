@@ -93,17 +93,17 @@
 
 				<div class="form-group">
 					<label class="col-lg-2 control-label">Input Feedback</label>
-					<div class="col-lg-10 horizontal-scroll" id="div1">
+					<div class="col-lg-10 horizontal-scroll selectableScroll" id="div1">
 						<table class="table table-bordered table-editor border-brush-black" id="table-feedback">
 							<thead class="th-center">
-								<tr><th>Property</th></tr>
+								<tr><th class="table-selector">Property</th></tr>
 							</thead>
-                            <tr class="valign-middle text-center"><td>Input Feedback</td></tr>
-                            <tr class="valign-middle text-center"><td>Output Feedback</td></tr>
-                            <tr class="valign-middle text-center"><td>Solution Feedback</td></tr>
-                            <tr class="valign-middle text-center"><td>Status Feedback</td></tr>
-                            <tr class="valign-middle text-center"><td>Score Feedback</td></tr>
-							<tr class="valign-middle text-center"><td>Time Limits</td></tr>
+                            <tr class="valign-middle text-center"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',0)">Input Feedback</th></tr>
+                            <tr class="valign-middle text-center"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',1)">Output Feedback</th></tr>
+                            <tr class="valign-middle text-center"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',2)">Solution Feedback</th></tr>
+                            <tr class="valign-middle text-center"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',3)">Status Feedback</th></tr>
+                            <tr class="valign-middle text-center"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',4)">Score Feedback</th></tr>
+							<tr class="valign-middle text-center"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',5)">Time Limits</th></tr>
 						</table>
 					</div>
 				</div>
@@ -198,30 +198,45 @@
 					if (columnsCountDifference > 0) {
 					    for (var i = currentColumnsCount; i < newColumnsCount; i++) {
 							that.addColumn(tableId, i + 1);
-						}
+					    }
+					    refreshSelectable();
 					}
 					else if(columnsCountDifference < 0){
 					    for (var i = 0; i < currentColumnsCount - newColumnsCount; i++) {
 							that.removeColumn(tableId);
-						}
+					    }
+					    refreshSelectable();
 					}
-					initCheckBoxes(tableId);
 				});
 			},
 			getColumnsCount: function(tableId){
 			    return $('#' + tableId + ' thead th').length - 1;
 			},
 			addColumn: function (tableId, number) {
-				var $newHeaderCell = $("<th>" + number + "</th>");
+			    var $newHeaderCell = $('<th class="column-selector" onclick="checkBoxTableManager.selectWholeColumn(&quot;' + tableId + '&quot;,' + (number - 1) + ')">' + number + '</th>');
 				$("#" + tableId + " thead tr").append($newHeaderCell);
 
 				var $newCheckBoxCell = $('<td><label><input name="checks" type="checkbox"><span></span></label></td>');
 				$("#" + tableId + " tr").not("thead tr").append($newCheckBoxCell);
+
 			},
 			removeColumn: function (tableId) {
-			    $("#" + tableId + " tr").find("th:last, td:last").remove();
+			    $("#" + tableId + " tr:first").find("th:last").remove();
+			    $("#" + tableId + " tr").not(":first").find("td:last").remove();
+			},
+			selectWholeColumn: function(tableId, columnIndex)
+			{
+			    var rows = $('#' + tableId + ' tr');
+			    var checkboxes = rows.find('td:eq(' + columnIndex + ')').find(":checkbox");
+			    toggleCheckboxes(checkboxes);
+			},
+			selectWholeRow: function(tableId, rowIndex)
+			{
+			    var checkboxes = $('#' + tableId).find('tr:eq(' + (rowIndex + 1) + ') :checkbox');
+			    toggleCheckboxes(checkboxes);
 			}
-		};
+        };
+
         checkBoxTableManager.registerInput('table-feedback', "file-1");
 	</script>
 
@@ -245,10 +260,6 @@
         }
 	</script>
 
-	<script>
-
-	</script>
-
 	@*FindFilesCountMismatch*@
 	<script>
 		$("#file-1").change(function () {
@@ -267,91 +278,6 @@
 				$("#inputFilesGroup2")[0].classList.remove("has-error");
 			}
 		}
-	</script>
-
-	@*Draggable Checkboxes*@
-	<script>
-
-		window.onload = function () {
-			initCheckBoxes('table-input-feedback');
-			initCheckBoxes('table-output-feedback');
-			initCheckBoxes('table-solution-feedback');
-		};
-		/* Click-n-Drag Checkboxes */
-		var gCheckedValue = null;
-		function initCheckBoxes(sTblId) {
-			xTableIterate(sTblId,
-			  function (td, isRow) {
-			  	if (!isRow) {
-			  		var cb = td.getElementsByTagName('input');
-			  		if (typeof cb[0] != "undefined")
-			  			if (cb && cb[0].type.toLowerCase() == 'checkbox') {
-			  				td.checkBoxObj = cb[0];
-			  				td.onmousedown = tdOnMouseDown;
-			  				td.onmouseover = tdOnMouseOver;
-			  				td.onclick = tdOnClick;
-			  			}
-			  	}
-			  }
-			);
-		}
-		function tdOnMouseDown(ev) {
-			if (this.checkBoxObj) {
-				gCheckedValue = this.checkBoxObj.checked = !this.checkBoxObj.checked;
-				document.onmouseup = docOnMouseUp;
-				document.onselectstart = docOnSelectStart; // for IE
-				xPreventDefault(ev); // cancel text selection
-				refreshPlainTextParameters('table-feedback')
-			}
-		}
-		function tdOnMouseOver(ev) {
-		    if (gCheckedValue != null && this.checkBoxObj) {
-		        var refresh = false;
-		        if (this.checkBoxObj.checked != gCheckedValue) {
-		            refresh = true;
-		        }
-		        this.checkBoxObj.checked = gCheckedValue;
-		        if (refresh) {
-		            refreshPlainTextParameters('table-feedback')
-		        }
-			}
-		}
-		function docOnMouseUp() {
-			document.onmouseup = null;
-			document.onselectstart = null;
-			gCheckedValue = null;
-		}
-		function tdOnClick() {
-			// Cancel a click on the checkbox itself. Let it bubble up to the TD
-			return false;
-		}
-		function docOnSelectStart(ev) {
-			return false; // cancel text selection
-		}
-		function xTableIterate(sec, fnCallback, data) {
-			var r, c;
-			sec = xGetElementById(sec);
-			if (!sec || !fnCallback) { return; }
-			for (r = 0; r < sec.rows.length; ++r) {
-				if (false == fnCallback(sec.rows[r], true, r, c, data)) { return; }
-				for (c = 0; c < sec.rows[r].cells.length; ++c) {
-					if (false == fnCallback(sec.rows[r].cells[c], false, r, c, data)) { return; }
-				}
-			}
-		}
-		function xGetElementById(e) {
-			if (typeof (e) == 'string') {
-				if (document.getElementById) e = document.getElementById(e);
-				else if (document.all) e = document.all[e];
-				else e = null;
-			}
-			return e;
-		}
-		function xPreventDefault(e) {
-			if (e && e.preventDefault) e.preventDefault();
-			else if (window.event) window.event.returnValue = false;
-		}
-
 	</script>
 
 	@*File Inputs*@
@@ -381,4 +307,96 @@
 			});
 		}(document, window, 0));
 	</script>
+
+    @*Create Selectable*@
+    <script>
+        var selectingWholeRowColumn = false;
+        function bindTable(tableId) {
+
+            $('.selectableScroll')
+                .selectableScroll({
+                    filter: "td, th:not(.table-selector)",
+                    distance: 3,
+                    selecting: function(event,ui){
+                        selectingHeader(true, ui.selecting, tableId);
+                    },
+                    unselecting: function (event, ui) {
+                        selectingHeader(false, ui.unselecting, tableId);
+                    },
+                    stop: function (event, ui) {
+                        var checkboxes = $('#' + tableId).find('tr td')
+                            .filter('.ui-selected').find(':checkbox');
+                        toggleCheckboxes(checkboxes);
+                    },
+                    autoRefresh: false
+                });
+
+            $('#' + tableId).find('.table-selector').click(function () {
+                var checkboxes = $('#' + tableId).find(":checkbox");
+                toggleCheckboxes(checkboxes);
+            });
+        }
+        function toggleCheckboxes(checkboxes)
+        {
+            var checkValue = getCheckboxCheckValue(checkboxes, true);
+            checkboxes.prop("checked", checkValue);
+        }
+        function getCheckboxCheckValue(checkboxes)
+        {
+            var checkValue;
+            var allChecked = true;
+            checkboxes.each(function () {
+                if (!$(this).is(":checked")) {
+                    allChecked = false;
+                    return;
+                }
+            });
+            checkValue = !allChecked;
+            return checkValue;
+        }
+        function selectingHeader(isSelecting, item, tableId)
+        {
+            var selectedItem = $(item);
+
+            var rowHeader = selectedItem.parent().find('th').first();
+            var cellIndex = selectedItem.index();
+            var columnHeader = $('#' + tableId).find('tr').find("th:eq(" + (cellIndex) + ")");
+            var columnCells = $('#' + tableId).find('tr').not(":first")
+                .find("td:eq(" + (cellIndex - 1) + ")");
+
+            if (!selectedItem.is("th")) {
+                if (columnHeader.hasClass("ui-selecting") || rowHeader.hasClass("ui-selecting")) {
+                    selectedItem.addClass("ui-selecting");
+                }
+            }
+            /*else if (selectedItem.hasClass("table-selector")) {
+                var cells = $('#' + tableId).find(".row-selector, column-selector td");
+                if (isSelecting) {
+                    cells.addClass("ui-selecting");
+                } else {
+                    cells.removeClass("ui-selecting");
+                }
+            } //TOO BUGGY*/
+            else if (rowHeader.hasClass('row-selector')) {
+                if (isSelecting) {
+                    selectedItem.parent().find('td').addClass('ui-selecting');
+                } else {
+                    selectedItem.parent().find('td').removeClass('ui-selecting');
+                }
+            }
+            else if (columnHeader.hasClass('column-selector')) {
+                if (isSelecting) {
+                    columnCells.addClass('ui-selecting');
+                } else {
+                    columnCells.removeClass('ui-selecting');
+                }
+            }
+        }
+
+        function refreshSelectable()
+        {
+            $('.selectableScroll').selectableScroll("refresh");
+        }
+        bindTable('table-feedback');
+    </script>
 }
