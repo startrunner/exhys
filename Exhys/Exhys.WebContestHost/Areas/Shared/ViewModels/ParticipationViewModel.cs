@@ -11,11 +11,13 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
         public List<ProblemSolutionViewModel> ProblemSubmissions { get; set; }
 
         public ParticipationViewModel () : this(null) { }
+        public int Id { get; set; }
         public ParticipationViewModel (DataModels.Participation model)
         {
             if (model != null)
             {
                 this.Competition = new CompetitionViewModel(model.Competition);
+                this.Id = model.Id;
                 if(model.Submissions!=null)
                 {
                     ProblemSubmissions = new List<ProblemSolutionViewModel>();

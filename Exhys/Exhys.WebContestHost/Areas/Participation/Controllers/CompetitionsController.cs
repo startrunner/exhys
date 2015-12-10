@@ -224,7 +224,23 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
 
                 return RedirectToAction("Participate");
             }
-        } 
+        }
+
+        [HttpGet]
+        public ActionResult ListSubmissions(int participationId)
+        {
+            List<ProblemSolutionViewModel> problemSolutionViewModel;
+            using (var db = new ExhysContestEntities())
+            {
+                var problemSolutions = db.ProblemSolutions
+                    .Where(x => x.Participation.Id == participationId)
+                    .ToList();
+                problemSolutionViewModel = problemSolutions
+                    .Select(x => new ProblemSolutionViewModel(x))
+                    .ToList();
+            }
+            return PartialView(problemSolutionViewModel);
+        }
 
         private void HandleSolution (int solutionId)
         {
