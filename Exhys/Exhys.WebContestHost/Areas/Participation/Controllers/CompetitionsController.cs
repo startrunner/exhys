@@ -224,7 +224,7 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
 
                 return RedirectToAction("Participate");
             }
-        }
+        } 
 
         private void HandleSolution (int solutionId)
         {
