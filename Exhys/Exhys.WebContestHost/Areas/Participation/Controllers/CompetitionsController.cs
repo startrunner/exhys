@@ -235,39 +235,47 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
                     .Where(sol => sol.Id == solutionId)
                     .Include(sol => sol.Problem)
                     .Include(sol => sol.Problem.Tests)
-                    .Include(sol=>sol.Participation)
+                    .Include(sol => sol.Participation)
+                    .Include(sol => sol.Participation.Competition)
+                    .Include(sol => sol.Participation.User)
                     .AsNoTracking()
                     .FirstOrDefault();
                 solution.Status = ProblemSolution.ExecutionStatus.InProgress;
                 db.SaveChanges();
 
-                SubmissionClient client = new SubmissionClient();
-                client.SubmitRequestAsync(solution).ContinueWith((x) =>
-                {
-                    List<SolutionTestStatus> result = null;
-                    result = x.Result;
-
-                    using (var db1 = new ExhysContestEntities())
-                    {
-                        solution = db1.ProblemSolutions
-                            .Where(sol => sol.Id == solutionId)
-                            .Include(sol => sol.TestStatuses)
-                            .Include(sol => sol.Participation)
-                            .Include(sol => sol.Participation.Competition)
-                            .Include(sol => sol.Participation.User)
-                            .Include(sol => sol.Problem)
-                            .FirstOrDefault();
-
-                        solution.TestStatuses.Clear();
-                        foreach (var v in result)
-                        {
-                            solution.TestStatuses.Add(db1.Entry(v).Entity);
-                        }
-                        solution.Status = ProblemSolution.ExecutionStatus.Completed;
-                        db1.SaveChanges();
-                    }
-                });
             }
+
+            SubmissionClient client = new SubmissionClient();
+            client.SubmitRequestAsync(solution).ContinueWith((x) =>
+            {
+                List<SolutionTestStatus> result = null;
+                result = x.Result;
+
+                using (var db = new ExhysContestEntities())
+                {
+                    solution = db.ProblemSolutions
+                        .Where(sol => sol.Id == solutionId)
+                        .Include(sol => sol.TestStatuses)
+                        .Include(sol => sol.Problem)
+                        .Include(sol => sol.Participation)
+                        .FirstOrDefault();
+
+                    solution.TestStatuses.Clear();
+                    foreach (var v in result)
+                    {
+                        SolutionTestStatus status = new SolutionTestStatus
+                        {
+                            Output = v.Output,
+                            ProblemTest = db.ProblemTests.Where(y=>y.Id==v.ProblemTest.Id).FirstOrDefault(),
+                            Score = v.Score,
+                            Status = v.Status
+                        };
+                        solution.TestStatuses.Add(status);
+                    }
+                    solution.Status = ProblemSolution.ExecutionStatus.Completed;
+                    db.SaveChanges();
+                }
+            });
             
         }
     }
