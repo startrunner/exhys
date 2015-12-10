@@ -12,6 +12,8 @@ using System.Reflection;
 using Exhys.WebContestHost.Areas.Shared.Extensions;
 using Exhys.WebContestHost.Areas.Shared.Mvc;
 using System.Data.Entity;
+using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace Exhys.WebContestHost.Areas.Administration.Controllers
 {
@@ -49,36 +51,33 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
             inputFiles = inputFiles.OrderBy(f => f.FileName).ToList();
             solutionFiles = solutionFiles.OrderBy(f => f.FileName).ToList();
         }
-
-        private void Add_ParseFeedbackArguments (ProblemViewModel vm, int testCount, ref List<bool> inputFeedbacks, ref List<bool> outputFeedbacks, ref List<bool> solutionFeedbacks, ref List<bool> scoreFeedbacks, ref List<bool> statusFeedbacks)
-        {
-            char[] sep = new char[] { ';' };
-            Func<string, bool> cFunc = (s => s.Contains("1") ? true : false);
-
-            inputFeedbacks = vm.T_InputFeedbacks.Split(sep, StringSplitOptions.RemoveEmptyEntries).Convert(cFunc);
-            outputFeedbacks = vm.T_OutputFeedbacks.Split(sep, StringSplitOptions.RemoveEmptyEntries).Convert(cFunc);
-            solutionFeedbacks = vm.T_SolutionFeedbacks.Split(sep, StringSplitOptions.RemoveEmptyEntries).Convert(cFunc);
-            scoreFeedbacks = vm.T_ScoreFeedbacks.Split(sep, StringSplitOptions.RemoveEmptyEntries).Convert(cFunc);
-            statusFeedbacks = vm.T_StatusFeedbacks.Split(sep, StringSplitOptions.RemoveEmptyEntries).Convert(cFunc);
-
-            inputFeedbacks.Resize(testCount, inputFeedbacks.LastByIndex());
-            outputFeedbacks.Resize(testCount, outputFeedbacks.LastByIndex());
-            solutionFeedbacks.Resize(testCount, solutionFeedbacks.LastByIndex());
-            scoreFeedbacks.Resize(testCount, scoreFeedbacks.LastByIndex());
-            statusFeedbacks.Resize(testCount, statusFeedbacks.LastByIndex());
-        }
-        
-        private void Add_ParseTimeLimitArguments(ProblemViewModel vm, int testCount, ref List<double> timeLimits)
-        {
-            char[] sep = new char[] { ';' };
-            timeLimits = vm.T_TimeLimits.Split(sep, StringSplitOptions.RemoveEmptyEntries).Convert(s => double.Parse(s));
-            timeLimits.Resize(testCount, timeLimits.LastByIndex());
-        }
         #endregion
+
+        [DataContract]
+        class Add_FeedbackParameters
+        {
+            [DataMember(Name = "input-feedback")]
+            public bool[] InputFeedback { get; set; }
+
+            [DataMember(Name = "output-feedback")]
+            public bool[] OutputFeedback { get; set; }
+
+            [DataMember(Name = "solution-feedback")]
+            public bool[] SolutionFeedback { get; set; }
+
+            [DataMember(Name = "status-feedback")]
+            public bool[] StatusFeedback { get; set; }
+
+            [DataMember(Name = "score-feedback")]
+            public bool[] ScoreFeedback { get; set; }
+            public Add_FeedbackParameters () { }
+        }
 
         [HttpPost]
         public ActionResult Add(ProblemViewModel vm)
-        {//bobi  e kurva
+        {
+            string parametersJson = Request.Form["parameters"];
+            Add_FeedbackParameters feedbackParameters = JsonConvert.DeserializeObject<Add_FeedbackParameters>(Request.Form["parameters"]);
             if(!vm.Validate(ViewData))
             {
                 AddCompetitionOptions();
@@ -92,16 +91,9 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
                 statementFiles = new List<HttpPostedFileBase>();
             Add_FetchPostFiles(ref inputFiles, ref solutionFiles, ref statementFiles);
 
-            List<bool>
-                inputFeedbacks = new List<bool>(),
-                outputFeedbacks = new List<bool>(),
-                solutionFeedbacks = new List<bool>(),
-                scoreFeedbacks = new List<bool>(),
-                statusFeedbacks = new List<bool>();
-            Add_ParseFeedbackArguments(vm, inputFiles.Count, ref inputFeedbacks, ref outputFeedbacks, ref solutionFeedbacks, ref scoreFeedbacks, ref statusFeedbacks);
-
             List<double> timeLimits=new List<double>();
-            Add_ParseTimeLimitArguments(vm, inputFiles.Count, ref timeLimits);
+            while (timeLimits.Count < solutionFiles.Count) timeLimits.Add(1);
+            //Add_ParseTimeLimitArguments(vm, inputFiles.Count, ref timeLimits);
 
             if (inputFiles.Count!=solutionFiles.Count)
             {
@@ -116,13 +108,7 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
                 Problem problem = new Problem()
                 {
                     CompetitionGivenAt = competition,
-                    Name = vm.Name,
-                    T_InputFeedbacks = vm.T_InputFeedbacks,
-                    T_OutputFeedbacks = vm.T_OutputFeedbacks,
-                    T_ScoreFeedbacks = vm.T_ScoreFeedbacks,
-                    T_SolutionFeedbacks = vm.T_SolutionFeedbacks,
-                    T_StatusFeedbacks = vm.T_StatusFeedbacks,
-                    T_TimeLimits = vm.T_TimeLimits
+                    Name = vm.Name
                 };
                 problem = db.Problems.Add(problem);
                 db.SaveChanges();
@@ -138,11 +124,11 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
                         Solution = solutionFiles[i].ReadContents(),
                         GroupName = "DEFAULT",
                         Points = 10,
-                        InputFeedbackEnabled = inputFeedbacks[i],
-                        SolutionFeedbackEnabled = solutionFeedbacks[i],
-                        OutputFeedbackEnabled = outputFeedbacks[i],
-                        ScoreFeedbackEnabled = scoreFeedbacks[i],
-                        StatusFeedbackEnabled = statusFeedbacks[i],
+                        InputFeedbackEnabled = feedbackParameters.InputFeedback[i],
+                        SolutionFeedbackEnabled = feedbackParameters.SolutionFeedback[i],
+                        OutputFeedbackEnabled = feedbackParameters.OutputFeedback[i],
+                        ScoreFeedbackEnabled = feedbackParameters.ScoreFeedback[i],
+                        StatusFeedbackEnabled = feedbackParameters.StatusFeedback[i],
                         TimeLimit = timeLimits[i]
                     };
                     problem.Tests.Add(test);
@@ -150,6 +136,7 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
 
                 foreach(var sFile in statementFiles)
                 {
+                    if (sFile.ContentLength == 0 || sFile.FileName == null || sFile.FileName == "") continue;
                     var statement = new ProblemStatement()
                     {
                         Bytes = sFile.InputStream.ToArray(),
@@ -178,7 +165,9 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
 
                 var vm = new List<ProblemViewModel>();
 
-                var problems = db.Problems.ToList();
+                var problems = db.Problems
+                    .Include(prob=>prob.CompetitionGivenAt)
+                    .ToList();
                 foreach (var p in problems) vm.Add(new ProblemViewModel(p));
 
                 return View(vm);
@@ -198,6 +187,8 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
                         .FirstOrDefault();
                     if (problem == null) continue;
 
+                    ;
+
                     if (!pvm.RequestDelete)
                     {
                         Competition competition = db.Competitions
@@ -209,6 +200,8 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
                         problem.CompetitionGivenAt = competition;
                     }
                     else db.Problems.Remove(problem);
+
+                    ;
                     db.SaveChanges();
                 }
                 return RedirectToAction("List");

@@ -57,6 +57,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -151,6 +152,7 @@
     <Compile Include="Areas\Shared\ViewModels\UserAccountViewModel.cs" />
     <Compile Include="Areas\Shared\ViewModels\UserGroupViewModel.cs" />
     <Compile Include="Areas\Shared\ViewModels\ViewPermissions.cs" />
+    <Compile Include="Areas\Shared\ViewModels\WhatTheFuckException.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="FormErrors.cs" />
@@ -241,7 +243,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Participation\Models\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -308,11 +309,18 @@
       <Project>{a8b8cced-9569-4329-8bc6-e46f69364331}</Project>
       <Name>CodeBits</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Exhys.WebContestHost.Communication\Exhys.WebContestHost.Communication.csproj">
+      <Project>{467e611e-9a27-40ed-96ee-499c0fdc347f}</Project>
+      <Name>Exhys.WebContestHost.Communication</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Exhys.WebContestHost.DataModels\Exhys.WebContestHost.DataModels.csproj">
       <Project>{7a72ba22-4c12-4979-bdb7-728e636d45d5}</Project>
       <Name>Exhys.WebContestHost.DataModels</Name>
       <Private>True</Private>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

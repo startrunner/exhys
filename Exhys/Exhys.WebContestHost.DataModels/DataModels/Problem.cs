@@ -15,12 +15,13 @@ namespace Exhys.WebContestHost.DataModels
         [Required]
         public string Name { get; set; }
 
+        /*
         public string T_TimeLimits { get; set; }
         public string T_InputFeedbacks { get; set; }
         public string T_OutputFeedbacks { get; set; }
         public string T_SolutionFeedbacks { get; set; }
         public string T_ScoreFeedbacks { get; set; }
-        public string T_StatusFeedbacks { get; set; }
+        public string T_StatusFeedbacks { get; set; }*/
 
         public virtual Competition CompetitionGivenAt { get; set; }
 

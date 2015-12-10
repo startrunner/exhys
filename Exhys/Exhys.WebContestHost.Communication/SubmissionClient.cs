@@ -4,9 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
-using System.Text;
 using System.Threading.Tasks;
-using System.Diagnostics;
 using Exhys.WebContestHost.Communication.SubmissionRouter;
 using System.Threading;
 using System.ServiceModel.Channels;
@@ -26,7 +24,7 @@ namespace Exhys.WebContestHost.Communication
             submissionCompletionSource.TrySetResult(result);
         }
 
-        async public Task<List<SolutionTestStatus>> SubmitRequestAsync (ProblemSolution problemSolution)
+        public async Task<List<SolutionTestStatus>> SubmitRequestAsync (ProblemSolution problemSolution)
         {
             if(submissionCompletionSource!=null)
             {

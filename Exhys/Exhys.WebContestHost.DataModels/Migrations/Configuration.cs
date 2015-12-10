@@ -12,7 +12,7 @@ namespace Exhys.WebContestHost.DataModels.Migrations
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(Exhys.WebContestHost.DataModels.ExhysContestEntities context)
+        protected override void Seed (Exhys.WebContestHost.DataModels.ExhysContestEntities context)
         {
             var adminGroup = new UserGroup()
             {
@@ -20,7 +20,11 @@ namespace Exhys.WebContestHost.DataModels.Migrations
                 IsAdministrator = true,
                 IsOpen = false
             };
-            context.UserGroups.AddOrUpdate(x => x.Name, adminGroup);
+            try
+            {
+                context.UserGroups.AddOrUpdate(x => x.Name, adminGroup);
+            }
+            catch { }
 
             var adminUser = new UserAccount()
             {
@@ -29,7 +33,11 @@ namespace Exhys.WebContestHost.DataModels.Migrations
                 Username = "admin",
                 UserGroup = adminGroup
             };
-            context.UserAccounts.AddOrUpdate(x=>x.Username, adminUser);
+            try
+            {
+                context.UserAccounts.AddOrUpdate(x => x.Username, adminUser);
+            }
+            catch { }
 
             context.SaveChanges();
         }

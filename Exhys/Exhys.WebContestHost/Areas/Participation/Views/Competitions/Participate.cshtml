@@ -32,125 +32,135 @@
 
     <br /><br /><br />
     @*Problem List*@
-    <section>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th colspan="2">Problems</th>
-                </tr>
-                <tr>
-                    <th>Name</th>
-                    <th>Statement</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for(int i=0;i<Model.Competition.Problems.Count;i++)
-                {
+    <section style="float:left">
+        <fieldset>
+            <legend>Problems</legend>
+            <table class="table-bordered">
+                
+                <tbody>
+                    @for (int i = 0; i < Model.Competition.Problems.Count; i++)
+                    {
+                        <tr>
+                            <td>@Model.Competition.Problems[i].Name</td>
+                            <td>
+                                @for (int j = 0; j < Model.Competition.Problems[i].ProblemStatements.Count; j++)
+                                {
+                                    <div>
+                                        @using (Html.BeginForm(method: FormMethod.Get, actionName: "DownloadStatement", controllerName: "Competitions"))
+                                        {
+                                            <input type="hidden" name="id" value="@Model.Competition.Problems[i].ProblemStatements[j].Id" />
+                                            <button type="submit" class="btn btn-link">@Model.Competition.Problems[i].ProblemStatements[j].Filename.Split('\\').Last()</button>
+                                        }
+                                    </div>
+                                }
+                            </td>
+                        </tr>
+                    }
                     <tr>
-                        <td>@Model.Competition.Problems[i].Name</td>
-                        <td>
-                            @for(int j=0;j<Model.Competition.Problems[i].ProblemStatements.Count;j++)
-                            {
-                                <div>
-                                    @using (Html.BeginForm(method: FormMethod.Get, actionName: "DownloadStatement", controllerName: "Competitions"))
-                                    {
-                                        <input type="hidden" name="id" value="@Model.Competition.Problems[i].ProblemStatements[j].Id"/>
-                                        <button type="submit">@Model.Competition.Problems[i].ProblemStatements[j].Filename</button>
-                                    }
-                                </div>
-                            }
-                        </td>
+                        <td><br /></td>
+                        <td><br /></td>
                     </tr>
-                }
-                <tr>
-                    <td><br/></td>
-                    <td><br/></td>
-                </tr>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </fieldset>
     </section>
 
-    <br /><br /><br />
+    
     @*Submission*@
-    <section>
-        <label>Submit a Solution</label>
-        @using (Html.BeginForm())
+    <section style="padding-left:1cm;">
+        @using (Html.BeginForm(actionName:"SubmitSolution", controllerName:"Competitions", method: FormMethod.Post, htmlAttributes: new { }))
         {
             var vm = new ProblemSolutionViewModel();
 
-            <div class="form-group">
-                @Html.FixedDropDownListFor(m => vm.ProblemId, ViewData.GetProblemOptions())
-            </div>
+            <fieldset>
+                <legend>Submit a Solution</legend>
+                <div class="form-group">
+                    @Html.LabelFor(m => vm.ProblemId, "Problem")
+                    @Html.FixedDropDownListFor(m => vm.ProblemId, ViewData.GetProblemOptions())
+                </div>
 
-            <div class="form-group">
-                <input type="file" id="input-sol-file" name="@ProblemSolutionViewModel.FileInputName" />
-            </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => vm.SourceCode, "Source Code")
+                    @Html.TextAreaFor(m => vm.SourceCode, new { placeholder = "//Hello, World!" })
+                </div>
 
-            <div class="form-group">
-                @Html.FixedDropDownListFor(m=>vm.LanguageAlias, ViewData.GetProgrammingLanguageOptions())
-            </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => vm.LanguageAlias, "Language")
+                    @Html.FixedDropDownListFor(m => vm.LanguageAlias, ViewData.GetProgrammingLanguageOptions())
+                </div>
 
-            <div class="form-group">
-                <button type="submit">Submit Solution</button>
-            </div> 
+                <div class="form-group">
+                    <button class="btn btn-default" type="submit">Submit Solution</button>
+                    <button class="btn btn-default" type="reset">Reset</button>
+                </div>
+            </fieldset>
         }
         
     </section>
 
     <br /><br /><br />
     @*Previous Submissions*@
-    <section>
-        <span>Previous Submissions</span>
-        <table>
-            <thead>
-                <tr>
-                    <th>Problem</th>
-                    <th>Score</th>
-                    <th>Time</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Pr1</td>
-                    <td>
-                        <span>10</span>
-                        <span>10</span>
-                        <span>10</span>
-                        <span>10</span>
-                        <span>10</span>
-                        <strong>Total: 10</strong>
-                    </td>
-                    <td>12:30</td>
-                </tr>
 
-                <tr>
-                    <td>Pr2</td>
-                    <td>
-                        <span>10</span>
-                        <span>10</span>
-                        <span>10</span>
-                        <span>10</span>
-                        <span>10</span>
-                        <strong>Total: 10</strong>
-                    </td>
-                    <td>12:30</td>
-                </tr>
+    <section class="">
+        <fieldset>
+            <legend>Previous Submissions</legend>
+            <table class="table-bordered">
+                <thead>
+                    <tr>
+                        <th>Problem</th>
+                        <th>Status</th>
+                        <th>Total Score</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ 
+                        foreach (var v in Model.ProblemSubmissions)
+                        {
+                            <tr>
+                                <td class="text-center">@v.ProblemName</td>
+                                <td class="text-center">
+                                    @{ 
+                                        if (v.Status == ProblemSolutionExecutionStatusVm.Pending)
+                                        {<span>Pending</span>}
+                                        else if (v.Status == ProblemSolutionExecutionStatusVm.InProgress)
+                                        { <span>In Progress...</span>}
+                                        else
+                                        {
 
-                <tr>
-                    <td>Pr1</td>
-                    <td>
-                        <strong>Pending Evaluation</strong>
-                    </td>
-                    <td>12:30</td>
-                </tr>
-            </tbody>
-        </table>
+                                        }
+                                     }
+                                </td>
+                                <td class="text-center">
+                                    0
+                                </td>
+                                <td class="text-center">
+                                    <a href="#">Click</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </fieldset>
     </section>
+
+    <br /><br /><br /><br /><br />
+
+    <footer class="panel-footer">
+        <span>
+            Exhys Competitive Informatics Managment System
+        </span>
+        <br/>
+        <span>
+            2015-2016 Alexander Ivanov, Bobby Rachkov, Ivan Yochev
+        </span>
+    </footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     <script>
-        $('button').addClass('btn btn-default');
+        //$('button').addClass('btn btn-default');
     </script>
 </body>
 </html>

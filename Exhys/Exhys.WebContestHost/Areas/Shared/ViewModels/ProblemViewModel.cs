@@ -16,7 +16,7 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
         public const string StatementFilesInputName = "input-statement-files";
         #endregion
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "You need to enter time limits for tests.")]
+        /*[Required(AllowEmptyStrings = false, ErrorMessage = "You need to enter time limits for tests.")]
         public string T_TimeLimits { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "You need to set input feedbacks.")]
@@ -32,7 +32,7 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
         public string T_ScoreFeedbacks { get; set; }
 
         [Required(AllowEmptyStrings =false, ErrorMessage ="You need to set status feedbacks.")]
-        public string T_StatusFeedbacks { get; set; }
+        public string T_StatusFeedbacks { get; set; }*/
 
 
         //[Required(AllowEmptyStrings = false, ErrorMessage = "You need to enter a name for the problem.")]
@@ -76,11 +76,12 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
                 {
                     this.CompetitionId = model.CompetitionGivenAt.Id;
                     this.CompetitionName = model.CompetitionGivenAt.Name;
+                    /*
                     this.T_TimeLimits = model.T_TimeLimits;
                     this.T_SolutionFeedbacks = model.T_SolutionFeedbacks;
                     this.T_ScoreFeedbacks = model.T_ScoreFeedbacks;
                     this.T_OutputFeedbacks = model.T_OutputFeedbacks;
-                    this.T_InputFeedbacks = model.T_InputFeedbacks;
+                    this.T_InputFeedbacks = model.T_InputFeedbacks;*/
                 }
             }
         }

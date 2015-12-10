@@ -2,183 +2,139 @@
 <div>
 </div>
 @{
-	ViewData.SetPageTitle("Add Problem");
-	/*
-	===============================BOBI SHTE TE PREBIQ==========================================
-	1. You've used Non-English Variable Names (lastBrCol, curBrCol). What the fuck does 'Br' mean!?
-	2. The script you wrote for updating the checkbox tables would only work for a single table and could not be reused.
-	3. You put a ton of functions in the global 'namespace'. Please have a look at this article: http://www.codeproject.com/Articles/19030/Namespaces-in-JavaScript
-	4. What the fuck does 'file-1' mean?
-		-Alexander Ivanov
-
-	===============================Aleksandre EBI SE==========================================
-												-s obich Bobby Rachkov
-											PS: Maika ti e kurva
-	*/
+    ViewData.SetPageTitle("Add Problem");
 }
 @section styles{
-	<link rel="stylesheet" type="text/css" href="~/Content/checkboxes-style.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/checkboxes-style.css">
 }
 <div>
-	<br />
-	<div>
-		@using(Html.BeginForm("Add", "Problems", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal well", id="add-problem-form" }))
-		{
-			<fieldset>
-				<legend>Add Problem</legend>
-				@if(Html.ErrorListFor(ViewData) != null)
-				{
-					<div class="alert alert-dismissible alert-danger">
-						<button id="btn-close" type="button" class="close" data-dismiss="alert">×</button>
-						@Html.ErrorListFor(ViewData)
-					</div>
-				}
+    <br />
+    <div>
+        @using (Html.BeginForm("Add", "Problems", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal well", id = "add-problem-form" }))
+        {
+            @*This is used to pass the feedback parameters in a JSON object.*@
+            <input type="hidden" name="parameters" id="input-feedback-parameters"/>
 
-				<div class="form-group">
-					@Html.LabelFor(m => m.CompetitionId, "Competition Id", new { @class = "col-lg-2 control-label" })
-					<div class="col-lg-10">
-						@Html.FixedDropDownListFor(m => m.CompetitionId, ViewData.GetCompetitionOptions(), new { @class = "form-control padding-0" })
-					</div>
-				</div>
-				<div class="form-group">
-					@Html.LabelFor(m => m.Name, new { @class = "col-lg-2 control-label" })
-					<div class="col-lg-10">
-						@Html.TextBoxFor(m => m.Name, new { placeholder = "Problem Name", @class = "form-control lineH" })
-					</div>
-				</div>
-				<div class="form-group" id="inputFilesGroup1">
-					<label for="files-inp" class="col-lg-2 control-label">Input Files</label>
-					<div class="col-lg-10">
-						<label class="fileContainer">
-							<span class="box js">
-								<input type="file" name="@ProblemViewModel.InputFilesInputName" id="file-1" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple />
-								<label for="file-1" class=" btn btn-default"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z" /></svg> <span>Choose files&hellip;</span></label>
-							</span>
-						</label>
-						@*<input id="files-inp" name="@ProblemViewModel.InputFilesInputName" type="file" multiple placeholder="Test Files" class="form-control" />*@
-					</div>
-				</div>
-				<div class="form-group" id="inputFilesGroup2">
-					<label for="files-sol" class="col-lg-2 control-label">Solution Files</label>
-					<div class="col-lg-10">
-						<label class="fileContainer">
-							<span class="box js">
-								<input type="file" name="@ProblemViewModel.SolutionFilesInputName" id="file-2" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple />
-								<label for="file-2" class=" btn btn-default"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z" /></svg> <span>Choose files&hellip;</span></label>
-							</span>
-						</label>
-						@*<input id="files-sol" name="@ProblemViewModel.SolutionFilesInputName" type="file" multiple placeholder="Test Files" class="form-control" />*@
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="files-stt" class="col-lg-2 control-label">Statement Files</label>
-					<div class="col-lg-10">
-						<label class="fileContainer">
-							<span class="box js">
-								<input type="file" name="@ProblemViewModel.StatementFilesInputName" id="file-3" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple />
-								<label for="file-3" class=" btn btn-default"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z" /></svg> <span>Choose a file&hellip;</span></label>
-							</span>
-						</label>
-						@*Click here to trigger the file uploader!
-							<input id="files-stt" name="@ProblemViewModel.StatementFilesInputName" type="file" multiple placeholder="Statements" class="form-control" />*@
+            <fieldset>
+                <legend>Add Problem</legend>
+                @if (Html.ErrorListFor(ViewData) != null)
+                {
+                    <div class="alert alert-dismissible alert-danger">
+                        <button id="btn-close" type="button" class="close" data-dismiss="alert">×</button>
+                        @Html.ErrorListFor(ViewData)
+                    </div>
+                }
 
-					</div>
-				</div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.CompetitionId, "Competition Id", new { @class = "col-lg-2 control-label" })
+                    <div class="col-lg-10">
+                        @Html.FixedDropDownListFor(m => m.CompetitionId, ViewData.GetCompetitionOptions(), new { @class = "form-control padding-0" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Name, new { @class = "col-lg-2 control-label" })
+                    <div class="col-lg-10">
+                        @Html.TextBoxFor(m => m.Name, new { placeholder = "Problem Name", @class = "form-control lineH" })
+                    </div>
+                </div>
+                <div class="form-group" id="inputFilesGroup1">
+                    <label for="files-inp" class="col-lg-2 control-label">Input Files</label>
+                    <div class="col-lg-10">
+                        <label class="fileContainer">
+                            <span class="box js">
+                                <input type="file" name="@ProblemViewModel.InputFilesInputName" id="file-1" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple />
+                                <label for="file-1" class="btn btn-default"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z" /></svg> <span>Choose files&hellip;</span></label>
+                            </span>
+                        </label>
+                        @*<input id="files-inp" name="@ProblemViewModel.InputFilesInputName" type="file" multiple placeholder="Test Files" class="form-control" />*@
+                    </div>
+                </div>
+                <div class="form-group" id="inputFilesGroup2">
+                    <label for="files-sol" class="col-lg-2 control-label">Solution Files</label>
+                    <div class="col-lg-10">
+                        <label class="fileContainer">
+                            <span class="box js">
+                                <input type="file" name="@ProblemViewModel.SolutionFilesInputName" id="file-2" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple />
+                                <label for="file-2" class="btn btn-default"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z" /></svg> <span>Choose files&hellip;</span></label>
+                            </span>
+                        </label>
+                        @*<input id="files-sol" name="@ProblemViewModel.SolutionFilesInputName" type="file" multiple placeholder="Test Files" class="form-control" />*@
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="files-stt" class="col-lg-2 control-label">Statement Files</label>
+                    <div class="col-lg-10">
+                        <label class="fileContainer">
+                            <span class="box js">
+                                <input type="file" name="@ProblemViewModel.StatementFilesInputName" id="file-3" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple />
+                                <label for="file-3" class="btn btn-default"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z" /></svg> <span>Choose a file&hellip;</span></label>
+                            </span>
+                        </label>
+                        @*Click here to trigger the file uploader!
+                            <input id="files-stt" name="@ProblemViewModel.StatementFilesInputName" type="file" multiple placeholder="Statements" class="form-control" />*@
 
-				<div class="form-group">
-					<label class="col-lg-2 control-label">Input Feedback</label>
-					<div class="col-lg-10 horizontal-scroll selectableScroll" id="div1">
-						<table class="table table-bordered table-editor border-brush-black" id="table-feedback">
-							<thead class="th-center">
-								<tr><th class="table-selector">Property</th></tr>
-							</thead>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Input Feedback</label>
+                    <div class="col-lg-10 horizontal-scroll selectableScroll" id="div1">
+                        <table class="table table-bordered table-editor border-brush-black" id="table-feedback">
+                            <thead class="th-center">
+                                <tr><th class="table-selector">Property</th></tr>
+                            </thead>
                             <tr class="valign-middle text-center" name="input-feedback"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',0)">Input Feedback</th></tr>
                             <tr class="valign-middle text-center" name="output-feedback"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',1)">Output Feedback</th></tr>
                             <tr class="valign-middle text-center" name="solution-feedback"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',2)">Solution Feedback</th></tr>
                             <tr class="valign-middle text-center" name="status-feedback"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',3)">Status Feedback</th></tr>
                             <tr class="valign-middle text-center" name="score-feedback"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',4)">Score Feedback</th></tr>
-							<!--<tr class="valign-middle text-center"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',5)">Time Limits</th></tr>-->
-						</table>
-					</div>
-				</div>
+                            <!--<tr class="valign-middle text-center"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',5)">Time Limits</th></tr>-->
+                        </table>
+                    </div>
+                </div>
 
-				<div class="form-group">
-					<label class="col-lg-2 control-label">Output Feedback</label>
-					<div class="col-lg-10 horizontal-scroll" id="div2">
-						<table class="table table-bordered table-editor border-brush-black" id="table-output-feedback">
-							<thead class="th-center">
-								<tr></tr>
-							</thead>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Output Feedback</label>
+                    <div class="col-lg-10 horizontal-scroll" id="div2">
+                        <table class="table table-bordered table-editor border-brush-black" id="table-output-feedback">
+                            <thead class="th-center">
+                                <tr></tr>
+                            </thead>
                             <!--tr class="valign-middle text-center"></tr-->
-						</table>
-					</div>
-				</div>
+                        </table>
+                    </div>
+                </div>
 
-				<div class="form-group">
-					<label class="col-lg-2 control-label">Solution Feedback</label>
-					<div class="col-lg-10 horizontal-scroll" id="div3">
-						<table class="table table-bordered table-editor border-brush-black" id="table-solution-feedback">
-							<thead class="th-center">
-								<tr></tr>
-							</thead>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Solution Feedback</label>
+                    <div class="col-lg-10 horizontal-scroll" id="div3">
+                        <table class="table table-bordered table-editor border-brush-black" id="table-solution-feedback">
+                            <thead class="th-center">
+                                <tr></tr>
+                            </thead>
                             <!--tr class="valign-middle text-center"></tr-->
-						</table>
-					</div>
-				</div>
+                        </table>
+                    </div>
+                </div>
 
-				<div class="form-group">
-					<label class="col-lg-2 control-label">Submit Problem</label>
-					<div class="col-lg-10">
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">Submit Problem</label>
+                    <div class="col-lg-10">
                         <button type="submit" id="submit-button" class="btn btn-primary">Add Problem</button>
-						<button type="reset" class="btn btn-default">Reset</button>
-					</div>
-				</div>
+                        <button type="reset" class="btn btn-default">Reset</button>
+                    </div>
+                </div>
+            </fieldset>
 
-				@*<div class="form-group">
-        <label class="col-lg-2 control-label">PlainText Parameters</label>
-        <div class="col-lg-10">
-            <div>
-                @Html.LabelFor(m => m.T_InputFeedbacks, "Input Feedback")
-                @Html.TextBoxFor(m => m.T_InputFeedbacks, new { placeholder = "Input Feedbacks ('1;0;0')", @class = "plainTextParameter" })
-            </div>
-
-            <div>
-                @Html.LabelFor(m => m.T_OutputFeedbacks, "Output Feedback")
-                @Html.TextBoxFor(m => m.T_OutputFeedbacks, new { placeholder = "Output Feedbacks ('1;0;0')", @class = "plainTextParameter" })
-            </div>
-
-            <div>
-                @Html.LabelFor(m => m.T_SolutionFeedbacks, "Solution   Feedback")
-                @Html.TextBoxFor(m => m.T_SolutionFeedbacks, new { placeholder = "Solution Feedbacks ('1;0;0')", @class = "plainTextParameter" })
-            </div>
-
-            <div>
-                @Html.LabelFor(m => m.T_StatusFeedbacks, "Status Feedback")
-                @Html.TextBoxFor(m => m.T_StatusFeedbacks, new { placeholder = "Status Feedbacks ('1;0;0')", @class = "plainTextParameter"})
-            </div>
-
-            <div>
-                @Html.LabelFor(m => m.T_ScoreFeedbacks, "Score Feedback")
-                @Html.TextBoxFor(m => m.T_ScoreFeedbacks, new { placeholder = "Score Feedback ('1;0;0')", @class = "plainTextParameter" })
-            </div>
-
-            <div>
-                @Html.LabelFor(m => m.T_TimeLimits, "Time Limits")
-                @Html.TextBoxFor(m => m.T_TimeLimits, new { placeholder = "Time Limits ('1.0;1.0')", @class = "plainTextParameter" })
-            </div>
-        </div>
-    </div>*@
-			</fieldset>
-
-		}
-	</div>
+        }
+    </div>
 </div>
 @section scripts{
 
 
 
-	@*GenerateCheckboxColumns*@
-	<script>
+    @*GenerateCheckboxColumns*@
+    <script>
         var checkBoxTableManager = {
 			registerInput: function (tableId, fileInputId) {
 			    var that = checkBoxTableManager;
@@ -229,30 +185,29 @@
 			    var checkboxes = $('#' + tableId).find('tr:eq(' + (rowIndex + 1) + ') :checkbox');
 			    toggleCheckboxes(checkboxes);
 			},
-			serializeAllRows: function(tableId)
-			{
+			serializeAllRows: function (tableId) {
 			    var rows = $('#' + tableId + ' tr').not(':first');
 			    console.log(rows);
-			    var tableData = [];
-                rows.each(function(){
+			    var tableData = {};
+			    rows.each(function () {
 			        var checkboxes = $(this).find(':checkbox');
 			        var rowData = [];
-			        checkboxes.each(function()
-			        {
+			        checkboxes.each(function () {
 			            rowData.push($(this).is(":checked"));
 			        });
 			        console.log($(this).attr("name"));
-			        tableData.push({ name: $(this).attr("name"), value: rowData })
-                })
-                return JSON.stringify(tableData);
+			        //tableData.push({ name: $(this).attr("name"), value: rowData })
+			        tableData[$(this).attr("name")] = rowData;
+			    })
+			    return JSON.stringify(tableData);
 			}
         };
 
         checkBoxTableManager.registerInput('table-feedback', "file-1");
-	</script>
+    </script>
 
     @*SerializeCheckBoxRow*@
-	<script>
+    <script>
         function refreshPlainTextParameters(tableId)
         {
             $(".plainTextParameter").each(function (index) {
@@ -269,10 +224,10 @@
 
             return serializedString.slice(0,-1);
         }
-	</script>
+    </script>
 
-	@*FindFilesCountMismatch*@
-	<script>
+    @*FindFilesCountMismatch*@
+    <script>
 		$("#file-1").change(function () {
 			checkAndMark();
 		});
@@ -289,10 +244,10 @@
 				$("#inputFilesGroup2")[0].classList.remove("has-error");
 			}
 		}
-	</script>
+    </script>
 
-	@*File Inputs*@
-	<script>
+    @*File Inputs*@
+    <script>
 		; (function (document, window, index) {
 			var inputs = document.querySelectorAll('.inputfile');
 			Array.prototype.forEach.call(inputs, function (input) {
@@ -317,7 +272,7 @@
 				input.addEventListener('blur', function () { input.classList.remove('has-focus'); });
 			});
 		}(document, window, 0));
-	</script>
+    </script>
 
     @*Create Selectable*@
     <script>
@@ -405,11 +360,8 @@
 
     @*Submit form*@
     <script>
-        $("#add-problem-form").submit(function () {
-            var data = $(this).serializeArray();
-            data.push({name: 'parameters', value: checkBoxTableManager.serializeAllRows('table-feedback')});
-            var url = $(this).attr("action");
-            $.post(url, data);
+        $("#add-problem-form").submit(function (e) {
+            document.getElementById('input-feedback-parameters')['value'] = checkBoxTableManager.serializeAllRows('table-feedback');
         });
     </script>
 }

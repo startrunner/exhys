@@ -9,7 +9,7 @@
 			<thead>
 				<tr>
 					<th>Name</th>
-					<th>Group</th>
+					<th>Competition</th>
 					<th>Delete?</th>
 				</tr>
 			</thead>
@@ -19,14 +19,6 @@
 					<tr>
 						<td>
 							@Html.HiddenFor(m => m[i].Id)
-						</td>
-						<td>
-							@Html.HiddenFor(m => m[i].T_InputFeedbacks)
-							@Html.HiddenFor(m => m[i].T_OutputFeedbacks)
-							@Html.HiddenFor(m => m[i].T_SolutionFeedbacks)
-							@Html.HiddenFor(m => m[i].T_StatusFeedbacks)
-							@Html.HiddenFor(m => m[i].T_TimeLimits)
-
 							@Html.TextBoxFor(m => m[i].Name)
 						</td>
 						<td>

@@ -92,6 +92,10 @@
     <Compile Include="Migrations\201512051744222_RegisteredProgLanguagesInDatabaseModel.Designer.cs">
       <DependentUpon>201512051744222_RegisteredProgLanguagesInDatabaseModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201512081932529_RemovedT_Properties.cs" />
+    <Compile Include="Migrations\201512081932529_RemovedT_Properties.Designer.cs">
+      <DependentUpon>201512081932529_RemovedT_Properties.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataModels\UserAccount.cs" />
@@ -125,6 +129,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201512051744222_RegisteredProgLanguagesInDatabaseModel.resx">
       <DependentUpon>201512051744222_RegisteredProgLanguagesInDatabaseModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201512081932529_RemovedT_Properties.resx">
+      <DependentUpon>201512081932529_RemovedT_Properties.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

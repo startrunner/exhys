@@ -9,6 +9,8 @@ using Exhys.WebContestHost.Areas.Shared.ViewModels;
 using Exhys.WebContestHost.DataModels;
 using System.Data.Entity;
 using Exhys.WebContestHost.Areas.Shared;
+using System.Threading.Tasks;
+using Exhys.WebContestHost.Communication;
 
 namespace Exhys.WebContestHost.Areas.Participation.Controllers
 {
@@ -29,13 +31,13 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
             return RedirectToAction(controllerName: "../Accounts", actionName: "SignIn", routeValues: new { });
         }
 
-        private ActionResult RedirectToList()
+        private ActionResult RedirectToList ()
         {
             return RedirectToAction("List");
         }
 
         [HttpGet]
-        public ActionResult List()
+        public ActionResult List ()
         {
             var vm = new List<CompetitionViewModel>();
 
@@ -51,7 +53,7 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
 
                 var participations = db.Participations
                     .Where(p => p.User.Id == user.Id)
-                    .Include(p=>p.Competition)
+                    .Include(p => p.Competition)
                     .ToList();
 
                 var competitions = user.UserGroup.AvaiableCompetition.ToList();
@@ -59,7 +61,7 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
                 {
                     var compVm = new CompetitionViewModel(comp);
 
-                    if(participations.Where(p=>p.Competition.Id==comp.Id).Count()!=0)
+                    if (participations.Where(p => p.Competition.Id == comp.Id).Count() != 0)
                     {
                         compVm.IsUserParticipating = true;
                     }
@@ -72,12 +74,12 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
         }
 
         [HttpGet]
-        public ActionResult Join(int id)
+        public ActionResult Join (int id)
         {
             using (var db = new ExhysContestEntities())
             {
                 var competition = db.Competitions.Where(c => c.Id == id).FirstOrDefault();
-                if(competition==null)
+                if (competition == null)
                 {
                     return RedirectToList();
                 }
@@ -89,7 +91,7 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
         }
 
         [HttpPost]
-        public ActionResult Join(CompetitionViewModel vm)
+        public ActionResult Join (CompetitionViewModel vm)
         {
             using (var db = new ExhysContestEntities())
             {
@@ -99,8 +101,8 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
                 var user = Request.GetSignedInUserQuery(db).FirstOrDefault();
                 if (user == null) return RedirectToSignIn();
 
-                var participation=db.Participations
-                    .Where(p=>p.User.Id==user.Id && p.Competition.Id==competition.Id)
+                var participation = db.Participations
+                    .Where(p => p.User.Id == user.Id && p.Competition.Id == competition.Id)
                     .FirstOrDefault();
                 if (participation != null) return RedirectToAction("Participate", new { id = vm.Id });
 
@@ -113,17 +115,17 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
                 db.SaveChanges();
 
                 return RedirectToAction("Participate", new { id = competition.Id });
-                
+
             }
         }
 
         [HttpGet]
-        public ActionResult Participate(int? id)
+        public ActionResult Participate (int? id)
         {
-            if(id==null)
+            if (id == null)
             {
                 id = Request.GetCurrentCompetitionCookie();
-                if(id==null)
+                if (id == null)
                 {
                     return RedirectToAction("List");
                 }
@@ -139,7 +141,7 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
                 AddProblemOptions(db, id.Value);
 
                 var competition = db.Competitions.Where(c => c.Id == id)
-                    
+
                     .FirstOrDefault();
                 if (competition == null) return RedirectToList();
 
@@ -148,7 +150,8 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
 
                 var participation = db.Participations
                     .Where(p => p.User.Id == user.Id && p.Competition.Id == competition.Id)
-                    .Include(p => p.Competition.Problems.Select(prob=>prob.ProblemStatements))
+                    .Include(p => p.Competition.Problems.Select(prob => prob.ProblemStatements))
+                    .Include(p => p.Submissions)
                     .FirstOrDefault();
                 if (participation == null) return RedirectToList();
 
@@ -160,7 +163,7 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
         }
 
         [HttpGet]
-        public ActionResult DownloadStatement(int id)
+        public ActionResult DownloadStatement (int id)
         {
             using (var db = new ExhysContestEntities())
             {
@@ -170,6 +173,102 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
 
                 return File(fileContents: statement.Bytes, fileDownloadName: statement.Filename, contentType: "application/zip");
             }
+        }
+
+        [HttpPost, ValidateInput(false)]
+        public ActionResult SubmitSolution (ProblemSolutionViewModel vm)
+        {
+            using (var db = new ExhysContestEntities())
+            {
+                var problem = db.Problems
+                    .Where(p => p.Id == vm.ProblemId)
+                    .Include(p => p.ProblemSolutions)
+                    .Include(p => p.CompetitionGivenAt)
+                    .FirstOrDefault();
+                var competition = db.Competitions
+                    .Where(c => c.Id == problem.CompetitionGivenAt.Id)
+                    .Include(c => c.Participations)
+                    .FirstOrDefault();
+                var user = Request
+                    .GetSignedInUserQuery(db)
+                    .Include(u => u.Participations)
+                    .FirstOrDefault();
+                var participation = db.Participations
+                    .Where(p => p.User.Id == user.Id && p.Competition.Id == competition.Id)
+                    .FirstOrDefault();
+
+                var solution = new ProblemSolution()
+                {
+                    LanguageAlias = vm.LanguageAlias,
+                    Participation = participation,
+                    Problem = problem,
+                    Status = ProblemSolution.ExecutionStatus.Pending,
+                    SourceCode = vm.SourceCode,
+                    Message = ""
+                };
+
+                db.ProblemSolutions.Add(solution);
+                db.SaveChanges();
+
+                int solutionId = db.Entry(solution).Entity.Id;
+
+                Task.Run(() =>
+                {
+                    HandleSolution(solutionId);
+                })
+
+                .ContinueWith((x) =>
+                {
+                    throw new Exception();
+                }, TaskContinuationOptions.OnlyOnFaulted);
+
+                return RedirectToAction("Participate");
+            }
+        }
+
+        private void HandleSolution (int solutionId)
+        {
+            ProblemSolution solution = null;
+            using (var db = new ExhysContestEntities())
+            {
+                solution = db.ProblemSolutions
+                    .Where(sol => sol.Id == solutionId)
+                    .Include(sol => sol.Problem)
+                    .Include(sol => sol.Problem.Tests)
+                    .Include(sol=>sol.Participation)
+                    .AsNoTracking()
+                    .FirstOrDefault();
+                solution.Status = ProblemSolution.ExecutionStatus.InProgress;
+                db.SaveChanges();
+
+                SubmissionClient client = new SubmissionClient();
+                client.SubmitRequestAsync(solution).ContinueWith((x) =>
+                {
+                    List<SolutionTestStatus> result = null;
+                    result = x.Result;
+
+                    using (var db1 = new ExhysContestEntities())
+                    {
+                        solution = db1.ProblemSolutions
+                            .Where(sol => sol.Id == solutionId)
+                            .Include(sol => sol.TestStatuses)
+                            .Include(sol => sol.Participation)
+                            .Include(sol => sol.Participation.Competition)
+                            .Include(sol => sol.Participation.User)
+                            .Include(sol => sol.Problem)
+                            .FirstOrDefault();
+
+                        solution.TestStatuses.Clear();
+                        foreach (var v in result)
+                        {
+                            solution.TestStatuses.Add(db1.Entry(v).Entity);
+                        }
+                        solution.Status = ProblemSolution.ExecutionStatus.Completed;
+                        db1.SaveChanges();
+                    }
+                });
+            }
+            
         }
     }
 }
