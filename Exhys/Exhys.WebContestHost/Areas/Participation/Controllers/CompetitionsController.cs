@@ -264,7 +264,7 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
                             solution.TestStatuses.Add(db1.Entry(v).Entity);
                         }
                         solution.Status = ProblemSolution.ExecutionStatus.Completed;
-                        db1.SaveChanges();
+                        db1.SaveChanges(); 
                     }
                 });
             }
