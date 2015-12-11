@@ -1,11 +1,11 @@
 ﻿@model ParticipationViewModel
 @{ 
-    
+
 }
 <!doctype html>
 <html>
 <head>
-    @if(Model!=null&&Model.Competition!=null)
+    @if (Model != null && Model.Competition != null)
     {
         <title>@Model.Competition.Name - Exhys</title>
     }
@@ -68,7 +68,7 @@
     
     @*Submission*@
     <section style="padding-left:1cm;">
-        @using (Html.BeginForm(actionName:"SubmitSolution", controllerName:"Competitions", method: FormMethod.Post, htmlAttributes: new { }))
+        @using (Html.BeginForm(actionName: "SubmitSolution", controllerName: "Competitions", method: FormMethod.Post, htmlAttributes: new { }))
         {
             var vm = new ProblemSolutionViewModel();
 
@@ -101,49 +101,21 @@
     <br /><br /><br />
     @*Previous Submissions*@
 
-    <section class="">
-        <fieldset>
-            <legend>Previous Submissions</legend>
-            <table class="table-bordered">
-                <thead>
-                    <tr>
-                        <th>Problem</th>
-                        <th>Status</th>
-                        <th>Total Score</th>
-                        <th>Details</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{ 
-                        foreach (var v in Model.ProblemSubmissions)
-                        {
-                            <tr>
-                                <td class="text-center">@v.ProblemName</td>
-                                <td class="text-center">
-                                    @{ 
-                                        if (v.Status == ProblemSolutionExecutionStatusVm.Pending)
-                                        {<span>Pending</span>}
-                                        else if (v.Status == ProblemSolutionExecutionStatusVm.InProgress)
-                                        { <span>In Progress...</span>}
-                                        else
-                                        { 
+    <script>/*
+        function updateCart() {
+            var tdata = $(frm).serialize(); 
+            // or your data in the format that will be used ??
+            $.ajax({
+                type: "POST",
+                data: tdata,
+                url : '<%= Url.Action("Create", "Cart") %>',
+                dataType: "json",
+                success: function (result) { success(result); }  
+            });
+        }); */
+    </script>
 
-                                        }
-                                     }
-                                </td>
-                                <td class="text-center">
-                                    0
-                                </td>
-                                <td class="text-center">
-                                    <a href="#">Click</a>
-                                </td>
-                            </tr>
-                        }
-                    }
-                </tbody>
-            </table>
-        </fieldset>
-    </section>
+    @{Html.RenderAction(actionName: "ListSubmissions", controllerName: "Competitions", routeValues: new { participationId = Model.Id });}
 
     <br /><br /><br /><br /><br />
 

@@ -1,0 +1,45 @@
+﻿@model List<ProblemSolutionViewModel>
+<section class="">
+    <fieldset>
+        <legend>Previous Submissions</legend>
+        <table class="table-bordered">
+            <thead>
+                <tr>
+                    <th>Problem</th>
+                    <th>Status</th>
+                    <th>Total Score</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (var v in Model)
+                    {
+                        <tr>
+                            <td class="text-center">@v.ProblemName</td>
+                            <td class="text-center">
+                                @{
+                                    if (v.Status == ProblemSolutionExecutionStatusVm.Pending)
+                                    {<span>Pending</span>}
+                                    else if (v.Status == ProblemSolutionExecutionStatusVm.InProgress)
+                                    { <span>In Progress...</span>}
+                                    else
+                                    {
+
+                                    }
+                                }
+                            </td>
+                            <td class="text-center">
+                                0
+                            </td>
+                            <td class="text-center">
+                                <a href="#">Click</a>
+                            </td>
+                        </tr>
+                                    }
+                }
+            </tbody>
+        </table>
+    </fieldset>
+</section>
+

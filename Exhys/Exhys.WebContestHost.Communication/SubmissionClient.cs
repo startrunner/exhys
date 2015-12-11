@@ -72,10 +72,17 @@ namespace Exhys.WebContestHost.Communication
 
         private List<SolutionTestStatus> CreateSolutionTestStatuses(SubmissionResultDto submissionResult, Problem problem)
         {
-            return submissionResult.TestResults
-                .ToList()
-                .Select((x, i) => CreateSolutionTestStatus(x, problem.Tests.ElementAt(i)))
-                .ToList();
+            if (submissionResult.TestResults != null)
+            {
+                return submissionResult.TestResults
+                    .ToList()
+                    .Select((x, i) => CreateSolutionTestStatus(x, problem.Tests.ElementAt(i)))
+                    .ToList();
+            }
+            else
+            {
+                return new List<SolutionTestStatus>();
+            }
         }
 
         private SolutionTestStatus CreateSolutionTestStatus(TestResultDto testResult, ProblemTest test)
