@@ -83,11 +83,13 @@
                             <thead class="th-center">
                                 <tr><th class="table-selector">Property</th></tr>
                             </thead>
-                            <tr class="valign-middle text-center" name="input-feedback"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',0)">Input Feedback</th></tr>
-                            <tr class="valign-middle text-center" name="output-feedback"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',1)">Output Feedback</th></tr>
-                            <tr class="valign-middle text-center" name="solution-feedback"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',2)">Solution Feedback</th></tr>
-                            <tr class="valign-middle text-center" name="status-feedback"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',3)">Status Feedback</th></tr>
-                            <tr class="valign-middle text-center" name="score-feedback"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',4)">Score Feedback</th></tr>
+                            <tr class="valign-middle text-center checkbox-row" name="input-feedback"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',0)">Input Feedback</th></tr>
+                            <tr class="valign-middle text-center checkbox-row" name="output-feedback"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',1)">Output Feedback</th></tr>
+                            <tr class="valign-middle text-center checkbox-row" name="solution-feedback"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',2)">Solution Feedback</th></tr>
+                            <tr class="valign-middle text-center checkbox-row" name="status-feedback"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',3)">Status Feedback</th></tr>
+                            <tr class="valign-middle text-center checkbox-row" name="score-feedback"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',4)">Score Feedback</th></tr>
+                            <tr class="valign-middle text-center textbox-row" name="time-limits"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',5)">Time Limits</th></tr>
+                            <tr class="valign-middle text-center textbox-row" name="test-scores"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',6)">Test Scores</th></tr>
                             <!--<tr class="valign-middle text-center"><th class="row-selector" onclick="checkBoxTableManager.selectWholeRow('table-feedback',5)">Time Limits</th></tr>-->
                         </table>
                     </div>
@@ -166,8 +168,13 @@
 			    var $newHeaderCell = $('<th class="column-selector" onclick="checkBoxTableManager.selectWholeColumn(&quot;' + tableId + '&quot;,' + (number - 1) + ')">' + number + '</th>');
 				$("#" + tableId + " thead tr").append($newHeaderCell);
 
-				var $newCheckBoxCell = $('<td><label><input name="checks" type="checkbox"><span></span></label></td>');
-				$("#" + tableId + " tr").not("thead tr").append($newCheckBoxCell);
+				var $newCheckBoxCell = $('<td><label><input type="checkbox"><span></span></label></td>');
+				$("#" + tableId + " tr.checkbox-row").not("thead tr").append($newCheckBoxCell);
+
+				console.log($("#" + tableId + " tr.checkbox-row").not("thead tr"));
+
+				var $textBoxCell = $('<td><input type="number" value="0" min="0"></td>');
+				$("#" + tableId + " tr.textbox-row").not("thead tr").append($textBoxCell);
 
 			},
 			removeColumn: function (tableId) {
@@ -191,12 +198,15 @@
 			    var tableData = {};
 			    rows.each(function () {
 			        var checkboxes = $(this).find(':checkbox');
+			        var textboxes = $(this).find(':input(number)');
 			        var rowData = [];
 			        checkboxes.each(function () {
 			            rowData.push($(this).is(":checked"));
 			        });
+			        textboxes.each(function () {
+			            rowData.push($(this).val());
+			        });
 			        console.log($(this).attr("name"));
-			        //tableData.push({ name: $(this).attr("name"), value: rowData })
 			        tableData[$(this).attr("name")] = rowData;
 			    })
 			    return JSON.stringify(tableData);
@@ -281,7 +291,7 @@
 
             $('.selectableScroll')
                 .selectableScroll({
-                    filter: "td, th:not(.table-selector)",
+                    filter: "td:not(:has(input[type=number])), tr:not(.textbox-row) > th:not(.table-selector)",
                     distance: 3,
                     selecting: function(event,ui){
                         selectingHeader(true, ui.selecting, tableId);
@@ -327,7 +337,7 @@
             var rowHeader = selectedItem.parent().find('th').first();
             var cellIndex = selectedItem.index();
             var columnHeader = $('#' + tableId).find('tr').find("th:eq(" + (cellIndex) + ")");
-            var columnCells = $('#' + tableId).find('tr').not(":first")
+            var columnCells = $('#' + tableId).find('tr').not(":first").not(".textbox-row")
                 .find("td:eq(" + (cellIndex - 1) + ")");
 
             if (!selectedItem.is("th")) {
