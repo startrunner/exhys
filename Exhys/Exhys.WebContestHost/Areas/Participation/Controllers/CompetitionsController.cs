@@ -227,19 +227,34 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
         }
 
         [HttpGet]
-        public ActionResult ListSubmissions(int participationId)
+        public ActionResult ListSubmissions (int participationId)
         {
-            List<ProblemSolutionViewModel> problemSolutionViewModel;
+            List<ProblemSolutionViewModel> vm;
             using (var db = new ExhysContestEntities())
             {
-                var problemSolutions = db.ProblemSolutions
+                var user = Request.GetSignedInUserQuery(db).FirstOrDefault();
+                if (user == null) { return Content("Not Signed In"); }
+
+                var participation = db.Participations
+                    .Where(p => p.Id == participationId)
+                    .FirstOrDefault();
+
+                var sols = db.ProblemSolutions
                     .Where(x => x.Participation.Id == participationId)
+                    .Where(x => x.Participation.User.Id == user.Id)
+                    .Include(x => x.TestStatuses)
+                    .Include(x => x.TestStatuses.Select(y => y.ProblemTest))
                     .ToList();
-                problemSolutionViewModel = problemSolutions
+
+                var statusedSols = sols.Where(s => s.TestStatuses.Count != 0).ToList();
+
+                ;
+
+                vm = sols
                     .Select(x => new ProblemSolutionViewModel(x))
                     .ToList();
             }
-            return PartialView(problemSolutionViewModel);
+            return PartialView(vm);
         }
 
         private void HandleSolution (int solutionId)
@@ -270,11 +285,11 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
                 using (var db = new ExhysContestEntities())
                 {
                     solution = db.ProblemSolutions
-                        .Where(sol => sol.Id == solutionId)
-                        .Include(sol => sol.TestStatuses)
-                        .Include(sol => sol.Problem)
-                        .Include(sol => sol.Participation)
-                        .FirstOrDefault();
+                                .Where(sol => sol.Id == solutionId)
+                                .Include(sol => sol.TestStatuses)
+                            .Include(sol => sol.Problem)
+                                .Include(sol => sol.Participation)
+                                .FirstOrDefault();
 
                     solution.TestStatuses.Clear();
                     foreach (var v in result)
@@ -282,7 +297,7 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
                         SolutionTestStatus status = new SolutionTestStatus
                         {
                             Output = v.Output,
-                            ProblemTest = db.ProblemTests.Where(y=>y.Id==v.ProblemTest.Id).FirstOrDefault(),
+                            ProblemTest = db.ProblemTests.Where(y => y.Id == v.ProblemTest.Id).FirstOrDefault(),
                             Score = v.Score,
                             Status = v.Status
                         };
@@ -292,7 +307,7 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
                     db.SaveChanges();
                 }
             });
-            
+
         }
     }
 }
