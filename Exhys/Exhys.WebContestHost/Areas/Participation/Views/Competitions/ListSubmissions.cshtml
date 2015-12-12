@@ -25,7 +25,12 @@
                                     { <span>In Progress...</span>}
                                     else
                                     {
-
+                                        foreach(var status in v.TestStatuses)
+                                        {
+                                            <span>
+                                                @status.Score
+                                            </span>
+                                        }
                                     }
                                 }
                             </td>

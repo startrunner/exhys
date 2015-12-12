@@ -149,6 +149,7 @@
     <Compile Include="Areas\Shared\ViewModels\ProblemViewModel.cs" />
     <Compile Include="Areas\Shared\ViewModels\ProgrammingLanguageViewModel.cs" />
     <Compile Include="Areas\Shared\ViewModels\SignedInUserViewModel.cs" />
+    <Compile Include="Areas\Shared\ViewModels\SolutionTestStatusViewModel.cs" />
     <Compile Include="Areas\Shared\ViewModels\UserAccountViewModel.cs" />
     <Compile Include="Areas\Shared\ViewModels\UserGroupViewModel.cs" />
     <Compile Include="Areas\Shared\ViewModels\ViewPermissions.cs" />
