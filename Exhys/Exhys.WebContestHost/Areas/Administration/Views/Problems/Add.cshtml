@@ -198,11 +198,10 @@
 			},
 			serializeAllRows: function (tableId) {
 			    var rows = $('#' + tableId + ' tr').not(':first');
-			    console.log(rows);
 			    var tableData = {};
 			    rows.each(function () {
 			        var checkboxes = $(this).find(':checkbox');
-			        var textboxes = $(this).find(':input(number)');
+			        var textboxes = $(this).find('input[type=number]');
 			        var rowData = [];
 			        checkboxes.each(function () {
 			            rowData.push($(this).is(":checked"));
@@ -210,7 +209,6 @@
 			        textboxes.each(function () {
 			            rowData.push($(this).val());
 			        });
-			        console.log($(this).attr("name"));
 			        tableData[$(this).attr("name")] = rowData;
 			    })
 			    return JSON.stringify(tableData);
