@@ -321,7 +321,7 @@ namespace Exhys.WebContestHost.Controllers
                         solution.TestStatuses.Add(status);
                     } 
 
-                    ;
+                    ;  
 
                     solution.Status = ProblemSolution.ExecutionStatus.Completed;
                     db.SaveChanges();

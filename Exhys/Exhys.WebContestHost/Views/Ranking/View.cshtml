@@ -1,0 +1,47 @@
+﻿@model RankingViewModel
+<!doctype html>
+<html>
+<head>
+    <title>@Model.CompetitionName - Ranking</title>
+</head>
+<body>
+    <table border="1" style="width:100%;">
+        <thead>
+            <tr>
+                <th rowspan="2">Rank</th>
+                <th rowspan="2">Name</th>
+                <th rowspan="1" colspan="@Model.ProblemNames.Count()">Problem Scores</th>
+                <th rowspan="2">Total</th>
+            </tr>
+            <tr>
+                @{ 
+                    foreach(string name in Model.ProblemNames)
+                    {
+                        <th>@name</th>
+                    }
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @{ 
+                int i = 1;
+                foreach(RankingUserViewModel user in Model.Users)
+                {
+                    <tr>
+                        <td>@(i++)</td>
+                        <td>@user.Name</td>
+                        @{ 
+                            foreach(string score in user.ProblemScores)
+                            {
+                                <td>@score</td>
+                            }
+                        }
+
+                        <td>@user.Score</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</body>
+</html>

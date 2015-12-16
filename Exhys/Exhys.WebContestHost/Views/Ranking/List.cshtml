@@ -1,0 +1,32 @@
+﻿@model List<CompetitionViewModel>
+<!doctype html>
+<html>
+<head>
+
+</head>
+<body>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>View</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                for (int i = 0; i < Model.Count; i++)
+                {
+                    <tr>
+                        <td>@Model[i].Name</td>
+                        <td>@Model[i].Description</td>
+                        <td>
+                            @Html.ActionLink("Click", "View", new { id=Model[i].Id })
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,102 @@
+﻿@model ProblemSolutionViewModel
+<!doctype html>
+<html>
+<head>
+
+</head>
+<body>
+    <fieldset>
+        <legend>Status</legend>
+        @{
+            var status = Model.Status;
+            string statusStr = "";
+            if (status == ProblemSolutionExecutionStatusVm.Completed) { statusStr = "Completed"; }
+            else if (status == ProblemSolutionExecutionStatusVm.InProgress) { statusStr = "In Progress..."; }
+            else if (status == ProblemSolutionExecutionStatusVm.Pending) { statusStr = "Pending"; }
+            @statusStr
+        }
+    </fieldset>
+    <fieldset>
+        <legend>Source Code</legend>
+        <code style="white-space:pre-wrap">@Model.SourceCode</code>
+    </fieldset>
+    <fieldset>
+        <legend>Status</legend>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Test</th>
+                    <th>Score</th>
+                    <th>Status</th>
+                    <th>Input</th>
+                    <th>Output</th>
+                    <th>Solution</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    double totalScore = 0, totalPossible = 0;
+                    var statuses = Model.TestStatuses;
+                    for (int i = 0; i < statuses.Count; i++)
+                    {
+                        <tr>
+                            <td>@(i+1)</td>
+                            <td>
+                                @{ 
+                                    string s="";
+                                    if (!statuses[i].Score.Equals(double.NaN))
+                                    {
+                                        s = statuses[i].Score.ToString();
+                                        totalScore += statuses[i].Score;
+                                        totalPossible += statuses[i].PossibleScore;
+                                    }
+                                    else
+                                    {
+                                        s = "?";
+                                    }
+                                    @s
+                                }
+                            </td>
+                            <td>
+                                @{ 
+                                    var sts = statuses[i].Status;
+                                    string stsStr = "";
+                                    if (sts == TestStatusVm.CorrectAnswer) { stsStr = "Correct Answer"; }
+                                    if(sts == TestStatusVm.MemoryLimitExceeded) { stsStr = "Memory exceeded"; }
+                                    if(sts== TestStatusVm.SegmentationFault) { stsStr = "Segmentation Fault"; }
+                                    if(sts== TestStatusVm.TimeOut) { stsStr = "Timeout"; }
+                                    if(sts== TestStatusVm.WrongAnswer) { stsStr = "Wrong Answer"; }
+                                    if(sts== TestStatusVm.NoFeedback) { stsStr = "No Feedback"; }
+                                    @stsStr
+                                }
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(statuses[i].Input))
+                                {<code>@statuses[i].Input</code>}
+                                else
+                                {@("No Feedback")}
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(statuses[i].Output))
+                                {<code>@statuses[i].Output</code>}
+                                else
+                                {@("No Feedback")}
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(statuses[i].Solution))
+                                {<code>@statuses[i].Solution</code>}
+                                else
+                                {@("No Feedback")}
+                            </td>
+                        </tr>
+                    }
+                }
+                <tr>
+                    <th>Total</th>
+                    <td colspan="5">@totalScore / @totalPossible</td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+</body>
+</html>
