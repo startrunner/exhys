@@ -70,7 +70,7 @@ namespace Exhys.WebContestHost.Controllers
                 }
             }
 
-            return View(vm);
+            return PartialView(vm);
         }
 
         [HttpGet]

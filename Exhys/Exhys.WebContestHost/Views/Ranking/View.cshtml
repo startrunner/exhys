@@ -3,6 +3,8 @@
 <html>
 <head>
     <title>@Model.CompetitionName - Ranking</title>
+    @Styles.Render("~/Content/css", "~/Content/custom-css")
+    @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
     <table border="1" style="width:100%;">
@@ -15,7 +17,7 @@
             </tr>
             <tr>
                 @{ 
-                    foreach(string name in Model.ProblemNames)
+                    foreach (string name in Model.ProblemNames)
                     {
                         <th>@name</th>
                     }
@@ -24,14 +26,13 @@
         </thead>
         <tbody>
             @{ 
-                int i = 1;
-                foreach(RankingUserViewModel user in Model.Users)
+                foreach (RankingUserViewModel user in Model.Users)
                 {
                     <tr>
-                        <td>@(i++)</td>
+                        <td>@(user.Rank.ToString())</td>
                         <td>@user.Name</td>
                         @{ 
-                            foreach(string score in user.ProblemScores)
+                            foreach (string score in user.ProblemScores)
                             {
                                 <td>@score</td>
                             }
@@ -39,9 +40,14 @@
 
                         <td>@user.Score</td>
                     </tr>
-                }
+                            }
             }
         </tbody>
     </table>
+
+    @{Html.RenderAction(controllerName: "Home", actionName: "Footer");}
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
 </body>
 </html>

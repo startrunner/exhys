@@ -1,0 +1,16 @@
+﻿<footer class="panel-footer exhys-footer">
+        Exhys judge system for competitive informatics<br />
+        © 2015-2016 Alexander Ivanov, Bobby Rachkov, Ivan Yochev
+    <div class="nav-pills">
+        @Html.ActionLink("Admin CP", "List", "Administration/UserAccounts")
+        @Html.ActionLink("Ranking", "List", "Ranking")
+        @Html.ActionLink("Compete", "List", "Participation")
+    </div>
+</footer>
+<style>
+    .exhys-footer{
+        position:fixed;
+        bottom: 0;
+        width: 100%;
+    }
+</style>

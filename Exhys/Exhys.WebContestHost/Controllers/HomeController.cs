@@ -30,5 +30,11 @@ namespace Exhys.WebContestHost.Controllers
 
             return View();
         }
+
+        [HttpGet]
+        public ActionResult Footer()
+        {
+            return PartialView();
+        }
     }
 }

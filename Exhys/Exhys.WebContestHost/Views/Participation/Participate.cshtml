@@ -119,15 +119,8 @@
 
     <br /><br /><br /><br /><br />
 
-    <footer class="panel-footer">
-        <span>
-            Exhys Competitive Informatics Managment System
-        </span>
-        <br/>
-        <span>
-            2015-2016 Alexander Ivanov, Bobby Rachkov, Ivan Yochev
-        </span>
-    </footer>
+    @{Html.RenderAction("Footer", "Home"); }
+
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

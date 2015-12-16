@@ -1,40 +1,53 @@
 ﻿@model IList<CompetitionViewModel>
-
-    <br /><br /><br /><br />
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Join</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        @foreach (var competition in Model)
-        {
+<!doctype html>
+<html>
+<head>
+    <title>List Competitions</title>
+    @Styles.Render("~/Content/css", "~/Content/custom-css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <table>
+        <thead>
             <tr>
-                <td>@competition.Name</td>
-                <td>@competition.Description</td>
-                <td>
-                    @if (competition.IsUserParticipating == false)
-                    {
-                        using (Html.BeginForm("Join", "Participation", FormMethod.Get))
-                        {
-                            <input type="hidden" name="id" value="@competition.Id" />
-                            <button type="submit">Join</button>
-                        }
-                    }
-                    else
-                    {
-                        using (Html.BeginForm("Participate", "Participation", FormMethod.Get))
-                        {
-                            <input type="hidden" name="id" value="@competition.Id" />
-                            <button type="submit">Already Joined</button>
-                        }
-                    }
-                </td>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Join</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+
+        <tbody>
+            @foreach (var competition in Model)
+            {
+                <tr>
+                    <td>@competition.Name</td>
+                    <td>@competition.Description</td>
+                    <td>
+                        @if (competition.IsUserParticipating == false)
+                        {
+                            using (Html.BeginForm("Join", "Participation", FormMethod.Get))
+                            {
+                                <input type="hidden" name="id" value="@competition.Id" />
+                                <button type="submit">Join</button>
+                            }
+                        }
+                        else
+                        {
+                            using (Html.BeginForm("Participate", "Participation", FormMethod.Get))
+                            {
+                                <input type="hidden" name="id" value="@competition.Id" />
+                                <button type="submit">Already Joined</button>
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @{ Html.RenderAction("Footer", "Home");}
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+</body>
+</html>

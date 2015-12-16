@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Exhys.WebContestHost.Areas.Shared.Extensions;
 using Exhys.WebContestHost.Areas.Shared.ViewModels;
 using Exhys.WebContestHost.DataModels;
 
@@ -79,12 +80,26 @@ namespace Exhys.WebContestHost.Controllers
                     return new RankingUserViewModel()
                     {
                         Name = participation.User.FullName,
-                        ProblemScores = problemScores.ToArray(), 
-                        Score = fullScore
+                        ProblemScores = problemScores.ToArray(),
+                        Score = fullScore,
+                        Rank = new RankViewModel()
                     };   
                 })
                 .OrderByDescending(user=>user.Score)
                 .ToArray();
+
+                for(int i=0;i<vm.Users.Length;i++)
+                {
+                    if(i==0 || vm.Users[i].Score!=vm.Users[i-1].Score) vm.Users[i].Rank.From = i + 1;
+                    else vm.Users[i].Rank.From = vm.Users[i - 1].Rank.From;
+                }
+
+                vm.Users.LastByIndex().Rank.To = vm.Users.Length;
+                for(int i=vm.Users.Length-2;i>=0;i--)
+                {
+                    if (vm.Users[i].Score != vm.Users[i + 1].Score) vm.Users[i].Rank.To = i + 1;
+                    else vm.Users[i].Rank.To = vm.Users[i + 1].Rank.To;
+                }
             }
 
             ;

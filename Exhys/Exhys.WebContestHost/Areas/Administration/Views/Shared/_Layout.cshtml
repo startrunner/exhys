@@ -14,11 +14,11 @@
 	</header>
 	<div>
 		@{
-			var user = ViewData.GetSignedInUser();
-			if(user != null && user.IsGuest == false)
-			{
+            var user = ViewData.GetSignedInUser();
+            if (user != null && user.IsGuest == false)
+            {
 				<span>User: @(user.FullName)</span>
-			}
+            }
 		}
 	</div>
 	<div class="navbar navbar-default navbar-fixed-top">
@@ -29,7 +29,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				@Html.ActionLink("Exhys", "Index", "Home", new { area = "" }, new { @class = "navbar-brand"})
+				@Html.ActionLink("Exhys", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
@@ -93,7 +93,9 @@
 	<div class="container body-content">
 		@RenderBody()
 	</div>
-	
+
+    @{Html.RenderAction("Footer", "Home", new { Area = "" }); }
+
 	@Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jquery-ui")
 	@Scripts.Render("~/bundles/bootstrap")

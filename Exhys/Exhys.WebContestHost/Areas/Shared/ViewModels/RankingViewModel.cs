@@ -5,11 +5,25 @@ using System.Web;
 
 namespace Exhys.WebContestHost.Areas.Shared.ViewModels
 {
+
+    public class RankViewModel
+    {
+        public int From { get; set; }
+        public int To { get; set; }
+
+        public override string ToString ()
+        {
+            if (From != To) return $"{From} - {To}";
+            else return From.ToString();
+        }
+    }
+
     public class RankingUserViewModel
     {
         public string Name { get; set; }
         public double Score { get; set; }
         public string[] ProblemScores { get; set; }
+        public RankViewModel Rank;
         public RankingUserViewModel ()
         {
             ProblemScores = new string[0];
