@@ -36,7 +36,9 @@ namespace Exhys.WebContestHost.Areas.Shared.Mvc
 
         protected override void HandleUnauthorizedRequest (AuthorizationContext filterContext)
         {
-            filterContext.Result = new RedirectResult("~/WebRoot/ErrorPages/401.html");
+            var route= filterContext.RequestContext.RouteData;
+            filterContext.Controller.TempData.SetRedirectsBackTo(route);
+            filterContext.Result = new RedirectResult("~/accounts/signin");
             //base.HandleUnauthorizedRequest(filterContext);
         }
     }

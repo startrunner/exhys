@@ -18,6 +18,7 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
         public bool RequestDelete { get; set; }
         public int UserId { get;  set; }
         public int? GroupId { get; set; }
+        public string GroupName { get; set; }
 
         public UserAccountViewModel () : this(null) { }
         public UserAccountViewModel (UserAccount model)
@@ -25,12 +26,13 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
             if (model != null)
             {
                 Username = model.Username;
-                Password = model.Password;
                 FullName = model.FullName;
+                Password = model.Password;
                 if (model.UserGroup != null)
                 {
                     this.IsAdmin = model.UserGroup.IsAdministrator;
                     this.GroupId = model.UserGroup.Id;
+                    this.GroupName = model.UserGroup.Name;
                 }
                 this.UserId = model.Id;
             }
@@ -41,44 +43,7 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
             this.RequestDelete = false;
         }
 
-        public bool ValidateForRegistration(ViewDataDictionary viewData)
-        {
-            if (Username == null || Username.Length < DatabaseLimits.Username_MinLength)
-            {
-                viewData.ModelState.AddModelError(FormErrors.UsernameTooShort);
-            }
-            else if(Username.Length>DatabaseLimits.Username_MaxLength)
-            {
-                viewData.ModelState.AddModelError(FormErrors.UsernameTooLong);
-            }
-
-            if(Password==null || Password.Length<DatabaseLimits.Username_MinLength)
-            {
-                viewData.ModelState.AddModelError(FormErrors.UsernameTooShort);
-            }
-            else if(Password.Length>DatabaseLimits.Username_MaxLength)
-            {
-                viewData.ModelState.AddModelError(FormErrors.UsernameTooLong);
-            }
-
-            if(Password!=ConfirmPassword)
-            {
-                viewData.ModelState.AddModelError(FormErrors.PasswordMismatch);
-            }
-
-            if ((FullName != null && FullName.Length > DatabaseLimits.HumanName_MaxLength))
-            {
-                viewData.ModelState.AddModelError(FormErrors.HumanNameTooLong);
-            }
-
-            if(GroupId==null)
-            {
-                viewData.ModelState.AddModelError(FormErrors.NoGroupSelected);
-            }
-            return viewData.ModelState.IsValid;
-        }
-
-        public bool ValidateForSignIn(ViewDataDictionary viewData)
+        private void ValidateUsername(ViewDataDictionary viewData)
         {
             if (Username == null || Username.Length < DatabaseLimits.Username_MinLength)
             {
@@ -88,6 +53,70 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
             {
                 viewData.ModelState.AddModelError(FormErrors.UsernameTooLong);
             }
+        }
+
+        private void ValidateNameAndGroup(ViewDataDictionary viewData)
+        {
+            if ((FullName != null && FullName.Length > DatabaseLimits.HumanName_MaxLength))
+            {
+                viewData.ModelState.AddModelError(FormErrors.HumanNameTooLong);
+            }
+
+            if (GroupId == null)
+            {
+                viewData.ModelState.AddModelError(FormErrors.NoGroupSelected);
+            }
+        }
+
+        public bool ValidateForRegistration (ViewDataDictionary viewData)
+        {
+            ValidateUsername(viewData);
+
+            if (Password == null || Password.Length < DatabaseLimits.Password_MinLength)
+            {
+                viewData.ModelState.AddModelError(FormErrors.PasswordTooShort);
+            }
+            else if (Password.Length > DatabaseLimits.Password_MaxLength)
+            {
+                viewData.ModelState.AddModelError(FormErrors.PasswordTooLong);
+            }
+
+            if (Password != ConfirmPassword)
+            {
+                viewData.ModelState.AddModelError(FormErrors.PasswordMismatch);
+            }
+
+            ValidateNameAndGroup(viewData);
+
+            return viewData.ModelState.IsValid;
+        }
+
+        public bool ValidateForEdit (ViewDataDictionary viewData)
+        {
+            if (!string.IsNullOrEmpty(Password))
+            {
+                if (Password.Length < DatabaseLimits.Password_MinLength)
+                {
+                    viewData.ModelState.AddModelError(FormErrors.PasswordTooShort);
+                }
+                else if (Password.Length > DatabaseLimits.Password_MaxLength)
+                {
+                    viewData.ModelState.AddModelError(FormErrors.PasswordTooLong);
+                }
+                if (Password != ConfirmPassword)
+                {
+                    viewData.ModelState.AddModelError(FormErrors.PasswordMismatch);
+                }
+            }
+
+            ValidateNameAndGroup(viewData);
+
+            return viewData.ModelState.IsValid;
+        }
+
+        public bool ValidateForSignIn(ViewDataDictionary viewData)
+        {
+            ValidateUsername(viewData);
 
             if (Password == null || Password.Length < DatabaseLimits.Password_MinLength)
             {

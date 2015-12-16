@@ -19,7 +19,7 @@ namespace Exhys.WebContestHost.Areas.Shared.Extensions
             that[PropertyNames.FormErrors] = errors;
         }
 
-        public static void SetRedirectsBackTo(this TempDataDictionary that, RouteBase url)
+        public static void SetRedirectsBackTo(this TempDataDictionary that, RouteData url)
         {
             that[PropertyNames.RedirectsBackTo] = url;
         }
@@ -29,9 +29,9 @@ namespace Exhys.WebContestHost.Areas.Shared.Extensions
             return that[PropertyNames.FormErrors] as IEnumerable<FormErrors.FormError>;
         }
 
-        public static RouteBase GetRedirectsBackTo(this TempDataDictionary that)
+        public static RouteData GetRedirectsBackTo(this TempDataDictionary that)
         {
-            return that[PropertyNames.RedirectsBackTo] as RouteBase;
+            return that[PropertyNames.RedirectsBackTo] as RouteData;
         }
 
     }

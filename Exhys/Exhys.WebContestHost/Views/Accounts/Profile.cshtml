@@ -1,31 +1,54 @@
 ﻿@model Exhys.WebContestHost.Areas.Shared.ViewModels.UserAccountViewModel
+@{ 
+    if(Model!=null)
+    {
+        Model.Password = null;
+    }
+}
 <!doctype html>
 <html>
 <head>
 
 </head>
 <body>
-    <header></header>
+    @Html.ActionLink("Sign Out", "SignOut")
+
+    @Html.ErrorListFor(ViewData)
 
     <section>
-        <table>
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Is Admin</th>
-                </tr>
-            </thead>
+        @using (Html.BeginForm())
+        {
+            @Html.HiddenFor(m => m.UserId)
+            @Html.HiddenFor(m => m.GroupId)
+            @Html.HiddenFor(m=>m.GroupName)
+            @Html.HiddenFor(m => m.Username)
+        <table border="1">
             <tbody>
                 <tr>
+                    <th>Username</th>
                     <td>@Model.Username</td>
-                    <td>@Model.FullName</td>
-                    <td>@Model.IsAdmin</td>
+                </tr>
+                <tr>
+                    <th>Group</th>
+                    <td>@Model.GroupName</td>
+                </tr>
+                <tr>
+                    <th>@Html.LabelFor(m=>m.FullName, "Name")</th> 
+                    <td>@Html.TextBoxFor(m=>m.FullName)</td>
+                </tr>
+                <tr>
+                    <th>@Html.LabelFor(m => m.Password, "New Password")</th>
+                    <td>@Html.PasswordFor(m => m.Password)</td>
+                </tr>
+                <tr>
+                    <th>@Html.LabelFor(m => m.ConfirmPassword, "Confirm Password")</th>
+                    <td>@Html.PasswordFor(m => m.ConfirmPassword)</td>
                 </tr>
             </tbody>
+
         </table>
-        @Html.ActionLink("Sign Out", "SignOut")
+        <button type="submit">Save Changes</button>
+        }
     </section>
 
     <footer></footer>

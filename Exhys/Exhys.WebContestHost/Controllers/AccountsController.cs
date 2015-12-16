@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -125,7 +127,11 @@ namespace Exhys.WebContestHost.Controllers
 
                 Response.SetSessionCookie(session.Id);
 
-                return RedirectToAction("Profile");
+                var backRedirect = TempData.GetRedirectsBackTo();
+                var redirectValues = backRedirect.Values;
+                redirectValues.Add("area", backRedirect.DataTokens["area"]);
+                ;
+                return RedirectToRoute(backRedirect.Values);
             }
 
         invalid_credentials:
@@ -138,11 +144,35 @@ namespace Exhys.WebContestHost.Controllers
         {
             using (var db = new ExhysContestEntities())
             {
-                var user = Request.GetSignedInUserQuery(db).FirstOrDefault();
+                var user = Request.GetSignedInUserQuery(db)
+                    .Include(u=>u.UserGroup)
+                    .FirstOrDefault();
 
                 if (user == null) return RedirectToAction("SignIn");
                 return PartialView(new UserAccountViewModel(user));
             }
+        }
+
+        [HttpPost]
+        public new ActionResult Profile(UserAccountViewModel vm)
+        {
+            if(!vm.ValidateForEdit(ViewData))
+            {
+                return PartialView(vm);
+            }
+            using (var db = new ExhysContestEntities())
+            {
+                var signedIn = Request.GetSignedInUserQuery(db).FirstOrDefault();
+                Debug.Assert(signedIn != null && signedIn.Id == vm.UserId, "watafa you doin, m8???");
+
+                signedIn.FullName = vm.FullName;
+                if(!string.IsNullOrEmpty(vm.Password))
+                {
+                    signedIn.Password = vm.Password;
+                }
+                db.SaveChanges();
+            }
+            return RedirectToAction("Profile");
         }
 
         [HttpGet]

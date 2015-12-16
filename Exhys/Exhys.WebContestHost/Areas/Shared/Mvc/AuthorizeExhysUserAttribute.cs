@@ -44,11 +44,7 @@ namespace Exhys.WebContestHost.Areas.Shared.Mvc
 
         protected override void HandleUnauthorizedRequest (AuthorizationContext filterContext)
         {
-            filterContext.Controller.TempData.SetFormErrors(new List<FormErrors.FormError>()
-            {
-                FormErrors.SignInRequired(FormErrors.Actions.ParticipateInACompetition)
-            });
-
+            filterContext.Controller.TempData.SetRedirectsBackTo(filterContext.RequestContext.RouteData);
             filterContext.Result = new RedirectResult("~/accounts/signin");
         }
     }

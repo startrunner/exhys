@@ -21,22 +21,13 @@ namespace Exhys.WebContestHost.Controllers
         /// A user should not participate in any competition if they are not signed in
         /// </summary>
         /// <returns></returns>
-        private ActionResult RedirectToSignIn ()
-        {
-            TempData.SetFormErrors(
-                new List<FormErrors.FormError>
-                {
-                    FormErrors.SignInRequired("participate in a competition")
-                });
-            return RedirectToAction(controllerName: "../Accounts", actionName: "SignIn", routeValues: new { });
-        }
-
         private ActionResult RedirectToList ()
         {
             return RedirectToAction("List");
         }
 
         [HttpGet]
+        [AuthorizeExhysUser]
         public ActionResult List ()
         {
             var vm = new List<CompetitionViewModel>();
@@ -44,7 +35,6 @@ namespace Exhys.WebContestHost.Controllers
             using (var db = new ExhysContestEntities())
             {
                 var user = Request.GetSignedInUserQuery(db).FirstOrDefault();
-                if (user == null) return RedirectToSignIn();
 
                 db.Entry(user)
                     .Reference(u => u.UserGroup)
@@ -74,6 +64,7 @@ namespace Exhys.WebContestHost.Controllers
         }
 
         [HttpGet]
+        [AuthorizeExhysUser]
         public ActionResult Join (int id)
         {
             using (var db = new ExhysContestEntities())
@@ -91,6 +82,7 @@ namespace Exhys.WebContestHost.Controllers
         }
 
         [HttpPost]
+        [AuthorizeExhysUser]
         public ActionResult Join (CompetitionViewModel vm)
         {
             using (var db = new ExhysContestEntities())
@@ -99,7 +91,6 @@ namespace Exhys.WebContestHost.Controllers
                 if (competition == null) return RedirectToAction("List");
 
                 var user = Request.GetSignedInUserQuery(db).FirstOrDefault();
-                if (user == null) return RedirectToSignIn();
 
                 var participation = db.Participations
                     .Where(p => p.User.Id == user.Id && p.Competition.Id == competition.Id)
@@ -120,6 +111,7 @@ namespace Exhys.WebContestHost.Controllers
         }
 
         [HttpGet]
+        [AuthorizeExhysUser]
         public ActionResult Participate (int? id)
         {
             if (id == null)
@@ -146,7 +138,6 @@ namespace Exhys.WebContestHost.Controllers
                 if (competition == null) return RedirectToList();
 
                 var user = Request.GetSignedInUserQuery(db).FirstOrDefault();
-                if (user == null) return RedirectToSignIn();
 
                 var participation = db.Participations
                     .Where(p => p.User.Id == user.Id && p.Competition.Id == competition.Id)
@@ -163,6 +154,7 @@ namespace Exhys.WebContestHost.Controllers
         }
          
         [HttpGet]
+        [AuthorizeExhysUser]
         public ActionResult DownloadStatement (int id)
         {
             using (var db = new ExhysContestEntities())
@@ -226,6 +218,7 @@ namespace Exhys.WebContestHost.Controllers
         }
 
         [HttpGet]
+        [AuthorizeExhysUser]
         public ActionResult ViewSubmission(int id)
         {
             using (var db = new ExhysContestEntities())
@@ -245,6 +238,7 @@ namespace Exhys.WebContestHost.Controllers
         }
 
         [HttpGet]
+        [AuthorizeExhysUser]
         public ActionResult ListSubmissions (int participationId)
         {
             List<ProblemSolutionViewModel> vm;
