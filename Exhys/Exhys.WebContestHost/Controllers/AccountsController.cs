@@ -140,6 +140,7 @@ namespace Exhys.WebContestHost.Controllers
         }
 
         [HttpGet]
+        [AuthorizeExhysUser]
         public new ActionResult Profile ()
         {
             using (var db = new ExhysContestEntities())
@@ -148,7 +149,6 @@ namespace Exhys.WebContestHost.Controllers
                     .Include(u=>u.UserGroup)
                     .FirstOrDefault();
 
-                if (user == null) return RedirectToAction("SignIn");
                 return PartialView(new UserAccountViewModel(user));
             }
         }
