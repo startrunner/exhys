@@ -161,7 +161,7 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
                 return View(vm);
             }
         }
-
+         
         [HttpGet]
         public ActionResult DownloadStatement (int id)
         {
