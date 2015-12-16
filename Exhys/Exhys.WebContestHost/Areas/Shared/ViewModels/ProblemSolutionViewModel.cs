@@ -16,6 +16,7 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
     {
         public const string FileInputName = "input-src-file";
 
+        public int Id { get; set; }
         public string LanguageAlias { get; set; }
         public string ProblemName { get; set; }
         public int? ProblemId { get; set; }
@@ -31,6 +32,7 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
 
             if (model != null)
             {
+                this.Id = model.Id;
                 if (model.Problem != null)
                 {
                     this.ProblemName = model.Problem.Name;
@@ -51,6 +53,7 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
             {
                 this.SourceCode = "";
             }
+            ;
         }
 
 

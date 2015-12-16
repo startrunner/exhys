@@ -9,6 +9,7 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
     {
         public CompetitionViewModel Competition { get; set; }
         public List<ProblemSolutionViewModel> ProblemSubmissions { get; set; }
+        public UserAccountViewModel User { get; set; }
 
         public ParticipationViewModel () : this(null) { }
         public int Id { get; set; }
@@ -25,6 +26,10 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
                     {
                         ProblemSubmissions.Add(new ProblemSolutionViewModel(v));
                     }
+                }
+                if(model.User!=null)
+                {
+                    this.User = new UserAccountViewModel(model.User);
                 }
             }
         }

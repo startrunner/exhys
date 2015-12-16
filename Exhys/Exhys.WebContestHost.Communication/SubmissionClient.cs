@@ -87,12 +87,15 @@ namespace Exhys.WebContestHost.Communication
 
         private SolutionTestStatus CreateSolutionTestStatus(TestResultDto testResult, ProblemTest test)
         {
-            return new SolutionTestStatus
+            var rt = new SolutionTestStatus
             {
                 Output = testResult.Output,
                 Status = CreateTestStatus(testResult.Status),
-                ProblemTest = test                
+                ProblemTest = test,
+                Score = 0
             };
+            if (testResult.Status == TestResultDto.ResultStatus.CorrectAnswer) rt.Score = test.Points;
+            return rt;
         }
 
         private SolutionTestStatus.TestStatus CreateTestStatus(TestResultDto.ResultStatus resultStatus)

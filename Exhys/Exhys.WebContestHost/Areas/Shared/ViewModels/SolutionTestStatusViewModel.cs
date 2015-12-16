@@ -9,8 +9,9 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
         public string Input { get; set; }
         public string Output { get; set; }
         public string Solution { get; set; }
-        public double Score { get; private set; }
-        public TestStatusVm Status { get; set; }
+        public double Score { get; set; } = double.NaN;
+        public double PossibleScore { get; set; }
+        public TestStatusVm Status { get; set; } = TestStatusVm.NoFeedback;
 
         public SolutionTestStatusViewModel (SolutionTestStatus model)
         {
@@ -20,6 +21,7 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
                 if (model.ProblemTest != null)
                 {
                     var test = model.ProblemTest;
+                    this.PossibleScore = test.Points;
                     if (test.InputFeedbackEnabled)
                     {
                         this.Input = test.Input;
@@ -42,6 +44,7 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
                     }
                 }
             }
+            ;
         }
 
         private static TestStatusVm ConvertStatus (SolutionTestStatus.TestStatus status)
@@ -67,6 +70,7 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
 
     public enum TestStatusVm
     {
+        NoFeedback,
         SegmentationFault,
         WrongAnswer,
         CorrectAnswer,

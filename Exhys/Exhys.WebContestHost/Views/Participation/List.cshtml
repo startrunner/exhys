@@ -1,5 +1,6 @@
 ﻿@model IList<CompetitionViewModel>
 
+    <br /><br /><br /><br />
 <table>
     <thead>
         <tr>
@@ -8,6 +9,7 @@
             <th>Join</th>
         </tr>
     </thead>
+
     <tbody>
         @foreach (var competition in Model)
         {
@@ -17,7 +19,7 @@
                 <td>
                     @if (competition.IsUserParticipating == false)
                     {
-                        using (Html.BeginForm("Join", "Competitions", FormMethod.Get))
+                        using (Html.BeginForm("Join", "Participation", FormMethod.Get))
                         {
                             <input type="hidden" name="id" value="@competition.Id" />
                             <button type="submit">Join</button>
@@ -25,7 +27,7 @@
                     }
                     else
                     {
-                        using (Html.BeginForm("Participate", "Competitions", FormMethod.Get))
+                        using (Html.BeginForm("Participate", "Participation", FormMethod.Get))
                         {
                             <input type="hidden" name="id" value="@competition.Id" />
                             <button type="submit">Already Joined</button>

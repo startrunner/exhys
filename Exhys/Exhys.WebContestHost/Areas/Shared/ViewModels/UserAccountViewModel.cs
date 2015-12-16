@@ -27,9 +27,12 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
                 Username = model.Username;
                 Password = model.Password;
                 FullName = model.FullName;
-                this.IsAdmin = model.UserGroup.IsAdministrator;
+                if (model.UserGroup != null)
+                {
+                    this.IsAdmin = model.UserGroup.IsAdministrator;
+                    this.GroupId = model.UserGroup.Id;
+                }
                 this.UserId = model.Id;
-                if(model.UserGroup!=null)this.GroupId = model.UserGroup.Id;
             }
             else
             {

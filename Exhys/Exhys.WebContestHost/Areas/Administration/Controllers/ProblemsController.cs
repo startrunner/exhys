@@ -71,6 +71,12 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
             [DataMember(Name = "score-feedback")]
             public bool[] ScoreFeedback { get; set; }
             public Add_FeedbackParameters () { }
+
+            [DataMember(Name ="time-limits")]
+            public double[] TimeLimits { get; set; }
+
+            [DataMember(Name ="test-scores")]
+            public double[] TestScores { get; set; }
         }
 
         [HttpPost]
@@ -91,8 +97,6 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
                 statementFiles = new List<HttpPostedFileBase>();
             Add_FetchPostFiles(ref inputFiles, ref solutionFiles, ref statementFiles);
 
-            List<double> timeLimits=new List<double>();
-            while (timeLimits.Count < solutionFiles.Count) timeLimits.Add(1);
             //Add_ParseTimeLimitArguments(vm, inputFiles.Count, ref timeLimits);
 
             if (inputFiles.Count!=solutionFiles.Count)
@@ -123,13 +127,13 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
                         Input = inputFiles[i].ReadContents(),
                         Solution = solutionFiles[i].ReadContents(),
                         GroupName = "DEFAULT",
-                        Points = 10,
+                        Points = feedbackParameters.TestScores[i],
                         InputFeedbackEnabled = feedbackParameters.InputFeedback[i],
                         SolutionFeedbackEnabled = feedbackParameters.SolutionFeedback[i],
                         OutputFeedbackEnabled = feedbackParameters.OutputFeedback[i],
                         ScoreFeedbackEnabled = feedbackParameters.ScoreFeedback[i],
                         StatusFeedbackEnabled = feedbackParameters.StatusFeedback[i],
-                        TimeLimit = timeLimits[i]
+                        TimeLimit = feedbackParameters.TimeLimits[i]
                     };
                     problem.Tests.Add(test);
                 }
@@ -144,6 +148,8 @@ namespace Exhys.WebContestHost.Areas.Administration.Controllers
                     };
                     problem.ProblemStatements.Add(statement);
                 }
+
+                ;
 
                 db.SaveChanges();
 

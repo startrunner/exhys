@@ -15,6 +15,7 @@
                 @{
                     foreach (var v in Model)
                     {
+                        double totalScore=0, totalPossible=0;
                         <tr>
                             <td class="text-center">@v.ProblemName</td>
                             <td class="text-center">
@@ -25,20 +26,37 @@
                                     { <span>In Progress...</span>}
                                     else
                                     {
-                                        foreach(var status in v.TestStatuses)
+                                        foreach (var status in v.TestStatuses)
                                         {
                                             <span>
-                                                @status.Score
+                                                @{ 
+                                                    string s;
+                                                    if (!status.Score.Equals(double.NaN))
+                                                    {
+                                                        s = status.Score.ToString();
+                                                        totalScore += status.Score;
+                                                        totalPossible += status.PossibleScore;
+                                                    }
+                                                    else
+                                                    {
+                                                        s = "?";
+                                                    }
+                                                    @s
+
+                                                }
                                             </span>
                                         }
                                     }
                                 }
                             </td>
                             <td class="text-center">
-                                0
+                                @totalScore / @totalPossible
                             </td>
                             <td class="text-center">
-                                <a href="#">Click</a>
+                                @using (Html.BeginForm(actionName: "ViewSubmission", method: FormMethod.Get, controllerName:"Participation", routeValues: new { id = v.Id })) 
+                                {
+                                    <button type="submit">Click</button>
+                                }
                             </td>
                         </tr>
                                     }

@@ -12,10 +12,10 @@ using Exhys.WebContestHost.Areas.Shared;
 using System.Threading.Tasks;
 using Exhys.WebContestHost.Communication;
 
-namespace Exhys.WebContestHost.Areas.Participation.Controllers
+namespace Exhys.WebContestHost.Controllers
 {
     [AuthorizeExhysUser]
-    public class CompetitionsController : ExhysController
+    public class ParticipationController : ExhysController
     {
         /// <summary>
         /// A user should not participate in any competition if they are not signed in
@@ -158,7 +158,7 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
                 var vm = new ParticipationViewModel(participation);
                 vm.Competition.IncludeProblems().IncludeProblemStatements();
 
-                return View(vm);
+                return PartialView(vm);
             }
         }
          
@@ -216,13 +216,31 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
                 {
                     HandleSolution(solutionId);
                 })
-
                 .ContinueWith((x) =>
                 {
                     throw new Exception();
                 }, TaskContinuationOptions.OnlyOnFaulted);
 
                 return RedirectToAction("Participate");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ViewSubmission(int id)
+        {
+            using (var db = new ExhysContestEntities())
+            {
+                var user = Request.GetSignedInUserQuery(db).FirstOrDefault();
+                var submission = db.ProblemSolutions
+                    .Where(x => x.Id == id)
+                    .Where(x=>x.Participation.User.Id==user.Id)
+                    .Include(x=>x.Problem)
+                    .Include(x=>x.TestStatuses.Select(y=>y.ProblemTest))
+                    .FirstOrDefault();
+                if (submission == null) throw new Exception("This submission does not exist or you don't have permissions to view it.");
+
+
+                return PartialView(new ProblemSolutionViewModel(submission));
             }
         }
 
@@ -242,11 +260,10 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
                 var sols = db.ProblemSolutions
                     .Where(x => x.Participation.Id == participationId)
                     .Where(x => x.Participation.User.Id == user.Id)
+                    .Include(x=>x.Problem)
                     .Include(x => x.TestStatuses)
                     .Include(x => x.TestStatuses.Select(y => y.ProblemTest))
                     .ToList();
-
-                var statusedSols = sols.Where(s => s.TestStatuses.Count != 0).ToList();
 
                 ;
 
@@ -302,7 +319,10 @@ namespace Exhys.WebContestHost.Areas.Participation.Controllers
                             Status = v.Status
                         };
                         solution.TestStatuses.Add(status);
-                    }
+                    } 
+
+                    ;
+
                     solution.Status = ProblemSolution.ExecutionStatus.Completed;
                     db.SaveChanges();
                 }

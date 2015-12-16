@@ -46,7 +46,7 @@
                                 @for (int j = 0; j < Model.Competition.Problems[i].ProblemStatements.Count; j++)
                                 {
                                     <div>
-                                        @using (Html.BeginForm(method: FormMethod.Get, actionName: "DownloadStatement", controllerName: "Competitions"))
+                                        @using (Html.BeginForm(method: FormMethod.Get, actionName: "DownloadStatement", controllerName: "Participation"))
                                         {
                                             <input type="hidden" name="id" value="@Model.Competition.Problems[i].ProblemStatements[j].Id" />
                                             <button type="submit" class="btn btn-link">@Model.Competition.Problems[i].ProblemStatements[j].Filename.Split('\\').Last()</button>
@@ -68,7 +68,7 @@
     
     @*Submission*@
     <section style="padding-left:1cm;">
-        @using (Html.BeginForm(actionName: "SubmitSolution", controllerName: "Competitions", method: FormMethod.Post, htmlAttributes: new { }))
+        @using (Html.BeginForm(actionName: "SubmitSolution", controllerName: "Participation", method: FormMethod.Post, htmlAttributes: new { }))
         {
             var vm = new ProblemSolutionViewModel();
 
@@ -115,7 +115,7 @@
         }); */
     </script>
 
-    @{Html.RenderAction(actionName: "ListSubmissions", controllerName: "Competitions", routeValues: new { participationId = Model.Id });}
+    @{Html.RenderAction(actionName: "ListSubmissions", controllerName: "Participation", routeValues: new { participationId = Model.Id });}
 
     <br /><br /><br /><br /><br />
 

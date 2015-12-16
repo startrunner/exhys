@@ -128,8 +128,8 @@
     <Compile Include="Areas\Administration\Controllers\ProgrammingLanguagesController.cs" />
     <Compile Include="Areas\Administration\Controllers\UserAccountsController.cs" />
     <Compile Include="Areas\Administration\Controllers\UserGroupsController.cs" />
-    <Compile Include="Areas\Participation\Controllers\CompetitionsController.cs" />
-    <Compile Include="Areas\Participation\ParticipationAreaRegistration.cs" />
+    <Compile Include="Areas\Shared\ViewModels\RankingViewModel.cs" />
+    <Compile Include="Controllers\ParticipationController.cs" />
     <Compile Include="Areas\Shared\CookieNames.cs" />
     <Compile Include="Areas\Shared\ExhysHelpers.cs" />
     <Compile Include="Areas\Shared\Extensions\HttpPostedFileBase_Extensions.cs" />
@@ -156,6 +156,7 @@
     <Compile Include="Areas\Shared\ViewModels\WhatTheFuckException.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RankingController.cs" />
     <Compile Include="FormErrors.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -210,7 +211,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Administration\Views\Problems\Add.cshtml" />
-    <Content Include="Areas\Participation\Views\Competitions\ListSubmissions.cshtml" />
+    <Content Include="Views\Participation\ListSubmissions.cshtml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
@@ -233,7 +234,9 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -242,6 +245,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="WebRoot\ErrorPages\401.html" />
     <Content Include="WebRoot\Scripts\Bindings.js" />
+    <Content Include="Views\Participation\ViewSubmission.cshtml" />
+    <Content Include="Views\Ranking\List.cshtml" />
+    <Content Include="Views\Ranking\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -262,13 +268,9 @@
     <Content Include="Areas\Administration\Views\Competitions\List.cshtml" />
     <Content Include="Areas\Administration\Views\Competitions\Add.cshtml" />
     <Content Include="Areas\Administration\Views\Competitions\Edit.cshtml" />
-    <Content Include="Areas\Participation\Views\web.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Areas\Participation\Views\Shared\_Shared.cshtml" />
-    <Content Include="Areas\Participation\Views\Competitions\List.cshtml" />
-    <Content Include="Areas\Participation\Views\Competitions\Join.cshtml" />
-    <Content Include="Areas\Participation\Views\Competitions\Participate.cshtml" />
+    <Content Include="Views\Participation\List.cshtml" />
+    <Content Include="Views\Participation\Join.cshtml" />
+    <Content Include="Views\Participation\Participate.cshtml" />
     <Content Include="Areas\Administration\Views\Problems\List.cshtml" />
     <Content Include="Areas\Administration\Views\UserGroups\Add.cshtml" />
     <Content Include="Areas\Administration\Views\UserAccounts\AddMany.cshtml" />
