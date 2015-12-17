@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0CCF4541-2838-4277-8850-989E5E269CCD}</ProjectGuid>
+    <ProjectGuid>{F07E0128-B778-4D37-82EB-5D018CCAC090}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MiniGWCpp11</RootNamespace>
-    <AssemblyName>MiniGWCpp11</AssemblyName>
+    <RootNamespace>MiniGWC99</RootNamespace>
+    <AssemblyName>MiniGWC99</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -41,22 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MiniGW.cs" />
+    <Compile Include="MiniGWC.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Exhys.ExecutionCore.Contracts\Exhys.ExecutionCore.Contracts.csproj">
       <Project>{7efa5797-224b-4a1a-b7b4-5297b1071ac1}</Project>
       <Name>Exhys.ExecutionCore.Contracts</Name>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\Exhys.ExecutionCore\Exhys.ExecutionCore.csproj">
-      <Project>{7241fbcf-2387-485f-b4b2-8541de3a48bd}</Project>
-      <Name>Exhys.ExecutionCore</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MiniGWC99\MiniGWC99.csproj">
-      <Project>{f07e0128-b778-4d37-82eb-5d018ccac090}</Project>
-      <Name>MiniGWC99</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
