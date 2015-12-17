@@ -17,10 +17,9 @@ namespace Exhys.WebContestHost.Controllers
     [AuthorizeExhysUser]
     public class ParticipationController : ExhysController
     {
-        /// <summary>
-        /// A user should not participate in any competition if they are not signed in
-        /// </summary>
-        /// <returns></returns>
+        [HttpGet]
+        public ActionResult Index () => RedirectToAction("List");
+
         private ActionResult RedirectToList ()
         {
             return RedirectToAction("List");

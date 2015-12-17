@@ -12,6 +12,8 @@ namespace Exhys.WebContestHost.Controllers
 {
     public class RankingController : Controller
     {
+        [HttpGet]
+        public ActionResult Index () => RedirectToAction("List");
 
         [HttpGet]
         public ActionResult List()
@@ -88,17 +90,21 @@ namespace Exhys.WebContestHost.Controllers
                 .OrderByDescending(user=>user.Score)
                 .ToArray();
 
-                for(int i=0;i<vm.Users.Length;i++)
+                if (vm.Users.Length != 0)
                 {
-                    if(i==0 || vm.Users[i].Score!=vm.Users[i-1].Score) vm.Users[i].Rank.From = i + 1;
-                    else vm.Users[i].Rank.From = vm.Users[i - 1].Rank.From;
-                }
 
-                vm.Users.LastByIndex().Rank.To = vm.Users.Length;
-                for(int i=vm.Users.Length-2;i>=0;i--)
-                {
-                    if (vm.Users[i].Score != vm.Users[i + 1].Score) vm.Users[i].Rank.To = i + 1;
-                    else vm.Users[i].Rank.To = vm.Users[i + 1].Rank.To;
+                    for (int i = 0; i < vm.Users.Length; i++)
+                    {
+                        if (i == 0 || vm.Users[i].Score != vm.Users[i - 1].Score) vm.Users[i].Rank.From = i + 1;
+                        else vm.Users[i].Rank.From = vm.Users[i - 1].Rank.From;
+                    }
+
+                    vm.Users.LastByIndex().Rank.To = vm.Users.Length;
+                    for (int i = vm.Users.Length - 2; i >= 0; i--)
+                    {
+                        if (vm.Users[i].Score != vm.Users[i + 1].Score) vm.Users[i].Rank.To = i + 1;
+                        else vm.Users[i].Rank.To = vm.Users[i + 1].Rank.To;
+                    }
                 }
             }
 

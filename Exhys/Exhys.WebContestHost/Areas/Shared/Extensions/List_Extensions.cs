@@ -21,9 +21,9 @@ namespace Exhys.WebContestHost.Areas.Shared.Extensions
         }
 
         public static TItem LastByIndex<TItem>(this IList<TItem> that)
-        {
+        { 
             return that[that.Count - 1];
-        }
+        } 
 
         public static TItem LastByIndexOrDefault<TItem>(this IList<TItem> that)
         {

@@ -2,24 +2,40 @@
 <!doctype html>
 <html>
 <head>
-
+    @Styles.Render("~/Content/css", "~/Content/custom-css")
+    @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <header></header>
-    <div>
-        
-    </div>
     <section>
-        @using (Html.BeginForm(FormMethod.Post))
+        <br />
+        @using (Html.BeginForm("SignIn", "Accounts", FormMethod.Post, new { @class="form-signin" }))
         {
+            <h2 class="form-signin-heading">Please Sign In</h2>
             <div>
                 @Html.ErrorListFor(ViewData)
             </div>
-            @Html.TextBoxFor(m => m.Username)
-            @Html.PasswordFor(m => m.Password)
-            <button type="submit">Sign In</button>
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.Username, new { placeholder="Username", @class="form-control"})
+            </div>
+            <div class="form-group">
+                @Html.PasswordFor(m => m.Password, new { placeholder="Password", @class="form-control"})
+            </div>
+            <div class="form-group">
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign In</button>
+            </div>
         }
     </section>
-    <footer></footer>
+    <style>
+        .form-signin {
+            max-width: 330px;
+            padding: 15px;
+            margin: 0 auto;
+        }
+            .form-signin-heading, .form-signin .checkbox {
+                margin-bottom: 10px;
+            }
+    </style>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
 </body>
 </html>

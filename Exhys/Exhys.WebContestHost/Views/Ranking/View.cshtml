@@ -6,19 +6,19 @@
     @Styles.Render("~/Content/css", "~/Content/custom-css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
-    <table border="1" style="width:100%;">
+<body style="padding:8px;">
+    <table border="1" style="width:100%;" class="table table-hover table-responsive table-striped">
         <thead>
             <tr>
                 <th rowspan="2">Rank</th>
                 <th rowspan="2">Name</th>
-                <th rowspan="1" colspan="@Model.ProblemNames.Count()">Problem Scores</th>
+                <th rowspan="1" colspan="@Model.ProblemNames.Length">Problem Scores</th>
                 <th rowspan="2">Total</th>
             </tr>
             <tr>
                 @{ 
                     foreach (string name in Model.ProblemNames)
-                    {
+                    { 
                         <th>@name</th>
                     }
                 }

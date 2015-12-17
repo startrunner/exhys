@@ -12,29 +12,9 @@ namespace Exhys.WebContestHost.Controllers
 {
     public class HomeController : ExhysController
     {
-        public ActionResult Index ()
-        {
-            return View();
-        }
-
-        public ActionResult About ()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact ()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
         [HttpGet]
-        public ActionResult Footer()
-        {
-            return PartialView();
-        }
+        public ActionResult Index () => RedirectToAction("List", "Participation");
+        [HttpGet]
+        public ActionResult Footer () => PartialView();
     }
 }

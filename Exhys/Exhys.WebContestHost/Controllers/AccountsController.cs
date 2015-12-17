@@ -179,7 +179,7 @@ namespace Exhys.WebContestHost.Controllers
         public ActionResult SignOut ()
         {
             Response.DeleteSessionCookie();
-            return RedirectToAction("SignIn");
+            return RedirectToAction("Index", "Home");
         }
     }
 }
