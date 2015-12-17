@@ -2,9 +2,10 @@
 <!doctype html>
 <html>
 <head>
-
+    @Styles.Render("~/Content/css", "~/Content/custom-css")
 </head>
-<body>
+<body style="padding-left:10px;">
+    <br />
     <fieldset>
         <legend>Status</legend>
         @{
@@ -13,16 +14,20 @@
             if (status == ProblemSolutionExecutionStatusVm.Completed) { statusStr = "Completed"; }
             else if (status == ProblemSolutionExecutionStatusVm.InProgress) { statusStr = "In Progress..."; }
             else if (status == ProblemSolutionExecutionStatusVm.Pending) { statusStr = "Pending"; }
-            @statusStr
         }
+        @statusStr
     </fieldset>
+
+    <br />
     <fieldset>
         <legend>Source Code</legend>
-        <code style="white-space:pre-wrap">@Model.SourceCode</code>
+        <code style="white-space:pre-wrap; width:100%; padding-left:0px;">@Model.SourceCode.Trim()</code>
     </fieldset>
+
+    <br />
     <fieldset>
         <legend>Status</legend>
-        <table border="1">
+        <table class="table-hover table-bordered">
             <thead>
                 <tr>
                     <th>Test</th>
@@ -98,5 +103,8 @@
             </tbody>
         </table>
     </fieldset>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
 </body>
 </html>
