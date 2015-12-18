@@ -48,6 +48,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniGWC99.Tests", "MiniGWC9
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exhys.WebContestHost.Communication.ParallelRunningTest", "Exhys.WebContestHost.Communication.ParallelRunningTest\Exhys.WebContestHost.Communication.ParallelRunningTest.csproj", "{7119FA20-308E-4630-8437-245999AB1BAB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exhys.WebContestHost.Communication.SpamService", "Exhys.WebContestHost.Communication.SpamService\Exhys.WebContestHost.Communication.SpamService.csproj", "{EAA493F6-DB95-410D-B426-415EBBA2405D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{49C07B5C-A484-4617-A1F2-92B14EEF0603} = {49C07B5C-A484-4617-A1F2-92B14EEF0603}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -381,6 +386,22 @@ Global
 		{7119FA20-308E-4630-8437-245999AB1BAB}.Release|x64.Build.0 = Release|Any CPU
 		{7119FA20-308E-4630-8437-245999AB1BAB}.Release|x86.ActiveCfg = Release|Any CPU
 		{7119FA20-308E-4630-8437-245999AB1BAB}.Release|x86.Build.0 = Release|Any CPU
+		{EAA493F6-DB95-410D-B426-415EBBA2405D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAA493F6-DB95-410D-B426-415EBBA2405D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAA493F6-DB95-410D-B426-415EBBA2405D}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{EAA493F6-DB95-410D-B426-415EBBA2405D}.Debug|ARM.Build.0 = Debug|Any CPU
+		{EAA493F6-DB95-410D-B426-415EBBA2405D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EAA493F6-DB95-410D-B426-415EBBA2405D}.Debug|x64.Build.0 = Debug|Any CPU
+		{EAA493F6-DB95-410D-B426-415EBBA2405D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EAA493F6-DB95-410D-B426-415EBBA2405D}.Debug|x86.Build.0 = Debug|Any CPU
+		{EAA493F6-DB95-410D-B426-415EBBA2405D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAA493F6-DB95-410D-B426-415EBBA2405D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAA493F6-DB95-410D-B426-415EBBA2405D}.Release|ARM.ActiveCfg = Release|Any CPU
+		{EAA493F6-DB95-410D-B426-415EBBA2405D}.Release|ARM.Build.0 = Release|Any CPU
+		{EAA493F6-DB95-410D-B426-415EBBA2405D}.Release|x64.ActiveCfg = Release|Any CPU
+		{EAA493F6-DB95-410D-B426-415EBBA2405D}.Release|x64.Build.0 = Release|Any CPU
+		{EAA493F6-DB95-410D-B426-415EBBA2405D}.Release|x86.ActiveCfg = Release|Any CPU
+		{EAA493F6-DB95-410D-B426-415EBBA2405D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

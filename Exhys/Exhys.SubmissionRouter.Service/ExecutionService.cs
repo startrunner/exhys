@@ -86,17 +86,23 @@ namespace Exhys.SubmissionRouter.Service
             OnExecutionCompleted(executionResult);
         }
 
+        int startedExecutionCount = 0;
+
+        Queue<ExecutionDto> executionQueue = new Queue<ExecutionDto>();
         private void ExecuteRequest(ExecutionDto execution, int retriesCount = 3)
         {
             lock (_lock)
             {
+                Debug.WriteLine($"Queue cunt {executionQueue.Count}");
                 Executioner executioner = GetFreeExecutioner();
-
                 if (executioner != null)
                 {
+                    Debug.WriteLine("executioner is not null");
                     try
                     {
                         executioner.Execute(execution);
+                        if (executionQueue.Count != 0) ExecuteRequest(executionQueue.Dequeue());
+                        Debug.WriteLine($"Execution #{startedExecutionCount++}");
                     }
                     catch(ExecutionFailedException)
                     {
@@ -113,6 +119,11 @@ namespace Exhys.SubmissionRouter.Service
                             ExecuteRequest(execution, retriesCount-1);
                         }
                     }
+                }
+                else
+                {
+                    Debug.WriteLine("nope note free");
+                    executionQueue.Enqueue(execution);
                 }
             }
         }
@@ -139,6 +150,8 @@ namespace Exhys.SubmissionRouter.Service
                 Submission = submission
             };
             ExecuteRequest(execution);
+            
+            //Debug.WriteLine($"callback added {callbacks.Count}");
             callbacks.Add(execution.Id, callback);
             
             return execution.Id;
