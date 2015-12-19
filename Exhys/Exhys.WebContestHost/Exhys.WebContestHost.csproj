@@ -128,6 +128,7 @@
     <Compile Include="Areas\Administration\Controllers\ProgrammingLanguagesController.cs" />
     <Compile Include="Areas\Administration\Controllers\UserAccountsController.cs" />
     <Compile Include="Areas\Administration\Controllers\UserGroupsController.cs" />
+    <Compile Include="Areas\Shared\ViewModels\FooterViewModel.cs" />
     <Compile Include="Areas\Shared\ViewModels\RankingViewModel.cs" />
     <Compile Include="Controllers\ParticipationController.cs" />
     <Compile Include="Areas\Shared\CookieNames.cs" />
@@ -164,6 +165,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Exhys.WebContestHost.DataModels.ExhysContestEntities.mdf" />
+    <Content Include="App_Data\Exhys.WebContestHost.DataModels.ExhysContestEntities_log.ldf">
+      <DependentUpon>Exhys.WebContestHost.DataModels.ExhysContestEntities.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -172,7 +177,6 @@
     <Content Include="Content\custom-style.css" />
     <Content Include="Content\Pictures\Check_box_checked.png" />
     <Content Include="Content\Pictures\Check_box_empty.png" />
-    <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -242,15 +246,14 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="WebRoot\ErrorPages\401.html" />
-    <Content Include="WebRoot\Scripts\Bindings.js" />
     <Content Include="Views\Participation\ViewSubmission.cshtml" />
     <Content Include="Views\Ranking\List.cshtml" />
     <Content Include="Views\Ranking\View.cshtml" />
     <Content Include="Views\Home\Footer.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="WebRoot\Scripts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -281,27 +284,6 @@
     <Content Include="Content\custom-style.less" />
     <Content Include="Content\checkboxes-style.less" />
     <None Include="Project_Readme.html" />
-    <Content Include="WebRoot\Styles\participation.css">
-      <DependentUpon>participation.scss</DependentUpon>
-    </Content>
-    <Content Include="WebRoot\Styles\participation.min.css">
-      <DependentUpon>participation.css</DependentUpon>
-    </Content>
-    <Content Include="WebRoot\Styles\participation.scss">
-      <Compile>True</Compile>
-      <Minify>True</Minify>
-      <IgnoreWarnings>True</IgnoreWarnings>
-      <IgnoreErrors>True</IgnoreErrors>
-      <CompileStyle>Nested</CompileStyle>
-      <DebugInfo>False</DebugInfo>
-    </Content>
-    <Content Include="WebRoot\Styles\style.css">
-      <DependentUpon>style.scss</DependentUpon>
-    </Content>
-    <Content Include="WebRoot\Styles\style.min.css">
-      <DependentUpon>style.css</DependentUpon>
-    </Content>
-    <Content Include="WebRoot\Styles\style.scss" />
     <Content Include="Views\Accounts\Profile.cshtml" />
     <Content Include="Views\Accounts\Register.cshtml" />
     <Content Include="Views\Accounts\SignIn.cshtml" />
