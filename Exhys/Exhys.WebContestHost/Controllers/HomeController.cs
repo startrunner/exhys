@@ -7,20 +7,34 @@ using Exhys.WebContestHost.DataModels;
 
 namespace Exhys.WebContestHost.Controllers
 {
-    public class HomeController : ExhysController
-    {
-        [HttpGet]
-        public ActionResult Index () => RedirectToAction("List", "Participation");
-        [HttpGet]
-        public ActionResult Footer ()
-        {
-            FooterViewModel vm = new FooterViewModel();
-            using (var db = new ExhysContestEntities())
-            {
-                var user = Request.GetSignedInUserQuery(db).FirstOrDefault();
-                if (user != null && user.UserGroup.IsAdministrator) vm.IsAdmin = true;
-            }
-            return PartialView(vm);
-        }
-    }
+	public class HomeController : ExhysController
+	{
+		[HttpGet]
+		public ActionResult Index() => RedirectToAction("List", "Participation");
+		
+		public ActionResult Footer()
+		{
+			return PartialView(GetUserDetails());
+		}
+		public ActionResult Navigation()
+		{
+			return PartialView(GetUserDetails());
+		}
+		private FooterViewModel GetUserDetails()
+		{
+			FooterViewModel vm = new FooterViewModel();
+			using(var db = new ExhysContestEntities())
+			{
+				var user = Request.GetSignedInUserQuery(db).FirstOrDefault();
+				if(user == null) vm.IsSignedIn = false;
+				else
+				{
+					vm.IsSignedIn = true;
+					if(user.UserGroup.IsAdministrator) vm.IsAdmin = true;
+					vm.UserName = user.FullName;
+				}
+			}
+			return vm;
+		}
+	}
 }

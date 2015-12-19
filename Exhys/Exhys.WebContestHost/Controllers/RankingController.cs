@@ -26,7 +26,7 @@ namespace Exhys.WebContestHost.Controllers
                     .Select(c => new CompetitionViewModel(c))
                     .ToList();
             }
-            return PartialView(vm);
+            return View(vm);
         }
 
 
@@ -110,7 +110,7 @@ namespace Exhys.WebContestHost.Controllers
 
             ;
 
-            return PartialView(vm);
+            return View(vm);
         }
 
         
