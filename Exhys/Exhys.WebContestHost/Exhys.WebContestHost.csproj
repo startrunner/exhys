@@ -128,7 +128,6 @@
     <Compile Include="Areas\Administration\Controllers\ProgrammingLanguagesController.cs" />
     <Compile Include="Areas\Administration\Controllers\UserAccountsController.cs" />
     <Compile Include="Areas\Administration\Controllers\UserGroupsController.cs" />
-    <Compile Include="Areas\Shared\ViewModels\FooterViewModel.cs" />
     <Compile Include="Areas\Shared\ViewModels\RankingViewModel.cs" />
     <Compile Include="Controllers\ParticipationController.cs" />
     <Compile Include="Areas\Shared\CookieNames.cs" />
@@ -165,18 +164,50 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\Exhys.WebContestHost.DataModels.ExhysContestEntities.mdf" />
-    <Content Include="App_Data\Exhys.WebContestHost.DataModels.ExhysContestEntities_log.ldf">
-      <DependentUpon>Exhys.WebContestHost.DataModels.ExhysContestEntities.mdf</DependentUpon>
-    </Content>
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\checkboxes-style.css" />
-    <Content Include="Content\custom-style.css" />
+    <Content Include="Content\Old themes\bootstrap-theme.css" />
+    <Content Include="Content\Old themes\bootstrap-theme.min.css" />
+    <Content Include="Content\Old themes\bootstrap.css" />
+    <Content Include="Content\Old themes\bootstrap.min.css" />
+    <Content Include="Content\Old themes\checkboxes-style.css" />
+    <Content Include="Content\Old themes\custom-style.css" />
+    <Content Include="Content\Old themes\darkly.css" />
+    <Content Include="Content\Old themes\themes\base\accordion.css" />
+    <Content Include="Content\Old themes\themes\base\all.css" />
+    <Content Include="Content\Old themes\themes\base\autocomplete.css" />
+    <Content Include="Content\Old themes\themes\base\base.css" />
+    <Content Include="Content\Old themes\themes\base\button.css" />
+    <Content Include="Content\Old themes\themes\base\core.css" />
+    <Content Include="Content\Old themes\themes\base\datepicker.css" />
+    <Content Include="Content\Old themes\themes\base\dialog.css" />
+    <Content Include="Content\Old themes\themes\base\draggable.css" />
+    <Content Include="Content\Old themes\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\Old themes\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\Old themes\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\Old themes\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\Old themes\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\Old themes\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\Old themes\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\Old themes\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\Old themes\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\Old themes\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\Old themes\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\Old themes\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\Old themes\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\Old themes\themes\base\menu.css" />
+    <Content Include="Content\Old themes\themes\base\progressbar.css" />
+    <Content Include="Content\Old themes\themes\base\resizable.css" />
+    <Content Include="Content\Old themes\themes\base\selectable.css" />
+    <Content Include="Content\Old themes\themes\base\selectmenu.css" />
+    <Content Include="Content\Old themes\themes\base\slider.css" />
+    <Content Include="Content\Old themes\themes\base\sortable.css" />
+    <Content Include="Content\Old themes\themes\base\spinner.css" />
+    <Content Include="Content\Old themes\themes\base\tabs.css" />
+    <Content Include="Content\Old themes\themes\base\theme.css" />
+    <Content Include="Content\Old themes\themes\base\tooltip.css" />
     <Content Include="Content\Pictures\Check_box_checked.png" />
     <Content Include="Content\Pictures\Check_box_empty.png" />
+    <Content Include="Content\STYLES\checkboxes-style.css" />
+    <Content Include="Content\STYLES\custom-style.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -216,7 +247,6 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Administration\Views\Problems\Add.cshtml" />
     <Content Include="Views\Participation\ListSubmissions.cshtml" />
-    <None Include="Properties\PublishProfiles\Alexander.pubxml" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
@@ -246,14 +276,15 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="WebRoot\ErrorPages\401.html" />
+    <Content Include="WebRoot\Scripts\Bindings.js" />
     <Content Include="Views\Participation\ViewSubmission.cshtml" />
     <Content Include="Views\Ranking\List.cshtml" />
     <Content Include="Views\Ranking\View.cshtml" />
     <Content Include="Views\Home\Footer.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="WebRoot\Scripts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -279,11 +310,30 @@
     <Content Include="Areas\Administration\Views\ProgrammingLanguages\Add.cshtml" />
     <Content Include="Areas\Administration\Views\ProgrammingLanguages\List.cshtml" />
     <None Include="compilerconfig.json" />
-    <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\custom-style.less" />
     <Content Include="Content\checkboxes-style.less" />
     <None Include="Project_Readme.html" />
+    <Content Include="WebRoot\Styles\participation.css">
+      <DependentUpon>participation.scss</DependentUpon>
+    </Content>
+    <Content Include="WebRoot\Styles\participation.min.css">
+      <DependentUpon>participation.css</DependentUpon>
+    </Content>
+    <Content Include="WebRoot\Styles\participation.scss">
+      <Compile>True</Compile>
+      <Minify>True</Minify>
+      <IgnoreWarnings>True</IgnoreWarnings>
+      <IgnoreErrors>True</IgnoreErrors>
+      <CompileStyle>Nested</CompileStyle>
+      <DebugInfo>False</DebugInfo>
+    </Content>
+    <Content Include="WebRoot\Styles\style.css">
+      <DependentUpon>style.scss</DependentUpon>
+    </Content>
+    <Content Include="WebRoot\Styles\style.min.css">
+      <DependentUpon>style.css</DependentUpon>
+    </Content>
+    <Content Include="WebRoot\Styles\style.scss" />
     <Content Include="Views\Accounts\Profile.cshtml" />
     <Content Include="Views\Accounts\Register.cshtml" />
     <Content Include="Views\Accounts\SignIn.cshtml" />

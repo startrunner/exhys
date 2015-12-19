@@ -27,10 +27,7 @@ namespace Exhys.WebContestHost
 			//		  "~/Content/site.css"));
 
 			bundles.Add(new StyleBundle("~/Content/custom-css").Include(
-					  "~/Content/custom-style.css",
-					  "~/Content/shit.css",
-                      "~/Content/jquery-ui.min.css",
-                      "~/Content/jquery-ui.structure.min.css"));            
+					  "~/Content/STYLES/custom-style.css"));            
 
         }
     }
