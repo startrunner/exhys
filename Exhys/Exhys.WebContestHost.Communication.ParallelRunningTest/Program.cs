@@ -58,7 +58,7 @@ namespace Exhys.WebContestHost.Communication.ParallelRunningTest
 
             for (;;)
             {
-                if (run < 100)
+                if (run < 32)
                 {
                         run++;
                         var submissionClient = new SubmissionClient();

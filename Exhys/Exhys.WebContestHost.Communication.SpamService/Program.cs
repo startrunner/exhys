@@ -5,6 +5,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Exhys.SubmissionRouter.Dtos;
 using Exhys.WebContestHost.Communication.SpamService.RouterReference;
@@ -57,13 +58,13 @@ namespace Exhys.WebContestHost.Communication.SpamService
         {
             public void Pong ()
             {
-                
+                //Console.WriteLine("pong <3()");
             }
 
             public void SubmissionProcessed (SubmissionResultDto result)
             {
                 pongCount++;
-                Debug.WriteLine($"Pong () #{pongCount}");
+                Console.WriteLine($"execute response () #{pongCount}");
             }
         }
         static int pongCount = 0;
@@ -80,9 +81,10 @@ namespace Exhys.WebContestHost.Communication.SpamService
 
         static void Main (string[] args)
         {
+            int reqCount = 0;
             Initialize();
             var client = CreateClientInstance();
-            for(int i=0;i<1000;i++)
+            for(int i=0;i<32;i++)
             {
                 client.Submit(new SubmissionDto()
                 {
@@ -95,8 +97,17 @@ namespace Exhys.WebContestHost.Communication.SpamService
                         TimeLimit = x.TimeLimit
                     }).ToList()
                 });
-                if(i==999) Debug.WriteLine("no more ping()");
+                Console.WriteLine($"request # {++reqCount}()");
             }
+
+            /*for(;;)
+            {
+                Thread.Sleep(1000);
+                Console.Write("[]");
+                client.Ping();
+            }*/
+
+
             Console.Read();
         }
     }

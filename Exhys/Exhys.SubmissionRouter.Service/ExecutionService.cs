@@ -11,21 +11,25 @@ using System.Timers;
 using Exhys.ExecutionCore.Contracts;
 using System.Diagnostics;
 using Exhys.ExecutionCore;
+using System.Threading;
 
 namespace Exhys.SubmissionRouter.Service
 {
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Reentrant)]
     public class ExecutionService : IExecutionService, ISubmissionService
     {
-        private List<Executioner> executioners;
-        private Dictionary<Guid, ISubmissionCallback> callbacks;
-        private IExecutionCallback localExecutionCallback;
-        private Guid localExecutionerId;
-        private object _lock;
+        Dictionary<Guid, ISubmissionCallback> callbacks;
+        IExecutionCallback localExecutionCallback;
+        System.Timers.Timer executionTimer = null;
+        List<Executioner> executioners;
+        Queue<ExecutionDto> executionQueue;
+        Guid localExecutionerId;
+        object _lock;
 
-        public ExecutionService()
+        public ExecutionService ()
         {
             _lock = new object();
+            executionQueue = new Queue<ExecutionDto>();
             executioners = new List<Executioner>();
             callbacks = new Dictionary<Guid, ISubmissionCallback>();
             localExecutionCallback = new LocalExecutionCallback(GetExecutionCore(), this);
@@ -33,29 +37,15 @@ namespace Exhys.SubmissionRouter.Service
             RegisterLocalExecutioner();
         }
 
-        private IExecutionCore GetExecutionCore()
-        {
-            return ExecutionCoreFactory.Generate();
-        }
+        private IExecutionCore GetExecutionCore () => ExecutionCoreFactory.Generate();
 
         #region IExecutionService implementation
 
-        private void RegisterLocalExecutioner()
-        {
-            localExecutionerId = Register(localExecutionCallback);
-        }
+        private void RegisterLocalExecutioner () => localExecutionerId = Register(localExecutionCallback);
+        private void UnregisterLocalExecutioner () => Unregister(localExecutionerId);
+        public Guid Register () => Register(OperationContext.Current.GetCallbackChannel<IExecutionCallback>());
 
-        private void UnregisterLocalExecutioner()
-        {
-            Unregister(localExecutionerId);
-        }
-
-        public Guid Register()
-        {
-            return Register(OperationContext.Current.GetCallbackChannel<IExecutionCallback>());
-        }
-
-        public Guid Register(IExecutionCallback executionCallback)
+        public Guid Register (IExecutionCallback executionCallback)
         {
             Executioner executioner = new Executioner(executionCallback);
             executioner.Guid = Guid.NewGuid();
@@ -67,16 +57,16 @@ namespace Exhys.SubmissionRouter.Service
             return executioner.Guid;
         }
 
-        public void Unregister(Guid id)
+        public void Unregister (Guid id)
         {
-            executioners.RemoveAll(x=>x.Guid==id);
-            if (localExecutionerId != id && executioners.Count==0)
+            executioners.RemoveAll((x) => x.Guid == id);
+            if (localExecutionerId != id && executioners.Count == 0)
             {
                 RegisterLocalExecutioner();
             }
         }
 
-        public void SubmitResult(ExecutionResultDto executionResult)
+        public void SubmitResult (ExecutionResultDto executionResult)
         {
             Executioner executioner = executioners.FirstOrDefault(x => x.CurrentExecutionId == executionResult.ExecutionId);
             if (executioner != null)
@@ -86,63 +76,24 @@ namespace Exhys.SubmissionRouter.Service
             OnExecutionCompleted(executionResult);
         }
 
-        int startedExecutionCount = 0;
-
-        Queue<ExecutionDto> executionQueue = new Queue<ExecutionDto>();
-        private void ExecuteRequest(ExecutionDto execution, int retriesCount = 3)
+        private void ExecuteRequest (ExecutionDto execution)
         {
             lock (_lock)
             {
-                Debug.WriteLine($"Queue cunt {executionQueue.Count}");
-                Executioner executioner = GetFreeExecutioner();
-                if (executioner != null)
-                {
-                    Debug.WriteLine("executioner is not null");
-                    try
-                    {
-                        executioner.Execute(execution);
-                        if (executionQueue.Count != 0) ExecuteRequest(executionQueue.Dequeue());
-                        Debug.WriteLine($"Execution #{startedExecutionCount++}");
-                    }
-                    catch(ExecutionFailedException)
-                    {
-                        ExecutionResultDto executionResult = new ExecutionResultDto();
-                        executionResult.ExecutionId = execution.Id;
-                        executionResult.IsExecutionSuccessful = false;
-                        SubmitResult(executionResult);
-                    }
-                    catch(ConnectionFailedException)
-                    {
-                        Unregister(executioner.Guid);
-                        if (retriesCount > 0)
-                        {
-                            ExecuteRequest(execution, retriesCount-1);
-                        }
-                    }
-                }
-                else
-                {
-                    Debug.WriteLine("nope note free");
-                    executionQueue.Enqueue(execution);
-                }
+                executionQueue.Enqueue(execution);
+                StartExecutionTimer();
             }
         }
 
-        private Executioner GetFreeExecutioner()
-        {
-            return executioners.FirstOrDefault(x => !x.IsBusy);
-        }
+        private Executioner GetFreeExecutioner () => executioners.FirstOrDefault(x => !x.IsBusy);
 
         #endregion
 
         #region ISubmissionService
 
-        public Guid Submit(SubmissionDto submission)
-        {
-            return Submit(submission, OperationContext.Current.GetCallbackChannel<ISubmissionCallback>());
-        }
+        public Guid Submit (SubmissionDto submission) => Submit(submission, OperationContext.Current.GetCallbackChannel<ISubmissionCallback>());
 
-        public Guid Submit(SubmissionDto submission, ISubmissionCallback callback)
+        public Guid Submit (SubmissionDto submission, ISubmissionCallback callback)
         {
             ExecutionDto execution = new ExecutionDto()
             {
@@ -150,14 +101,13 @@ namespace Exhys.SubmissionRouter.Service
                 Submission = submission
             };
             ExecuteRequest(execution);
-            
-            //Debug.WriteLine($"callback added {callbacks.Count}");
+
             callbacks.Add(execution.Id, callback);
-            
+
             return execution.Id;
         }
 
-        private void OnExecutionCompleted(ExecutionResultDto executionResult)
+        private void OnExecutionCompleted (ExecutionResultDto executionResult)
         {
             SubmissionResultDto submissionResult = new SubmissionResultDto()
             {
@@ -176,16 +126,70 @@ namespace Exhys.SubmissionRouter.Service
             }
         }
 
-        public void Ping()
+        public void Ping ()
         {
             var callback = OperationContext.Current.GetCallbackChannel<ISubmissionCallback>();
             Task.Run(() =>
             {
-                System.Threading.Thread.Sleep(3000);
+                Thread.Sleep(3000);
                 callback.Pong();
             });
         }
 
+        #endregion
+
+        #region ExecutionWork
+        private void StartExecutionTimer ()
+        {
+            if (executionTimer == null)
+            {
+                executionTimer = new System.Timers.Timer()
+                {
+                    AutoReset = true,
+                    Interval = TimeSpan.FromSeconds(.25).TotalMilliseconds,
+                };
+            }
+            executionTimer.Elapsed += OnExecutionTimerTicked;
+            executionTimer.Enabled = true;
+        }
+
+        private void StopExecutionTimer ()
+        {
+            if (executionTimer != null)
+            {
+                executionTimer.Enabled = false;
+            }
+        }
+
+        private void OnExecutionTimerTicked (object sender, ElapsedEventArgs e)
+        {
+            lock (_lock)
+            {
+                var executioner = GetFreeExecutioner();
+                while (executioner != null && executionQueue.Count != 0)
+                {
+                    var item = executionQueue.Dequeue();
+                    try
+                    {
+                        executioner.Execute(item);
+                    }
+                    catch (ExecutionFailedException)
+                    {
+                        ExecutionResultDto executionResult = new ExecutionResultDto();
+                        executionResult.ExecutionId = item.Id;
+                        executionResult.IsExecutionSuccessful = false;
+                        SubmitResult(executionResult);
+                    }
+                    catch (ConnectionFailedException)
+                    {
+                        Unregister(executioner.Guid);
+                    }
+
+                    executioner = GetFreeExecutioner();
+                }
+                if (executionQueue.Count == 0) StopExecutionTimer();
+            }
+        }
         #endregion
     }
 }

@@ -12,6 +12,8 @@ namespace Exhys.SubmissionRouter.Service.Model
 {
     public class Executioner
     {
+        public event EventHandler<EventArgs> ExecutionFinished;
+
         private IExecutionCallback executionCallback;
 
         public Executioner(IExecutionCallback executionCallback)
@@ -64,6 +66,10 @@ namespace Exhys.SubmissionRouter.Service.Model
         public void OnExecutionFinished()
         {
             CurrentExecutionId = null;
+            if(ExecutionFinished!=null)
+            {
+                ExecutionFinished(this, new EventArgs());
+            }
         }
     }
 }
