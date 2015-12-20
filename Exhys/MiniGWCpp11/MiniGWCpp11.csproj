@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -49,14 +50,6 @@
       <Project>{7efa5797-224b-4a1a-b7b4-5297b1071ac1}</Project>
       <Name>Exhys.ExecutionCore.Contracts</Name>
       <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\Exhys.ExecutionCore\Exhys.ExecutionCore.csproj">
-      <Project>{7241fbcf-2387-485f-b4b2-8541de3a48bd}</Project>
-      <Name>Exhys.ExecutionCore</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MiniGWC99\MiniGWC99.csproj">
-      <Project>{f07e0128-b778-4d37-82eb-5d018ccac090}</Project>
-      <Name>MiniGWC99</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
