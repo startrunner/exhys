@@ -68,7 +68,7 @@ namespace Exhys.WebContestHost.Communication.ParallelRunningTest
                         submissionClient.SubmitRequestAsync(problemSolution).ContinueWith((x) =>
                         {
                             Console.WriteLine("one done");
-                            result = x.Result;
+                            result = x.Result.TestResults;
                             completed++;
                         }, TaskContinuationOptions.NotOnFaulted)
                         .ContinueWith(x =>

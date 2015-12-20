@@ -52,7 +52,7 @@ namespace Exhys.WebContestHost.Communication.Test
                     Tests = tests
                 }
             };
-            List<SolutionTestStatus> result = submissionClient.SubmitRequestAsync(problemSolution).Result;
+            List<SolutionTestStatus> result = submissionClient.SubmitRequestAsync(problemSolution).Result.TestResults;
             Assert.IsNotNull(result);
             Assert.AreEqual(result.Count, 5);
         }

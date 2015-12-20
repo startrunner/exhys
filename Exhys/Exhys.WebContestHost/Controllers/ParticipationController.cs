@@ -169,6 +169,9 @@ namespace Exhys.WebContestHost.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult SubmitSolution (ProblemSolutionViewModel vm)
         {
+            string baseUrl = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+            string serviceUrl = baseUrl + "/ExhysService.svc";
+
             using (var db = new ExhysContestEntities())
             {
                 var problem = db.Problems
@@ -205,7 +208,7 @@ namespace Exhys.WebContestHost.Controllers
 
                 Task.Run(() =>
                 {
-                    HandleSolution(solutionId);
+                    HandleSolution(solutionId,serviceUrl);
                 })
                 .ContinueWith((x) =>
                 {
@@ -267,7 +270,7 @@ namespace Exhys.WebContestHost.Controllers
             return View(vm);
         }
 
-        private void HandleSolution (int solutionId)
+        private void HandleSolution (int solutionId, string serviceUrl)
         {
             ProblemSolution solution = null;
             using (var db = new ExhysContestEntities())
@@ -286,15 +289,10 @@ namespace Exhys.WebContestHost.Controllers
 
             }
 
-            string baseUrl = Request.Url.GetLeftPart(UriPartial.Authority);
-            string serviceUrl = baseUrl + "ExhysService.svc";
-
-
             SubmissionClient client = new SubmissionClient(serviceUrl);
             client.SubmitRequestAsync(solution).ContinueWith((x) =>
             {
-                List<SolutionTestStatus> result = null;
-                result = x.Result;
+                SubmissionResult result = x.Result;
 
                 using (var db = new ExhysContestEntities())
                 {
@@ -306,7 +304,7 @@ namespace Exhys.WebContestHost.Controllers
                                 .FirstOrDefault();
 
                     solution.TestStatuses.Clear();
-                    foreach (var v in result)
+                    foreach (var v in result.TestResults)
                     {
                         SolutionTestStatus status = new SolutionTestStatus
                         {
@@ -318,9 +316,15 @@ namespace Exhys.WebContestHost.Controllers
                         solution.TestStatuses.Add(status);
                     } 
 
-                    ;  
-
-                    solution.Status = ProblemSolution.ExecutionStatus.Completed;
+                    ;
+                    if (x.Result.IsSuccessful)
+                    {
+                        solution.Status = ProblemSolution.ExecutionStatus.Completed;
+                    }
+                    else
+                    {
+                        solution.Status = ProblemSolution.ExecutionStatus.ExecutionFailed;
+                    }
                     db.SaveChanges();
                 }
             });

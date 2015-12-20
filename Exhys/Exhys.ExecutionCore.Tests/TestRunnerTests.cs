@@ -14,7 +14,8 @@ namespace Exhys.ExecutionCore.Tests
         [TestMethod]
         public void TestCompileAndRun()
         {
-            var program = CompilerFactory.Get("c++").Compile(add1Src);
+            CompilerFactory.Initialize("");
+            var program = CompilerFactory.Instance.Get("c++").Compile(add1Src);
             Assert.IsTrue(program.IsSuccessful);
 
             List<TestDto> tests = new List<TestDto>();

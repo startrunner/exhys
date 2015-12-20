@@ -13,7 +13,8 @@ namespace CscCSharp.Tests
         public void TestCsHelloWorld ()
         {
             Debug.WriteLine("Shit");
-            ICompiler csc = CompilerFactory.Get("c#");// new Csc();
+            CompilerFactory.Initialize("");
+            ICompiler csc = CompilerFactory.Instance.Get("c#");// new Csc();
 
             CompilationResult helloWorldProgram = csc.Compile(csHelloWorld);
 

@@ -34,7 +34,8 @@ namespace Exhys.WebContestHost.DataModels
         {
             Pending,
             InProgress,
-            Completed
+            Completed,
+            ExecutionFailed
         }
     }
 }
