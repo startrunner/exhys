@@ -265,7 +265,8 @@
                 .selectableScroll({
                     filter: "td:not(:has(input[type=number])), tr:not(.textbox-row) > th:not(.table-selector)",
                     distance: 3,
-                    selecting: function(event,ui){
+                    selecting: function (event, ui) {
+                        console.log("selecting");
                         selectingHeader(true, ui.selecting, tableId);
                     },
                     unselecting: function (event, ui) {

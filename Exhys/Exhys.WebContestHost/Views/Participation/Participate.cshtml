@@ -1,8 +1,18 @@
 ﻿@model ParticipationViewModel
-@{
 
-}
-@if(Model != null && Model.Competition != null)
+<script type="text/javascript">
+
+    //setInterval(refreshSubmissions,5000);
+
+    function refreshSubmissions() {
+        var scroll = $(window).scrollTop();
+        $('#submissions-list').load('@Url.Action("ListSubmissions", "Participation")?participationId=@Model.Id', function () {
+        });
+        setTimeout("$(window).scrollTop(scroll);", 1000);
+    }
+</script>
+
+@if (Model != null && Model.Competition != null)
 {
 	<h2 class="text-center">@Model.Competition.Name</h2>
 }
@@ -17,24 +27,24 @@
 			<table class="table-bordered table">
 
 				<tbody>
-					@for(int i = 0; i < Model.Competition.Problems.Count; i++)
-					{
+					@for (int i = 0; i < Model.Competition.Problems.Count; i++)
+                    {
 						<tr>
 							<th>@Model.Competition.Problems[i].Name</th>
 							<td>
-								@for(int j = 0; j < Model.Competition.Problems[i].ProblemStatements.Count; j++)
-								{
+								@for (int j = 0; j < Model.Competition.Problems[i].ProblemStatements.Count; j++)
+                                {
 									<div class="padding-0">
-										@using(Html.BeginForm(method: FormMethod.Get, actionName: "DownloadStatement", controllerName: "Participation"))
-										{
+										@using (Html.BeginForm(method: FormMethod.Get, actionName: "DownloadStatement", controllerName: "Participation"))
+                                        {
 											<input type="hidden" name="id" value="@Model.Competition.Problems[i].ProblemStatements[j].Id" />
 											<button type="submit" class="btn btn-link height-25px padding-0">@Model.Competition.Problems[i].ProblemStatements[j].Filename.Split('\\').Last()</button>
-										}
+                                        }
 									</div>
-								}
+                                }
 							</td>
 						</tr>
-					}
+                    }
 				</tbody>
 			</table>
 		</fieldset>
@@ -43,9 +53,9 @@
 
 	@*Submission*@
 	<section style="padding-left:1cm;">
-		@using(Html.BeginForm(actionName: "SubmitSolution", controllerName: "Participation", method: FormMethod.Post, htmlAttributes: new { }))
-		{
-			var vm = new ProblemSolutionViewModel();
+		@using (Html.BeginForm(actionName: "SubmitSolution", controllerName: "Participation", method: FormMethod.Post, htmlAttributes: new { }))
+        {
+            var vm = new ProblemSolutionViewModel();
 
 			<fieldset>
 				<legend>Submit a Solution</legend>
@@ -56,12 +66,12 @@
 
 				<div class="form-group">
 					@Html.LabelFor(m => vm.SourceCode, "Source Code")
-					@Html.TextAreaFor(m => vm.SourceCode, new { placeholder = "//Hello, World!",@class="form-control input-lg", id = "inputLarge" })
+					@Html.TextAreaFor(m => vm.SourceCode, new { placeholder = "//Hello, World!", @class = "form-control input-lg", id = "inputLarge" })
 				</div>
 
 				<div class="form-group">
 					@Html.LabelFor(m => vm.LanguageAlias, "Language")
-					@Html.FixedDropDownListFor(m => vm.LanguageAlias, ViewData.GetProgrammingLanguageOptions(),new { @class="form-control"})
+					@Html.FixedDropDownListFor(m => vm.LanguageAlias, ViewData.GetProgrammingLanguageOptions(), new { @class = "form-control" })
 				</div>
 
 				<div class="form-group">
@@ -69,29 +79,15 @@
 					<button class="btn btn-default" type="reset">Reset</button>
 				</div>
 			</fieldset>
-		}
+        }
 
 	</section>
 </div>
 
 	<br /><br /><br />
-	@*Previous Submissions*@
-
-	<script>
-		/*
-				function updateCart() {
-					var tdata = $(frm).serialize();
-					// or your data in the format that will be used ??
-					$.ajax({
-						type: "POST",
-						data: tdata,
-						url : '<%= Url.Action("Create", "Cart") %>',
-						dataType: "json",
-						success: function (result) { success(result); }
-					});
-				}); */
-	</script>
-
-	@{Html.RenderAction(actionName: "ListSubmissions", controllerName: "Participation", routeValues: new { participationId = Model.Id });}
+    <span id="submissions-list">
+        @{Html.RenderAction(actionName: "ListSubmissions", controllerName: "Participation", routeValues: new { participationId = Model.Id });}
+    </span>
+	
 <br /><br /><br />
 <br /><br /><br />

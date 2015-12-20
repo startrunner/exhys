@@ -1,18 +1,21 @@
 input[type="checkbox"] {
   display: none;
 }
-input[type="checkbox"] + label span {
+label>input[type="checkbox"] + span {
   display: inline-block;
   width: 23px;
   height: 23px;
   margin: -1px 4px 0 0;
   vertical-align: middle;
-  background: url("/Content/Pictures/Check_box_empty.png") no-repeat center;
+  //background: url("/Content/Pictures/Check_box_empty.png") no-repeat center;
+  background: url("http://www.clker.com/cliparts/e/q/p/N/s/G/checkbox-unchecked.svg") no-repeat center;
   background-size: contain;
   cursor: pointer;
 }
-input[type="checkbox"]:checked + label span {
-  background: url("/Content/Pictures/Check_box_checked.png") no-repeat center;
+
+label>input[type="checkbox"]:checked + span{
+  //background: url("/Content/Pictures/Check_box_checked.png") no-repeat center;
+  background: url("http://www.clker.com/cliparts/4/h/F/B/m/4/nxt-checkbox-checked-ok-md.png") no-repeat center;
   width: 23px;
   height: 23px;
   background-size: contain;
