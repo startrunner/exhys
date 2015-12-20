@@ -8,7 +8,7 @@
                 @Html.ErrorListFor(ViewData)
             </div>
             <div class="form-group">
-                @Html.TextBoxFor(m => m.Username, new { placeholder="Username", @class="form-control line-height-normal"})
+                @Html.TextBoxFor(m => m.Username, new { placeholder="Username", @class="form-control lineH"})
             </div>
             <div class="form-group">
                 @Html.PasswordFor(m => m.Password, new { placeholder="Password", @class="form-control"})
@@ -16,5 +16,7 @@
             <div class="form-group">
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Sign In</button>
             </div>
-        }
+			<h5>Don't have an account yet?<a href="/Accounts/Register"> Sign up</a></h5>
+
+		}
     </section>

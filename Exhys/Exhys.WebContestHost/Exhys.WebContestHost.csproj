@@ -251,6 +251,7 @@
     <Content Include="Views\Ranking\List.cshtml" />
     <Content Include="Views\Ranking\View.cshtml" />
     <Content Include="Views\Home\Footer.cshtml" />
+    <Content Include="Views\Home\Navigation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

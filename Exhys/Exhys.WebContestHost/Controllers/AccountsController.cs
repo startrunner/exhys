@@ -128,10 +128,10 @@ namespace Exhys.WebContestHost.Controllers
 
                 Response.SetSessionCookie(session.Id);
 
-                var backRedirect = TempData.GetRedirectsBackTo();
                 try
                 {
-                    var redirectValues = backRedirect.Values;
+					var backRedirect = TempData.GetRedirectsBackTo();
+					var redirectValues = backRedirect.Values;
                     redirectValues.Add("area", backRedirect.DataTokens["area"]);
                     return RedirectToRoute(backRedirect.Values);
                 } 
