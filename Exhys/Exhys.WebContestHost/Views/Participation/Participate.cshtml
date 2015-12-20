@@ -25,9 +25,6 @@
 	    $(document).ready(function () {
 		    setInterval(refreshSubmissions, 5000);
 	    });
-		$(document).ready(function () {
-			setInterval(refreshSubmissions, 5000);
-		});
 		function resizeTextarea(id) {
 			var a = document.getElementById(id);
 			a.style.height = 'auto';
@@ -122,13 +119,3 @@
 </div>
 
 <br /><br /><br />
-<!--div id="submissions-list" style="display: inline-block">
-	@{Html.RenderAction(actionName: "ListSubmissions", controllerName: "Participation", routeValues: new { participationId = Model.Id });}
-</!--div-->
-
-
-<script>
-	$(document).ready(function () {
-		setInterval(refreshSubmissions, 5000);
-	});
-</script>
