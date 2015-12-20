@@ -120,7 +120,7 @@ namespace Exhys.WebContestHost.Communication
         {
             NetHttpBinding binding = new NetHttpBinding();
             binding.WebSocketSettings.TransportUsage = WebSocketTransportUsage.Always;
-            EndpointAddress endpointAddress = new EndpointAddress("ws://localhost:9080/SubmissionRouter");
+            EndpointAddress endpointAddress = new EndpointAddress("ws://publish.rimsoft.bg/Exhys/ExhysService.svc/SubmissionService");
             InstanceContext instanceContext = new InstanceContext(this);
             SubmissionServiceClient submissionServiceClient = new SubmissionServiceClient(instanceContext,binding,endpointAddress);
             return submissionServiceClient;

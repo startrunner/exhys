@@ -12,10 +12,12 @@ using Exhys.ExecutionCore.Contracts;
 using System.Diagnostics;
 using Exhys.ExecutionCore;
 using System.Threading;
+using System.ServiceModel.Activation;
 
 namespace Exhys.SubmissionRouter.Service
 {
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Reentrant)]
+    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class ExecutionService : IExecutionService, ISubmissionService
     {
         Dictionary<Guid, ISubmissionCallback> callbacks;

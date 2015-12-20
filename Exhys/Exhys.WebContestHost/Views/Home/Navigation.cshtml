@@ -1,0 +1,39 @@
+﻿@model FooterViewModel
+@if(Model.IsSignedIn)
+{
+	<div class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				@Html.ActionLink("Exhys", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li>@Html.ActionLink("Ranking", "List", "Ranking")</li>
+					<li>@Html.ActionLink("Compete", "List", "Participation")</li>
+					@if(@Model.IsAdmin)
+					{
+						<li>@Html.ActionLink("Admin CP", "List", "Administration/UserAccounts")</li>
+					}
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="/Accounts/Profile" id="registerLink">@Model.UserName</a></li>
+					<li>
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes" aria-expanded="true" style="width:37px">
+							<img src="~/Content/Pictures/user.jpg" class="img-user"/>
+						</a>
+						<ul class="dropdown-menu">
+							<li>@Html.ActionLink(linkText: "Sign Out", controllerName: "Accounts", actionName: "SignOut")</li>
+							<li>@Html.ActionLink(linkText: "View Profile", controllerName: "Accounts", actionName: "Profile")</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<br /><br /><br /><br />
+}

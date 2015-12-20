@@ -24,6 +24,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
+    <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -58,6 +59,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -165,48 +167,51 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\checkboxes-style.css" />
-    <Content Include="Content\custom-style.css" />
+    <Content Include="Content\Old themes\bootstrap-theme.css" />
+    <Content Include="Content\Old themes\bootstrap-theme.min.css" />
+    <Content Include="Content\Old themes\bootstrap.css" />
+    <Content Include="Content\Old themes\bootstrap.min.css" />
+    <Content Include="Content\Old themes\checkboxes-style.css" />
+    <Content Include="Content\Old themes\custom-style.css" />
+    <Content Include="Content\Old themes\darkly.css" />
+    <Content Include="Content\Old themes\themes\base\accordion.css" />
+    <Content Include="Content\Old themes\themes\base\all.css" />
+    <Content Include="Content\Old themes\themes\base\autocomplete.css" />
+    <Content Include="Content\Old themes\themes\base\base.css" />
+    <Content Include="Content\Old themes\themes\base\button.css" />
+    <Content Include="Content\Old themes\themes\base\core.css" />
+    <Content Include="Content\Old themes\themes\base\datepicker.css" />
+    <Content Include="Content\Old themes\themes\base\dialog.css" />
+    <Content Include="Content\Old themes\themes\base\draggable.css" />
+    <Content Include="Content\Old themes\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\Old themes\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\Old themes\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\Old themes\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\Old themes\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\Old themes\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\Old themes\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\Old themes\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\Old themes\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\Old themes\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\Old themes\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\Old themes\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\Old themes\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\Old themes\themes\base\menu.css" />
+    <Content Include="Content\Old themes\themes\base\progressbar.css" />
+    <Content Include="Content\Old themes\themes\base\resizable.css" />
+    <Content Include="Content\Old themes\themes\base\selectable.css" />
+    <Content Include="Content\Old themes\themes\base\selectmenu.css" />
+    <Content Include="Content\Old themes\themes\base\slider.css" />
+    <Content Include="Content\Old themes\themes\base\sortable.css" />
+    <Content Include="Content\Old themes\themes\base\spinner.css" />
+    <Content Include="Content\Old themes\themes\base\tabs.css" />
+    <Content Include="Content\Old themes\themes\base\theme.css" />
+    <Content Include="Content\Old themes\themes\base\tooltip.css" />
     <Content Include="Content\Pictures\Check_box_checked.png" />
     <Content Include="Content\Pictures\Check_box_empty.png" />
-    <Content Include="Content\Site.css" />
-    <Content Include="Content\themes\base\accordion.css" />
-    <Content Include="Content\themes\base\all.css" />
-    <Content Include="Content\themes\base\autocomplete.css" />
-    <Content Include="Content\themes\base\base.css" />
-    <Content Include="Content\themes\base\button.css" />
-    <Content Include="Content\themes\base\core.css" />
-    <Content Include="Content\themes\base\datepicker.css" />
-    <Content Include="Content\themes\base\dialog.css" />
-    <Content Include="Content\themes\base\draggable.css" />
-    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
-    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
-    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
-    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="Content\themes\base\menu.css" />
-    <Content Include="Content\themes\base\progressbar.css" />
-    <Content Include="Content\themes\base\resizable.css" />
-    <Content Include="Content\themes\base\selectable.css" />
-    <Content Include="Content\themes\base\selectmenu.css" />
-    <Content Include="Content\themes\base\slider.css" />
-    <Content Include="Content\themes\base\sortable.css" />
-    <Content Include="Content\themes\base\spinner.css" />
-    <Content Include="Content\themes\base\tabs.css" />
-    <Content Include="Content\themes\base\theme.css" />
-    <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Content\STYLES\checkboxes-style.css" />
+    <Content Include="Content\STYLES\custom-style.css" />
+    <Content Include="ExhysService.svc" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.js" />
@@ -249,8 +254,10 @@
     <Content Include="Views\Home\Navigation.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="WebRoot\Scripts\" />
+    <Folder Include="WebRoot\Styles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -288,6 +295,10 @@
     <ProjectReference Include="..\CodeBits\CodeBits.csproj">
       <Project>{a8b8cced-9569-4329-8bc6-e46f69364331}</Project>
       <Name>CodeBits</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Exhys.SubmissionRouter.Service\Exhys.SubmissionRouter.Service.csproj">
+      <Project>{49c07b5c-a484-4617-a1f2-92b14eef0603}</Project>
+      <Name>Exhys.SubmissionRouter.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\Exhys.WebContestHost.Communication\Exhys.WebContestHost.Communication.csproj">
       <Project>{467e611e-9a27-40ed-96ee-499c0fdc347f}</Project>

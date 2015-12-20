@@ -2,52 +2,52 @@
 <!doctype html>
 <html>
 <head>
-    <title>@Model.CompetitionName - Ranking</title>
-    @Styles.Render("~/Content/css", "~/Content/custom-css")
-    @Scripts.Render("~/bundles/modernizr")
+	<title>@Model.CompetitionName - Ranking</title>
+	@Styles.Render("~/Content/css", "~/Content/custom-css")
+	@Scripts.Render("~/bundles/modernizr")
 </head>
 <body style="padding:8px;">
-    <table border="1" style="width:100%;" class="table table-hover table-responsive table-striped">
-        <thead>
-            <tr>
-                <th rowspan="2">Rank</th>
-                <th rowspan="2">Name</th>
-                <th rowspan="1" colspan="@Model.ProblemNames.Length">Problem Scores</th>
-                <th rowspan="2">Total</th>
-            </tr>
-            <tr>
-                @{ 
-                    foreach (string name in Model.ProblemNames)
-                    { 
-                        <th>@name</th>
-                    }
-                }
-            </tr>
-        </thead>
-        <tbody>
-            @{ 
-                foreach (RankingUserViewModel user in Model.Users)
-                {
-                    <tr>
-                        <td>@(user.Rank.ToString())</td>
-                        <td>@user.Name</td>
-                        @{ 
-                            foreach (string score in user.ProblemScores)
-                            {
-                                <td>@score</td>
-                            }
-                        }
+	<table border="1" style="width:100%;" class="table table-hover table-responsive table-striped">
+		<thead>
+			<tr>
+				<th rowspan="2">Rank</th>
+				<th rowspan="2">Name</th>
+				<th rowspan="1" colspan="@Model.ProblemNames.Length">Problem Scores</th>
+				<th rowspan="2">Total</th>
+			</tr>
+			<tr>
+				@{
+					foreach(string name in Model.ProblemNames)
+					{
+						<th>@name</th>
+					}
+				}
+			</tr>
+		</thead>
+		<tbody>
+			@{
+				foreach(RankingUserViewModel user in Model.Users)
+				{
+					<tr>
+						<td>@(user.Rank.ToString())</td>
+						<td>@user.Name</td>
+						@{
+							foreach(string score in user.ProblemScores)
+							{
+								<td>@score</td>
+							}
+						}
 
-                        <td>@user.Score</td>
-                    </tr>
-                            }
-            }
-        </tbody>
-    </table>
+						<td>@user.Score</td>
+					</tr>
+				}
+			}
+		</tbody>
+	</table>
 
-    @{Html.RenderAction(controllerName: "Home", actionName: "Footer");}
+	@{Html.RenderAction(controllerName: "Home", actionName: "Footer");}
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+	@Scripts.Render("~/bundles/jquery")
+	@Scripts.Render("~/bundles/bootstrap")
 </body>
 </html>
