@@ -7,7 +7,7 @@
 	@RenderSection("styles", required: false)
 	@Styles.Render("~/Content/custom-css")
 </head>
-<body>
+<body onunload="unloadP('ExhysAdminPageScroll')" onload="loadP('ExhysAdminPageScroll')">
 	<header>
 		Exhys Administration
 
@@ -117,6 +117,7 @@
 	@Scripts.Render("~/bundles/jquery")
 	@Scripts.Render("~/bundles/jquery-ui")
 	@Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/scrollfix")
 	@RenderSection("scripts", required: false)
 	<script>
 		$('button').addClass('btn btn-default');

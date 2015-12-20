@@ -1,6 +1,7 @@
 input[type="checkbox"] {
   display: none;
 }
+
 label>input[type="checkbox"] + span {
   display: inline-block;
   width: 23px;

@@ -2,13 +2,26 @@
 
 <script type="text/javascript">
 
-    //setInterval(refreshSubmissions,5000);
-
     function refreshSubmissions() {
-        var scroll = $(window).scrollTop();
-        $('#submissions-list').load('@Url.Action("ListSubmissions", "Participation")?participationId=@Model.Id', function () {
+        $.ajaxSetup({
+            cache: false
         });
-        setTimeout("$(window).scrollTop(scroll);", 1000);
+        var currentHeight = $("#submissions-list").height();
+        $('#submissions-list').css("height", currentHeight);
+        $.ajax(
+            {
+                url: '@Url.Action("ListSubmissions", "Participation")?participationId=@Model.Id',
+                success: function (result) {
+                    $("#submissions-list").html(result)
+                        .promise()
+                        .done(function()
+                        {
+                            $("#submissions-list").css("height", "");
+                            currentHeight = $("#submissions-list").height();
+                            $('#submissions-list').css("height", currentHeight);
+                        });
+                }
+            });
     }
 </script>
 
@@ -85,9 +98,15 @@
 </div>
 
 	<br /><br /><br />
-    <span id="submissions-list">
+    <div id="submissions-list" style="display: inline-block">
         @{Html.RenderAction(actionName: "ListSubmissions", controllerName: "Participation", routeValues: new { participationId = Model.Id });}
-    </span>
+    </div>
 	
 <br /><br /><br />
 <br /><br /><br />
+
+<script>
+    $(document).ready(function () {
+        setInterval(refreshSubmissions, 5000);
+    });
+</script>

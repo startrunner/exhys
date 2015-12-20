@@ -49,17 +49,28 @@ namespace Exhys.WebContestHost.Communication
             }, false);
 
             SubmissionDto submission = CreateSubmission(problemSolution);
+            SubmissionServiceClient client = null;
             try
             {
-                SubmissionServiceClient client = CreateClientInstance();
-                client.Open();
+                client = CreateClientInstance();
                 Guid executionId = await client.SubmitAsync(submission);
                 await submissionCompletionSource.Task;
-                client.Close();
+                
             }
             catch(Exception ex)
             {
                 throw new Exception($"Unable to communicate with server! {ex.Message}");
+            }
+            finally
+            {
+                try
+                {
+                    client.Close();
+                }
+                catch
+                {
+                    client.Abort();
+                }
             }
 
             SubmissionResultDto result = null;
@@ -71,8 +82,8 @@ namespace Exhys.WebContestHost.Communication
             token.Dispose();
             return new SubmissionResult
             {
-                TestResults = CreateSolutionTestStatuses(result, problemSolution.Problem),
-                IsSuccessful = result.IsSuccessful
+                TestResults = result==null ? null : CreateSolutionTestStatuses(result, problemSolution.Problem),
+                IsSuccessful = result == null ? false : result.IsSuccessful
             };
         }
 
