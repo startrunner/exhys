@@ -19,15 +19,27 @@
 						<tr>
 							<td class="text-center">@v.ProblemName</td>
 							<td class="text-center">
-								@{
-									if(v.Status == ProblemSolutionExecutionStatusVm.Pending)
-									{<span>Pending</span>}
-									else if(v.Status == ProblemSolutionExecutionStatusVm.InProgress)
-									{ <span>In Progress...</span>}
-									else
-									{
-										foreach(var status in v.TestStatuses)
-										{
+								@{  
+                                    if (v.Status == ProblemSolutionExecutionStatusVm.Pending)
+                                    {
+                                        <span>Pending</span>
+                                    }
+                                    else if(v.Status == ProblemSolutionExecutionStatusVm.InProgress)
+                                    {
+                                         <span>In Progress...</span>
+                                    }
+                                    else if (v.Status == ProblemSolutionExecutionStatusVm.ExecutionFailed)
+                                    {
+                                        <span>Execution Failed...</span>
+                                    }
+                                    else if (v.Status == ProblemSolutionExecutionStatusVm.Completed)
+                                    {
+                                        <span>Completed</span>
+                                    /*}
+                                    else
+                                    {*/
+                                        foreach (var status in v.TestStatuses)
+                                        {
 											<span>
 												@{
 													string s;
@@ -45,8 +57,8 @@
 
 												}
 											</span>
-														}
-													}
+										}
+									}
 								}
 							</td>
 							<td class="text-center">

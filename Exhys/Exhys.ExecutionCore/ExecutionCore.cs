@@ -34,10 +34,7 @@ namespace Exhys.ExecutionCore
                     testResults = testRunner.Run();
                 }
             }
-            catch
-            {
-
-            }
+            catch { }
             return new ExecutionResultDto()
             {
                 ExecutionId = execution.Id,

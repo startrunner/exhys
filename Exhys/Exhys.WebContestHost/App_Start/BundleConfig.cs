@@ -18,7 +18,10 @@ namespace Exhys.WebContestHost
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
 						"~/Scripts/jquery.validate*"));
 
-			bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+            bundles.Add(new ScriptBundle("~/bundles/scrollfix").Include(
+                        "~/Scripts/scrollfix.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
 					  "~/Scripts/bootstrap.js",
 					  "~/Scripts/respond.js"));
 
@@ -27,7 +30,9 @@ namespace Exhys.WebContestHost
 			//		  "~/Content/site.css"));
 
 			bundles.Add(new StyleBundle("~/Content/custom-css").Include(
-					  "~/Content/STYLES/custom-style.css"));            
+					  "~/Content/STYLES/custom-style.css"));      
+            
+                  
 
         }
     }
