@@ -48,7 +48,7 @@ namespace Exhys.WebContestHost.Controllers
             }
 
 
-            using (var db = new ExhysContestEntities())
+            using (var db = new ExhysContestEntities()) 
             {
                 var users = db.UserAccounts.Where(u => u.Username == vm.Username).Take(1).ToList();
                 if (users != null && users.Count != 0)
