@@ -22,6 +22,9 @@
 					}
 				});
 		}
+	    $(document).ready(function () {
+		    setInterval(refreshSubmissions, 5000);
+	    });
 		$(document).ready(function () {
 			setInterval(refreshSubmissions, 5000);
 		});
@@ -122,3 +125,10 @@
 <!--div id="submissions-list" style="display: inline-block">
 	@{Html.RenderAction(actionName: "ListSubmissions", controllerName: "Participation", routeValues: new { participationId = Model.Id });}
 </!--div-->
+
+
+<script>
+	$(document).ready(function () {
+		setInterval(refreshSubmissions, 5000);
+	});
+</script>
