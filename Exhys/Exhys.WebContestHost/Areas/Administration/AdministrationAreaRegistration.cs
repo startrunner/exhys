@@ -9,7 +9,7 @@ namespace Exhys.WebContestHost.Areas.Administration
             get 
             {
                 return "Administration";
-            }
+            } 
         }
 
         public override void RegisterArea(AreaRegistrationContext context) 
