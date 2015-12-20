@@ -267,7 +267,7 @@ namespace Exhys.WebContestHost.Controllers
                     .Select(x => new ProblemSolutionViewModel(x))
                     .ToList();
             }
-            return View(vm);
+            return PartialView(vm);
         }
 
         private void HandleSolution (int solutionId, string serviceUrl)

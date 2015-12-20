@@ -7065,6 +7065,7 @@ th:first-child .fixed-head {
   position: fixed;
   bottom: 0;
   width: 100%;
+  background: #DDDDDD;
 }
 .form-signin {
   max-width: 330px;
@@ -7089,8 +7090,14 @@ th:first-child .fixed-head {
 #table-feedback table,
 #table-feedback td,
 #table-feedback th {
-  border: 1px solid lightgrey;
+  border: 1px solid #D3D3D3;
 }
 .width-100 {
   width: 100px;
+}
+.ui-selecting {
+  background-color: #FFF5FA !important;
+}
+.max-width-500 {
+  max-width: 500px !important;
 }

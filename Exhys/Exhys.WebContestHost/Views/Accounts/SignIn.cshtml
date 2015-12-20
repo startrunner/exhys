@@ -1,8 +1,8 @@
 ﻿@model Exhys.WebContestHost.Areas.Shared.ViewModels.UserAccountViewModel
     <section>
         <br />
-        @using (Html.BeginForm("SignIn", "Accounts", FormMethod.Post, new { @class="form-signin" }))
-        {
+        @using (Html.BeginForm("SignIn", "Accounts", FormMethod.Post, new { @class= "form-signin" }))
+		{
             <h2 class="form-signin-heading">Please Sign In</h2>
             <div>
                 @Html.ErrorListFor(ViewData)

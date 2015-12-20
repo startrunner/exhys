@@ -90,15 +90,7 @@
 					</li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li>
-						<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes" aria-expanded="true" style="width:37px">
-							<img src="~/Content/Pictures/user.jpg" class="img-user" />
-						</a>
-						<ul class="dropdown-menu">
-							<li><a href="~/Accounts/SignOut">Sign Out</a></li>
-							<li><a href="~/Accounts/Profile">View Profile</a></li>
-						</ul>
-					</li>
+					@{Html.RenderAction("UserDetails", "Home", new { Area = "", WithUsernameInFront = false, WithUsernameInDropdown = true }); }
 				</ul>
 			</div>
 		</div>

@@ -2,7 +2,7 @@
 
 @if(ViewData.GetOpenUserGroupOptions() != null)
 {
-	using(Html.BeginForm("Register", "Accounts", FormMethod.Post, new { @class = "form-signin" }))
+	using(Html.BeginForm("Register", "Accounts", FormMethod.Post, new { @class = "form-signin max-width-500" }))
 	{
 		<div>
 			@Html.ErrorListFor(ViewData)
