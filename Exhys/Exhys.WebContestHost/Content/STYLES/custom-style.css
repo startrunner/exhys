@@ -7096,8 +7096,11 @@ th:first-child .fixed-head {
   width: 100px;
 }
 .ui-selecting {
-  background-color: #FFF5FA !important;
+  background-color: #AAAAAA !important;
 }
 .max-width-500 {
   max-width: 500px !important;
+}
+.font-size-14 {
+  font-size: 14px;
 }

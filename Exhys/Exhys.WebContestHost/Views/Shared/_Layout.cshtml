@@ -1,16 +1,16 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exhys</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Exhys</title>
 	@Styles.Render("~/Content/custom-css")
 </head>
 <body>
 	@{Html.RenderAction("Navigation", "Home"); }
-    <div class="container body-content">
-        @RenderBody()
-    </div>
+	<div class="container body-content">
+		@RenderBody()
+	</div>
 	@{Html.RenderAction("Footer", "Home"); }
 	@Scripts.Render("~/bundles/jquery")
 	@Scripts.Render("~/bundles/bootstrap")

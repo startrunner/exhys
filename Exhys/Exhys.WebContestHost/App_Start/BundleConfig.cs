@@ -21,7 +21,7 @@ namespace Exhys.WebContestHost
             bundles.Add(new ScriptBundle("~/bundles/scrollfix").Include(
                         "~/Scripts/scrollfix.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+			bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
 					  "~/Scripts/bootstrap.js",
 					  "~/Scripts/respond.js"));
 

@@ -209,8 +209,6 @@
     <Content Include="Content\Old themes\themes\base\tooltip.css" />
     <Content Include="Content\Pictures\Check_box_black_checked.png" />
     <Content Include="Content\Pictures\Check_box_black_empty.png" />
-    <Content Include="Content\Pictures\Check_box_white_checked.png" />
-    <Content Include="Content\Pictures\Check_box_white_empty.png" />
     <Content Include="Content\Pictures\user.jpg" />
     <Content Include="Content\STYLES\checkboxes-style.css" />
     <Content Include="Content\STYLES\custom-style.css" />
@@ -350,7 +348,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>64767</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
