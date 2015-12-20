@@ -41,7 +41,7 @@ namespace Exhys.WebContestHost.Communication.Test
         [TestMethod]
         public void TestSubmit()
         {
-            SubmissionClient submissionClient = new SubmissionClient();
+            SubmissionClient submissionClient = new SubmissionClient("");
             ProblemSolution problemSolution = new ProblemSolution
             {
                 LanguageAlias = "c++",

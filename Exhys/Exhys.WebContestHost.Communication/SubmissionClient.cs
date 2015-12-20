@@ -14,9 +14,11 @@ namespace Exhys.WebContestHost.Communication
     [CallbackBehavior(UseSynchronizationContext = true)]
     public class SubmissionClient:ISubmissionServiceCallback
     {
-        TaskCompletionSource<SubmissionResultDto> submissionCompletionSource;
-        public SubmissionClient()
+        private TaskCompletionSource<SubmissionResultDto> submissionCompletionSource;
+        private string serviceAddress;
+        public SubmissionClient(string serviceAddress)
         {
+            this.serviceAddress = serviceAddress;
         }
 
         public void SubmissionProcessed(SubmissionResultDto result)
@@ -120,7 +122,7 @@ namespace Exhys.WebContestHost.Communication
         {
             NetHttpBinding binding = new NetHttpBinding();
             binding.WebSocketSettings.TransportUsage = WebSocketTransportUsage.Always;
-            EndpointAddress endpointAddress = new EndpointAddress("ws://publish.rimsoft.bg/Exhys/ExhysService.svc/SubmissionService");
+            EndpointAddress endpointAddress = new EndpointAddress(serviceAddress+"/SubmissionService");
             InstanceContext instanceContext = new InstanceContext(this);
             SubmissionServiceClient submissionServiceClient = new SubmissionServiceClient(instanceContext,binding,endpointAddress);
             return submissionServiceClient;

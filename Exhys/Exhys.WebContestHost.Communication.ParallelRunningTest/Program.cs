@@ -61,7 +61,7 @@ namespace Exhys.WebContestHost.Communication.ParallelRunningTest
                 if (run < 32)
                 {
                         run++;
-                        var submissionClient = new SubmissionClient();
+                        var submissionClient = new SubmissionClient("");
                         clients.Add(submissionClient);
 
                         List<SolutionTestStatus> result = null;

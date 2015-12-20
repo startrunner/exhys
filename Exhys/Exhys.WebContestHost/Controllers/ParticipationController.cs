@@ -286,7 +286,11 @@ namespace Exhys.WebContestHost.Controllers
 
             }
 
-            SubmissionClient client = new SubmissionClient();
+            string baseUrl = Request.Url.GetLeftPart(UriPartial.Authority);
+            string serviceUrl = baseUrl + "ExhysService.svc";
+
+
+            SubmissionClient client = new SubmissionClient(serviceUrl);
             client.SubmitRequestAsync(solution).ContinueWith((x) =>
             {
                 List<SolutionTestStatus> result = null;
