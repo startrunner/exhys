@@ -1,131 +1,97 @@
 ﻿@model ParticipationViewModel
-@{ 
+@{
 
 }
-<!doctype html>
-<html>
-<head>
-    @if (Model != null && Model.Competition != null)
-    {
-        <title>@Model.Competition.Name - Exhys</title>
-    }
-    @Styles.Render( "~/Content/custom-css")
-</head>
-<body>
-
-    @*Navigation Bar*@
-    <section class="navbar navbar-default navbar-fixed-top">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand">
-                @if (Model != null && Model.Competition != null)
-                {
-                    @Model.Competition.Name
-                }
-            </a>
-        </div>
-    </section>
-
-    <br /><br /><br />
-    @*Problem List*@
-    <section style="float:left">
-        <fieldset>
-            <legend>Problems</legend>
-            <table class="table-bordered">
-                
-                <tbody>
-                    @for (int i = 0; i < Model.Competition.Problems.Count; i++)
-                    {
-                        <tr>
-                            <td>@Model.Competition.Problems[i].Name</td>
-                            <td>
-                                @for (int j = 0; j < Model.Competition.Problems[i].ProblemStatements.Count; j++)
-                                {
-                                    <div>
-                                        @using (Html.BeginForm(method: FormMethod.Get, actionName: "DownloadStatement", controllerName: "Participation"))
-                                        {
-                                            <input type="hidden" name="id" value="@Model.Competition.Problems[i].ProblemStatements[j].Id" />
-                                            <button type="submit" class="btn btn-link">@Model.Competition.Problems[i].ProblemStatements[j].Filename.Split('\\').Last()</button>
-                                        }
-                                    </div>
-                                }
-                            </td>
-                        </tr>
-                    }
-                    <tr>
-                        <td><br /></td>
-                        <td><br /></td>
-                    </tr>
-                </tbody>
-            </table>
-        </fieldset>
-    </section>
-
-    
-    @*Submission*@
-    <section style="padding-left:1cm;">
-        @using (Html.BeginForm(actionName: "SubmitSolution", controllerName: "Participation", method: FormMethod.Post, htmlAttributes: new { }))
-        {
-            var vm = new ProblemSolutionViewModel();
-
-            <fieldset>
-                <legend>Submit a Solution</legend>
-                <div class="form-group">
-                    @Html.LabelFor(m => vm.ProblemId, "Problem")
-                    @Html.FixedDropDownListFor(m => vm.ProblemId, ViewData.GetProblemOptions())
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(m => vm.SourceCode, "Source Code")
-                    @Html.TextAreaFor(m => vm.SourceCode, new { placeholder = "//Hello, World!" })
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(m => vm.LanguageAlias, "Language")
-                    @Html.FixedDropDownListFor(m => vm.LanguageAlias, ViewData.GetProgrammingLanguageOptions())
-                </div>
-
-                <div class="form-group">
-                    <button class="btn btn-default" type="submit">Submit Solution</button>
-                    <button class="btn btn-default" type="reset">Reset</button>
-                </div>
-            </fieldset>
-        }
-        
-    </section>
-
-    <br /><br /><br />
-    @*Previous Submissions*@
-
-    <script>/*
-        function updateCart() {
-            var tdata = $(frm).serialize(); 
-            // or your data in the format that will be used ??
-            $.ajax({
-                type: "POST",
-                data: tdata,
-                url : '<%= Url.Action("Create", "Cart") %>',
-                dataType: "json",
-                success: function (result) { success(result); }  
-            });
-        }); */
-    </script>
-
-    @{Html.RenderAction(actionName: "ListSubmissions", controllerName: "Participation", routeValues: new { participationId = Model.Id });}
-
-    <br /><br /><br /><br /><br />
-
-    @{Html.RenderAction("Footer", "Home"); }
+@if(Model != null && Model.Competition != null)
+{
+	<h2 class="text-center">@Model.Competition.Name</h2>
+}
 
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    <script>
-        //$('button').addClass('btn btn-default');
-    </script>
-</body>
-</html>
+<br />
+@*Problem List*@
+<div class="form-group">
+	<section style="float:left" class="col-lg-4">
+		<fieldset>
+			<legend>Problems</legend>
+			<table class="table-bordered table">
+
+				<tbody>
+					@for(int i = 0; i < Model.Competition.Problems.Count; i++)
+					{
+						<tr>
+							<th>@Model.Competition.Problems[i].Name</th>
+							<td>
+								@for(int j = 0; j < Model.Competition.Problems[i].ProblemStatements.Count; j++)
+								{
+									<div class="padding-0">
+										@using(Html.BeginForm(method: FormMethod.Get, actionName: "DownloadStatement", controllerName: "Participation"))
+										{
+											<input type="hidden" name="id" value="@Model.Competition.Problems[i].ProblemStatements[j].Id" />
+											<button type="submit" class="btn btn-link height-25px padding-0">@Model.Competition.Problems[i].ProblemStatements[j].Filename.Split('\\').Last()</button>
+										}
+									</div>
+								}
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</fieldset>
+	</section>
+
+
+	@*Submission*@
+	<section style="padding-left:1cm;">
+		@using(Html.BeginForm(actionName: "SubmitSolution", controllerName: "Participation", method: FormMethod.Post, htmlAttributes: new { }))
+		{
+			var vm = new ProblemSolutionViewModel();
+
+			<fieldset>
+				<legend>Submit a Solution</legend>
+				<div class="form-group">
+					@Html.LabelFor(m => vm.ProblemId, "Problem")
+					@Html.FixedDropDownListFor(m => vm.ProblemId, ViewData.GetProblemOptions(), new { @class = "form-control" })
+				</div>
+
+				<div class="form-group">
+					@Html.LabelFor(m => vm.SourceCode, "Source Code")
+					@Html.TextAreaFor(m => vm.SourceCode, new { placeholder = "//Hello, World!",@class="form-control input-lg", id = "inputLarge" })
+				</div>
+
+				<div class="form-group">
+					@Html.LabelFor(m => vm.LanguageAlias, "Language")
+					@Html.FixedDropDownListFor(m => vm.LanguageAlias, ViewData.GetProgrammingLanguageOptions(),new { @class="form-control"})
+				</div>
+
+				<div class="form-group">
+					<button class="btn btn-primary" type="submit">Submit Solution</button>
+					<button class="btn btn-default" type="reset">Reset</button>
+				</div>
+			</fieldset>
+		}
+
+	</section>
+</div>
+
+	<br /><br /><br />
+	@*Previous Submissions*@
+
+	<script>
+		/*
+				function updateCart() {
+					var tdata = $(frm).serialize();
+					// or your data in the format that will be used ??
+					$.ajax({
+						type: "POST",
+						data: tdata,
+						url : '<%= Url.Action("Create", "Cart") %>',
+						dataType: "json",
+						success: function (result) { success(result); }
+					});
+				}); */
+	</script>
+
+	@{Html.RenderAction(actionName: "ListSubmissions", controllerName: "Participation", routeValues: new { participationId = Model.Id });}
+<br /><br /><br />
+<br /><br /><br />

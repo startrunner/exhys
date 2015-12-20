@@ -209,6 +209,7 @@
     <Content Include="Content\Old themes\themes\base\tooltip.css" />
     <Content Include="Content\Pictures\Check_box_checked.png" />
     <Content Include="Content\Pictures\Check_box_empty.png" />
+    <Content Include="Content\Pictures\user.jpg" />
     <Content Include="Content\STYLES\checkboxes-style.css" />
     <Content Include="Content\STYLES\custom-style.css" />
     <Content Include="ExhysService.svc" />
