@@ -1,37 +1,35 @@
 ﻿@model ParticipationViewModel
+@section scripts{
+	<script type="text/javascript">
 
-<script type="text/javascript">
-
-    function refreshSubmissions() {
-        $.ajaxSetup({
-            cache: false
-        });
-        var currentHeight = $("#submissions-list").height();
-        $('#submissions-list').css("height", currentHeight);
-        $.ajax(
-            {
-                url: '@Url.Action("ListSubmissions", "Participation")?participationId=@Model.Id',
-                success: function (result) {
-                    $("#submissions-list").html(result)
-                        .promise()
-                        .done(function()
-                        {
-                            $("#submissions-list").css("height", "");
-                            currentHeight = $("#submissions-list").height();
-                            $('#submissions-list').css("height", currentHeight);
-                        });
-                }
-            });
-    }
-</script>
-
-@if (Model != null && Model.Competition != null)
+		function refreshSubmissions() {
+			$.ajaxSetup({
+				cache: false
+			});
+			var currentHeight = $("#submissions-list").height();
+			$('#submissions-list').css("height", currentHeight);
+			$.ajax(
+				{
+					url: '@Url.Action("ListSubmissions", "Participation")?participationId=@Model.Id',
+					success: function (result) {
+						$("#submissions-list").html(result)
+							.promise()
+							.done(function () {
+								$("#submissions-list").css("height", "");
+								currentHeight = $("#submissions-list").height();
+								$('#submissions-list').css("height", currentHeight);
+							});
+					}
+				});
+		}
+	</script>
+}
+@if(Model != null && Model.Competition != null)
 {
 	<h2 class="text-center">@Model.Competition.Name</h2>
 }
 
 
-<br />
 @*Problem List*@
 <div class="form-group">
 	<section style="float:left" class="col-lg-4">
@@ -40,35 +38,40 @@
 			<table class="table-bordered table">
 
 				<tbody>
-					@for (int i = 0; i < Model.Competition.Problems.Count; i++)
-                    {
+					@for(int i = 0; i < Model.Competition.Problems.Count; i++)
+					{
 						<tr>
-							<th>@Model.Competition.Problems[i].Name</th>
-							<td>
-								@for (int j = 0; j < Model.Competition.Problems[i].ProblemStatements.Count; j++)
-                                {
-									<div class="padding-0">
-										@using (Html.BeginForm(method: FormMethod.Get, actionName: "DownloadStatement", controllerName: "Participation"))
-                                        {
+							<th width="50%">@Model.Competition.Problems[i].Name</th>
+							<td width="50%">
+								@for(int j = 0; j < Model.Competition.Problems[i].ProblemStatements.Count; j++)
+								{
+									<div class="padding-0 center">
+										@using(Html.BeginForm(method: FormMethod.Get, actionName: "DownloadStatement", controllerName: "Participation"))
+										{
 											<input type="hidden" name="id" value="@Model.Competition.Problems[i].ProblemStatements[j].Id" />
 											<button type="submit" class="btn btn-link height-25px padding-0">@Model.Competition.Problems[i].ProblemStatements[j].Filename.Split('\\').Last()</button>
-                                        }
+										}
 									</div>
-                                }
+								}
 							</td>
 						</tr>
-                    }
+					}
 				</tbody>
 			</table>
 		</fieldset>
+		<br/><br />
+		<div id="submissions-list" style="display: inline-block">
+			@{Html.RenderAction(actionName: "ListSubmissions", controllerName: "Participation", routeValues: new { participationId = Model.Id });}
+		</div>
+		<br /><br /><br /><br />
 	</section>
 
 
 	@*Submission*@
 	<section style="padding-left:1cm;">
-		@using (Html.BeginForm(actionName: "SubmitSolution", controllerName: "Participation", method: FormMethod.Post, htmlAttributes: new { }))
-        {
-            var vm = new ProblemSolutionViewModel();
+		@using(Html.BeginForm(actionName: "SubmitSolution", controllerName: "Participation", method: FormMethod.Post, htmlAttributes: new { }))
+		{
+			var vm = new ProblemSolutionViewModel();
 
 			<fieldset>
 				<legend>Submit a Solution</legend>
@@ -92,21 +95,19 @@
 					<button class="btn btn-default" type="reset">Reset</button>
 				</div>
 			</fieldset>
-        }
+		}
 
 	</section>
 </div>
 
-	<br /><br /><br />
-    <div id="submissions-list" style="display: inline-block">
-        @{Html.RenderAction(actionName: "ListSubmissions", controllerName: "Participation", routeValues: new { participationId = Model.Id });}
-    </div>
-	
 <br /><br /><br />
-<br /><br /><br />
+<!--div id="submissions-list" style="display: inline-block">
+	@{Html.RenderAction(actionName: "ListSubmissions", controllerName: "Participation", routeValues: new { participationId = Model.Id });}
+</!--div-->
+
 
 <script>
-    $(document).ready(function () {
-        setInterval(refreshSubmissions, 5000);
-    });
+	$(document).ready(function () {
+		setInterval(refreshSubmissions, 5000);
+	});
 </script>
