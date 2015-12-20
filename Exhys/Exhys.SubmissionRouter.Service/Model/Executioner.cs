@@ -40,7 +40,7 @@ namespace Exhys.SubmissionRouter.Service.Model
             },tokenSource.Token).ContinueWith(t=>
             {
                 //throw new ExecutionFailedException(execution.Id);
-            },TaskContinuationOptions.NotOnRanToCompletion);
+            },TaskContinuationOptions.OnlyOnFaulted);
             CurrentExecutionId = execution.Id;
         }
 
