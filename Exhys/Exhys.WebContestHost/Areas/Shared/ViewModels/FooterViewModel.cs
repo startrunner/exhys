@@ -10,6 +10,8 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
         public bool IsAdmin { get; set; }
 		public bool IsSignedIn { get; set; }
 		public string UserName { get; set; }
+		public bool WithUsernameInDropdown { get; set; }
+		public bool WithUsernameInFront { get; set; }
 		public FooterViewModel()
         {
 

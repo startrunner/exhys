@@ -11,16 +11,12 @@ namespace Exhys.WebContestHost.Controllers
 	{
 		[HttpGet]
 		public ActionResult Index() => RedirectToAction("List", "Participation");
-		
+
 		public ActionResult Footer()
 		{
-			return PartialView(GetUserDetails());
+			return PartialView();
 		}
 		public ActionResult Navigation()
-		{
-			return PartialView(GetUserDetails());
-		}
-		private FooterViewModel GetUserDetails()
 		{
 			FooterViewModel vm = new FooterViewModel();
 			using(var db = new ExhysContestEntities())
@@ -34,7 +30,25 @@ namespace Exhys.WebContestHost.Controllers
 					vm.UserName = user.FullName;
 				}
 			}
-			return vm;
+			return PartialView(vm);
+		}
+		public ActionResult UserDetails( bool WithUsernameInFront = false, bool WithUsernameInDropdown = false )
+		{
+			FooterViewModel vm = new FooterViewModel();
+			using(var db = new ExhysContestEntities())
+			{
+				var user = Request.GetSignedInUserQuery(db).FirstOrDefault();
+				if(user == null) vm.IsSignedIn = false;
+				else
+				{
+					vm.IsSignedIn = true;
+					if(user.UserGroup.IsAdministrator) vm.IsAdmin = true;
+					vm.UserName = user.FullName;
+					vm.WithUsernameInFront = WithUsernameInFront;
+					vm.WithUsernameInDropdown = WithUsernameInDropdown;
+				}
+			}
+			return PartialView(vm);
 		}
 	}
 }
