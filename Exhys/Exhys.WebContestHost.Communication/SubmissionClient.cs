@@ -26,7 +26,7 @@ namespace Exhys.WebContestHost.Communication
             submissionCompletionSource.TrySetResult(result);
         }
 
-        public async Task<List<SolutionTestStatus>> SubmitRequestAsync (ProblemSolution problemSolution)
+        public async Task<SubmissionResult> SubmitRequestAsync (ProblemSolution problemSolution)
         {
             if(submissionCompletionSource!=null)
             {
@@ -45,7 +45,7 @@ namespace Exhys.WebContestHost.Communication
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromMilliseconds(timeoutMs));
             CancellationTokenRegistration token = tokenSource.Token.Register(() => 
             {
-                //submissionCompletionSource.TrySetCanceled();
+                submissionCompletionSource.TrySetCanceled();
             }, false);
 
             SubmissionDto submission = CreateSubmission(problemSolution);
@@ -69,7 +69,11 @@ namespace Exhys.WebContestHost.Communication
             }
             submissionCompletionSource = null;
             token.Dispose();
-            return CreateSolutionTestStatuses(result, problemSolution.Problem);
+            return new SubmissionResult
+            {
+                TestResults = CreateSolutionTestStatuses(result, problemSolution.Problem),
+                IsSuccessful = result.IsSuccessful
+            };
         }
 
         private List<SolutionTestStatus> CreateSolutionTestStatuses(SubmissionResultDto submissionResult, Problem problem)

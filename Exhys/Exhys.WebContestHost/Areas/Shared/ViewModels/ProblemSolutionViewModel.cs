@@ -10,7 +10,8 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
     {
         Pending,
         Completed,
-        InProgress
+        InProgress,
+        ExecutionFailed
     }
     public class ProblemSolutionViewModel
     {
@@ -67,6 +68,8 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
                     return ProblemSolutionExecutionStatusVm.InProgress;
                 case ProblemSolution.ExecutionStatus.Completed:
                     return ProblemSolutionExecutionStatusVm.Completed;
+                case ProblemSolution.ExecutionStatus.ExecutionFailed:
+                    return ProblemSolutionExecutionStatusVm.ExecutionFailed;
                 default:
                     throw new NotImplementedException();
             }

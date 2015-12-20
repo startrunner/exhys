@@ -6,27 +6,32 @@ using System.Threading.Tasks;
 using Exhys.ExecutionCore.Contracts;
 using System.ComponentModel.Composition.Hosting;
 using System.Reflection;
+using System.Diagnostics;
+using System.IO;
 
 namespace Exhys.ExecutionCore
 {
-    public static class CompilerFactory
+    public class CompilerFactory
     {
+        CompilerFactory instance;
         static Dictionary<string,ICompiler> compilers;
-        static CompilerFactory()
+        string basePath;
+        public CompilerFactory(string basePath)
         {
+            this.basePath = basePath;
             LoadAllCompilers();
         }
 
-        private static void LoadAllCompilers()
+        private void LoadAllCompilers()
         {
             AggregateCatalog catalog = new AggregateCatalog();
-            catalog.Catalogs.Add(new DirectoryCatalog("..\\..\\..\\Compilers"));
+            catalog.Catalogs.Add(new DirectoryCatalog(basePath));
             CompositionContainer container = new CompositionContainer(catalog);
             IEnumerable<Lazy<ICompiler>> loadedLazyCompilers = container.GetExports<ICompiler>();
             compilers = loadedLazyCompilers.ToDictionary(x => x.Value.LanguageAlias, x=>x.Value);
         }
 
-        public static ICompiler Get(string languageAlias)
+        public ICompiler Get(string languageAlias)
         {
             if (compilers.ContainsKey(languageAlias.ToLower()))
             {
@@ -37,5 +42,13 @@ namespace Exhys.ExecutionCore
                 return null;
             }
         }
+
+        public static CompilerFactory Initialize(string basePath)
+        {
+            Instance = new CompilerFactory(basePath);
+            return Instance;
+        }
+
+        public static CompilerFactory Instance { get; private set; }
     }
 }

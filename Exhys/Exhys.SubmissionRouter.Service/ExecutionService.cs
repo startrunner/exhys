@@ -13,6 +13,8 @@ using System.Diagnostics;
 using Exhys.ExecutionCore;
 using System.Threading;
 using System.ServiceModel.Activation;
+using System.Reflection;
+using System.Web.Hosting;
 
 namespace Exhys.SubmissionRouter.Service
 {
@@ -30,6 +32,11 @@ namespace Exhys.SubmissionRouter.Service
 
         public ExecutionService ()
         {
+            if(CompilerFactory.Instance==null)
+            {
+                CompilerFactory.Initialize(HostingEnvironment.ApplicationPhysicalPath+"bin\\Compilers");
+            }
+
             _lock = new object();
             executionQueue = new Queue<ExecutionDto>();
             executioners = new List<Executioner>();
@@ -114,7 +121,8 @@ namespace Exhys.SubmissionRouter.Service
             SubmissionResultDto submissionResult = new SubmissionResultDto()
             {
                 ExecutionId = executionResult.ExecutionId,
-                TestResults = executionResult.TestResults
+                TestResults = executionResult.TestResults,
+                IsSuccessful = executionResult.IsExecutionSuccessful
             };
 
             ISubmissionCallback callback = callbacks[submissionResult.ExecutionId];

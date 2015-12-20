@@ -13,7 +13,8 @@ namespace MiniGWC99.Tests
         public void TestGnuGccHelloWorld ()
         {
             Debug.WriteLine("Shit");
-            ICompiler gpp = CompilerFactory.Get("c");
+            CompilerFactory.Initialize("");
+            ICompiler gpp = CompilerFactory.Instance.Get("c");
 
             CompilationResult helloWorldProgram = gpp.Compile(cHelloWorld);
 

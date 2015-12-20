@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Serialization;
+using System.Threading;
 
 namespace Exhys.SubmissionRouter.Service.Model
 {
@@ -24,13 +25,22 @@ namespace Exhys.SubmissionRouter.Service.Model
         public void Execute(ExecutionDto execution)
         {
             TestConnection(execution.Id);
+            double totalTestsTime = 0;
+            if (execution.Submission.Tests != null)
+            {
+                totalTestsTime = execution.Submission.Tests
+                .Select(x => x.TimeLimit * 1000)
+                .Sum();
+            }
+            double timeoutMs = totalTestsTime + 10000;
+            CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromMilliseconds(timeoutMs));
             Task.Run(() =>
             {
                 executionCallback.ExecuteSubmission(execution);
-            }).ContinueWith(t=>
+            },tokenSource.Token).ContinueWith(t=>
             {
                 throw new ExecutionFailedException(execution.Id);
-            },TaskContinuationOptions.OnlyOnFaulted);
+            },TaskContinuationOptions.NotOnRanToCompletion);
             CurrentExecutionId = execution.Id;
         }
 

@@ -10,7 +10,8 @@ namespace Exhys.ExecutionCore.Tests
         [TestMethod]
         public void TestGetCompiler()
         {
-            ICompiler compiler = CompilerFactory.Get("c++"); 
+            CompilerFactory.Initialize("");
+            ICompiler compiler = CompilerFactory.Instance.Get("c++"); 
             Assert.IsNotNull(compiler);
         }
     }
