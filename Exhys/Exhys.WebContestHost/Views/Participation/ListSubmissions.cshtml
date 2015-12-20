@@ -1,68 +1,67 @@
 ﻿@model List<ProblemSolutionViewModel>
 <section class="">
-    <fieldset>
-        <legend>Previous Submissions</legend>
-        <table class="table-bordered">
-            <thead>
-                <tr>
-                    <th>Problem</th>
-                    <th>Status</th>
-                    <th>Total Score</th>
-                    <th>Details</th>
-                </tr>
-            </thead>
-            <tbody>
-                @{
-                    foreach (var v in Model)
-                    {
-                        double totalScore=0, totalPossible=0;
-                        <tr>
-                            <td class="text-center">@v.ProblemName</td>
-                            <td class="text-center">
-                                @{
-                                    if (v.Status == ProblemSolutionExecutionStatusVm.Pending)
-                                    {<span>Pending</span>}
-                                    else if (v.Status == ProblemSolutionExecutionStatusVm.InProgress)
-                                    { <span>In Progress...</span>}
-                                    else
-                                    {
-                                        foreach (var status in v.TestStatuses)
-                                        {
-                                            <span>
-                                                @{ 
-                                                    string s;
-                                                    if (!status.Score.Equals(double.NaN))
-                                                    {
-                                                        s = status.Score.ToString();
-                                                        totalScore += status.Score;
-                                                        totalPossible += status.PossibleScore;
-                                                    }
-                                                    else
-                                                    {
-                                                        s = "?";
-                                                    }
-                                                    @s
+	<fieldset>
+		<legend>Previous Submissions</legend>
+		<table class="table-bordered table">
+			<thead class="th-center">
+				<tr>
+					<th>Problem</th>
+					<th>Status</th>
+					<th>Total Score</th>
+					<th>Details</th>
+				</tr>
+			</thead>
+			<tbody>
+				@{
+					foreach(var v in Model)
+					{
+						double totalScore = 0, totalPossible = 0;
+						<tr>
+							<td class="text-center">@v.ProblemName</td>
+							<td class="text-center">
+								@{
+									if(v.Status == ProblemSolutionExecutionStatusVm.Pending)
+									{<span>Pending</span>}
+									else if(v.Status == ProblemSolutionExecutionStatusVm.InProgress)
+									{ <span>In Progress...</span>}
+									else
+									{
+										foreach(var status in v.TestStatuses)
+										{
+											<span>
+												@{
+													string s;
+													if(!status.Score.Equals(double.NaN))
+													{
+														s = status.Score.ToString();
+														totalScore += status.Score;
+														totalPossible += status.PossibleScore;
+													}
+													else
+													{
+														s = "?";
+													}
+													@s
 
-                                                }
-                                            </span>
-                                        }
-                                    }
-                                }
-                            </td>
-                            <td class="text-center">
-                                @totalScore / @totalPossible
-                            </td>
-                            <td class="text-center">
-                                @using (Html.BeginForm(actionName: "ViewSubmission", method: FormMethod.Get, controllerName:"Participation", routeValues: new { id = v.Id })) 
-                                {
-                                    <button type="submit">Click</button>
-                                }
-                            </td>
-                        </tr>
-                                    }
-                }
-            </tbody>
-        </table>
-    </fieldset>
+												}
+											</span>
+														}
+													}
+								}
+							</td>
+							<td class="text-center">
+								@totalScore / @totalPossible
+							</td>
+							<td class="text-center">
+								@using(Html.BeginForm(actionName: "ViewSubmission", method: FormMethod.Get, controllerName: "Participation", routeValues: new { id = v.Id }))
+								{
+									<button class="btn btn-primary height-27px padding-1 width-100" type="submit">Click</button>
+								}
+							</td>
+						</tr>
+													}
+				}
+			</tbody>
+		</table>
+	</fieldset>
 </section>
-

@@ -1,12 +1,4 @@
 ﻿@model RankingViewModel
-<!doctype html>
-<html>
-<head>
-	<title>@Model.CompetitionName - Ranking</title>
-	@Styles.Render("~/Content/css", "~/Content/custom-css")
-	@Scripts.Render("~/bundles/modernizr")
-</head>
-<body style="padding:8px;">
 	<ul class="breadcrumb">
 		<li><a href="/Participation/List">Home</a></li>
 		<li><a href="/Ranking/List">Ranking</a></li>
@@ -49,10 +41,3 @@
 			}
 		</tbody>
 	</table>
-
-	@{Html.RenderAction(controllerName: "Home", actionName: "Footer");}
-
-	@Scripts.Render("~/bundles/jquery")
-	@Scripts.Render("~/bundles/bootstrap")
-</body>
-</html>

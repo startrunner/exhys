@@ -1,11 +1,4 @@
 ﻿@model List<CompetitionViewModel>
-<!doctype html>
-<html>
-<head>
-    @Styles.Render("~/Content/css", "~/Content/custom-css")
-    @Scripts.Render("~/bundles/modernizr")
-</head>   
-<body>
 	<ul class="breadcrumb">
 		<li><a href="/Participation/List">Home</a></li>
 		<li class="active">Ranking</li>
@@ -33,10 +26,3 @@
             }
         </tbody>
     </table>
-
-    @{ Html.RenderAction("Footer", "Home"); }
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-</body>
-</html>
