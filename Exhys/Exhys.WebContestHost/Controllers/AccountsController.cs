@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Exhys.WebContestHost.Areas.Shared;
 using Exhys.WebContestHost.Areas.Shared.Extensions;
