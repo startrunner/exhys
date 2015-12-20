@@ -53,6 +53,7 @@ namespace Exhys.WebContestHost.Controllers
                 var users = db.UserAccounts.Where(u => u.Username == vm.Username).Take(1).ToList();
                 if (users != null && users.Count != 0)
                 {
+                    AddOpenUserGroupOptions();
                     ViewData.ModelState.AddModelError("username-taken", "That username already exists.");//
                     return PartialView(vm);
                 }
