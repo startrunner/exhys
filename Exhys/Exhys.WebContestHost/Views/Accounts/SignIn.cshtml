@@ -1,11 +1,4 @@
 ﻿@model Exhys.WebContestHost.Areas.Shared.ViewModels.UserAccountViewModel
-<!doctype html>
-<html>
-<head>
-    @Styles.Render("~/Content/css", "~/Content/custom-css")
-    @Scripts.Render("~/bundles/modernizr")
-</head>
-<body>
     <section>
         <br />
         @using (Html.BeginForm("SignIn", "Accounts", FormMethod.Post, new { @class="form-signin" }))
@@ -15,7 +8,7 @@
                 @Html.ErrorListFor(ViewData)
             </div>
             <div class="form-group">
-                @Html.TextBoxFor(m => m.Username, new { placeholder="Username", @class="form-control"})
+                @Html.TextBoxFor(m => m.Username, new { placeholder="Username", @class="form-control line-height-normal"})
             </div>
             <div class="form-group">
                 @Html.PasswordFor(m => m.Password, new { placeholder="Password", @class="form-control"})
@@ -25,17 +18,3 @@
             </div>
         }
     </section>
-    <style>
-        .form-signin {
-            max-width: 330px;
-            padding: 15px;
-            margin: 0 auto;
-        }
-            .form-signin-heading, .form-signin .checkbox {
-                margin-bottom: 10px;
-            }
-    </style>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-</body>
-</html>

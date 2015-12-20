@@ -27,7 +27,7 @@ namespace Exhys.WebContestHost.Controllers
                     return RedirectToAction("Profile");
                 }
             }
-            return PartialView();
+            return View();
         }
 
         [HttpPost]
@@ -44,7 +44,7 @@ namespace Exhys.WebContestHost.Controllers
             if (!vm.ValidateForRegistration(ViewData))
             {
                 AddOpenUserGroupOptions();
-                return PartialView(vm);
+                return View(vm);
             }
 
 
@@ -55,7 +55,7 @@ namespace Exhys.WebContestHost.Controllers
                 {
                     AddOpenUserGroupOptions();
                     ViewData.ModelState.AddModelError("username-taken", "That username already exists.");//
-                    return PartialView(vm);
+                    return View(vm);
                 }
 
                 var group = db.UserGroups.Where(g => g.Id == vm.GroupId).FirstOrDefault();
@@ -86,7 +86,7 @@ namespace Exhys.WebContestHost.Controllers
                 {
                     IEnumerable<FormErrors.FormError> errors = TempData.GetFormErrors();
                     ViewData.ModelState.AddModelErrorRange(errors);
-                    return PartialView();
+                    return View();
                 }
             }
         }
@@ -104,7 +104,7 @@ namespace Exhys.WebContestHost.Controllers
             if (!vm.ValidateForSignIn(ViewData))
             {
                 AddOpenUserGroupOptions();
-                return PartialView(vm);
+                return View(vm);
             }
 
             using (var db = new ExhysContestEntities())
@@ -143,7 +143,7 @@ namespace Exhys.WebContestHost.Controllers
 
         invalid_credentials:
             ViewData.ModelState.AddModelError(FormErrors.InvalidCredentials);
-            return PartialView(vm);
+            return View(vm);
         }
 
         [HttpGet]
@@ -156,7 +156,7 @@ namespace Exhys.WebContestHost.Controllers
                     .Include(u=>u.UserGroup)
                     .FirstOrDefault();
 
-                return PartialView(new UserAccountViewModel(user));
+                return View(new UserAccountViewModel(user));
             }
         }
 
@@ -165,7 +165,7 @@ namespace Exhys.WebContestHost.Controllers
         {
             if(!vm.ValidateForEdit(ViewData))
             {
-                return PartialView(vm);
+                return View(vm);
             }
             using (var db = new ExhysContestEntities())
             {

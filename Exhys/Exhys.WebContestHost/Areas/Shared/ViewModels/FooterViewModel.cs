@@ -8,7 +8,9 @@ namespace Exhys.WebContestHost.Areas.Shared.ViewModels
     public class FooterViewModel
     {
         public bool IsAdmin { get; set; }
-        public FooterViewModel()
+		public bool IsSignedIn { get; set; }
+		public string UserName { get; set; }
+		public FooterViewModel()
         {
 
         }

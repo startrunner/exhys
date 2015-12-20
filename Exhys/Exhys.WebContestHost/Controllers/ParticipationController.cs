@@ -59,7 +59,7 @@ namespace Exhys.WebContestHost.Controllers
                 }
             }
 
-            return PartialView(vm);
+            return View(vm);
         }
 
         [HttpGet]
@@ -148,7 +148,7 @@ namespace Exhys.WebContestHost.Controllers
                 var vm = new ParticipationViewModel(participation);
                 vm.Competition.IncludeProblems().IncludeProblemStatements();
 
-                return PartialView(vm);
+                return View(vm);
             }
         }
          
@@ -232,7 +232,7 @@ namespace Exhys.WebContestHost.Controllers
                 if (submission == null) throw new Exception("This submission does not exist or you don't have permissions to view it.");
 
 
-                return PartialView(new ProblemSolutionViewModel(submission));
+                return View(new ProblemSolutionViewModel(submission));
             }
         }
 
@@ -264,7 +264,7 @@ namespace Exhys.WebContestHost.Controllers
                     .Select(x => new ProblemSolutionViewModel(x))
                     .ToList();
             }
-            return PartialView(vm);
+            return View(vm);
         }
 
         private void HandleSolution (int solutionId)
