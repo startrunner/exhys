@@ -169,7 +169,7 @@ namespace Exhys.WebContestHost.Controllers
         [HttpPost, ValidateInput(false)]
         public ActionResult SubmitSolution (ProblemSolutionViewModel vm)
         {
-            string baseUrl = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority);
+            string baseUrl = System.Web.HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~/");
             string serviceUrl = baseUrl + "/ExhysService.svc";
 
             using (var db = new ExhysContestEntities())

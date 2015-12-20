@@ -55,6 +55,7 @@ namespace MiniGWCpp11
 
         private static string GetFullFilePath (string fileName)
         {
+            Debug.WriteLine(Environment.GetEnvironmentVariable("PATH"));
             if (File.Exists(fileName)) return Path.GetFullPath(fileName);
             foreach (var path in Environment.GetEnvironmentVariable("PATH").Split(';'))
             {

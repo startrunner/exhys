@@ -28,6 +28,7 @@ namespace Exhys.ExecutionCore
                 try
                 {
                     compiler = CompilerFactory.Instance.Get(submission.LanguageAlias);
+                    Debug.WriteLine(compiler);
                 }
                 catch (Exception e)
                 {
@@ -36,6 +37,7 @@ namespace Exhys.ExecutionCore
                 try
                 {
                     compilationResult = compiler.Compile(submission.SourceCode);
+                    Debug.WriteLine(compilationResult);
                 }
                 catch (Exception e)
                 {
