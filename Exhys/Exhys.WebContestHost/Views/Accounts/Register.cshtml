@@ -1,23 +1,24 @@
 ﻿@model Exhys.WebContestHost.Areas.Shared.ViewModels.UserAccountViewModel
 
-
-@using(Html.BeginForm("Register", "Accounts", FormMethod.Post, new { @class = "form-signin" }))
+@if(ViewData.GetOpenUserGroupOptions() != null)
 {
-	<div>
-		@Html.ErrorListFor(ViewData)
-	</div>
+	using(Html.BeginForm("Register", "Accounts", FormMethod.Post, new { @class = "form-signin" }))
+	{
+		<div>
+			@Html.ErrorListFor(ViewData)
+		</div>
 		<div>
 			<h5>Group:</h5>
 			@Html.FixedDropDownListFor(m => m.GroupId, ViewData.GetOpenUserGroupOptions(), new { @class = "form-control" })
 		</div>
-			<div>
-				<h5>Username:</h5>
-				@Html.TextBoxFor(m => m.Username, new { @class = "form-control lineH" })
-			</div>
-			<div>
-				<h5>Password:</h5>
-				@Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-			</div>
+		<div>
+			<h5>Username:</h5>
+			@Html.TextBoxFor(m => m.Username, new { @class = "form-control lineH" })
+		</div>
+		<div>
+			<h5>Password:</h5>
+			@Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+		</div>
 			<div>
 				<h5>Confirm Password:</h5>
 				@Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
@@ -29,4 +30,10 @@
 			<br />
 			<button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
 			<h5>Already have an account?<a href="/Accounts/SignIn"> Sign in</a></h5>
+	}
+}
+else
+{
+	<br /><br />
+	<div class="valign-middle"><h3 class="text-center">Sorry, you cannot register at this time! :(</h3></div>
 }

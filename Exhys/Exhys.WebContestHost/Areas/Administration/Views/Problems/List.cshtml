@@ -19,13 +19,13 @@
 					<tr>
 						<td>
 							@Html.HiddenFor(m => m[i].Id)
-							@Html.TextBoxFor(m => m[i].Name)
+							@Html.TextBoxFor(m => m[i].Name, new { @class = "form-control lineH height-25px" })
 						</td>
 						<td>
-							@Html.FixedDropDownListFor(m => m[i].CompetitionId, ViewData.GetCompetitionOptions())
+							@Html.FixedDropDownListFor(m => m[i].CompetitionId, ViewData.GetCompetitionOptions(), new { @class = "form-control height-25px padding-0" })
 						</td>
-						<td>
-							@Html.CheckBoxFor(m => m[i].RequestDelete)
+						<td class="text-center">
+								@Html.CheckBoxFor(m => m[i].RequestDelete)
 						</td>
 					</tr>
 				}

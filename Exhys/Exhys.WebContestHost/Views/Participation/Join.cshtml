@@ -7,17 +7,18 @@
         @Html.HiddenFor(m=>m.Description)
         @Html.HiddenFor(m=>m.GroupId)
         <div>
-            Are you sure you want to join this competition?
+			<h3>Are you sure you want to join this competition?</h3>
         </div>
         <div>
-            @Model.Name
+			<h4>@Model.Name</h4>
         </div>
         <div>
             @Model.Description
         </div>
+		<br/>
         <div>
-            <button type="submit">Yes</button>
-            <button type="button" onclick="window.history.back();">No</button>
+            <button class="btn btn-primary" type="submit">Yes</button>
+            <button class="btn" type="button" onclick="window.history.back();">No</button>
         </div>
     }
 </region>

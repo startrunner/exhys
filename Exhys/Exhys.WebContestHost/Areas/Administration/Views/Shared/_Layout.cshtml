@@ -14,11 +14,11 @@
 	</header>
 	<div>
 		@{
-            var user = ViewData.GetSignedInUser();
-            if (user != null && user.IsGuest == false)
-            {
+			var user = ViewData.GetSignedInUser();
+			if(user != null && user.IsGuest == false)
+			{
 				<span>User: @(user.FullName)</span>
-            }
+			}
 		}
 	</div>
 	<div class="navbar navbar-default navbar-fixed-top">
@@ -30,10 +30,13 @@
 					<span class="icon-bar"></span>
 				</button>
 				@*Html.ActionLink("Exhys", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
-                <a class="navbar-brand">Exhys Administration</a>
+				<a class="navbar-brand">Exhys Administration</a>
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
+					<li>
+						<a href="~/Participation/List">Home</a>
+					</li>
 					<li class="dropdown">
 						<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes" aria-expanded="true">
 							User Groups
@@ -64,28 +67,27 @@
 							<li>@Html.ActionLink(linkText: "Create Competition", controllerName: "Competitions", actionName: "Add")</li>
 						</ul>
 					</li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes" aria-expanded="true">
-                            Problems
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="problems">
-                            <li>@Html.ActionLink(linkText: "List Problems", controllerName: "Problems", actionName: "List")</li>
-                            <li>@Html.ActionLink(linkText: "Add Problem", controllerName: "Problems", actionName: "Add")</li>
-                        </ul>
-                    </li>
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes" aria-expanded="true">
+							Problems
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="problems">
+							<li>@Html.ActionLink(linkText: "List Problems", controllerName: "Problems", actionName: "List")</li>
+							<li>@Html.ActionLink(linkText: "Add Problem", controllerName: "Problems", actionName: "Add")</li>
+						</ul>
+					</li>
 
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes" aria-expanded="true">
-                            Programming Languages
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="problems">
-                            <li>@Html.ActionLink(linkText: "List Languages", controllerName: "ProgrammingLanguages", actionName: "List")</li>
-                            <li>@Html.ActionLink(linkText: "Add Language", controllerName: "ProgrammingLanguages", actionName: "Add")</li>
-                        </ul>
-                    </li>
-
+					<li class="dropdown">
+						<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="themes" aria-expanded="true">
+							Programming Languages
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu" aria-labelledby="problems">
+							<li>@Html.ActionLink(linkText: "List Languages", controllerName: "ProgrammingLanguages", actionName: "List")</li>
+							<li>@Html.ActionLink(linkText: "Add Language", controllerName: "ProgrammingLanguages", actionName: "Add")</li>
+						</ul>
+					</li>
 				</ul>
 			</div>
 		</div>
@@ -95,14 +97,14 @@
 		@RenderBody()
 	</div>
 
-    <br />
-    <br />
-    <br /><br /><br /><br />
+	<br />
+	<br />
+	<br /><br /><br /><br />
 
-    @{Html.RenderAction("Footer", "Home", new { Area = "" }); }
+	@{Html.RenderAction("Footer", "Home", new { Area = "" }); }
 
 	@Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jquery-ui")
+	@Scripts.Render("~/bundles/jquery-ui")
 	@Scripts.Render("~/bundles/bootstrap")
 	@RenderSection("scripts", required: false)
 	<script>
