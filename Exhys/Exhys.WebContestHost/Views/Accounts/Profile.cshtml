@@ -6,18 +6,14 @@
     }
 }
 
-    @Html.ActionLink("Sign Out", "SignOut")
-
     @Html.ErrorListFor(ViewData)
-
-    <section>
-        @using (Html.BeginForm())
+        @using (Html.BeginForm("Profile","Accounts", FormMethod.Post, new { @class = "form-signin" }))
         {
             @Html.HiddenFor(m => m.UserId)
             @Html.HiddenFor(m => m.GroupId)
             @Html.HiddenFor(m=>m.GroupName)
             @Html.HiddenFor(m => m.Username)
-        <table border="1">
+        <table class="table">
             <tbody>
                 <tr>
                     <th>Username</th>
@@ -29,19 +25,18 @@
                 </tr>
                 <tr>
                     <th>@Html.LabelFor(m=>m.FullName, "Name")</th> 
-                    <td>@Html.TextBoxFor(m=>m.FullName)</td>
+                    <td>@Html.TextBoxFor(m=>m.FullName, new { @class = "form-control lineH" })</td>
                 </tr>
                 <tr>
                     <th>@Html.LabelFor(m => m.Password, "New Password")</th>
-                    <td>@Html.PasswordFor(m => m.Password)</td>
+                    <td>@Html.PasswordFor(m => m.Password, new { @class = "form-control" })</td>
                 </tr>
                 <tr>
                     <th>@Html.LabelFor(m => m.ConfirmPassword, "Confirm Password")</th>
-                    <td>@Html.PasswordFor(m => m.ConfirmPassword)</td>
+                    <td>@Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })</td>
                 </tr>
             </tbody>
 
         </table>
-        <button type="submit">Save Changes</button>
+        <button class="btn" type="submit">Save Changes</button>
         }
-    </section>

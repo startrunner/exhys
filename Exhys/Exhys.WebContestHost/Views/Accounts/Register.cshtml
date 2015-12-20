@@ -1,36 +1,32 @@
 ﻿@model Exhys.WebContestHost.Areas.Shared.ViewModels.UserAccountViewModel
-<!doctype html>
-<html>
-<head>
 
-</head>
-<body>
-    <header></header>
-    <section>
 
-        @using (Html.BeginForm(FormMethod.Post))
-        {
-            <div>
-                @Html.ErrorListFor(ViewData)
-            </div>
-            <div>
-                @Html.FixedDropDownListFor(m => m.GroupId, ViewData.GetOpenUserGroupOptions())
-            </div>
-            <div>
-                @Html.TextBoxFor(m => m.Username, new { placeholder = "Username" })
-            </div>
-            <div>
-                @Html.PasswordFor(m => m.Password, new { placeholder = "Password" })
-            </div>
-            <div>
-                @Html.PasswordFor(m => m.ConfirmPassword, new { placeholder = "Confirm Password" })
-            </div>
-            <div>
-                @Html.TextBoxFor(m => m.FullName, new { placeholder = "Name" })
-            </div>
-            <button type="submit">Register</button>
-        }
-    </section>
-    <footer></footer>
-</body>
-</html>
+@using(Html.BeginForm("Register", "Accounts", FormMethod.Post, new { @class = "form-signin" }))
+{
+	<div>
+		@Html.ErrorListFor(ViewData)
+	</div>
+		<div>
+			<h5>Group:</h5>
+			@Html.FixedDropDownListFor(m => m.GroupId, ViewData.GetOpenUserGroupOptions(), new { @class = "form-control" })
+		</div>
+			<div>
+				<h5>Username:</h5>
+				@Html.TextBoxFor(m => m.Username, new { @class = "form-control lineH" })
+			</div>
+			<div>
+				<h5>Password:</h5>
+				@Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+			</div>
+			<div>
+				<h5>Confirm Password:</h5>
+				@Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+			</div>
+			<div>
+				<h5>Name:</h5>
+				@Html.TextBoxFor(m => m.FullName, new { @class = "form-control lineH" })
+			</div>
+			<br />
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+			<h5>Already have an account?<a href="/Accounts/SignIn"> Sign in</a></h5>
+}
