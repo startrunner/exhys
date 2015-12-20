@@ -45,7 +45,7 @@ namespace Exhys.WebContestHost.Communication
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromMilliseconds(timeoutMs));
             CancellationTokenRegistration token = tokenSource.Token.Register(() => 
             {
-                submissionCompletionSource.TrySetCanceled();
+                //submissionCompletionSource.TrySetCanceled();
             }, false);
 
             SubmissionDto submission = CreateSubmission(problemSolution);

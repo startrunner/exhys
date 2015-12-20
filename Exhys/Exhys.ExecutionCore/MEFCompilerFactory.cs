@@ -39,7 +39,7 @@ namespace Exhys.ExecutionCore
             }
             else
             {
-                return null;
+                throw new Exception($"Compiler with alias {languageAlias} not found at {basePath}");
             }
         }
 

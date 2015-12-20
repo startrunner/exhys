@@ -24,6 +24,9 @@ namespace Exhys.SubmissionRouter.Service
         public void ExecuteSubmission(ExecutionDto execution)
         {
             ExecutionResultDto result = executionCore.Execute(execution);
+
+            ;
+
             executionService.SubmitResult(result);
         }
         public bool TestConnection()

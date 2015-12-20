@@ -19,14 +19,28 @@ namespace Exhys.ExecutionCore
         public async Task<ExecutionResultDto> ExecuteAsync (ExecutionDto execution)
         {
             SubmissionDto submission;
-            ICompiler compiler;
+            ICompiler compiler=null;
             CompilationResult compilationResult = null;
             List<TestResultDto> testResults = null;
             try
             {
                 submission = execution.Submission;
-                compiler = CompilerFactory.Instance.Get(submission.LanguageAlias);
-                compilationResult = compiler.Compile(submission.SourceCode);
+                try
+                {
+                    compiler = CompilerFactory.Instance.Get(submission.LanguageAlias);
+                }
+                catch (Exception e)
+                {
+                    e.ToString();
+                }
+                try
+                {
+                    compilationResult = compiler.Compile(submission.SourceCode);
+                }
+                catch (Exception e)
+                {
+                    e.ToString();
+                }
 
                 if (compilationResult.IsSuccessful)
                 {
