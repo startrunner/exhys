@@ -127,11 +127,18 @@ namespace Exhys.WebContestHost.Controllers
 
                 Response.SetSessionCookie(session.Id);
 
-                var backRedirect = TempData.GetRedirectsBackTo();
-                var redirectValues = backRedirect.Values;
-                redirectValues.Add("area", backRedirect.DataTokens["area"]);
-                ;
-                return RedirectToRoute(backRedirect.Values);
+                try
+                {
+                    var backRedirect = TempData.GetRedirectsBackTo();
+                    var redirectValues = backRedirect.Values;
+                    redirectValues.Add("area", backRedirect.DataTokens["area"]);
+
+                    return RedirectToRoute(backRedirect.Values);
+                }
+                catch
+                {
+                    return RedirectToAction("Profile");
+                }
             }
 
         invalid_credentials:
